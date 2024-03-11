@@ -1,0 +1,216 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: immich
+  namespace: immich
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+      automountServiceAccountToken: false
+    controllers:
+      app:
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.2@sha256:97427a43406f21c781535ead04f3548aba45f8f06a1c040dd66d9fdb0b0cc1a2
+              pullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - configMapRef:
+                  name: immich-configmap
+              - secretRef:
+                  name: immich-secret
+        type: deployment
+        strategy: RollingUpdate
+        replicas: 3
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: app
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.98.1
+            args: ["start-server.sh"]
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512M
+              limits:
+                memory: 2Gi
+
+      ml:
+        type: deployment
+        strategy: RollingUpdate
+        replicas: 3
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v1.98.1
+            envFrom: *envFrom
+            resources:
+              requests:
+                memory: 2150M
+              limits:
+                memory: 8Gi
+
+      micro:
+        type: deployment
+        strategy: RollingUpdate
+        replicas: 3
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.98.1
+            args: ["start-microservices.sh"]
+            envFrom: *envFrom
+            resources:
+              requests:
+                memory: 512M
+              limits:
+                memory: 2Gi
+
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 3001
+      ml:
+        controller: ml
+        ports:
+          http:
+            port: 3003
+    ingress:
+      app:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/upstream-hash-by: "$client_ip"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            set $forwarded_client_ip "";
+            if ($http_x_forwarded_for ~ "^([^,]+)") {
+              set $forwarded_client_ip $1;
+            }
+            set $client_ip $remote_addr;
+            if ($forwarded_client_ip != "") {
+             set $client_ip $forwarded_client_ip;
+            }
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Immich"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Media"
+          gethomepage.dev/icon: "immich.png"
+          gethomepage.dev/widget.url: "https://photos.talos.plexuz.xyz"
+          gethomepage.dev/widget.type: "immich"
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_IMMICH_APIKEY}}"
+        hosts:
+          - host: &host "photos.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: 3001
+        tls:
+          - hosts:
+              - *host
+      internal:
+        enabled: true
+        className: internal
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/upstream-hash-by: "$client_ip"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            set $forwarded_client_ip "";
+            if ($http_x_forwarded_for ~ "^([^,]+)") {
+              set $forwarded_client_ip $1;
+            }
+            set $client_ip $remote_addr;
+            if ($forwarded_client_ip != "") {
+             set $client_ip $forwarded_client_ip;
+            }
+        hosts:
+          - host: &internal "photos.talos.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: 3001
+        tls:
+          - hosts:
+              - *internal
+
+    persistence:
+      library:
+        enabled: true
+        existingClaim: immich-nfs
+        type: persistentVolumeClaim
+        globalMounts:
+          - path: /usr/src/app/upload
+      cache:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: ceph-filesystem
+        accessMode: ReadWriteMany
+        size: 10Gi
+      geocoding-dump:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/.reverse-geocoding-dump
+      transformers-cache:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/.transformers_cache
+      geoname-dump:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump

@@ -1,0 +1,39 @@
+---
+version: "3"
+
+tasks:
+  toolbox:
+    desc: Exec into the Rook Ceph toolbox
+    interactive: true
+    cmds:
+      - kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
+
+  password:
+    desc: Retrieve the rook-ceph dashboard password
+    cmds:
+      - kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
+
+  cleanup:
+    desc: Remove ceph
+    #interactive: true
+    ignore_error: true
+    cmds:
+      - kubectl --namespace rook-ceph patch cephcluster rook-ceph --type merge -p '{"spec":{"cleanupPolicy":{"confirmation":"yes-really-destroy-data"}}}'
+      - kubectl delete -Rf clusters/dextek/system/rook-ceph/app/helmrelease.yaml
+      - kubectl delete -Rf clusters/dextek/system/rook-ceph/ks.yaml
+      - |
+        for i in {10..00}; do echo "Waiting: $i"; sleep 1; done; echo
+      - kubectl delete -Rf clusters/dextek/system/rook-ceph/app/helmrelease.yaml
+      - kubectl delete crds cephblockpools.ceph.rook.io cephbucketnotifications.ceph.rook.io cephbuckettopics.ceph.rook.io \
+        cephclients.ceph.rook.io cephclusters.ceph.rook.io cephfilesystemmirrors.ceph.rook.io \
+        cephfilesystems.ceph.rook.io cephfilesystemsubvolumegroups.ceph.rook.io \
+        cephnfses.ceph.rook.io cephobjectrealms.ceph.rook.io cephobjectstores.ceph.rook.io \
+        cephobjectstoreusers.ceph.rook.io cephobjectzonegroups.ceph.rook.io cephobjectzones.ceph.rook.io \
+        cephrbdmirrors.ceph.rook.io objectbucketclaims.objectbucket.io objectbuckets.objectbucket.io
+
+      #- kubectl delete -Rf hack/disk-wipe
+      #- kubectl apply -Rf hack/disk-wipe
+      #- kubectl wait job --for=condition=Ready --timeout=10s -n kube-system -l job=disk-wipe
+      #- kubectl logs -f -l job=disk-wipe --all-containers -n kube-system
+      #- kubectl delete -Rf hack/disk-wipe
+      #- kubectl delete ns rook-ceph

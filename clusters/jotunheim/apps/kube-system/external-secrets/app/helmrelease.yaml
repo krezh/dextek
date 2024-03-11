@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: external-secrets
+  namespace: kube-system
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: external-secrets
+      version: 0.9.13
+      sourceRef:
+        kind: HelmRepository
+        name: external-secrets
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    replicaCount: 1
+    installCRDs: true
+    serviceMonitor:
+      enabled: false
+    webhook:
+      replicaCount: 1
+      serviceMonitor:
+        enabled: false
+    certController:
+      replicaCount: 1
+      serviceMonitor:
+        enabled: false

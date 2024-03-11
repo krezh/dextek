@@ -1,0 +1,43 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: miscellaneous-rules
+  namespace: monitoring
+  labels:
+    prometheus: k8s
+    role: alert-rules
+spec:
+  groups:
+    - name: dockerhub.rules
+      rules:
+        - alert: BootstrapRateLimitRisk
+          annotations:
+            summary: Kubernetes cluster at risk of being rate limited by dockerhub on bootstrap
+          expr: |
+            count(time() - container_last_seen{image=~"(docker.io).*",container!=""} < 30) > 100
+          for: 15m
+          labels:
+            severity: critical
+    - name: oomkilled.rules
+      rules:
+        - alert: OutOfMemoryKilledPod
+          annotations:
+            summary: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10 minutes.
+          expr: |
+            (kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[10m]) == 1
+          labels:
+            severity: critical
+    - name: external-secrets
+      rules:
+        - alert: SecretSyncError
+          annotations:
+            summary: SecretSyncError {{ $labels.exported_namespace }}/{{ $labels.name }}
+          labels:
+            severity: critical
+            description: |
+              Synchronization of the ExternalSecret `{{ $labels.name }}` in namespace `{{ $labels.exported_namespace }}` is failing.
+              Check for errors in the Status field of the associated ExternalSecret object.
+          expr: max(increase(externalsecret_sync_calls_error[5m]) > 0) by (exported_namespace, name)
+          for: 5m

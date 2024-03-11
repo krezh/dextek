@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # Pre Flux-Kustomizations
+  - ./namespace.yaml
+  # Flux-Kustomizations
+  - ./cilium/ks.yaml
+  - ./k8s-gateway/ks.yaml
+  - ./metrics-server/ks.yaml
+  - ./reloader/ks.yaml
+  - ./snapshot-controller/ks.yaml
+  - ./node-feature-discovery/ks.yaml
+  - ./external-secrets/ks.yaml
+  - ./descheduler/ks.yaml
+  - ./k8tz/ks.yaml
+  - ./multus
+  - ./k8s-ycl/ks.yaml
+  - ./tetragon
+  # - ./system-upgrade-controller
+  - ./kubelet-csr-approver
+  - ./talup
+  - ./spegel

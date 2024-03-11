@@ -1,0 +1,13 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  customManagers: [
+    {
+      customType: "regex",
+      description: "Process CloudnativePG Postgresql version",
+      fileMatch: ["(^|/)clusters/.+\\.ya?ml(\\.j2)?$"],
+      matchStrings: ["imageName: (?<depName>\\S+):(?<currentValue>.*)"],
+      datasourceTemplate: "docker",
+      versioningTemplate: "redhat",
+    },
+  ],
+}

@@ -1,0 +1,58 @@
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# IPXE
+infrastructure/ipxe/ipxe
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Packer
+packer_cache/
+
+
+# Sops
+.decrypted*.sops.*
+*decrypted*
+
+# Linters
+megalinter-reports/
+
+github_conf
+talosconfig
+kubeconfig
+controlplane_*.yaml
+worker_*.yaml

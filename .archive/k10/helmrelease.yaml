@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: k10
+  namespace: kasten-io
+spec:
+  chart:
+    spec:
+      chart: k10
+      sourceRef:
+        kind: HelmRepository
+        name: k10
+        namespace: flux-system
+      version: 6.0.1
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    auth:
+      groupAllowList:
+        - admins
+      k10AdminGroups:
+        - admins
+      oidcAuth:
+        clientID: k10 #ClientID given by the OIDC provider for K10
+        clientSecret: ${SECRET_K10_OAUTH_CLIENT_SECRET} #ClientSecret given by the OIDC provider for K10
+        enabled: true
+        groupClaim: groups #Name of a custom OpenID Connect claim for specifying user groups
+        logoutURL: https://auth.${SECRET_PUBLIC_DOMAIN}/logout #URL to your OIDC provider's logout endpoint
+        prompt: none #The prompt type to be requested with the OIDC provider. Default is select_account.
+        providerURL: https://auth.${SECRET_PUBLIC_DOMAIN} #URL to your OIDC provider
+        redirectURL: https://k10.${SECRET_PRIVATE_DOMAIN} #URL to the K10 gateway service
+        scopes: profile email groups openid #Space separated OIDC scopes required for userinfo. Example: "profile email"
+        usernameClaim: preferred_username #Claim to be used as the username
+        usernamePrefix: "-"
+    eula:
+      accept: true
+      email: ${SECRET_EMAIL}
+      company: "null"
+    garbagecollector:
+      daemonPeriod: 21600
+      importRunActions:
+        enabled: true
+      keepMaxActions: 25
+      retireActions:
+        enabled: true
+    gateway:
+      exposeAdminPort: true
+    global:
+      persistence:
+        enabled: true
+        accessMode: ReadWriteOnce
+        storageClass: ceph-block
+    ingress:
+      create: true
+      class: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        hajimari.io/enable: "true"
+        hajimari.io/icon: backup-restore
+        hajimari.io/appName: "K10"
+        hajimari.io/url: "https://k10.${SECRET_PRIVATE_DOMAIN}/k10"
+      host: "k10.${SECRET_PRIVATE_DOMAIN}"
+      tls:
+        enabled: true
+        secretName: "k10-tls"
+    grafana:
+      enabled: false

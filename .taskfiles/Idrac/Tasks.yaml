@@ -1,0 +1,21 @@
+---
+version: "3"
+
+tasks:
+  asgard:
+    desc: Asgard
+    interactive: true
+    cmds:
+      - ssh root@192.168.1.10 console com2
+
+  vanaheim:
+    desc: Vanaheim
+    interactive: true
+    cmds:
+      - ssh root@192.168.1.7 console com2
+
+  alfheim:
+    desc: Alfheim
+    interactive: true
+    cmds:
+      - ssh root@192.168.1.14 console com2
