@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: karma
+  namespace: monitoring
 spec:
   interval: 30m
   chart:
@@ -51,6 +52,8 @@ spec:
     serviceMonitor:
       app:
         serviceName: karma
+        endpoints:
+          - port: http
         enabled: true
     ingress:
       app:
