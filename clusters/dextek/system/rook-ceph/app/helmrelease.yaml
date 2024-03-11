@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: rook-ceph-operator
+  namespace: rook-ceph
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: rook-ceph
+      sourceRef:
+        kind: HelmRepository
+        name: rook-release
+        namespace: flux-system
+      version: v1.13.6
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  values:
+    csi:
+      cephFSKernelMountOptions: ms_mode=prefer-crc
+      kubeletDirPath: /var/lib/kubelet
+      enableCSIHostNetwork: true
+      enableLiveness: true
+      #enableOMAPGenerator: true
+      #provisionerReplicas: 3
+      serviceMonitor:
+        enabled: true
+      #readAffinity:
+      #  enabled: true
+      provisioner:
+        image: registry.k8s.io/sig-storage/csi-provisioner:v4.0.0
+      cephcsi:
+        image: quay.io/cephcsi/cephcsi:v3.10.2
+      registrar:
+        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.0
+      snapshotter:
+        image: registry.k8s.io/sig-storage/csi-snapshotter:v7.0.1
+      attacher:
+        image: registry.k8s.io/sig-storage/csi-attacher:v4.5.0
+      resizer:
+        image: registry.k8s.io/sig-storage/csi-resizer:v1.10.0
+    crds:
+      enabled: true
+    disableDeviceHotplug: false
+    enableDiscoveryDaemon: true
+    monitoring:
+      enabled: true
+    pspEnable: false

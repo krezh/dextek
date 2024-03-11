@@ -1,0 +1,37 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+    name: sops-age
+    namespace: flux-system
+stringData:
+    age.agekey: ENC[AES256_GCM,data:4LOjnzGfeJXsLN08csYAUQKtDwGZXLA1P6LpQlFKL2z/P7h5iGbTCU2roE9azgMBX9ZThrmH4tG9NF3OfbvTi3eO3u069kBROJGhk7ssCXQuRylwdgqOmaEG5JP/BqqhTyE3KlGxD40CItbEdauePyR/4xBOfT3mWFOFvPyFbLBcr6LMEeZfA4Sph1TmA/nuxVnBq0WTHkIVGrOO0u7nSVutA/fi2w208rzs47LYFC5SFUb0TGnXkUSTCgaX,iv:qVqb+VxwFcLlp9gkUg+/O9gYKPqyLc1FdXCLPJPBG64=,tag:zOaQBGeZ+M0aSQN5u0L64A==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1el5jq43hnhq8uzyfruretlrxk0ch8xvykdzu94cfsu5tyywwga3qy3f46h
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArd1AzeURVSlh4QlAydk9i
+            azFHaWlJWU44RW9rWEJ1cXVud3BrMmdWaTBZCnljTHJuc0hZNlltUUdyQlZiYTk4
+            cHQ1a3lacHpXKytqNEgzNXV4b2dMQ0UKLS0tIGtEc2pXeVhHV3R1dG5DNlIvblVn
+            NWtZMVRoY293UGZOYXJjV00vWHdsYW8KUCjuuC96lAa8tWpbKn5qLoHDfGGOVbc8
+            zL6BxJMWSpR6+mobrbCFb9dZ00lFyMnupIukJlUU0jPUJhPrGQ6X7Q==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age15e7zt8gwt8eg2hcm35h0mlvvexkrxj8uu424lvrmlzvma3ancpvslcevcg
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBhbHNLMjRySW1XWHdIS3VK
+            ZjNOSFY2amlRbGl2RkZ4MnBUaVlTWTlvbXc0ClRUOUtiYURNbHVpYVFFY3NrUUhJ
+            UUxSSmxzS3NHVms0VTUybExXazZYLzgKLS0tIHBHNVRDVmxudGlXdVYwQ2pVRW1K
+            OVFRNnRVeHZkVGpGTFdwaURkWkgzMFkKk0rS7rZb/u0bQCwNjEwr8lvdo7YyxfXn
+            97kYfYEiffc0t/ZPqCDgPd9sPeMQP4mcleDVGAe4NrCJjRCdUPutfA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-26T10:18:24Z"
+    mac: ENC[AES256_GCM,data:N4G36nWufx/vkTAZ4zXM/vuhArlFCINpWjXrwgidL7k5GjXdD0IOjfj1ekmkQUnsgc1SntC9P0hX2v9TGaihYImLgoVjhHfVAuASm4nzThP5Kcxc202NePJE4E+GXVMYqaEi9sMU07TUQV7YL71Xv1YzF4dpn05oE+yeoSifXGw=,iv:/LJdpKllV4/zTNEdLXT4BUy7PuTNC9jp/baGeDNyjEE=,tag:GNlgwv4MGmpmX97oZAwqcQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

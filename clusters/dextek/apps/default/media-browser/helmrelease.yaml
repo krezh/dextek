@@ -1,0 +1,99 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: media-browser
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.0.1
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      app:
+        type: statefulset
+        containers:
+          app:
+            image:
+              repository: docker.io/filebrowser/filebrowser
+              tag: v2.27.0
+            env:
+              TZ: Europe/Stockholm
+              FB_DATABASE: /config/filebrowser.db
+              FB_LOG: stdout
+              FB_NOAUTH: "true"
+              FB_ROOT: /media
+            resources:
+              limits:
+                memory: 500Mi
+              requests:
+                cpu: 10m
+                memory: 50Mi
+            probes:
+              liveness: &probes
+                custom: true
+                enabled: true
+                spec:
+                  failureThreshold: 3
+                  httpGet:
+                    path: /health
+                    port: 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+              readiness: *probes
+              startup:
+                enabled: false
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 80
+    ingress:
+      app:
+        className: internal
+        enabled: true
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Media-browser"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "filebrowser.png"
+        hosts:
+          - host: &HOST "{{ .Release.Name }}.talos.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *HOST
+    persistence:
+      media:
+        enabled: true
+        existingClaim: media
+    volumeClaimTemplates:
+      - accessMode: ReadWriteOnce
+        mountPath: /config
+        name: config
+        size: 1Gi
+        storageClass: ceph-block

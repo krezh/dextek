@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: backblaze
+    namespace: kasten-io
+type: secrets.kanister.io/aws
+stringData:
+    aws_access_key_id: ENC[AES256_GCM,data:tRX/hox+pnsylknbCTGB9By1U4560SldfA==,iv:qtxGx7XkLQRpIQIQNfFIiwE9ClCdidYIgJ/4QjfvzkQ=,tag:mZbeTbtXqwsnM9joskAYkg==,type:str]
+    aws_secret_access_key: ENC[AES256_GCM,data:G6hTdQJFMvLymNLoEJJKVjWu/w4AN/l2851NZi9c9w==,iv:lilEMhn7MGsYizSV5DVfTVoZCKwyuE8uPbpaJP8apIQ=,tag:0Qmcj7CdkIAauNvG9Rv5uA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1el5jq43hnhq8uzyfruretlrxk0ch8xvykdzu94cfsu5tyywwga3qy3f46h
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBtZklVSmhCcElDQ1lCUTZ0
+            YkJ5L3crbkthOVZJUjZSNFFhRVBxL2NvWDFFCjByQ1ZnZk5WYm5WN1NZc0NJRlUy
+            WXBVWkljN2JZNisrN0pYT0QyYzN6ajAKLS0tIGVwb2FxR01IdG4razVvU0hjR01O
+            MzRIVmI5Sm9mWldka2NHWEp2Z3pVdmMKuynH3/E9Xba/DiZUUofBlS4evMvQMKKi
+            LZLwtA3JDDX1QSp5gizJTYiMiEKtU2Vqsc+Ihbqzn6OY+21XkFFp6g==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age15e7zt8gwt8eg2hcm35h0mlvvexkrxj8uu424lvrmlzvma3ancpvslcevcg
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2d1orNlI0OFpISWtZdEdF
+            Zkt0K0s0MlcrZm5NdkpmWnZpQlMveVRpc0R3CmsrS1RsNE16WFg1SHBxZkZRNnlG
+            cmg4MmhrdjRKdVF2Nk1BZ1hvM2JsalkKLS0tIDc0YmZCUW5LQzVMMzFza3BVc3VO
+            ak15bmZuSTVNczVxSG9QWlhTSmlFNWcKtjzEwXmYqsfU+aoZuQowzv06wG56WTeC
+            24719CT91OC+XL9aagNONcDjLcLu6jA3kR8f7VRqSQVy1drbEMVfYA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-17T20:09:50Z"
+    mac: ENC[AES256_GCM,data:SpR6+uUEKKYQ93mixhXXza9MBWaJORkBcaYDJRJSK62UhWl5nrJR2XKPjDFtewZdt0P7co1Qw9e4SgQiHMgZwudX3FXKRdkFhs6okNsHr9CvKQPtbNchT5mvaa/qesTFcIJ9Jb+up4f+Gx6nNcPWcNZQ60o0QNB7ktirw0KyDWU=,iv:/ob8tMY1cRtbrJqcuQcdyTPe3ipViL5L65DRqjTI0XU=,tag:ofMmEOUujx2Inv/L+Iz7yg==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

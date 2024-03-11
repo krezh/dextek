@@ -1,0 +1,43 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: redis
+  namespace: databases
+spec:
+  interval: 30m
+  timeout: 15m
+  chart:
+    spec:
+      chart: redis
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      version: 18.19.1
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    auth:
+      enabled: true
+      existingSecret: redis
+      sentinel: false
+    global:
+      #imageRegistry: public.ecr.aws
+      storageClass: ceph-block
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        interval: 1m
+    sentinel:
+      enabled: true
+      getMasterTimeout: 10
+      masterSet: redis-master
+      startupProbe:
+        failureThreshold: 2

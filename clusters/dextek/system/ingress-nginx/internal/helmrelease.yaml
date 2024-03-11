@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: ingress-nginx-internal
+  namespace: ingress-nginx
+spec:
+  interval: 30m
+  timeout: 15m
+  chart:
+    spec:
+      chart: ingress-nginx
+      sourceRef:
+        kind: HelmRepository
+        name: ingress-nginx
+        namespace: flux-system
+      version: 4.10.0
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  values:
+    fullnameOverride: nginx-internal
+    controller:
+      ingressClassResource:
+        name: internal
+        default: true
+        controllerValue: k8s.io/internal
+      admissionWebhooks:
+        objectSelector:
+          matchExpressions:
+            - key: ingress-class
+              operator: In
+              values: ["internal"]
+      allowSnippetAnnotations: true
+      config:
+        client-body-buffer-size: 100M
+        client-body-timeout: 120
+        client-header-timeout: 120
+        enable-brotli: "true"
+        enable-real-ip: "true"
+        keep-alive-requests: 10000
+        keep-alive: 120
+        log-format-escape-json: "true"
+        log-format-upstream: >
+          {"time": "$time_iso8601", "remote_addr": "$proxy_protocol_addr", "x_forwarded_for": "$proxy_add_x_forwarded_for",
+          "request_id": "$req_id", "remote_user": "$remote_user", "bytes_sent": $bytes_sent, "request_time": $request_time,
+          "status": $status, "vhost": "$host", "request_proto": "$server_protocol", "path": "$uri", "request_query": "$args",
+          "request_length": $request_length, "duration": $request_time, "method": "$request_method", "http_referrer": "$http_referer",
+          "http_user_agent": "$http_user_agent"}
+        proxy-body-size: 0
+        proxy-buffer-size: 16k
+        ssl-protocols: TLSv1.3 TLSv1.2
+        use-geoip2: true
+        #custom-http-errors: 401,403,404,500,501,502,503
+        server-snippet: add_header X-Robots-Tag "noindex";
+      extraArgs:
+        default-ssl-certificate: ingress-nginx/plexuz-default-tls
+      extraEnvs:
+        - name: TZ
+          value: Europe/Stockholm
+      kind: DaemonSet
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+          namespace: ingress-nginx
+          namespaceSelector:
+            any: true
+      service:
+        annotations:
+          coredns.io/hostname: ingress-internal
+        externalTrafficPolicy: Local
+    defaultBackend:
+      enabled: false
+      replicaCount: 3
+      image:
+        repository: ghcr.io/tarampampam/error-pages
+        tag: 2.26.0
+      extraEnvs:
+        - name: TEMPLATE_NAME
+          value: app-down
+        - name: SHOW_DETAILS
+          value: "false"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/instance
+                      operator: In
+                      values:
+                        - ingress-nginx-internal
+                    - key: app.kubernetes.io/component
+                      operator: In
+                      values:
+                        - default-backend
+                topologyKey: kubernetes.io/hostname
+              weight: 100

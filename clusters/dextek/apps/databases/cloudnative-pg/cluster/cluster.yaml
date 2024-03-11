@@ -1,0 +1,61 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: databases
+spec:
+  instances: 3
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.2-v0.2.0
+  enableSuperuserAccess: true
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 20Gi
+    storageClass: ceph-block
+  superuserSecret:
+    name: cloudnative-pg-secret
+  postgresql:
+    parameters:
+      max_connections: "600"
+      shared_buffers: 512MB
+    shared_preload_libraries:
+      - "vectors.so"
+  resources:
+    requests:
+      cpu: 500m
+    limits:
+      memory: 4Gi
+  monitoring:
+    enablePodMonitor: true
+  backup:
+    retentionPolicy: 7d
+    barmanObjectStore: &barmanObjectStore
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      data:
+        compression: bzip2
+      destinationPath: s3://cnpg-backup/
+      endpointURL: https://s3.int.plexuz.xyz
+      # Note: serverName version needs to be inclemented
+      # when recovering from an existing cnpg cluster
+      serverName: &currentCluster cnpg-v11
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg-secret
+          key: aws-access-key-id
+        secretAccessKey:
+          name: cloudnative-pg-secret
+          key: aws-secret-access-key
+  # # Note: previousCluster needs to be set to the name of the previous
+  # # cluster when recovering from an existing cnpg cluster
+  bootstrap:
+    recovery:
+      source: &previousCluster cnpg-v10
+  # externalClusters is needed when recovering from an existing cnpg cluster
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        <<: *barmanObjectStore
+        serverName: *previousCluster

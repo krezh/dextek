@@ -1,0 +1,190 @@
+apiVersion: metal.sidero.dev/v1alpha2
+kind: ServerClass
+metadata:
+  name: controlplane
+  namespace: default
+spec:
+  bootFromDiskMethod: ipxe-exit
+  environmentRef:
+    namespace: default
+    name: default
+  configPatches:
+    - op: replace
+      path: /machine/install
+      value:
+        image: ghcr.io/siderolabs/installer:${TALOS_VERSION}
+        disk: /dev/sda
+        bootloader: true
+        wipe: false
+        extraKernelArgs:
+          - cpufreq.default_governor=ondemand
+          - net.ifnames=0
+        extensions:
+          - image: ghcr.io/siderolabs/nut-client:2.8.0-${TALOS_VERSION}
+
+    - op: add
+      path: /machine/sysctls
+      value:
+        fs.inotify.max_user_watches: 1048576
+        fs.inotify.max_user_instances: 8192
+
+    - op: replace
+      path: /machine/kubelet/extraArgs
+      value:
+        rotate-server-certificates: true
+        feature-gates: CronJobTimeZone=true
+
+    - op: replace
+      path: /machine/kubelet/extraConfig
+      value:
+        maxPods: 150
+        serializeImagePulls: false
+
+    - op: replace
+      path: /machine/kubelet/nodeIP
+      value:
+        validSubnets:
+          - 10.10.0.0/27
+
+    - op: replace
+      path: /machine/features
+      value:
+        rbac: true
+        stableHostname: true
+        apidCheckExtKeyUsage: true
+        diskQuotaSupport: true
+        kubePrism:
+          enabled: true
+          port: 7445
+        kubernetesTalosAPIAccess:
+          enabled: true
+          allowedRoles:
+            - os:etcd:backup
+          allowedKubernetesNamespaces:
+            - kube-system
+
+    - op: add
+      path: /machine/certSANs
+      value:
+        - talos.k8s.${SECRET_PUBLIC_DOMAIN}
+        - 192.168.20.5
+
+    - op: add
+      path: /machine/files
+      value:
+        - path: /var/etc/nut/upsmon.conf
+          permissions: 0o600
+          op: create
+          content: |-
+            MONITOR ${UPSMON_HOST} 1 upsmon_remote ${UPSMON_PASS} slave
+            SHUTDOWNCMD "/sbin/poweroff"
+        - path: /etc/cri/conf.d/20-customization.part
+          op: create
+          content: |-
+            [metrics]
+            address = "0.0.0.0:11234"
+            [plugins."io.containerd.grpc.v1.cri"]
+            enable_unprivileged_ports = true
+            enable_unprivileged_icmp = true
+
+    - op: replace
+      path: /machine/network
+      value:
+        nameservers:
+          - 192.168.20.1
+        disableSearchDomain: true
+        interfaces:
+          - interface: eth0
+            mtu: 1500
+            routes:
+              - network: 192.168.20.0/24
+                gateway: 192.168.20.1
+            dhcp: true
+            dhcpOptions:
+              ipv6: false
+            vip:
+              ip: 192.168.20.5
+          - interface: eth4
+            mtu: 9000
+            routes:
+              - network: 10.10.0.0/27
+            dhcp: true
+            dhcpOptions:
+              ipv6: false
+
+    - op: add
+      path: /machine/time
+      value:
+        disabled: false
+        servers:
+          - 192.168.20.1
+
+    - op: add
+      path: /machine/registries/mirrors
+      value:
+        docker.io:
+          endpoints:
+            - https://harbor.int.plexuz.xyz/v2/docker
+          overridePath: true
+        ghcr.io:
+          endpoints:
+            - https://harbor.int.plexuz.xyz/v2/ghcr
+          overridePath: true
+        registry.k8s.io:
+          endpoints:
+            - https://harbor.int.plexuz.xyz/v2/k8s
+          overridePath: true
+        quay.io:
+          endpoints:
+            - https://harbor.int.plexuz.xyz/v2/quay
+          overridePath: true
+
+    - op: add
+      path: /cluster/controlPlane
+      value:
+        endpoint: https://talos.k8s.plexuz.xyz:6443
+
+    - op: add
+      path: /cluster/etcd/advertisedSubnets
+      value:
+        - 10.10.0.0/27
+
+    - op: replace
+      path: /cluster/allowSchedulingOnControlPlanes
+      value: true
+
+    - op: add
+      path: /cluster/extraManifests
+      value:
+        - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/ha-install.yaml
+
+    - op: replace
+      path: /cluster/network/cni
+      value:
+        name: none
+
+    - op: add
+      path: /cluster/proxy
+      value:
+        disabled: true
+
+    - op: add
+      path: /cluster/apiServer/certSANs
+      value:
+        - talos.k8s.plexuz.xyz
+        - 192.168.20.5
+
+    - op: add
+      path: /cluster/apiServer/disablePodSecurityPolicy
+      value: true
+
+    - op: add
+      path: /cluster/apiServer/extraArgs
+      value:
+        oidc-client-id: kubernetes
+        oidc-groups-claim: groups
+        oidc-issuer-url: https://auth.plexuz.xyz
+        oidc-username-claim: sub
+
+    - op: remove
+      path: /cluster/apiServer/admissionControl

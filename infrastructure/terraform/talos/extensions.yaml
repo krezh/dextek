@@ -1,0 +1,10 @@
+customization:
+  extraKernelArgs:
+    - net.ifnames=0
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/binfmt-misc
+      - siderolabs/intel-ucode
+      - siderolabs/iscsi-tools
+      - siderolabs/nut-client
+      - siderolabs/util-linux-tools

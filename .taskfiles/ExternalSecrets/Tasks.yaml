@@ -1,0 +1,19 @@
+---
+version: "3"
+
+tasks:
+  sync-all:
+    desc: Sync all ExternalSecrets
+    cmds:
+      - |
+        kubectl get es --all-namespaces --no-headers | awk '{print $1, $2}' \
+          | xargs --max-procs=4 -l bash -c \
+            'kubectl -n $0 annotate es/$1 force-sync==$(date +%s) --field-manager=flux-client-side-apply --overwrite'
+  sync-failed:
+    desc: Sync failed ExternalSecrets
+    cmds:
+      - |
+        kubectl get es --all-namespaces --no-headers | awk '{print $1, $2, $5}' \
+          | grep "SecretSyncedError" \
+          | xargs --max-procs=4 -l bash -c \
+            'kubectl -n $0 annotate es/$1 force-sync==$(date +%s) --field-manager=flux-client-side-apply --overwrite'

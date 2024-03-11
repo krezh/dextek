@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: multus
+  namespace: flux-system
+spec:
+  targetNamespace: kube-system
+  path: ./clusters/dextek/system/kube-system/multus/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dextek
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: multus-config
+  namespace: flux-system
+spec:
+  targetNamespace: kube-system
+  dependsOn:
+    - name: multus
+  path: ./clusters/dextek/system/kube-system/multus/config
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dextek
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

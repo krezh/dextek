@@ -1,0 +1,29 @@
+{
+  "material-icon-theme.files.associations": {
+    "*.secret.sops.env": "lock",
+    "*.secret.sops.yaml": "lock"
+  },
+  "material-icon-theme.folders.associations": {
+    // top level
+    ".archive": "archive",
+    "archive": "archive",
+    // .github
+    ".github/workflows": "robot",
+    // namespaces
+    "actions-runner-system": "github",
+    "cert-manager": "guard",
+    "default": "home",
+    "digester-system": "hook",
+    "flux-system": "pipe",
+    "kube-system": "kubernetes",
+    "monitoring": "event",
+    "network": "connection",
+    "networking": "connection",
+    "observability": "event",
+    "rook-ceph": "base",
+    "storage": "dump",
+    "system-upgrade": "update",
+    "tools": "tools",
+    "volsync": "aws"
+  }
+}

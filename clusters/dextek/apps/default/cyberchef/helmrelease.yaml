@@ -1,0 +1,75 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: cyberchef
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      app:
+        type: deployment
+        strategy: Recreate
+        containers:
+          app:
+            image:
+              # https://hub.docker.com/r/mpepping/cyberchef
+              repository: docker.io/mpepping/cyberchef
+              tag: v10.8.2@sha256:508cc7988fda7e2e36053a02c7752460da37cc5864557c3c5915df2f34f57248
+            env:
+              TZ: Europe/Stockholm
+            resources:
+              requests:
+                cpu: 15m
+                memory: 273M
+              limits:
+                memory: 798M
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 8000
+    ingress:
+      app:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Cyberchef"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "mdi-hammer-wrench"
+        hosts:
+          - host: &host "chef.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *host

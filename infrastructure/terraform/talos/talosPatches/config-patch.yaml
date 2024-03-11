@@ -1,0 +1,121 @@
+machine:
+  install:
+    image: ${zot_factory_url}/installer/${talos_factory_hash}:${talos_version}
+    disk: /dev/sda
+    diskSelector:
+      model: ${disk_model}
+    wipe: false
+    extraKernelArgs:
+      - cpufreq.default_governor=ondemand
+      - net.ifnames=0
+      - talos.platform=metal
+  sysctls:
+    fs.inotify.max_user_watches: 1048576
+    fs.inotify.max_user_instances: 8192
+    net.ipv6.conf.all.disable_ipv6: 1
+    net.ipv6.conf.default.disable_ipv6: 1
+  kubelet:
+    extraArgs:
+      rotate-server-certificates: true
+      feature-gates: GracefulNodeShutdown=true
+    extraConfig:
+      maxPods: 200
+      serializeImagePulls: false
+    nodeIP:
+      validSubnets:
+        - "10.10.0.0/27"
+  certSANs: &sans
+    - talos.k8s.plexuz.xyz
+    - 192.168.20.5
+    - 127.0.0.1
+  network:
+    hostname: ${hostname}
+    nameservers:
+      - 192.168.20.1
+    disableSearchDomain: true
+    interfaces:
+      - deviceSelector:
+          hardwareAddr: ${mac_addr}
+          driver: ${driver}
+        mtu: 1500
+        dhcp: true
+        vlans:
+          - vlanId: 100 # IoT VLAN
+            mtu: 1500
+            dhcp: true
+            dhcpOptions:
+              routeMetric: 4096
+          # - vlanId: 10 # srv VLAN
+          #   mtu: 1500
+          #   dhcp: true
+          #   dhcpOptions:
+          #     routeMetric: 4096
+        vip:
+          ip: ${vip}
+      - deviceSelector:
+          hardwareAddr: ${mac_addr_10g}
+          driver: ${driver_10g}
+        mtu: 9000
+        dhcp: true
+  files:
+    - path: /var/etc/nut/upsmon.conf
+      permissions: 0o600
+      op: create
+      content: |-
+        MONITOR ${upsmonHost} 1 upsmon_remote ${upsmonPasswd} slave
+        SHUTDOWNCMD "/sbin/poweroff"
+    - path: /etc/cri/conf.d/20-customization.part
+      op: create
+      content: |-
+        [metrics]
+          address = "0.0.0.0:11234"
+        [plugins."io.containerd.grpc.v1.cri"]
+          enable_unprivileged_ports = true
+          enable_unprivileged_icmp = true
+        [plugins."io.containerd.grpc.v1.cri".containerd]
+          discard_unpacked_layers = false
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+          discard_unpacked_layers = false
+    - content: |
+        TS_AUTHKEY=${tailscale_authkey}
+      permissions: 0o644
+      path: /var/etc/tailscale/auth.env
+      op: create
+
+  time:
+    disabled: false
+    servers:
+      - 192.168.20.1
+  features:
+    kubePrism:
+      enabled: true
+      port: 7445
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles:
+        - os:admin
+      allowedKubernetesNamespaces:
+        - kube-system
+
+cluster:
+  controlPlane:
+    endpoint: https://talos.k8s.plexuz.xyz:6443
+  etcd:
+    advertisedSubnets:
+      - "10.10.0.0/27"
+  allowSchedulingOnControlPlanes: true
+  #extraManifests:
+  #  - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/ha-install.yaml
+  network:
+    cni:
+      name: none
+  proxy:
+    disabled: true
+  apiServer:
+    certSANs: *sans
+    disablePodSecurityPolicy: true
+    extraArgs:
+      oidc-client-id: kubernetes
+      oidc-groups-claim: groups
+      oidc-issuer-url: https://auth.plexuz.xyz
+      oidc-username-claim: sub

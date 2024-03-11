@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: external-dns
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: external-dns
+      version: 1.14.3
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    interval: 1m
+    # logLevel: debug
+    provider: cloudflare
+    env:
+      - name: CF_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: cloudflare-external-dns
+            key: CLOUDFLARE_API_TOKEN
+    extraArgs:
+      - --cloudflare-proxied
+      - --ingress-class=external
+      - --ignore-ingress-tls-spec
+    policy: sync
+    sources: ["ingress", "service"]
+    txtPrefix: k8s.
+    txtOwnerId: talos-plexuz
+    domainFilters: ["plexuz.xyz"]
+    excludeDomains: ["talos.plexuz.xyz"]
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: cloudflare-external-dns

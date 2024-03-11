@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dota-items
+  labels:
+    app: dota-items
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dota-items
+  template:
+    metadata:
+      name: dota-items
+      labels:
+        app: dota-items
+    spec:
+      containers:
+        - name: dota-items
+          image: ghcr.io/masalaz/dota-items:v1.1.0
+          resources: {}
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: discord-key

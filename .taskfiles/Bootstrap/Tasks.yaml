@@ -1,0 +1,45 @@
+---
+version: "3"
+
+var:
+  BOOTSTRAP_DIR: { { .BOOTSTRAP_DIR } }
+
+tasks:
+  all:
+    desc: Bootstrap all required resources (talos, kubelet-csr-approver, cilium, flux)
+    cmds:
+      - task: talos
+      - task: kubelet-csr-approver
+      - task: cilium
+      - task: flux
+
+  talos:
+    desc: Bootstrap Talos
+    dir: "{{.TERRAFORM_DIR}}/talos"
+    cmds:
+      - tofu init --upgrade
+      - tofu apply --var bootstrap=true --auto-approve
+
+  kubelet-csr-approver:
+    desc: Bootstrap kubelet-csr-approver
+    required: [talos]
+    cmds:
+      - until kubectl kustomize --enable-helm {{.BOOTSTRAP_DIR}}/kubelet-csr-approver | kubectl apply -f - && rm -rf {{.BOOTSTRAP_DIR}}/kubelet-csr-approver/charts; do sleep 10; done
+
+  cilium:
+    desc: Bootstrap Cilium
+    required: [kubelet-csr-approver]
+    cmds:
+      - until kubectl kustomize --enable-helm {{.BOOTSTRAP_DIR}}/cilium | kubectl apply -f - && rm -rf {{.BOOTSTRAP_DIR}}/cilium/charts; do sleep 10; done
+
+  flux:
+    desc: Bootstrap Flux resources
+    required: [cilium]
+    cmds:
+      - until kubectl apply --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux; do sleep 10; done
+      - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply -f -
+      - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply -f -
+      - sops --decrypt ./clusters/dextek/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
+      - until kubectl apply -f ./clusters/dextek/flux/vars/cluster-settings.yaml; do sleep 10; done
+      - sleep 10
+      - until kubectl apply --server-side --kustomize ./clusters/dextek/flux/config; do sleep 10; done

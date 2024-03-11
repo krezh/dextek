@@ -1,0 +1,95 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: bitwarden
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      main:
+        type: deployment
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.2@sha256:14c798b449a728fc60fa83f6a384a6fe463cf1cdca38a0935a29a2fff382286b
+              pullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - secretRef:
+                  name: bitwarden-secret
+        containers:
+          main:
+            image:
+              repository: vaultwarden/server
+              tag: 1.30.3
+            env:
+              TZ: Europe/Stockholm
+              SIGNUPS_ALLOWED: "true"
+              WEBSOCKET_ADDRESS: 0.0.0.0
+              DATA_FOLDER: "/config"
+              DOMAIN: https://bitwarden.plexuz.xyz
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 500Mi
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    ingress:
+      main:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Bitwarden"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "bitwarden.png"
+        hosts:
+          - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+        tls:
+          - hosts:
+              - *HOST
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        type: persistentVolumeClaim
+        size: 10Gi
+        retain: true

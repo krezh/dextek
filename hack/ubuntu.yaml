@@ -1,0 +1,99 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ubuntu-pv-claim
+  namespace: default
+spec:
+  # storageClassName: longhorn
+  #storageClassName: freenas-nfs-csi
+  #storageClassName: truenas-iscsi-csi
+  #storageClassName: ceph-filesystem
+  storageClassName: ceph-block
+  # storageClassName: gp2
+  # storageClassName: local-storage
+  # storageClassName: ibmc-block-bronze
+  # storageClassName: ibmc-block-silver
+  # storageClassName: ibmc-block-gold
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1000Gi
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-vanaheim
+  namespace: default
+  annotations:
+    linkerd.io/inject: disabled
+  labels:
+    setGateway: "false"
+spec:
+  restartPolicy: Never
+  hostNetwork: true
+  nodeName: vanaheim
+  containers:
+    - name: ubuntu
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command:
+        - sleep
+        - infinity
+      imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-asgard
+  namespace: default
+  annotations:
+    linkerd.io/inject: disabled
+  labels:
+    setGateway: "false"
+spec:
+  restartPolicy: Never
+  hostNetwork: true
+  nodeName: asgard
+  containers:
+    - name: ubuntu
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command:
+        - sleep
+        - infinity
+      imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-alfheim
+  namespace: default
+  annotations:
+    linkerd.io/inject: disabled
+  labels:
+    setGateway: "false"
+spec:
+  restartPolicy: Never
+  hostNetwork: true
+  nodeSelector:
+    kubernetes.io/hostname: alfheim
+  containers:
+    - name: ubuntu
+      image: ubuntu
+      securityContext:
+        privileged: true
+      command:
+        - sleep
+        - infinity
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: ubuntu-pv-claim

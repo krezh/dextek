@@ -1,0 +1,35 @@
+---
+# Create a selfsigned Issuer, in order to create a root CA certificate for
+# signing certificates
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsign
+  namespace: cert-manager
+spec:
+  selfSigned: {}
+---
+# Generate a CA Certificate used to sign certificates
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cluster-selfsigned-ca
+  namespace: cert-manager
+spec:
+  secretName: cluster-selfsigned-ca
+  duration: 43800h # 5y
+  issuerRef:
+    name: selfsign
+    kind: Issuer
+  commonName: "ca.cluster.cert-manager"
+  isCA: true
+---
+# Create an Issuer that uses the above generated CA certificate to issue certs
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: cluster-selfsigned
+  namespace: cert-manager
+spec:
+  ca:
+    secretName: cluster-selfsigned-ca

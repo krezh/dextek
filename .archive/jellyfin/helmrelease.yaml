@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jellyfin
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    controller:
+      type: statefulset
+    podAnnotations:
+      backup.velero.io/backup-volumes-excludes: media,transcode
+    image:
+      repository: ghcr.io/onedr0p/jellyfin
+      tag: 10.8.10@sha256:1ef614db6a4c589777eb48bc9004d573b9c09f0d6d573a509041c6060f3a956b
+    env:
+      TZ: ${TIMEZONE}
+    probes:
+      liveness:
+        custom: true
+        spec:
+          timeoutSeconds: 5
+          exec:
+            command:
+              - curl
+              - -sL
+              - https://status.${SECRET_PUBLIC_DOMAIN}/api/push/V0yEDpmXwW
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+            targetPort: 8096
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.ingress/public: "true"
+          external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Jellyfin"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Media"
+          gethomepage.dev/icon: "jellyfin.png"
+          #gethomepage.dev/widget.url: "http://jellyfin.downloads.svc.cluster.local"
+          #gethomepage.dev/widget.type: "jellyfin"
+          #gethomepage.dev/widget.key: "${SECRET_JELLYFIN_APIKEY}"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups: []
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        storageClass: ceph-block
+        labels:
+          velero.io/default-backup: "true"
+
+    persistence:
+      media:
+        labels:
+          velero.io/exclude-from-backup: "true"
+        enabled: true
+        type: nfs
+        server: ${NAS_FAST}
+        path: /mnt/tank/media
+        mountPath: /media
+        readOnly: true
+      transcode:
+        enabled: true
+        type: emptyDir
+    resources:
+      requests:
+        cpu: 100m
+        memory: 1000Mi
+      limits:
+        memory: 6000Mi

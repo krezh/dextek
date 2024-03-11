@@ -1,0 +1,113 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: satisfactory
+  namespace: games
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 0 # image uses PUID & PGID to fix permissions for Docker users, which requires starting as rootless :sadge: TODO: open issue to allow envvar to configure if rootless is allowed
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: Always
+      annotations:
+        k8tz.io/inject: "false"
+    controllers:
+      app:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/wolveix/satisfactory-server/satisfactory-server
+              tag: v1.6.0@sha256:e36d95f12a90b9363fc1a3836041f4b35156399a78779a1dc89c827b93218bb7
+            env:
+              TZ: Europe/Stockholm
+              DATA_FOLDER: "config"
+              AUTOPAUSE: true # -- pause game when no player is connected
+              AUTOSAVEINTERVAL: 300 # -- autosave interval in seconds
+              AUTOSAVENUM: 100 # -- number of rotating autosave files
+              AUTOSAVEONDISCONNECT: true # -- autosave when last player disconnects
+              CRASHREPORT: false # -- automatic crash reporting
+              DEBUG: false # -- for debugging the server
+              DISABLESEASONALEVENTS: false # -- disable the FICSMAS event (you miserable bastard)
+              MAXPLAYERS: 8 # -- set the player limit for your server
+              PGID: 568 # -- set the group ID of the user the server will run as
+              PUID: 568 # -- set the user ID of the user the server will run as
+              SERVERBEACONPORT: 15000 # -- set the game's beacon port
+              SERVERGAMEPORT: 7777 # -- set the game's port
+              SERVERIP: 0.0.0.0 # -- set the game's ip (usually not needed)
+              SERVERQUERYPORT: 15777 # -- set the game's query port
+              SKIPUPDATE: false # -- avoid updating the game on container start/restart
+              STEAMBETA: false # -- set experimental game version
+              MAXTICKRATE: 120 # -- set the maximum sim tick rate for your server (default 30)
+            probes:
+              startup:
+                enabled: false
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+    service:
+      app:
+        controller: app
+        type: LoadBalancer
+        annotations:
+          coredns.io/hostname: satisfactory-lb
+        externalTrafficPolicy: Local
+        ports:
+          query:
+            enabled: true
+            port: 15777
+            protocol: UDP
+          beacon:
+            enabled: true
+            port: 15000
+            protocol: UDP
+          game:
+            enabled: true
+            port: 7777
+            protocol: UDP
+    persistence:
+      data:
+        enabled: true
+        accessMode: ReadWriteOnce
+        type: persistentVolumeClaim
+        size: 10Gi
+        retain: true
+        globalMounts:
+          - path: /config
+      gamedata:
+        enabled: true
+        accessMode: ReadWriteOnce
+        type: persistentVolumeClaim
+        size: 50Gi
+        retain: true
+        globalMounts:
+          - path: /config/gamefiles
+      saves:
+        enabled: true
+        type: nfs
+        server: 10.10.0.2
+        path: /mnt/tank/k8s/satisfactory
+        globalMounts:
+          - path: /config/saved

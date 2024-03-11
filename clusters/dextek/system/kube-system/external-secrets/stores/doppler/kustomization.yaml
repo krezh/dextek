@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+resources:
+  - ./secret.sops.yaml
+  - ./clustersecretstore.yaml
+labels:
+  - pairs:
+      app.kubernetes.io/name: stores
+      app.kubernetes.io/instance: doppler
+      app.kubernetes.io/part-of: external-secrets

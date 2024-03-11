@@ -1,0 +1,130 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "Flux Images and tags",
+      groupName: "Flux",
+      matchPackagePatterns: ["flux"],
+      matchDatasources: ["docker", "github-tags"],
+      versioning: "samver",
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: "Immich Images",
+      groupName: "Immich",
+      matchPackagePatterns: ["immich"],
+      matchDatasources: ["docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/immich-app/immich",
+    },
+    {
+      description: "Weave Gitops",
+      groupName: "Weave-Gitops",
+      matchPackagePatterns: ["weave-gitops"],
+      matchDatasources: ["helm", "docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/weaveworks/weave-gitops",
+    },
+    {
+      description: "Rook-Ceph charts and image",
+      groupName: "Rook-Ceph",
+      matchPackagePatterns: ["rook.ceph"],
+      matchDatasources: ["helm", "docker"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: "External Snapshotter charts",
+      groupName: "External Snapshotter",
+      matchPackageNames: ["snapshot-controller", "snapshot-validation-webhook"],
+      matchDatasources: ["helm"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: "Thanos image and chart - mismatched versions",
+      groupName: "Thanos",
+      matchPackagePatterns: ["thanos"],
+      matchDatasources: ["docker", "github-releases", "helm"],
+      matchUpdateTypes: ["minor", "patch"],
+      group: { commitMessageTopic: "{{{groupName}}} group" },
+      separateMinorPatch: false,
+    },
+    {
+      description: "Vector image",
+      groupName: "Vector",
+      matchPackagePatterns: ["vector"],
+      matchDatasources: ["docker", "github-releases"],
+      matchUpdateTypes: ["minor", "patch"],
+      group: { commitMessageTopic: "{{{groupName}}} group" },
+      separateMinorPatch: false,
+    },
+    {
+      description: "Harbor Images",
+      groupName: "Harbor",
+      matchPackagePatterns: ["goharbor"],
+      matchDatasources: ["helm", "github-releases", "docker"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/goharbor/harbor",
+    },
+    {
+      description: "Talos Group",
+      groupName: "Talos",
+      matchPackagePatterns: ["siderolabs/talos", "siderolabs/talosctl"],
+      matchDatasources: ["docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: "Maintainerr Images",
+      groupName: "Maintainerr",
+      matchPackagePatterns: ["maintainerr"],
+      matchDatasources: ["docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/jorenn92/Maintainerr",
+    },
+    {
+      description: "Radarr Images",
+      groupName: "Radarr",
+      matchPackagePatterns: ["radarr"],
+      matchDatasources: ["docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/radarr/radarr",
+    },
+    {
+      description: "Zot Images",
+      groupName: "Zot",
+      matchPackagePatterns: ["zot"],
+      matchDatasources: ["docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/project-zot/zot",
+    },
+  ],
+}

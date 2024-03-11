@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: immich-configmap
+  namespace: immich
+data:
+  DB_PORT: "5432"
+  LOG_LEVEL: verbose
+  TRANSFORMERS_CACHE: /usr/src/app/.transformers_cache
+  IMMICH_SERVER_URL: http://immich:3001
+  IMMICH_MACHINE_LEARNING_URL: http://immich-ml:3003

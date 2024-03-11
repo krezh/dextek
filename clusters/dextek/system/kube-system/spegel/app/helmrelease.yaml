@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: spegel
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: spegel
+      version: v0.0.18
+      sourceRef:
+        kind: HelmRepository
+        name: xenitab
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    spegel:
+      containerdSock: /run/containerd/containerd.sock
+      containerdRegistryConfigPath: /etc/cri/conf.d/hosts
+      additionalMirrorRegistries:
+        - https://zot.int.plexuz.xyz/v2/docker.io
+        - https://zot.int.plexuz.xyz/v2/ghcr.io
+        - https://zot.int.plexuz.xyz/v2/quay.io
+        - https://zot.int.plexuz.xyz/v2/gcr.io
+        - https://zot.int.plexuz.xyz/v2/registry.k8s.io
+        - https://zot.int.plexuz.xyz/v2/public.ecr.aws
+    service:
+      registry:
+        hostPort: 29999
+    serviceMonitor:
+      enabled: true

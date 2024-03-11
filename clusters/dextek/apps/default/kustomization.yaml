@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./namespace.yaml
+  - ./media-pvc.yaml
+  - ./bazarr
+  - ./cyberchef
+  - ./doplarr
+  - ./dota-items
+  - ./evobot
+  - ./home-assistant
+  - ./homepage
+  - ./kubernetes-schemas
+  - ./media-browser
+  - ./ntfy
+  - ./overseerr
+  - ./plex
+  - ./tautulli
+  - ./theme-park
+  - ./unifi-controller
+  - ./atuin
+  - ./maintainerr
+  - ./jdownloader
+  - ./echo-server
+  - ./firefly
+  - ./mealie
+  - ./obsidian-couchdb
+  - ./matrix-synapse

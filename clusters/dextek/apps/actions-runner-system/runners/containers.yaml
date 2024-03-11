@@ -1,0 +1,79 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: arc-containers
+  namespace: actions-runner-system
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: gha-runner-scale-set
+      version: 0.8.3
+      sourceRef:
+        kind: HelmRepository
+        name: actions-runner-controller
+        namespace: flux-system
+
+  values:
+    runnerScaleSetName: containers-runner
+
+    githubConfigUrl: https://github.com/krezh/containers
+
+    minRunners: 0
+    maxRunners: 25
+
+    containerMode:
+      type: dind
+
+    template:
+      spec:
+        securityContext:
+          fsGroup: 123
+        containers:
+          - name: runner
+            image: ghcr.io/krezh/actions-runner:2.314.1@sha256:aa90703958a922afc3be947777e2b7c9f7b3831330753cd76c2f1b3b57191d9f
+            command: ["/home/runner/run.sh"]
+            volumeMounts:
+              - name: work
+                mountPath: /home/runner/_work
+              - name: tool
+                mountPath: /home/runner/_work/_tool
+          - name: dind
+            volumeMounts:
+              - name: work
+                mountPath: /home/runner/_work
+              - name: tool
+                mountPath: /home/runner/_work/_tool
+        volumes:
+          - name: work
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "ceph-block"
+                  resources:
+                    requests:
+                      storage: 10Gi
+          - name: tool
+            persistentVolumeClaim:
+              claimName: containers-tool
+
+    controllerServiceAccount:
+      name: actions-runner-controller-gha-rs-controller
+      namespace: actions-runner-system
+
+  valuesFrom:
+    - kind: Secret
+      name: actions-runner-controller
+      valuesKey: github_app_id
+      targetPath: githubConfigSecret.github_app_id
+    - kind: Secret
+      name: actions-runner-controller
+      valuesKey: github_app_installation_id
+      targetPath: githubConfigSecret.github_app_installation_id
+    - kind: Secret
+      name: actions-runner-controller
+      valuesKey: github_app_private_key
+      targetPath: githubConfigSecret.github_app_private_key

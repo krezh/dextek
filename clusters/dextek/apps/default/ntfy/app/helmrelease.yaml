@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: ntfy
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      app:
+        type: deployment
+        strategy: Recreate
+        containers:
+          app:
+            image:
+              repository: docker.io/binwiederhier/ntfy
+              tag: v2.9.0
+            env:
+              TZ: Europe/Stockholm
+              NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
+              NTFY_BEHIND_PROXY: true
+              NTFY_BASE_URL: https://ntfy.plexuz.xyz
+              NTFY_AUTH_DEFAULT_ACCESS: write-only
+              NTFY_AUTH_FILE: /var/cache/ntfy/user.db
+              NTFY_CACHE_FILE: /var/cache/ntfy/cache.db
+              NTFY_CACHE_DURATION: 12h
+              NTFY_ATTACHMENT_CACHE_DIR: /var/cache/ntfy/attachments
+              NTFY_ATTACHMENT_TOTAL_SIZE_LIMIT: 10G
+              NTFY_ATTACHMENT_FILE_SIZE_LIMIT: 10G
+              NTFY_ATTACHMENT_EXPIRY_DURATION: 3h
+              NTFY_WEB_PUSH_FILE: /var/cache/ntfy/webpush.db
+              NTFY_METRICS_LISTEN_HTTP: :8080
+              NTFY_ENABLE_LOGIN: true
+            envFrom:
+              - secretRef:
+                  name: ntfy-secret
+            args: [serve]
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 80
+          metrics:
+            port: 8080
+    serviceMonitor:
+      app:
+        serviceName: ntfy
+        enabled: true
+        endpoints:
+          - port: metrics
+            scheme: http
+            interval: 1m
+            scrapeTimeout: 10s
+    ingress:
+      app:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "NTFY"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "ntfy.png"
+        hosts:
+          - host: &host "ntfy.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: ntfy-config
+        globalMounts:
+          - path: /var/cache/ntfy

@@ -1,0 +1,88 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: harbor
+  namespace: harbor
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: harbor
+      version: 1.13.1
+      sourceRef:
+        kind: HelmRepository
+        name: harbor
+        namespace: flux-system
+  values:
+    expose:
+      tls:
+        # The ingress controller has a default certificate so we don't need to configure it
+        certSource: none
+      ingress:
+        hosts:
+          core: harbor.int.plexuz.xyz
+    externalURL: https://harbor.int.plexuz.xyz
+
+    portal:
+      image:
+        repository: ghcr.io/goharbor/harbor-portal
+        tag: v2.9.1
+    core:
+      image:
+        repository: ghcr.io/goharbor/harbor-core
+        tag: v2.9.1
+    jobservice:
+      image:
+        repository: ghcr.io/goharbor/harbor-jobservice
+        tag: v2.9.1
+    registry:
+      registry:
+        image:
+          repository: ghcr.io/goharbor/registry-photon
+          tag: v2.9.1
+      controller:
+        image:
+          repository: ghcr.io/goharbor/harbor-registryctl
+          tag: v2.9.1
+    database:
+      internal:
+        image:
+          repository: docker.io/goharbor/harbor-db
+          tag: v2.9.1
+    redis:
+      internal:
+        image:
+          repository: docker.io/goharbor/redis-photon
+          tag: v2.9.1
+
+    trivy:
+      enabled: false
+    chartmuseum:
+      enabled: false
+    notary:
+      enabled: false
+
+    # # Enable When you have found good graphs
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
+
+    cache:
+      # default is not enabled.
+      enabled: true
+      #  keep cache for one week.
+      expireHours: 168
+
+    persistence:
+      enabled: true
+      persistentVolumeClaim:
+        registry:
+          size: 512Gi
+        jobservice:
+          size: 512Gi
+        database:
+          size: 512Gi
+        redis:
+          size: 512Gi

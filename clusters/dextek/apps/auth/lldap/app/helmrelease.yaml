@@ -1,0 +1,99 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app lldap
+  namespace: auth
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
+    controllers:
+      app:
+        type: deployment
+        replicas: 3
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.2@sha256:97427a43406f21c781535ead04f3548aba45f8f06a1c040dd66d9fdb0b0cc1a2
+            envFrom: &envFrom
+              - secretRef:
+                  name: lldap-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/lldap/lldap
+              tag: v0.5.0
+            env:
+              TZ: Europe/Stockholm
+              LLDAP_HTTP_PORT: &http-port 80
+              LLDAP_HTTP_URL: https://lldap.talos.plexuz.xyz
+              LLDAP_LDAP_PORT: &ldap-port 389
+              LLDAP_LDAP_BASE_DN: dc=plexuz,dc=xyz
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 100m
+                memory: 100Mi
+              limits:
+                memory: 500Mi
+    service:
+      app:
+        controller: app
+        type: LoadBalancer
+        annotations:
+          coredns.io/hostname: ldap-lb
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: *http-port
+          ldap:
+            port: *ldap-port
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host "{{ .Release.Name }}.talos.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      data:
+        enabled: true
+        type: emptyDir
