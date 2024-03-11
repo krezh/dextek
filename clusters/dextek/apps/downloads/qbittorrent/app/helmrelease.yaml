@@ -76,8 +76,8 @@ spec:
           gethomepage.dev/icon: "qbittorrent.png"
           gethomepage.dev/widget.url: "http://qbittorrent.downloads.svc.cluster.local"
           gethomepage.dev/widget.type: "qbittorrent"
-          gethomepage.dev/widget.username: "${SECRET_QBITTORRENT_USER}"
-          gethomepage.dev/widget.password: "${SECRET_QBITTORRENT_PASS}"
+          gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_QBITTORRENT_USER}}"
+          gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_QBITTORRENT_PASS}}"
         hosts:
           - host: &host "qbit.plexuz.xyz"
             paths:
