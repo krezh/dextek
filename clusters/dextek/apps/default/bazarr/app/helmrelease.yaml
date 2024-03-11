@@ -1,0 +1,126 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: bazarr
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      app:
+        type: statefulset
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/bazarr
+              tag: 1.4.2@sha256:8d4a560d7307d6554bac85c566a49a23f6b47239a031772823cd294acecca72d
+            env:
+              TZ: Europe/Stockholm
+            resources:
+              requests:
+                cpu: 163m
+                memory: 979M
+              limits:
+                memory: 1500M
+          subcleaner:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.2.1
+            args:
+              - --repo=https://github.com/KBlixt/subcleaner.git
+              - --branch=master
+              - --depth=1
+              - --root=/add-ons/subcleaner
+              - --period=12h
+            resources:
+              requests:
+                cpu: 63m
+                memory: 53M
+              limits:
+                memory: 60M
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 80
+            targetPort: 6767
+    ingress:
+      app:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          nginx.ingress.kubernetes.io/custom-http-errors: 401,403,404,500,501,502,503
+          nginx.ingress.kubernetes.io/auth-method: GET
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.auth.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.plexuz.xyz?rm=$request_method
+          nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+          nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Bazarr"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Media"
+          gethomepage.dev/icon: "bazarr.png"
+          gethomepage.dev/widget.url: "http://bazarr.default.svc.cluster.local"
+          gethomepage.dev/widget.type: "bazarr"
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_BAZARR_APIKEY}}"
+        hosts:
+          - host: &host "{{ .Release.Name }}.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *host
+      api:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+        hosts:
+          - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
+            paths:
+              - path: /api
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *HOST
+    persistence:
+      config:
+        enabled: true
+        existingClaim: bazarr-config
+      media:
+        enabled: true
+        existingClaim: media
+      add-ons:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /add-ons

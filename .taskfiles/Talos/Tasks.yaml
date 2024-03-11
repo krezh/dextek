@@ -1,0 +1,22 @@
+---
+version: "3"
+
+tasks:
+  upgrade-all:
+    desc: Upgrade Talos on cluster
+    cmds:
+      - ./hack/talos-upgrade.sh -A
+
+  upgrade-all-force:
+    desc: Forced Upgrade Talos on cluster
+    cmds:
+      - ./hack/talos-upgrade.sh -Af
+
+  reset:
+    desc: Reset Talos and Clear all user disks
+    ignore_error: true
+    cmds:
+      - talosctl reset -n alfheim.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all --user-disks-to-wipe=/dev/sdb,/dev/sdc,/dev/sdd,/dev/sde,/dev/sdf
+      - talosctl reset -n vanaheim.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all --user-disks-to-wipe=/dev/sdb,/dev/sdc,/dev/sdd,/dev/sde,/dev/sdf
+      - talosctl reset -n asgard.k8s.plexuz.xyz  --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all --user-disks-to-wipe=/dev/sdb,/dev/sdc,/dev/sdd,/dev/sde,/dev/sdf
+      - talosctl reset -n ms01-01.k8s.plexuz.xyz  --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all --user-disks-to-wipe=/dev/nvme0n1,/dev/nvme1n1

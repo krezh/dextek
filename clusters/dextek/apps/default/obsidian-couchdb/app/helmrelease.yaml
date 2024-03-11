@@ -1,0 +1,99 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: obsidian-couchdb
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      app:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: ${APP_UID}
+            runAsGroup: ${APP_GID}
+            fsGroup: ${APP_GID}
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        initContainers:
+          init-config:
+            image:
+              repository: public.ecr.aws/docker/library/busybox
+              tag: latest@sha256:650fd573e056b679a5110a70aabeb01e26b76e545ec4b9c70a9523f2dfaf18c6
+              pullPolicy: IfNotPresent
+            command:
+              - "/bin/sh"
+              - "-c"
+              - "cp /tmp/config/*.ini /opt/couchdb/etc/default.d/; ls -lrt /opt/couchdb/etc/default.d;"
+
+        containers:
+          app:
+            image:
+              repository: public.ecr.aws/docker/library/couchdb
+              tag: 3.3.3
+            envFrom:
+              - secretRef:
+                  name: obsidian-couchdb-secret
+
+            resources:
+              limits:
+                memory: 1Gi
+
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 5984
+
+    ingress:
+      app:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: ingress.plexuz.xyz
+        hosts:
+          - host: &host obsidian-db.plexuz.xyz
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: obsidian-couchdb-configmap
+        advancedMounts:
+          app:
+            init-config:
+              - path: /tmp/config
+      data:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+        advancedMounts:
+          app:
+            app:
+              - path: /opt/couchdb/data
+      config-storage:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /opt/couchdb/etc/default.d

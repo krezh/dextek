@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: evobot
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.0.1
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      app:
+        type: deployment
+        replicas: 1
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: eritislami/evobot
+              tag: 2.9.0
+            envFrom:
+              - secretRef:
+                  name: evobot-secret
+            resources:
+              requests:
+                cpu: 50m
+                memory: 200Mi
+              limits:
+                memory: 300Mi
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 999
+              runAsGroup: 999
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL

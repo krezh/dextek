@@ -1,0 +1,108 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: unifi-controller
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      app:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/goofball222/unifi
+              tag: 8.0.28
+            env:
+              TZ: Europe/Stockholm
+              RUNAS_UID0: false
+              RUN_CHOWN: false
+              PGID: "568"
+              PUID: "568"
+              UNIFI_STDOUT: "true"
+              JVM_INIT_HEAP_SIZE: ""
+              JVM_MAX_HEAP_SIZE: 1024M
+              DB_MONGO_LOCAL: true
+    service:
+      app:
+        controller: app
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        annotations:
+          coredns.io/hostname: unifi-lb
+        ports:
+          http:
+            port: 8443
+          controller:
+            enabled: true
+            port: 8080
+            protocol: TCP
+          portal-http:
+            enabled: false
+            port: 8880
+            protocol: HTTP
+          portal-https:
+            enabled: false
+            port: 8843
+            protocol: HTTPS
+          speedtest:
+            enabled: true
+            port: 6789
+            protocol: TCP
+          stun:
+            enabled: true
+            port: 3478
+            protocol: UDP
+          syslog:
+            enabled: true
+            port: 5514
+            protocol: UDP
+          discovery:
+            enabled: true
+            port: 10001
+            protocol: UDP
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Unifi-controller"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "ubiquiti.png"
+        hosts:
+          - host: &host "unifi.talos.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: unifi-controller-config
+        globalMounts:
+          - path: /usr/lib/unifi/data
+      logs:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /usr/lib/unifi/logs

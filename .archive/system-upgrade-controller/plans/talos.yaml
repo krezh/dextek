@@ -1,0 +1,42 @@
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: talos
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+spec:
+  # renovate: datasource=github-releases depName=siderolabs/talos
+  version: "v1.6.1"
+  serviceAccountName: system-upgrade
+  secrets:
+    - name: talos
+      path: /var/run/secrets/talos.dev
+      ignoreUpdates: true
+  concurrency: 1
+  exclusive: true
+  nodeSelector:
+    matchExpressions:
+      - key: kubernetes.io/os
+        operator: In
+        values:
+          - linux
+  prepare:
+    image: &image ghcr.io/siderolabs/talosctl:v1.6.1
+    envs: &envs
+      - name: NODE_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.hostIP
+    args:
+      - --nodes=$(NODE_IP)
+      - health
+  upgrade:
+    image: *image
+    envs: *envs
+    args:
+      - --nodes=$(NODE_IP)
+      - upgrade
+      - --image=zot.int.plexuz.xyz/factory.talos.dev/installer/a1e5fc738deb459b9f9481505e6b67e12334ccac17f0361aa60a1621f26b1c8c:$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --preserve=true
+      - --wait=false

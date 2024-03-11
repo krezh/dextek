@@ -1,0 +1,21 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: jotunheim
+  labels:
+    k10/backup: "false"
+mountOptions:
+  - nconnect=8
+  - hard
+  - nfsvers=4.1
+  - noatime
+  - relatime
+  - rsize=32768
+  - wsize=32768
+parameters:
+  server: 10.10.0.2
+  share: /mnt/tank/k8s/pvcs
+provisioner: nfs.csi.k8s.io
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

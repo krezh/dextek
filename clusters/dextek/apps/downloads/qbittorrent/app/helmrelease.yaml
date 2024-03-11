@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: downloads
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+      annotations:
+        setGateway: "true"
+      hostname: qbittorrent
+    controllers:
+      app:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              tag: 4.6.3@sha256:a4ad890e8c4a287c17d12ca22eb1d84a046aba2efbd882bf7d6eb12459f6a70c
+            env:
+              TZ: Europe/Stockholm
+              UMASK: "022"
+              QBITTORRENT__PORT: &port 80
+              QBITTORRENT__USE_PROFILE: "false"
+              QBITTORRENT__BT_PORT: 64892
+              QBT_Preferences__WebUI__AlternativeUIEnabled: "true"
+              QBT_Preferences__WebUI__RootFolder: /add-ons/VueTorrent
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+          vuetorrent:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.2.1
+            args:
+              - --repo=https://github.com/WDaan/VueTorrent
+              - --branch=latest-release
+              - --wait=86400 # 1 day
+              - --root=/add-ons
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 80
+            targetPort: *port
+    ingress:
+      app:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Qbittorrent"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Downloads"
+          gethomepage.dev/icon: "qbittorrent.png"
+          gethomepage.dev/widget.url: "http://qbittorrent.downloads.svc.cluster.local"
+          gethomepage.dev/widget.type: "qbittorrent"
+          gethomepage.dev/widget.username: "${SECRET_QBITTORRENT_USER}"
+          gethomepage.dev/widget.password: "${SECRET_QBITTORRENT_PASS}"
+        hosts:
+          - host: &host "qbit.plexuz.xyz"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: qbittorrent-config
+      media:
+        enabled: true
+        existingClaim: media
+      downloads:
+        enabled: true
+        existingClaim: downloads
+      add-ons:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /add-ons

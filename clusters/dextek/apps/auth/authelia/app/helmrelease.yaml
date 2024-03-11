@@ -1,0 +1,140 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app authelia
+  namespace: auth
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.0.1
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      app:
+        type: deployment
+        replicas: 3
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.2@sha256:97427a43406f21c781535ead04f3548aba45f8f06a1c040dd66d9fdb0b0cc1a2
+            envFrom: &envFrom
+              - secretRef:
+                  name: authelia-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/authelia/authelia
+              tag: v4.38.0-beta3@sha256:b48ae4d0ed9d1eee76efe382df60928bae550ec19e5663858dde6dc5f41cf285
+            env:
+              AUTHELIA_SERVER_ADDRESS: tcp://0.0.0.0:80
+              AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
+              AUTHELIA_TELEMETRY_METRICS_ADDRESS: tcp://0.0.0.0:8080
+              AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
+              AUTHELIA_THEME: dark
+              X_AUTHELIA_CONFIG: /config/configuration.yaml
+              X_AUTHELIA_CONFIG_FILTERS: expand-env
+            envFrom: *envFrom
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: &port 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: *port
+          metrics:
+            enabled: true
+            port: 8080
+    serviceMonitor:
+      app:
+        serviceName: *app
+        enabled: true
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+    ingress:
+      app:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            add_header Cache-Control "no-store";
+            add_header Pragma "no-cache";
+            add_header X-Frame-Options "SAMEORIGIN";
+            add_header X-XSS-Protection "1; mode=block";
+        enabled: true
+        hosts:
+          - host: &host auth.plexuz.xyz
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: authelia
+        globalMounts:
+          - path: /config/configuration.yaml
+            subPath: configuration.yaml
+            readOnly: true
