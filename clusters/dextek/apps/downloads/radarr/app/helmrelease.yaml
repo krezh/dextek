@@ -65,7 +65,7 @@ spec:
                 enabled: false
             resources:
               limits:
-                memory: 8G
+                memory: 8Gi
           exporter:
             image:
               repository: ghcr.io/onedr0p/exportarr
