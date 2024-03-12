@@ -13,6 +13,9 @@ env:
   DEBCONF_NONINTERACTIVE_SEEN: "true"
   DEBIAN_FRONTEND: noninteractive
   APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE: DontWarn
+  
+permissions:
+  packages: write
 
 jobs:
   publish-manifests:
