@@ -64,11 +64,8 @@ spec:
               startup:
                 enabled: false
             resources:
-              requests:
-                cpu: 10m
-                memory: 250Mi
               limits:
-                memory: 8000Mi
+                memory: 8G
           exporter:
             image:
               repository: ghcr.io/onedr0p/exportarr
