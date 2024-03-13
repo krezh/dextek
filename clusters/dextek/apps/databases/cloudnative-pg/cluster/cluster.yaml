@@ -21,6 +21,9 @@ spec:
       shared_buffers: 512MB
     shared_preload_libraries:
       - "vectors.so"
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
   resources:
     requests:
       cpu: 500m
@@ -28,6 +31,14 @@ spec:
       memory: 4Gi
   monitoring:
     enablePodMonitor: true
+    # Ref: https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
+    podMonitorMetricRelabelings:
+      - {
+          sourceLabels: ["cluster"],
+          targetLabel: cnpg_cluster,
+          action: replace,
+        }
+      - { regex: cluster, action: labeldrop }
   backup:
     retentionPolicy: 7d
     barmanObjectStore: &barmanObjectStore
