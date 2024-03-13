@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    monitoring:
+      podMonitorEnabled: false
+      grafanaDashboard:
+        create: true
     crds:
       create: true
     config:
