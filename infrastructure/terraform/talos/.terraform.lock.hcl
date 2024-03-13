@@ -20,20 +20,32 @@ provider "registry.opentofu.org/hashicorp/http" {
 }
 
 provider "registry.opentofu.org/hashicorp/local" {
-  version     = "2.4.1"
-  constraints = "2.4.1"
+  version     = "2.5.1"
+  constraints = "2.5.1"
   hashes = [
-    "h1:ZmiQvqAmblLC08P/NR+AVQtZrD+GGRpjFWcl+qX3+tE=",
-    "zh:0d4d7a980ba3479459ab8a231019588d38615b22b97600419c3c7482ee82bc8b",
-    "zh:16cf003a5bff1c5cae32e29af30f54376aec29b21ce26768d5fa59cc8b3bac3e",
-    "zh:469539918519547b2b87a9301ad811e59e50d4f217c36da01e0d981b45a393e9",
-    "zh:620234f4c7dcfd00fa4b7d15e71fa055ada4a8afe084f84a40d06d02fc7e7c08",
-    "zh:68fd2f982c5fecff972e03eced690077911083f782a237d5a026597ab387f737",
-    "zh:7bc30de9089a3d060f9866e08f6bd766351880026a458a4b7443cb110d47dc16",
-    "zh:ad772631dfa005fdd6f7cc2ce33d1771218574b5153c5d601d7584fe9e8a0da2",
-    "zh:cb6f16481607a3899e1d0a8f9fcacf246fb4927ee274da69c7d1e75fc4960713",
-    "zh:dcac954e9e401c53db3750ab3df22173f7ba288e978da348f97ddbbc4a33abb1",
-    "zh:eeeb0583e152403bdb473de5f133b48cef04af8f7c3f38ee7dc6d034df91534d",
+    "h1:/GAVA/xheGQcbOZEq0qxANOg+KVLCA7Wv8qluxhTjhU=",
+    "h1:8oTPe2VUL6E2d3OcrvqyjI4Nn/Y/UEQN26WLk5O/B0g=",
+    "h1:GGgmUibXMbGiU/1N7SXvRHP8PfyFrGf+MjcEdj4colY=",
+    "h1:IWZLDjKZHwuOGngwC/Lh28wD7ssjhPRZUG/Ciu/l+Ss=",
+    "h1:JBG7iIbHhSnDtyBlbq74VUyJKp7v2e0JGyKMf0ghD+E=",
+    "h1:Np4kERf9SMrqUi7DJ1rK3soMK14k49nfgE7l/ipQ5xw=",
+    "h1:STyx5Wp/MvU+EAW4410j3jYBI4P1QTr0VFdU6+/Sb44=",
+    "h1:fm2EuMlsdPTuv2tKwx3PMJzWJUh7aMtU9Eky7t4fMys=",
+    "h1:jt/2hw3cy87hNIZ6Nzjl+Fyvu/ccorQPZ+OwHB8nJ0Q=",
+    "h1:sA7Ul9MCyD4NJyI2Pwo3xIXIzcTjfnEn3Iqz/j2WIvw=",
+    "h1:tjcGlQAFA0kmQ4vKkIPPUC4it1UYxLbg4YvHOWRAJHA=",
+    "zh:0af29ce2b7b5712319bf6424cb58d13b852bf9a777011a545fac99c7fdcdf561",
+    "zh:126063ea0d79dad1f68fa4e4d556793c0108ce278034f101d1dbbb2463924561",
+    "zh:196bfb49086f22fd4db46033e01655b0e5e036a5582d250412cc690fa7995de5",
+    "zh:37c92ec084d059d37d6cffdb683ccf68e3a5f8d2eb69dd73c8e43ad003ef8d24",
+    "zh:4269f01a98513651ad66763c16b268f4c2da76cc892ccfd54b401fff6cc11667",
+    "zh:51904350b9c728f963eef0c28f1d43e73d010333133eb7f30999a8fb6a0cc3d8",
+    "zh:73a66611359b83d0c3fcba2984610273f7954002febb8a57242bbb86d967b635",
+    "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
+    "zh:7ae387993a92bcc379063229b3cce8af7eaf082dd9306598fcd42352994d2de0",
+    "zh:9e0f365f807b088646db6e4a8d4b188129d9ebdbcf2568c8ab33bddd1b82c867",
+    "zh:b5263acbd8ae51c9cbffa79743fbcadcb7908057c87eb22fd9048268056efbc4",
+    "zh:dfcd88ac5f13c0d04e24be00b686d069b4879cc4add1b7b1a8ae545783d97520",
   ]
 }
 
