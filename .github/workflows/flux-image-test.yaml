@@ -85,7 +85,7 @@ jobs:
           path: pull
 
       - name: Gather Images in Default Branch
-        uses: docker://ghcr.io/allenporter/flux-local:main
+        uses: docker://ghcr.io/allenporter/flux-local:v4.3.1
         with:
           args: >-
             get cluster
@@ -95,7 +95,7 @@ jobs:
             --output-file default.yaml
 
       - name: Gather Images in Pull Request Branch
-        uses: docker://ghcr.io/allenporter/flux-local:main
+        uses: docker://ghcr.io/allenporter/flux-local:v4.3.1
         with:
           args: >-
             get cluster
@@ -120,11 +120,11 @@ jobs:
         id: extract-images
         shell: bash
         run: |
-          images=$(jo -a "$(grep -vf default.txt pull.txt)")
-          echo "images=${images}" >> "$GITHUB_OUTPUT"
+          images=$(jo -a $(grep -vf default.txt pull.txt))
+          echo "images=${images}" >> $GITHUB_OUTPUT
           echo "${images}"
-          echo "### Images" >> "$GITHUB_STEP_SUMMARY"
-          echo "${images}" | jq -r 'to_entries[] | "* \(.value)"' >> "$GITHUB_STEP_SUMMARY"
+          echo "### Images" >> $GITHUB_STEP_SUMMARY
+          echo "${images}" | jq -r 'to_entries[] | "* \(.value)"' >> $GITHUB_STEP_SUMMARY
 
   test-images:
     if: ${{ needs.extract-images.outputs.matrix != '[]' }}
