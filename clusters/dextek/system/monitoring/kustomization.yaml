@@ -15,4 +15,3 @@ resources:
   - ./unpoller
   - ./graphite-exporter
   - ./node-problem-detector
-  - ./karma
