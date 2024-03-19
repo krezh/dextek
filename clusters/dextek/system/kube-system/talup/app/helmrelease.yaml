@@ -44,7 +44,7 @@ spec:
               TALUP_KUBERNETES_VERSION: "v1.29.2"
               TALUP_INSTALLER_REPOSITORY: zot.int.plexuz.xyz/factory.talos.dev/installer
               TALUP_CONFIGMAP_ID_STATE_ENABLED: "true"
-              TALUP_ETCD_CHECK_ENABLED: "true"
+              TALUP_ETCD_CHECK_ENABLED: "false"
               TALUP_ROOK_CEPH_CHECK_ENABLED: "true"
               TALUP_DEBUG_PRETTY_PRINT: "true"
               TALUP_LOG_LEVEL: debug
