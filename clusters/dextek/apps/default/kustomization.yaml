@@ -24,7 +24,6 @@ resources:
   - ./maintainerr
   - ./jdownloader
   - ./echo-server
-  - ./firefly
   - ./mealie
   - ./obsidian-couchdb
   - ./matrix-synapse
