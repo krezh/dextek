@@ -29,14 +29,13 @@ spec:
     controllers:
       app:
         strategy: RollingUpdate
-        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
               repository: ghcr.io/krezh/talup
-              tag: v3.1.3@sha256:d27e9b1045ce13a0b5c1e3406393dc35410e88f47252e9a33026787bc7757bb8
+              tag: v3.1.4@sha256:2b66a090915769067f299fecdd83f3770cde8fde51da3f5100a10a88bdb1e48a
             env:
               TZ: Europe/Stockholm
               # renovate: datasource=github-releases depName=siderolabs/talos
