@@ -77,33 +77,6 @@ spec:
           coredns.io/hostname: ingress-public
           external-dns.alpha.kubernetes.io/hostname: plexuz.xyz
         externalTrafficPolicy: Local
-    defaultBackend:
-      enabled: false
-      replicaCount: 3
-      image:
-        repository: ghcr.io/tarampampam/error-pages
-        tag: 2.27.0
-      extraEnvs:
-        - name: TEMPLATE_NAME
-          value: app-down
-        - name: SHOW_DETAILS
-          value: "false"
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/instance
-                      operator: In
-                      values:
-                        - ingress-nginx-external
-                    - key: app.kubernetes.io/component
-                      operator: In
-                      values:
-                        - default-backend
-                topologyKey: kubernetes.io/hostname
-              weight: 100
   valuesFrom:
     - targetPath: controller.maxmindLicenseKey
       kind: Secret
