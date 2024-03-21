@@ -36,7 +36,7 @@ spec:
       cephcsi:
         image: quay.io/cephcsi/cephcsi:v3.10.2
       registrar:
-        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.0
+        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
       snapshotter:
         image: registry.k8s.io/sig-storage/csi-snapshotter:v7.0.1
       attacher:
