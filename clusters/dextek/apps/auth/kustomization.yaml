@@ -6,4 +6,3 @@ resources:
   - ./authelia
   - ./lldap
   - ./namespace.yaml
-  - ./zitadel
