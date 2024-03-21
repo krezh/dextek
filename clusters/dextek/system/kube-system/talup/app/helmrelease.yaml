@@ -29,7 +29,6 @@ spec:
     controllers:
       app:
         strategy: RollingUpdate
-        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
