@@ -126,5 +126,16 @@
       separateMinorPatch: true,
       sourceUrl: "https://github.com/project-zot/zot",
     },
+    {
+      description: ["Volsync Group"],
+      groupName: "Volsync",
+      matchPackagePatterns: ["volsync"],
+      matchDatasources: ["docker", "helm"],
+      matchUpdateTypes: ["minor", "patch"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
   ],
 }
