@@ -26,8 +26,8 @@ spec:
   values:
     replicaCount: 1
     manageCRDs: true
-    image:
-      repository: &image ghcr.io/onedr0p/volsync
+    image: &image
+      repository: ghcr.io/onedr0p/volsync
       tag: 0.8.0
     restic:
       <<: *image
