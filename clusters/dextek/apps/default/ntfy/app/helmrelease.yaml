@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: docker.io/binwiederhier/ntfy
-              tag: v2.9.0
+              tag: v2.10.0
             env:
               TZ: Europe/Stockholm
               NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
