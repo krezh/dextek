@@ -21,7 +21,7 @@ terraform {
     }
     matchbox = {
       source  = "poseidon/matchbox"
-      version = "0.5.2"
+      version = "0.5.4"
     }
     ssh = {
       source  = "loafoe/ssh"
