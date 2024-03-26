@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/goofball222/unifi
-              tag: 8.0.28
+              tag: 8.1.113
             env:
               TZ: Europe/Stockholm
               RUNAS_UID0: false
