@@ -63,7 +63,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.99.0
+              tag: v1.100.0
             args: ["start-server.sh"]
             envFrom: *envFrom
             resources:
@@ -83,7 +83,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.99.0
+              tag: v1.100.0
             envFrom: *envFrom
             resources:
               requests:
@@ -101,7 +101,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.99.0
+              tag: v1.100.0
             args: ["start-microservices.sh"]
             envFrom: *envFrom
             resources:
