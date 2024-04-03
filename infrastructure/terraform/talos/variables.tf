@@ -40,7 +40,7 @@ variable "kubernetes_version" {
 variable "tailscale_version" {
   description = "The Tailscale version"
   type        = string
-  default     = "1.60.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/tailscale
+  default     = "1.62.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/tailscale
 }
 
 variable "matchbox_url" {
