@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: itzg/minecraft-server
-      tag: 2024.3.0@sha256:2667394cd283322e14b094a877c8076f57fe051ff599e31b38383e6883b4c0fa
+      tag: 2024.4.0@sha256:4583e01ad193988ba5b3facd24eefe094f098138b06f65ea03cfc06507973f38
 
     resources:
       requests:
