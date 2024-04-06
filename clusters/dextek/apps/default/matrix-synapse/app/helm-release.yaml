@@ -19,7 +19,7 @@ spec:
     image:
       repository: ghcr.io/element-hq/synapse
       tag: v1.104.0
-    serverName: plexuz.xyz
+    serverName: matrix.plexuz.xyz
     publicServerName: matrix.plexuz.xyz
     wellknown:
       enabled: true

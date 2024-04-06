@@ -35,7 +35,14 @@ tasks:
             'kubectl -n $0 annotate terraform/$1 reconcile.fluxcd.io/requestedAt="$(date +%s)" --overwrite'
 
   hr-reset:
-    desc: Suspend all Flux HelmReleases
+    desc: Reset all Flux HelmReleases
+    cmds:
+      - |
+        flux get helmrelease --all-namespaces --no-header | awk '{print $1, $2}' \
+          | xargs --max-procs=4 -l bash -c 'flux reconcile helmrelease --reset --force -n $0 $1'
+
+  hr-reset-failed:
+    desc: Reset all not ready Flux HelmReleases
     cmds:
       - |
         flux get helmrelease --all-namespaces --no-header --status-selector READY=false | awk '{print $1, $2}' \
