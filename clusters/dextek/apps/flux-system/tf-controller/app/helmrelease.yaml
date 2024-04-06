@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    awsPackage:
+      repository: ghcr.io/flux-iac/aws-primitive-modules
     image:
       repository: ghcr.io/weaveworks/tf-controller
       pullPolicy: IfNotPresent
