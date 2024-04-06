@@ -40,11 +40,10 @@ spec:
       - --ingress-class=external
       - --ignore-ingress-tls-spec
     policy: sync
-    sources: ["ingress", "service"]
+    sources: ["ingress"]
     txtPrefix: k8s.
     txtOwnerId: talos-plexuz
     domainFilters: ["plexuz.xyz"]
-    excludeDomains: ["talos.plexuz.xyz"]
     serviceMonitor:
       enabled: true
     podAnnotations:
