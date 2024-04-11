@@ -33,15 +33,12 @@ spec:
           init-geoip:
             image:
               repository: ghcr.io/maxmind/geoipupdate
-              tag: v7.0
+              tag: v7.0.1
               pullPolicy: IfNotPresent
             env:
-              - name: GEOIPUPDATE_EDITION_IDS
-                value: GeoLite2-City
-              - name: GEOIPUPDATE_FREQUENCY
-                value: "0"
-              - name: GEOIPUPDATE_VERBOSE
-                value: "true"
+              GEOIPUPDATE_EDITION_IDS: GeoLite2-City
+              GEOIPUPDATE_FREQUENCY: "0"
+              GEOIPUPDATE_VERBOSE: "1"
             envFrom:
               - secretRef:
                   name: vector-aggregator-secret
