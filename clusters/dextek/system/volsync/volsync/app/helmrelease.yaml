@@ -24,12 +24,12 @@ spec:
       retries: 3
   # https://github.com/backube/volsync/blob/main/helm/volsync/values.yaml
   values:
-    replicaCount: 1
+    replicaCount: 3
     manageCRDs: true
-    image: &image
-      repository: ghcr.io/onedr0p/volsync
-      tag: 0.9.1
-    restic:
-      <<: *image
+    #image: &image
+    #  repository: ghcr.io/onedr0p/volsync
+    #  tag: 0.9.1
+    #restic:
+    #  <<: *image
     metrics:
       disableAuth: true
