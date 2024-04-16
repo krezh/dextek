@@ -36,6 +36,6 @@ resources:
   - ./postfinance.yaml
   - ./deliveryhero.yaml
   - ./dbman.yaml
-  - ./xenitab.yaml
+  - ./spegel.yaml
   - ./tailscale.yaml
   - ./ananace.yaml
