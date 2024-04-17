@@ -34,7 +34,7 @@ variable "talos_factory_schematic_endpoint" {
 variable "kubernetes_version" {
   description = "The Kubernetes version"
   type        = string
-  default     = "v1.29.3" # renovate: datasource=github-releases depName=kubernetes/kubernetes
+  default     = "v1.29.4" # renovate: datasource=github-releases depName=kubernetes/kubernetes
 }
 
 variable "tailscale_version" {
