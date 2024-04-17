@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: reloader
         namespace: flux-system
-      version: 1.0.79
+      version: 1.0.80
   install:
     crds: Create
   interval: 30m
