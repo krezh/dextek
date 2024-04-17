@@ -43,15 +43,6 @@ nodes = {
     disk_model    = "Samsung SSD*"
     driver        = "igc"
     driver_10g    = "i40e"
-  },
-  "ms01-03.k8s.plexuz.xyz" = {
-    hostname      = "ms01-03"
-    type          = "worker"
-    mac_addr      = "58:47:ca:74:f2:40"
-    mac_addr_10g  = "58:47:ca:74:f2:3d"
-    disk_model    = "Samsung SSD*"
-    driver        = "igc"
-    driver_10g    = "i40e"
   }
 }
 
