@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: disk-wipe-ms01-01
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      labels:
+        job: disk-wipe
+    spec:
+      restartPolicy: Never
+      nodeName: ms01-01
+      containers:
+        - name: disk-wipe
+          image: ubuntu
+          securityContext:
+            privileged: true
+          command: ["/bin/sh", "-c"]
+          args:
+            - DISKS='nvme0n1 nvme1n1';
+
+              rm -rf /node/rook-data/*;
+
+              apt-get update;
+              apt-get install fdisk gdisk parted udev -y;
+              for disk in $DISKS; do
+
+              echo "--- Ms01-01 Running ---";
+              echo "sgdisk --zap-all --clear /dev/$disk";
+              sgdisk --zap-all --clear /dev/$disk;
+              echo " ";
+
+              echo "--- Ms01-01 Running ---";
+              echo "wipefs -af /dev/$disk";
+              wipefs -af /dev/$disk;
+              echo " ";
+
+              echo "--- Ms01-01 Running ---";
+              echo "blkdiscard /dev/$disk";
+              blkdiscard /dev/$disk;
+              echo " ";
+
+              echo "--- Ms01-01 Running ---";
+              echo "partprobe /dev/$disk";
+              partprobe /dev/$disk;
+              echo " ";
+              echo "/dev/$disk - Done";
+              done &
+              wait
