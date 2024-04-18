@@ -12,11 +12,3 @@ resource "local_sensitive_file" "machine_config" {
   content         = data.talos_machine_configuration.machine[each.key].machine_configuration
   file_permission = 0600
 }
-
-# resource "local_sensitive_file" "worker_config" {
-#   for_each = var.worker_yaml ? var.nodes.workers : {}
-# 
-#   filename        = "worker_${each.value.hostname}.yaml"
-#   content         = data.talos_machine_configuration.worker[each.key].machine_configuration
-#   file_permission = 0600
-# }

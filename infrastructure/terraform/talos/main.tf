@@ -72,7 +72,7 @@ data "talos_client_configuration" "talosconfig" {
   ]
   client_configuration = talos_machine_secrets.talos.client_configuration
   cluster_name         = var.cluster_name
-  endpoints            = [for k, v in var.nodes : k]
+  endpoints            = [for k, v in var.nodes : k if v.type == "controlplane"]
   nodes                = [for k, v in var.nodes : k]
 }
 
