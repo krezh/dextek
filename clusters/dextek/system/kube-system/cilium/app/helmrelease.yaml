@@ -40,7 +40,7 @@ spec:
       enabled: true
 
     pmtuDiscovery:
-      enabled: true
+      enabled: false
 
     k8sServiceHost: localhost
     k8sServicePort: 7445
