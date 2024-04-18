@@ -53,7 +53,6 @@ machine:
         vip:
           ip: ${vip}
       - deviceSelector:
-          hardwareAddr: ${mac_addr_10g}
           driver: ${driver_10g}
         mtu: 9000
         dhcp: true
@@ -76,11 +75,6 @@ machine:
           discard_unpacked_layers = false
         [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
           discard_unpacked_layers = false
-    - content: |
-        TS_AUTHKEY=${tailscale_authkey}
-      permissions: 0o644
-      path: /var/etc/tailscale/auth.env
-      op: create
 
   time:
     disabled: false
