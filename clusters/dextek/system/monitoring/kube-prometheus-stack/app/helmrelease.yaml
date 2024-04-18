@@ -75,7 +75,7 @@ spec:
       fullnameOverride: kube-state-metrics
       metricLabelsAllowlist:
         - pods=[*]
-        - deployments=[*]S
+        - deployments=[*]
         - persistentvolumeclaims=[*]
       prometheus:
         monitor:
