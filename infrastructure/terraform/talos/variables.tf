@@ -37,12 +37,6 @@ variable "kubernetes_version" {
   default     = "v1.29.4" # renovate: datasource=github-releases depName=kubernetes/kubernetes
 }
 
-variable "tailscale_version" {
-  description = "The Tailscale version"
-  type        = string
-  default     = "1.62.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/tailscale
-}
-
 variable "matchbox_url" {
   description = "The Url to Matchbox"
   type        = string
@@ -79,7 +73,6 @@ variable "nodes" {
     hostname      = string
     type          = string
     mac_addr      = string
-    mac_addr_10g  = string
     disk_model    = string
     driver        = string
     driver_10g    = string
