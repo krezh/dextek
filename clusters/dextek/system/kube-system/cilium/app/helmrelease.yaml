@@ -64,6 +64,7 @@ spec:
 
     l7Proxy: true
 
+    enableRuntimeDeviceDetection: true
     enableCnpStatusUpdates: true
     endpointStatus:
       enabled: true
