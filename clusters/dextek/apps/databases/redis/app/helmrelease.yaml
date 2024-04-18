@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      version: 19.1.0
+      version: 19.1.1
   install:
     remediation:
       retries: 3
