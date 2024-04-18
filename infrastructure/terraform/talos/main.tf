@@ -24,13 +24,10 @@ data "talos_machine_configuration" "machine" {
       hostname           = each.key,
       disk_model         = each.value.disk_model,
       mac_addr           = each.value.mac_addr,
-      mac_addr_10g       = each.value.mac_addr_10g,
       vip                = var.vip,
       driver             = each.value.driver,
       driver_10g         = each.value.driver_10g,
-      matchboxUrl        = var.matchbox_url,
-      tailscale_version  = var.tailscale_version,
-      tailscale_authkey  = data.sops_file.secrets.data["tailscale.authkey"]
+      matchboxUrl        = var.matchbox_url
     }),
     file("talosPatches/registries.yaml"),
     (each.value.type == "controlplane") ? file("talosPatches/cpPatches.yaml") : null,
