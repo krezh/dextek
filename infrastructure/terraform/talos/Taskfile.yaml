@@ -32,16 +32,3 @@ tasks:
     interactive: true
     cmds:
       - tofu apply --var machine_yaml=true {{.CLI_ARGS}}
-
-  gen-secrets:
-    desc: Generate talos cluster secrets
-    cmds:
-      - talosctl gen secrets -o talos-secrets.sops.yaml
-      - sops -e -i talos-secrets.sops.yaml
-
-  apply-configs:
-    desc: Apply talos machine configs
-    cmds:
-      - talosctl apply -f controlplane_asgard.yaml -n asgard.k8s.plexuz.xyz
-      - talosctl apply -f controlplane_alfheim.yaml -n alfheim.k8s.plexuz.xyz
-      - talosctl apply -f controlplane_vanaheim.yaml -n vanaheim.k8s.plexuz.xyz
