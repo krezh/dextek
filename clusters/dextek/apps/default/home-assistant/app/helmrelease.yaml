@@ -34,14 +34,14 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
     controllers:
       app:
-        pod:
-          annotations:
-            k8s.v1.cni.cncf.io/networks: |
-              [{
-                "name":"multus-iot",
-                "namespace": "kube-system",
-                "ips": ["192.168.100.10/24"]
-              }]
+        #pod:
+          #annotations:
+          #  k8s.v1.cni.cncf.io/networks: |
+          #    [{
+          #      "name":"multus-iot",
+          #      "namespace": "kube-system",
+          #      "ips": ["192.168.100.10/24"]
+          #    }]
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
