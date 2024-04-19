@@ -39,7 +39,7 @@ spec:
             env:
               TZ: Europe/Stockholm
               # renovate: datasource=github-releases depName=siderolabs/talos
-              TALUP_INSTALLER_IMAGE_TAG: "v1.7.0"
+              TALUP_INSTALLER_IMAGE_TAG: "v1.6.7"
               # renovate: datasource=github-releases depName=kubernetes/kubernetes
               TALUP_KUBERNETES_VERSION: "v1.29.4"
               TALUP_INSTALLER_REPOSITORY: zot.int.plexuz.xyz/factory.talos.dev/installer
