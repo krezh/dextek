@@ -19,7 +19,7 @@ UNDERLINE=$(tput smul)
 
 # Default Variables
 NEW_VERSION="v1.6.7" # renovate: datasource=github-releases depName=siderolabs/talos
-IMAGE="zot.int.plexuz.xyz/factory.talos.dev/installer/a1e5fc738deb459b9f9481505e6b67e12334ccac17f0361aa60a1621f26b1c8c"
+IMAGE="zot.int.plexuz.xyz/factory.talos.dev/installer/cd05f774d6ae8a21e56330879f2fbd649a76aeda3e073edefc0330454a1458d8"
 NODE=""
 CHECK_SLEEP=3
 UPGRADE_INTERVAL=300 # 5m
