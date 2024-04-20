@@ -8,3 +8,4 @@ customization:
       - siderolabs/iscsi-tools
       - siderolabs/nut-client
       - siderolabs/util-linux-tools
+      - siderolabs/i915-ucode
