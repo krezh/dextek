@@ -40,7 +40,7 @@ machine:
       - deviceSelector:
           hardwareAddr: ${mac_addr}
           driver: ${driver}
-          physical: true
+          #physical: true
         mtu: 1500
         dhcp: true
         # vlans:
@@ -58,7 +58,7 @@ machine:
           ip: ${vip}
       - deviceSelector:
           driver: ${driver_10g}
-          physical: true
+          #physical: true
         mtu: 9000
         dhcp: true
   files:
