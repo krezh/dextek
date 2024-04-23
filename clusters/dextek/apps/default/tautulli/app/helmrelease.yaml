@@ -34,8 +34,18 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/tautulli
-              tag: 2.13.4@sha256:633a57b2f8634feb67811064ec3fa52f40a70641be927fdfda6f5d91ebbd5d73
+              repository: ghcr.io/tautulli/tautulli
+              tag: v2.13.4@sha256:fb5e22c7a4d9e770703a30d145f355786fecb28dfca6df56c5073c457f3c8a8e
+            command: ["/usr/local/bin/python", "Tautulli.py"]
+            args:
+              [
+                "--config",
+                "/config/config.ini",
+                "--datadir",
+                "/config",
+                "--port",
+                "8181",
+              ]
             env:
               TZ: Europe/Stockholm
             resources:
