@@ -46,6 +46,19 @@ spec:
                 "--port",
                 "8181",
               ]
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /status
+                    port: &port 8181
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             env:
               TZ: Europe/Stockholm
             resources:
@@ -60,7 +73,7 @@ spec:
         ports:
           http:
             port: 80
-            targetPort: 8181
+            targetPort: *port
     ingress:
       app:
         enabled: true
