@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/talup
-              tag: v3.2.1@sha256:e9f5f5aa752a3849a8f50ba7336bb8d98ab50f3907ffd102c8a0095157080b36
+              tag: v3.2.2@sha256:66e101e32ab8a4f0abc138dbb81c3e182671f64a521df6f9d5a5b97ad9cd488f
             env:
               TZ: Europe/Stockholm
               # renovate: datasource=github-releases depName=siderolabs/talos
