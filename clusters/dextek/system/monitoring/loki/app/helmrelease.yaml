@@ -109,6 +109,8 @@ spec:
         storageClass: ceph-block
     gateway:
       replicas: 3
+      deploymentStrategy:
+        type: Recreate
       image:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
