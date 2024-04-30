@@ -40,6 +40,7 @@ machine:
       - deviceSelector:
           hardwareAddr: ${mac_addr}
           driver: ${driver}
+          #TODO: Enable when upgrading to 1.7.0
           #physical: true
         mtu: 1500
         dhcp: true
@@ -58,6 +59,7 @@ machine:
           ip: ${vip}
       - deviceSelector:
           driver: ${driver_10g}
+          #TODO: Enable when upgrading to 1.7.0
           #physical: true
         mtu: 9000
         dhcp: true
@@ -103,8 +105,6 @@ cluster:
     advertisedSubnets:
       - "10.10.0.0/27"
   allowSchedulingOnControlPlanes: true
-  #extraManifests:
-  #  - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/ha-install.yaml
   network:
     cni:
       name: none
