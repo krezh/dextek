@@ -17,7 +17,6 @@ includes:
   externalsecrets: "{{.TASKS_DIR}}/ExternalSecrets/Tasks.yaml"
   rook: "{{.TASKS_DIR}}/Rook/Tasks.yaml"
   volsync: "{{.TASKS_DIR}}/VolSync/Tasks.yaml"
-  idrac: "{{.TASKS_DIR}}/Idrac/Tasks.yaml"
   bootstrap: "{{.TASKS_DIR}}/Bootstrap/Tasks.yaml"
   talos: "{{.TASKS_DIR}}/Talos/Tasks.yaml"
   terraform:
