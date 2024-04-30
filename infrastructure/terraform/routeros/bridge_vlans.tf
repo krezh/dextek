@@ -7,6 +7,8 @@ resource "routeros_interface_bridge_vlan" "vlan10" {
     routeros_interface_bridge_port.vanaheim_eth0.interface,
     routeros_interface_bridge_port.alfheim_eth0.interface,
     routeros_interface_bridge_port.ms01-01_eth0.interface,
+    routeros_interface_bridge_port.ms01-02_eth0.interface,
+    routeros_interface_bridge_port.ms01-03_eth0.interface,
   ]
   untagged = []
   comment  = var.comment
@@ -37,6 +39,8 @@ resource "routeros_interface_bridge_vlan" "vlan100" {
     routeros_interface_bridge_port.vanaheim_eth0.interface,
     routeros_interface_bridge_port.alfheim_eth0.interface,
     routeros_interface_bridge_port.ms01-01_eth0.interface,
+    routeros_interface_bridge_port.ms01-02_eth0.interface,
+    routeros_interface_bridge_port.ms01-03_eth0.interface,
     "ether23", "ether24"
   ]
   untagged = []
