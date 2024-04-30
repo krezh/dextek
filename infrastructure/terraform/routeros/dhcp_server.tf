@@ -14,13 +14,13 @@ resource "routeros_ip_dhcp_server_option_set" "lan_option_set" {
   options = join(",", [routeros_ip_dhcp_server_option.jumbo_frame_opt.name])
 }
 
-#resource "routeros_ip_dhcp_server_network" "dhcp_server_network" {
+# resource "routeros_ip_dhcp_server_network" "dhcp_server_network" {
 #  address         = "10.10.0.0/27"
 #  netmask         = 27
 #  domain          = "fast.dextek.io"
 #  dns_none        = true
 #  dhcp_option_set = routeros_ip_dhcp_server_option_set.lan_option_set.name
-#}
+# }
 
 resource "routeros_ip_dhcp_server" "dhcp200" {
   name                    = "dhcp200"
