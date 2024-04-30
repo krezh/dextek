@@ -33,18 +33,18 @@ resource "routeros_interface_bridge_port" "ms01-01_eth0" {
   comment   = "ms01-01 Eth0: ${var.comment}"
 }
 
-resource "routeros_interface_bridge_port" "ether6" {
+resource "routeros_interface_bridge_port" "ms01-02_eth0" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether6"
   pvid      = 20
-  comment   = var.comment
+  comment   = "ms01-02 Eth0: ${var.comment}"
 }
 
-resource "routeros_interface_bridge_port" "ether7" {
+resource "routeros_interface_bridge_port" "ms01-03_eth0" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether7"
   pvid      = 20
-  comment   = var.comment
+  comment   = "ms01-03 Eth0: ${var.comment}"
 }
 
 resource "routeros_interface_bridge_port" "ether9" {
