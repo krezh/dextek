@@ -25,15 +25,14 @@ resource "opnsense_unbound_host_override" "minio" {
   server   = "192.168.20.2"
 }
 
-resource "opnsense_unbound_host_override" "harbor" {
+resource "opnsense_unbound_host_override" "pikvm" {
   enabled     = true
-  description = "Harbor Registry"
+  description = "Pikvm"
 
-  hostname = "harbor"
+  hostname = "pikvm"
   domain   = "int.plexuz.xyz"
-  server   = "192.168.20.2"
+  server   = "192.168.1.15"
 }
-
 
 resource "opnsense_unbound_host_override" "matchbox" {
   enabled     = true
