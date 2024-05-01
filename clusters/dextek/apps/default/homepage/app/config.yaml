@@ -50,6 +50,9 @@ data:
               slug: 1
               type: uptimekuma
               url: https://status.plexuz.xyz
+        - PiKVM:
+            href: https://pikvm.int.plexuz.xyz
+            icon: pikvm.png
     - Calendars:
         - Sonarr:
             widget:
