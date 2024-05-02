@@ -93,6 +93,9 @@ spec:
         - name: minio-http
           module: http_2xx
           url: "https://minio.int.plexuz.xyz/minio/health/live"
+        - name: pikvm-http
+          module: http_2xx
+          url: "https://pikvm.int.plexuz.xyz"
 
     prometheusRule:
       enabled: true
