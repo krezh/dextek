@@ -41,7 +41,7 @@ spec:
               # renovate: datasource=github-releases depName=siderolabs/talos
               TALUP_INSTALLER_IMAGE_TAG: "v1.6.7"
               # renovate: datasource=github-releases depName=kubernetes/kubernetes
-              TALUP_KUBERNETES_VERSION: "v1.29.4"
+              TALUP_KUBERNETES_VERSION: "v1.30.0"
               TALUP_INSTALLER_REPOSITORY: zot.int.plexuz.xyz/factory.talos.dev/installer
               TALUP_CONFIGMAP_ID_STATE_ENABLED: "true"
               TALUP_ETCD_CHECK_ENABLED: "false"
