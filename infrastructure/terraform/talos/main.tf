@@ -12,6 +12,11 @@ data "talos_machine_configuration" "machine" {
   machine_type     = each.value.type
   cluster_name     = var.cluster_name
   cluster_endpoint = var.cluster_endpoint
+  
+  talos_version      = var.talos_version
+  kubernetes_version = var.kubernetes_version
+  docs               = false
+  examples           = false
 
   machine_secrets = talos_machine_secrets.talos.machine_secrets
   config_patches = [
@@ -33,10 +38,6 @@ data "talos_machine_configuration" "machine" {
     (each.value.type == "controlplane") ? file("talosPatches/cpPatches.yaml") : null,
     (each.value.type == "worker") ? file("talosPatches/workerPatches.yaml") : null
   ]
-  talos_version      = var.talos_version
-  kubernetes_version = var.kubernetes_version
-  docs               = false
-  examples           = false
 }
 
 resource "matchbox_profile" "machine" {
