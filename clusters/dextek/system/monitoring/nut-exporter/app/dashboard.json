@@ -483,7 +483,10 @@
       "type": "stat"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -575,7 +578,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "100 * avg_over_time(nut_battery_charge{ups=~\"${ups:pipe}\"}[$__interval])",
+          "expr": "sum by(ups) (100 * avg_over_time(nut_battery_charge{ups=~\"${ups}\"}[$__interval]))",
           "interval": "",
           "legendFormat": "{{ups}}",
           "range": true,
@@ -586,7 +589,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -675,7 +681,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "avg_over_time(nut_battery_runtime_seconds{ups=~\"${ups:pipe}\"}[$__interval])",
+          "expr": "sum by(ups) (avg_over_time(nut_battery_runtime_seconds{ups=~\"${ups}\"}[$__interval]))",
           "interval": "",
           "legendFormat": "{{ups}}",
           "range": true,
@@ -686,7 +692,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -772,7 +781,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "avg_over_time(nut_load{ups=~\"${ups:pipe}\"}[$__interval])",
+          "expr": "sum by(ups) (avg_over_time(nut_load{ups=~\"${ups}\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "{{ups}}",
@@ -784,7 +793,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -871,7 +883,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "avg_over_time(nut_battery_voltage_volts{ups=~\"${ups:pipe}\"}[$__interval])",
+          "expr": "sum by(ups) (avg_over_time(nut_battery_voltage_volts{ups=~\"${ups}\"}[$__interval]))",
           "interval": "",
           "legendFormat": "{{ups}}",
           "range": true,
@@ -882,7 +894,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -972,7 +987,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "avg_over_time(nut_input_voltage_volts{ups=~\"${ups:pipe}\"}[$__interval])",
+          "expr": "sum by(ups) (avg_over_time(nut_input_voltage_volts{ups=~\"${ups}\"}[$__interval]))",
           "interval": "",
           "legendFormat": "{{ups}}",
           "range": true,
@@ -983,7 +998,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1070,7 +1088,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "avg_over_time(nut_output_voltage_volts{ups=~\"${ups:pipe}\"}[$__interval])",
+          "expr": "sum by(ups) (avg_over_time(nut_output_voltage_volts{ups=~\"${ups}\"}[$__interval]))",
           "interval": "",
           "legendFormat": "{{ups}}",
           "range": true,
@@ -1244,6 +1262,6 @@
   "timezone": "",
   "title": "NUT UPS",
   "uid": "80-PUnWMk",
-  "version": 552,
+  "version": 557,
   "weekStart": ""
 }
