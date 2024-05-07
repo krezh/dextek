@@ -25,16 +25,16 @@ variable "talos_version" {
   default     = "v1.7.1" # renovate: datasource=github-releases depName=siderolabs/talos
 }
 
-variable "talos_factory_schematic_endpoint" {
-  description = "The api endpoint for factory schematics"
-  type        = string
-  default     = "https://factory.talos.dev/schematics"
-}
-
 variable "kubernetes_version" {
   description = "The Kubernetes version"
   type        = string
   default     = "v1.30.0" # renovate: datasource=github-releases depName=kubernetes/kubernetes
+}
+
+variable "talos_factory_schematic_endpoint" {
+  description = "The api endpoint for factory schematics"
+  type        = string
+  default     = "https://factory.talos.dev/schematics"
 }
 
 variable "matchbox_url" {
