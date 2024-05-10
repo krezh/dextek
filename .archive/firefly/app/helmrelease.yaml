@@ -27,7 +27,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
-          securityContext: # TODO change to nonroot when possible
+          securityContext:
             runAsUser: ${APP_UID}
             runAsGroup: ${APP_GID}
             fsGroup: ${APP_GID}
