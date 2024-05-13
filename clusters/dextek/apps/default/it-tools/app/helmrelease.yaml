@@ -56,9 +56,12 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.plexuz.xyz
         hosts:
-          - host: it-tools.plexuz.xyz
+          - host: &host it-tools.plexuz.xyz
             paths:
               - path: /
                 service:
                   identifier: *app
                   port: http
+        tls:
+          - hosts:
+              - *host
