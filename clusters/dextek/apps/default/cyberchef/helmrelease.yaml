@@ -62,7 +62,7 @@ spec:
           gethomepage.dev/name: "Cyberchef"
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
-          gethomepage.dev/icon: "mdi-hammer-wrench"
+          gethomepage.dev/icon: "cyberchef.png"
         hosts:
           - host: &host "chef.plexuz.xyz"
             paths:
