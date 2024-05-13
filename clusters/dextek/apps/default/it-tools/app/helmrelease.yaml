@@ -55,6 +55,11 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.plexuz.xyz
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "IT-Tools"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "it-tools.png"
         hosts:
           - host: &host it-tools.plexuz.xyz
             paths:
