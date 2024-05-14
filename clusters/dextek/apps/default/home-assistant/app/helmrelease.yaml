@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -35,13 +35,13 @@ spec:
     controllers:
       app:
         #pod:
-          #annotations:
-          #  k8s.v1.cni.cncf.io/networks: |
-          #    [{
-          #      "name":"multus-iot",
-          #      "namespace": "kube-system",
-          #      "ips": ["192.168.100.10/24"]
-          #    }]
+        #annotations:
+        #  k8s.v1.cni.cncf.io/networks: |
+        #    [{
+        #      "name":"multus-iot",
+        #      "namespace": "kube-system",
+        #      "ips": ["192.168.100.10/24"]
+        #    }]
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
