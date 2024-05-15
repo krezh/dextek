@@ -1,4 +1,5 @@
 resource "talos_machine_secrets" "talos" {
+  talos_version = var.talos_version
   lifecycle {
     prevent_destroy = true
   }
@@ -12,7 +13,7 @@ data "talos_machine_configuration" "machine" {
   machine_type     = each.value.type
   cluster_name     = var.cluster_name
   cluster_endpoint = var.cluster_endpoint
-  
+
   talos_version      = var.talos_version
   kubernetes_version = var.kubernetes_version
   docs               = false
