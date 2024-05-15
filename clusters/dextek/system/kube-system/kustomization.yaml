@@ -18,7 +18,6 @@ resources:
   - ./multus
   - ./k8s-ycl/ks.yaml
   - ./tetragon
-  # - ./system-upgrade-controller
   - ./kubelet-csr-approver
-  - ./talup
+  - ./system-upgrade-controller
   - ./spegel
