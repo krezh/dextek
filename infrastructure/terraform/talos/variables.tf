@@ -70,12 +70,12 @@ variable "machine_yaml" {
 variable "nodes" {
   description = "A map of node data"
   type = map(object({
-    hostname      = string
-    type          = string
-    mac_addr      = string
-    disk_model    = string
-    driver        = string
-    driver_10g    = string
+    hostname   = string
+    type       = string
+    mac_addr   = string
+    disk_model = string
+    driver     = string
+    driver_10g = string
   }))
 }
 
