@@ -28,7 +28,7 @@ variable "talos_version" {
 variable "kubernetes_version" {
   description = "The Kubernetes version"
   type        = string
-  default     = "v1.30.1" # renovate: datasource=github-releases depName=kubernetes/kubernetes
+  default     = "v1.30.0" # renovate: datasource=github-releases depName=kubernetes/kubernetes
 }
 
 variable "talos_factory_schematic_endpoint" {
