@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
 silent: true
@@ -12,15 +13,15 @@ vars:
   BOOTSTRAP_DIR: "clusters/dextek/bootstrap"
 
 includes:
-  k8s: "{{.TASKS_DIR}}/Kubernetes/Tasks.yaml"
-  flux: "{{.TASKS_DIR}}/Flux/Tasks.yaml"
-  externalsecrets: "{{.TASKS_DIR}}/ExternalSecrets/Tasks.yaml"
-  rook: "{{.TASKS_DIR}}/Rook/Tasks.yaml"
-  volsync: "{{.TASKS_DIR}}/VolSync/Tasks.yaml"
-  bootstrap: "{{.TASKS_DIR}}/Bootstrap/Tasks.yaml"
-  talos: "{{.TASKS_DIR}}/Talos/Tasks.yaml"
+  k8s: "{{.TASKS_DIR}}/Kubernetes"
+  flux: "{{.TASKS_DIR}}/Flux"
+  externalsecrets: "{{.TASKS_DIR}}/ExternalSecrets"
+  rook: "{{.TASKS_DIR}}/Rook"
+  volsync: "{{.TASKS_DIR}}/VolSync"
+  bootstrap: "{{.TASKS_DIR}}/Bootstrap"
+  talos: "{{.TASKS_DIR}}/Talos"
   terraform:
-    taskfile: "{{.TERRAFORM_DIR}}/talos/Taskfile.yaml"
+    taskfile: "{{.TERRAFORM_DIR}}/talos"
     dir: "{{.TERRAFORM_DIR}}/talos"
 
 tasks:
