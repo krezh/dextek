@@ -18,7 +18,7 @@ REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
 
 # Default Variables
-NEW_VERSION="v1.7.1" # renovate: datasource=github-releases depName=siderolabs/talos
+NEW_VERSION="v1.7.2" # renovate: datasource=github-releases depName=siderolabs/talos
 IMAGE="zot.int.plexuz.xyz/factory.talos.dev/installer/cd05f774d6ae8a21e56330879f2fbd649a76aeda3e073edefc0330454a1458d8"
 NODE=""
 CHECK_SLEEP=3
