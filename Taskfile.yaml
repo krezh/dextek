@@ -5,11 +5,9 @@ version: "3"
 silent: true
 
 vars:
-  PROJECT_DIR:
-    sh: "git rev-parse --show-toplevel"
+  TASKS_DIR: ".taskfiles"
   CLUSTER_DIR: "cluster"
   TERRAFORM_DIR: "infrastructure/terraform"
-  TASKS_DIR: ".taskfiles"
   BOOTSTRAP_DIR: "clusters/dextek/bootstrap"
 
 includes:
