@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  BOOTSTRAP_DIR: { { .BOOTSTRAP_DIR } }
+  BOOTSTRAP_DIR: "{{ .BOOTSTRAP_DIR }}"
 
 tasks:
   all:
