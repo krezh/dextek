@@ -9,7 +9,6 @@ spec:
     - "plexuz.xyz"
     - "*.plexuz.xyz"
     - "*.talos.plexuz.xyz"
-    - "*.k8s.plexuz.xyz"
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
