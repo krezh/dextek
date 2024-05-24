@@ -76,7 +76,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Overseerr"
-          gethomepage.dev/instance: "krezh"
+          #gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Media"
           gethomepage.dev/icon: "overseerr.png"
           gethomepage.dev/widget.url: "http://overseerr.default.svc.cluster.local"
