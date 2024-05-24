@@ -28,12 +28,12 @@ spec:
               repository: ghcr.io/mealie-recipes/mealie
               tag: v1.7.0
             env:
-              ALLOW_SIGNUP: "false"
+              ALLOW_SIGNUP: false
               PUID: ${APP_UID}
               PGID: ${APP_GID}
               BASE_URL: https://mealie.plexuz.xyz
               DB_ENGINE: sqlite
-              LDAP_AUTH_ENABLED: "true"
+              LDAP_AUTH_ENABLED: true
               LDAP_SERVER_URL: ldap://lldap.auth.svc.cluster.local
               LDAP_BASE_DN: "dc=plexuz,dc=xyz"
               LDAP_USER_FILTER: "(memberOf=cn=users,ou=groups,dc=plexuz,dc=xyz)"
@@ -41,13 +41,15 @@ spec:
               LDAP_ID_ATTRIBUTE: uid
               LDAP_NAME_ATTRIBUTE: displayName
               LDAP_MAIL_ATTRIBUTE: mail
+              OIDC_AUTH_ENABLED: true
+              OIDC_PROVIDER_NAME: "Authelia"
               OIDC_USER_GROUP: users
               OIDC_ADMIN_GROUP: admins
-              OIDC_AUTH_ENABLED: true
               OIDC_CLIENT_ID: mealie
               OIDC_SIGNUP_ENABLED: true
               OIDC_CONFIGURATION_URL: "https://auth.plexuz.xyz/.well-known/openid-configuration"
-              OIDC_AUTO_REDIRECT: false
+              OIDC_AUTO_REDIRECT: true
+              OIDC_REMEMBER_ME: true
             envFrom:
               - secretRef:
                   name: mealie-secret
