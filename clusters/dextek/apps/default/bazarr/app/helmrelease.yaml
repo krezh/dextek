@@ -85,7 +85,7 @@ spec:
           gethomepage.dev/icon: "bazarr.png"
           gethomepage.dev/widget.url: "http://bazarr.default.svc.cluster.local"
           gethomepage.dev/widget.type: "bazarr"
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_BAZARR_APIKEY}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_BAZARR_APIKEY}}` }}"
         hosts:
           - host: &host "{{ .Release.Name }}.plexuz.xyz"
             paths:

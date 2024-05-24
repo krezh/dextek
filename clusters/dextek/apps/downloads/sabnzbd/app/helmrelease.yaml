@@ -124,7 +124,7 @@ spec:
           gethomepage.dev/icon: "sabnzbd.png"
           gethomepage.dev/widget.url: "http://sabnzbd.downloads.svc.cluster.local"
           gethomepage.dev/widget.type: "sabnzbd"
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SABNZBD_APIKEY}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SABNZBD_APIKEY}}` }}"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
             sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.plexuz.xyz/css/base/sabnzbd/organizr.css"></head>';
