@@ -118,6 +118,6 @@ spec:
         enabled: true
         type: emptyDir
         globalMounts:
-          - path: /app/config
+          - path: /app
     serviceAccount:
       create: true
