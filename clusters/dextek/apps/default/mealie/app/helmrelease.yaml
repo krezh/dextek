@@ -49,7 +49,7 @@ spec:
               OIDC_SIGNUP_ENABLED: true
               OIDC_CONFIGURATION_URL: "https://auth.plexuz.xyz/.well-known/openid-configuration"
               OIDC_AUTO_REDIRECT: true
-              OIDC_REMEMBER_ME: true
+              OIDC_REMEMBER_ME: false
             envFrom:
               - secretRef:
                   name: mealie-secret
