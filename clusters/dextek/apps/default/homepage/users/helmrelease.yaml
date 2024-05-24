@@ -119,6 +119,5 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app
-          - path: /app/.next
     serviceAccount:
       create: true
