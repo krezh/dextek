@@ -50,7 +50,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: *app
+  name: &app homepage-krezh
   labels:
     app.kubernetes.io/instance: *app
     app.kubernetes.io/name: *app
