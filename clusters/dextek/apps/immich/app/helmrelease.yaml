@@ -146,7 +146,7 @@ spec:
           gethomepage.dev/icon: "immich.png"
           gethomepage.dev/widget.url: "https://photos.talos.plexuz.xyz"
           gethomepage.dev/widget.type: "immich"
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_IMMICH_APIKEY}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_APIKEY}}` }}"
         hosts:
           - host: &host "photos.plexuz.xyz"
             paths:
