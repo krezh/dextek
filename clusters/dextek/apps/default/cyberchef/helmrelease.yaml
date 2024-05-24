@@ -60,7 +60,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Cyberchef"
-          gethomepage.dev/instance: "krezh"
+          #gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
           gethomepage.dev/icon: "cyberchef.png"
         hosts:
