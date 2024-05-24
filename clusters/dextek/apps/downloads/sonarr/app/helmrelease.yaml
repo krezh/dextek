@@ -125,7 +125,7 @@ spec:
           gethomepage.dev/icon: "sonarr.png"
           gethomepage.dev/widget.url: "http://sonarr.downloads.svc.cluster.local"
           gethomepage.dev/widget.type: "sonarr"
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SONARR_APIKEY}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_APIKEY}}` }}"
         hosts:
           - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
             paths:
