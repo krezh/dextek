@@ -13,7 +13,9 @@ data:
         - LLDAP:
             - abbr: LD
               href: https://lldap.talos.plexuz.xyz
-  kubernetes.yaml: ""
+  kubernetes.yaml: |
+    ---
+    mode: cluster
   services.yaml: |
     ---
     - Monitoring:
