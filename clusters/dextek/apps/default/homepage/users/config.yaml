@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-users-config
+  namespace: default
+data:
+  bookmarks.yaml: |
+    ---
+    - Plexuz:
+        - Logout:
+            - abbr: LO
+              href: https://auth.plexuz.xyz/logout
+        - LLDAP:
+            - abbr: LD
+              href: https://lldap.talos.plexuz.xyz
+  kubernetes.yaml: ""
+  services.yaml: |
+    ---
+    - Monitoring:
+        - UptimeKuma:
+            href: https://status.plexuz.xyz
+            icon: uptime-kuma.png
+            widget:
+              slug: 1
+              type: uptimekuma
+              url: https://status.plexuz.xyz
+    - Calendars:
+        - Sonarr:
+            widget:
+              type: calendar
+              firstDayInWeek: monday
+              integrations:
+                - params:
+                    unmonitored: false
+                  service_group: Media
+                  service_name: Sonarr
+                  type: sonarr
+  settings.yaml: |
+    ---
+    instanceName: users
+    cardBlur: sm
+    color: zinc
+    fiveColumns: true
+    headerStyle: boxedWidgets
+    target: _self
+    layout:
+      - Servers:
+          header: false
+          columns: 4
+          style: row
+      - Calendars:
+          header: false
+          columns: 2
+          style: column
+      - Media:
+          header: false
+          columns: 1
+          style: column
+      - Downloads:
+          header: false
+          columns: 1
+          style: column
+      - Tools:
+          header: false
+          columns: 1
+          style: column
+      - Monitoring:
+          header: false
+          columns: 1
+          style: column
+  widgets.yaml: ""
