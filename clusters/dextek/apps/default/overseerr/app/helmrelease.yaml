@@ -89,16 +89,9 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
-          - host: &HOST2 "plexuz.xyz"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
         tls:
           - hosts:
               - *HOST
-              - *HOST2
     persistence:
       config:
         enabled: true
