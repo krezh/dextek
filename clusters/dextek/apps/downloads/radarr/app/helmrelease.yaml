@@ -124,7 +124,7 @@ spec:
           gethomepage.dev/icon: "radarr.png"
           gethomepage.dev/widget.url: "http://radarr.downloads.svc.cluster.local"
           gethomepage.dev/widget.type: "radarr"
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_RADARR_APIKEY}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_RADARR_APIKEY}}` }}"
         hosts:
           - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
             paths:

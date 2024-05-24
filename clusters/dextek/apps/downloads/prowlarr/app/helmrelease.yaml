@@ -140,7 +140,7 @@ spec:
           gethomepage.dev/icon: "prowlarr.png"
           gethomepage.dev/widget.url: "http://prowlarr.downloads.svc.cluster.local"
           gethomepage.dev/widget.type: "prowlarr"
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PROWLARR_APIKEY}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_APIKEY}}` }}"
         hosts:
           - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
             paths:
