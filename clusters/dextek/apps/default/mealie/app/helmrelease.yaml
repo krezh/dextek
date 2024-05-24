@@ -48,8 +48,8 @@ spec:
               OIDC_CLIENT_ID: mealie
               OIDC_SIGNUP_ENABLED: true
               OIDC_CONFIGURATION_URL: "https://auth.plexuz.xyz/.well-known/openid-configuration"
-              OIDC_AUTO_REDIRECT: true
-              OIDC_REMEMBER_ME: false
+              OIDC_AUTO_REDIRECT: false
+              OIDC_REMEMBER_ME: true
             envFrom:
               - secretRef:
                   name: mealie-secret
