@@ -42,7 +42,7 @@ spec:
               LDAP_NAME_ATTRIBUTE: displayName
               LDAP_MAIL_ATTRIBUTE: mail
               OIDC_AUTH_ENABLED: true
-              OIDC_PROVIDER_NAME: "Authelia"
+              OIDC_PROVIDER_NAME: Authelia
               OIDC_USER_GROUP: users
               OIDC_ADMIN_GROUP: admins
               OIDC_CLIENT_ID: mealie
