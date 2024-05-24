@@ -3,16 +3,35 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app homepage
+  name: &app homepage-krezh
   namespace: flux-system
 spec:
   targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: volsync
-  path: ./clusters/dextek/apps/default/homepage/app
+  path: ./clusters/dextek/apps/default/homepage/krezh
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dextek
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app homepage-users
+  namespace: flux-system
+spec:
+  targetNamespace: default
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./clusters/dextek/apps/default/homepage/users
   prune: true
   sourceRef:
     kind: GitRepository

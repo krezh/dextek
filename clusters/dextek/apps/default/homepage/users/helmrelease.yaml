@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app homepage
+  name: &app homepage-users
   namespace: default
 spec:
   interval: 30m
@@ -42,9 +42,6 @@ spec:
               tag: v0.8.13
             env:
               TZ: Europe/Stockholm
-            envFrom:
-              - secretRef:
-                  name: homepage-secret
             resources:
               requests:
                 cpu: 15m
@@ -88,12 +85,13 @@ spec:
           nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
           nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
         hosts:
-          - host: &host homepage.plexuz.xyz
+          - host: &host plexuz.xyz
             paths:
               - path: /
                 pathType: Prefix
                 service:
                   identifier: app
+                  port: http
         tls:
           - hosts:
               - *host
@@ -101,7 +99,7 @@ spec:
       config:
         enabled: true
         type: configMap
-        name: homepage-config
+        name: homepage-users-config
         globalMounts:
           - subPath: bookmarks.yaml
             path: /app/config/bookmarks.yaml
@@ -119,4 +117,4 @@ spec:
         globalMounts:
           - path: /app/config
     serviceAccount:
-      create: true
+      create: false
