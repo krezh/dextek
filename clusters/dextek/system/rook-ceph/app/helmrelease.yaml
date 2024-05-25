@@ -40,7 +40,7 @@ spec:
       snapshotter:
         image: registry.k8s.io/sig-storage/csi-snapshotter:v7.0.2
       attacher:
-        image: registry.k8s.io/sig-storage/csi-attacher:v4.5.1
+        image: registry.k8s.io/sig-storage/csi-attacher:v4.6.0
       resizer:
         image: registry.k8s.io/sig-storage/csi-resizer:v1.10.1
     crds:
