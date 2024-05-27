@@ -33,14 +33,6 @@ spec:
               PGID: ${APP_GID}
               BASE_URL: https://mealie.plexuz.xyz
               DB_ENGINE: sqlite
-              LDAP_AUTH_ENABLED: true
-              LDAP_SERVER_URL: ldap://lldap.auth.svc.cluster.local
-              LDAP_BASE_DN: "dc=plexuz,dc=xyz"
-              LDAP_USER_FILTER: "(memberOf=cn=users,ou=groups,dc=plexuz,dc=xyz)"
-              LDAP_ADMIN_FILTER: "(memberOf=cn=admins,ou=groups,dc=plexuz,dc=xyz)"
-              LDAP_ID_ATTRIBUTE: uid
-              LDAP_NAME_ATTRIBUTE: displayName
-              LDAP_MAIL_ATTRIBUTE: mail
               OIDC_AUTH_ENABLED: true
               OIDC_PROVIDER_NAME: Authelia
               OIDC_USER_GROUP: mealie_users
