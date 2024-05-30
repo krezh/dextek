@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Generate Token
-        uses: actions/create-github-app-token@a0de6af83968303c8c955486bf9739a57d23c7f1 # v1.10.0
+        uses: actions/create-github-app-token@v1.10.0
         id: app-token
         with:
           app-id: "${{ secrets.BOT_APP_ID }}"
