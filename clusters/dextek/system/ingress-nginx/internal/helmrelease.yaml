@@ -40,6 +40,7 @@ spec:
         client-header-timeout: 120
         enable-brotli: "true"
         enable-real-ip: "true"
+        force-ssl-redirect: "true"
         keep-alive-requests: 10000
         keep-alive: 120
         log-format-escape-json: "true"
