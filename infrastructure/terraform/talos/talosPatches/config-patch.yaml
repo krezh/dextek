@@ -7,7 +7,6 @@ machine:
     wipe: false
     extraKernelArgs:
       - cpufreq.default_governor=ondemand
-      - net.ifnames=0
       - talos.platform=metal
   sysctls:
     fs.inotify.max_queued_events: "65536"
