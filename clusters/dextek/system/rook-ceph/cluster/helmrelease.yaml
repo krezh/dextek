@@ -184,6 +184,7 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Monitoring"
           gethomepage.dev/icon: "rook.png"
+          gethomepage.dev/pod-selector: ""
         host:
           name: &host ceph.talos.plexuz.xyz
         tls:
