@@ -60,9 +60,6 @@ alertmanager:
       gethomepage.dev/group: "Monitoring"
       gethomepage.dev/icon: "alertmanager.png"
       gethomepage.dev/pod-selector: >-
-        app.kubernetes.io/instance in (
-          {{ .Release.Name }}
-        )
         app.kubernetes.io/name in (
           alertmanager
         )
