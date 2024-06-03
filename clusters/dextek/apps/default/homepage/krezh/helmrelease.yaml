@@ -31,7 +31,7 @@ spec:
         runAsNonRoot: true
     controllers:
       app:
-        replicas: 3
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
