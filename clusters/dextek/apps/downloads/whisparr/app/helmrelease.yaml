@@ -92,6 +92,10 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Media"
           gethomepage.dev/icon: "whisparr.png"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
         hosts:
           - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
             paths:
