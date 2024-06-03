@@ -86,6 +86,10 @@ spec:
           gethomepage.dev/widget.url: "http://bazarr.default.svc.cluster.local"
           gethomepage.dev/widget.type: "bazarr"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_BAZARR_APIKEY}}` }}"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
         hosts:
           - host: &host "{{ .Release.Name }}.plexuz.xyz"
             paths:

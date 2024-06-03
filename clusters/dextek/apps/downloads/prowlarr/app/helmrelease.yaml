@@ -141,6 +141,10 @@ spec:
           gethomepage.dev/widget.url: "http://prowlarr.downloads.svc.cluster.local"
           gethomepage.dev/widget.type: "prowlarr"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_APIKEY}}` }}"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
         hosts:
           - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
             paths:

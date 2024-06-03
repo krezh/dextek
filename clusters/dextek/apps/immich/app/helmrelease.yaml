@@ -147,6 +147,10 @@ spec:
           gethomepage.dev/widget.url: "https://photos.talos.plexuz.xyz"
           gethomepage.dev/widget.type: "immich"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_APIKEY}}` }}"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
         hosts:
           - host: &host "photos.plexuz.xyz"
             paths:
