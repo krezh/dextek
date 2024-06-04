@@ -42,6 +42,9 @@ data:
               url: https://heimdall.usr.int.plexuz.xyz
               username: "{{HOMEPAGE_VAR_OPNSENSE_USER}}"
               password: "{{HOMEPAGE_VAR_OPNSENSE_PASS}}"
+        - PiKVM:
+            href: https://pikvm.int.plexuz.xyz
+            icon: pikvm.png
     - Monitoring:
         - UptimeKuma:
             href: https://status.plexuz.xyz
@@ -50,9 +53,6 @@ data:
               slug: 1
               type: uptimekuma
               url: https://status.plexuz.xyz
-        - PiKVM:
-            href: https://pikvm.int.plexuz.xyz
-            icon: pikvm.png
     - Calendars:
         - Sonarr:
             widget:
