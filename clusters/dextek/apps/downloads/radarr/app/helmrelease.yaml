@@ -119,7 +119,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Radarr"
-          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/instance: ""
           gethomepage.dev/group: "Media"
           gethomepage.dev/icon: "radarr.png"
           gethomepage.dev/widget.url: "http://radarr.downloads.svc.cluster.local"
