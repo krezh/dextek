@@ -26,24 +26,23 @@ data:
               slug: 1
               type: uptimekuma
               url: https://status.plexuz.xyz
-    # - Media:
-    #     - Sonarr:
-    #         widget:
-    #           type: sonarr
-    #           fields: []
-    #           url: http://sonarr.downloads.svc.cluster.local
-    #           key: "{{HOMEPAGE_VAR_SONARR_APIKEY}}"
     - Calendars:
         - Sonarr:
             widget:
               type: calendar
               firstDayInWeek: monday
+              showTime: true
               integrations:
                 - params:
                     unmonitored: false
                   service_group: Media
                   service_name: Sonarr
                   type: sonarr
+                - params:
+                    unmonitored: false
+                  service_group: Media
+                  service_name: Radarr
+                  type: radarr
   settings.yaml: |
     ---
     instanceName: users
