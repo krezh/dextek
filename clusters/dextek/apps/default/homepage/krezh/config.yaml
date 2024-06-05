@@ -58,12 +58,18 @@ data:
             widget:
               type: calendar
               firstDayInWeek: monday
+              showTime: true
               integrations:
                 - params:
                     unmonitored: false
                   service_group: Media
                   service_name: Sonarr
                   type: sonarr
+                - params:
+                    unmonitored: false
+                  service_group: Media
+                  service_name: Radarr
+                  type: radarr
   settings.yaml: |
     ---
     instanceName: krezh
