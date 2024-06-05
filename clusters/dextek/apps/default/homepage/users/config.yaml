@@ -26,13 +26,13 @@ data:
               slug: 1
               type: uptimekuma
               url: https://status.plexuz.xyz
-    - Media:
-        - Sonarr:
-            widget:
-              type: sonarr
-              fields: []
-              url: http://sonarr.downloads.svc.cluster.local
-              key: "{{HOMEPAGE_VAR_SONARR_APIKEY}}"
+    # - Media:
+    #     - Sonarr:
+    #         widget:
+    #           type: sonarr
+    #           fields: []
+    #           url: http://sonarr.downloads.svc.cluster.local
+    #           key: "{{HOMEPAGE_VAR_SONARR_APIKEY}}"
     - Calendars:
         - Sonarr:
             widget:
