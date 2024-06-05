@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/krezh/krezh/main/assets/logo.gif?raw=true" width="270px" height="151.5px"/>
-
 ### My Home Operations Repository
 
 _... managed with Flux, Renovate, and GitHub Actions_ 🤖
