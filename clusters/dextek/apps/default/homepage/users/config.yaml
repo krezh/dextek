@@ -26,6 +26,11 @@ data:
               slug: 1
               type: uptimekuma
               url: https://status.plexuz.xyz
+    - Media:
+        - Sonarr:
+            widget:
+              type: sonarr
+              apikey: "{{HOMEPAGE_VAR_SONARR_APIKEY}}"
     - Calendars:
         - Sonarr:
             widget:
