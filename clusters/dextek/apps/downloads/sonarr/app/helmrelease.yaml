@@ -121,7 +121,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Sonarr"
-          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/instance: ""
           gethomepage.dev/group: "Media"
           gethomepage.dev/icon: "{{ .Release.Name }}.png"
           gethomepage.dev/widget.url: "http://sonarr.downloads.svc.cluster.local"
