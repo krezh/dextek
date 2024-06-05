@@ -125,11 +125,6 @@ spec:
           gnetId: 1860
           revision: 37
           datasource: Prometheus
-        redis:
-          # renovate: depName="Redis Dashboard for Prometheus Redis Exporter 1.x"
-          gnetId: 763
-          revision: 6
-          datasource: Prometheus
         spegel:
           # renovate: depName="Spegel"
           gnetId: 18089
@@ -171,6 +166,9 @@ spec:
           url: https://raw.githubusercontent.com/binwiederhier/ntfy/main/examples/grafana-dashboard/ntfy-grafana.json
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        dragonfly:
+          url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
+          datasource: Prometheus
       ceph:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
