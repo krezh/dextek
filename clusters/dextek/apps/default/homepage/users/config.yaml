@@ -30,7 +30,7 @@ data:
         - Sonarr:
             widget:
               type: sonarr
-              apikey: "{{HOMEPAGE_VAR_SONARR_APIKEY}}"
+              key: "{{HOMEPAGE_VAR_SONARR_APIKEY}}"
     - Calendars:
         - Sonarr:
             widget:
