@@ -8,7 +8,7 @@ resource "cloudflare_record" "ipv4" {
   ttl      = 1
 }
 
-resource "cloudflare_record" "ipv4" {
+resource "cloudflare_record" "doppler" {
   for_each = toset(var.domains)
   name     = "_doppler_O9Zugt4K0nNkt"
   zone_id  = data.cloudflare_zone.domain[each.key].id
