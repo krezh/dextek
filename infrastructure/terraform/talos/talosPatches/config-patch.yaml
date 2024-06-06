@@ -103,6 +103,12 @@ cluster:
     advertisedSubnets:
       - "10.10.0.0/27"
   allowSchedulingOnControlPlanes: true
+  discovery:
+    registries:
+      kubernetes:
+        disabled: false
+      service:
+        disabled: true
   network:
     cni:
       name: none
