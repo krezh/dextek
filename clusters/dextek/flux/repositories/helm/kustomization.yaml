@@ -39,3 +39,4 @@ resources:
   - ./spegel.yaml
   - ./tailscale.yaml
   - ./ananace.yaml
+  - ./netdata.yaml
