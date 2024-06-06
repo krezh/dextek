@@ -34,7 +34,7 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: internal
-        kubernetes.io/tls-acme: false
+        kubernetes.io/tls-acme: "false"
       spec:
         ingressClassName: internal
       path: /
