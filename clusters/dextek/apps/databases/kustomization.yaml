@@ -5,6 +5,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./cloudnative-pg
-  - ./redis
   - ./dbman
   - ./dragonfly
