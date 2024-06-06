@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
     - name: external-secrets-stores
-    - name: redis
+    - name: dragonfly-cluster
   path: ./clusters/dextek/apps/auth/authelia/app
   prune: true
   sourceRef:

@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cloudnative-pg-cluster
-    - name: redis
+    - name: dragonfly-cluster
   path: ./clusters/dextek/apps/immich/app
   prune: true
   sourceRef:
