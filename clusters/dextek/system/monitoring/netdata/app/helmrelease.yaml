@@ -48,6 +48,6 @@ spec:
       database:
         storageclass: ceph-block
     child:
-      enabled: false
+      enabled: true
     k8sState:
       enabled: true
