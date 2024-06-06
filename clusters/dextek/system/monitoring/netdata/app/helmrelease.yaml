@@ -49,6 +49,7 @@ spec:
         storageclass: ceph-block
       database:
         storageclass: ceph-block
+        volumesize: 10Gi
     child:
       enabled: true
     k8sState:
