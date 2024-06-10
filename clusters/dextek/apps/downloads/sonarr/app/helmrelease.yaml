@@ -36,15 +36,16 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/sonarr
-              tag: 4.0.5.1710@sha256:5d97c1e4d7d386e3d9a887d87d65da2b0115c73cd002d7d633df21baa5a4122c
+              repository: ghcr.io/onedr0p/sonarr-develop
+              tag: 4.0.5.1719@sha256:602af44d766a8c7c494d01fb79f6e7624aed58f0b86ffe10e1ecad280160a3df
             env:
               TZ: Europe/Stockholm
-              SONARR__INSTANCE_NAME: Sonarr
-              SONARR__PORT: &port 8989
-              SONARR__LOG_LEVEL: info
-              SONARR__APPLICATION_URL: "https://{{ .Release.Name }}.plexuz.xyz"
-              SONARR__AUTHENTICATION_METHOD: external
+              SONARR__APP__INSTANCENAME: Sonarr
+              SONARR__APP__THEME: dark
+              SONARR__SERVER__PORT: &port 8989
+              SONARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
+              SONARR__AUTH__METHOD: External
             envFrom: &envFrom
               - secretRef:
                   name: sonarr-secret

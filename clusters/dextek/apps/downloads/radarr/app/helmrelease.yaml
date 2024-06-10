@@ -36,15 +36,16 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/radarr
-              tag: 5.6.0.8846@sha256:6d9fe01aab867098e79d1041f7b71eca5b668b8254944ab89c23eef26042570c
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.6.0.8846@sha256:99c264af3f2d177e6674a9b304b64a35261202de30e54b35d5758d40edd94366
             env:
               TZ: Europe/Stockholm
-              RADARR__INSTANCE_NAME: Radarr
-              RADARR__PORT: &port 7878
-              RADARR__LOG_LEVEL: info
-              RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.plexuz.xyz"
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: dark
+              RADARR__SERVER__PORT: &port 7878
               RADARR__AUTHENTICATION_METHOD: External
+              RADARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
             envFrom: &envFrom
               - secretRef:
                   name: radarr-secret
