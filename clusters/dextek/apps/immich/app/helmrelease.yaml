@@ -63,9 +63,10 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.105.1
-            args: ["start-server.sh"]
+              tag: v1.106.1
             envFrom: *envFrom
+            env:
+              IMMICH_WORKERS_INCLUDE: api
             resources:
               requests:
                 cpu: 100m
@@ -83,7 +84,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.105.1
+              tag: v1.106.1
             envFrom: *envFrom
             resources:
               requests:
@@ -101,9 +102,10 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.105.1
-            args: ["start-microservices.sh"]
+              tag: v1.106.1
             envFrom: *envFrom
+            env:
+              IMMICH_WORKERS_EXCLUDE: api
             resources:
               requests:
                 memory: 512M
@@ -158,7 +160,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
-                  port: 3001
+                  port: http
         tls:
           - hosts:
               - *host
