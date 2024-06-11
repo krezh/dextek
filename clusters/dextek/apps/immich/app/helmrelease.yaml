@@ -64,8 +64,9 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.106.1
-            args: ["start-server.sh"]
             envFrom: *envFrom
+            env:
+              IMMICH_WORKERS_INCLUDE: api
             resources:
               requests:
                 cpu: 100m
@@ -102,8 +103,9 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.106.1
-            args: ["start-microservices.sh"]
             envFrom: *envFrom
+            env:
+              IMMICH_WORKERS_EXCLUDE: api
             resources:
               requests:
                 memory: 512M
@@ -158,7 +160,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
-                  port: 3001
+                  port: http
         tls:
           - hosts:
               - *host
