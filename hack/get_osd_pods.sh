@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Get OSD Pods
 # This uses the example/default cluster name "rook"
 OSD_PODS=$(kubectl get pods --all-namespaces -l \
