@@ -43,19 +43,19 @@ machine:
           physical: true
         mtu: 1500
         dhcp: true
+        vip:
+          ip: ${vip}
         vlans:
           - vlanId: 100 # IoT VLAN
             mtu: 1500
             dhcp: true
             dhcpOptions:
               routeMetric: 4096
-        #   # - vlanId: 10 # srv VLAN
-        #   #   mtu: 1500
-        #   #   dhcp: true
-        #   #   dhcpOptions:
-        #   #     routeMetric: 4096
-        vip:
-          ip: ${vip}
+          - vlanId: 10 # srv VLAN
+            mtu: 1500
+            dhcp: true
+            dhcpOptions:
+              routeMetric: 4096
       - deviceSelector:
           driver: ${driver_10g}
           physical: true
