@@ -51,11 +51,11 @@ machine:
             dhcp: true
             dhcpOptions:
               routeMetric: 4096
-          - vlanId: 10 # srv VLAN
-            mtu: 1500
-            dhcp: true
-            dhcpOptions:
-              routeMetric: 4096
+          # - vlanId: 10 # srv VLAN
+          #   mtu: 1500
+          #   dhcp: true
+          #   dhcpOptions:
+          #     routeMetric: 4096
       - deviceSelector:
           driver: ${driver_10g}
           physical: true
