@@ -35,6 +35,11 @@ spec:
       annotations:
         kubernetes.io/ingress.class: internal
         kubernetes.io/tls-acme: "false"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Netdata"
+        gethomepage.dev/instance: "krezh"
+        gethomepage.dev/group: "Monitoring"
+        gethomepage.dev/icon: "netdata.png"
       spec:
         ingressClassName: internal
       path: /
