@@ -40,6 +40,10 @@ spec:
         gethomepage.dev/instance: "krezh"
         gethomepage.dev/group: "Monitoring"
         gethomepage.dev/icon: "netdata.png"
+        gethomepage.dev/pod-selector: >-
+          app in (
+            {{ .Release.Name }}
+          )
       spec:
         ingressClassName: internal
       path: /
