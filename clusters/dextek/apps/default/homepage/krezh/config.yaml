@@ -45,6 +45,9 @@ data:
         - PiKVM:
             href: https://pikvm.int.plexuz.xyz
             icon: pikvm.png
+        - Mikrotik:
+            href: https://192.168.1.35/
+            icon: mikrotik.png
     - Monitoring:
         - UptimeKuma:
             href: https://status.plexuz.xyz
