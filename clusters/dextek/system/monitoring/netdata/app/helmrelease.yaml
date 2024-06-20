@@ -42,7 +42,7 @@ spec:
         gethomepage.dev/icon: "netdata.png"
         gethomepage.dev/pod-selector: >-
           app in (
-            {{ .Release.Name }}
+            netdata
           )
       spec:
         ingressClassName: internal
