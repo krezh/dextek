@@ -62,12 +62,6 @@ machine:
         mtu: 9000
         dhcp: true
   files:
-    - path: /var/etc/nut/upsmon.conf
-      permissions: 0o600
-      op: create
-      content: |-
-        MONITOR ${upsmonHost} 1 upsmon_remote ${upsmonPasswd} slave
-        SHUTDOWNCMD "/sbin/poweroff"
     - path: /etc/cri/conf.d/20-customization.part
       op: create
       content: |-
