@@ -16,3 +16,4 @@ resources:
   - ./graphite-exporter
   - ./node-problem-detector
   - ./netdata
+  - ./kromgo
