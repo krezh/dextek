@@ -35,7 +35,7 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
         with:
-          args: --verbose --no-progress --exclude '.*\.plexuz\.xyz.*' --exclude .*\.cluster\.local.* --exclude-mail  './**/*.md' './**/grafana/app/helmrelease.yaml'
+          args: --verbose --no-progress --exclude '.*\.plexuz\.xyz.*' --exclude .*\.cluster\.local.*  './**/*.md' './**/grafana/app/helmrelease.yaml'
           output: /tmp/results.md
 
       - name: Find Link Checker Issue
