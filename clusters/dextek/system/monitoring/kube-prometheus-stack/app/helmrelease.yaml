@@ -87,13 +87,13 @@ spec:
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
     kubeControllerManager:
-      enabled: false
+      enabled: true
     kubeScheduler:
-      enabled: false
+      enabled: true
     kubeProxy:
       enabled: false
     kubeEtcd:
-      enabled: false
+      enabled: true
     nodeExporter:
       enabled: true
     prometheus-node-exporter:

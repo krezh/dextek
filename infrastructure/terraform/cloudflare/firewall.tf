@@ -19,7 +19,7 @@ resource "cloudflare_filter" "allowed_paths" {
   for_each    = toset(var.domains)
   zone_id     = data.cloudflare_zone.domain[each.key].id
   description = "Allow Specified paths"
-  expression  = "(http.request.uri.path contains \"/feed/\") or (http.request.uri.path contains \"/api/\") or (http.user_agent eq \"Google-Calendar-Importer\") or (http.request.uri.path contains \"/image/\") or (http.request.uri.path contains \"/api2/json/\")"
+  expression  = "(http.request.uri.path contains \"/feed/\") or (http.request.uri.path contains \"/api/\") or (http.user_agent eq \"Google-Calendar-Importer\") or (http.request.uri.path contains \"/image/\") or (http.request.uri.path contains \"/api2/json/\") or (http.user_agent contains \"Shields.io\")"
 }
 resource "cloudflare_firewall_rule" "allowed_paths" {
   for_each    = toset(var.domains)
@@ -53,6 +53,7 @@ resource "cloudflare_filter" "bots" {
   description = "Expression to block bots determined by CF"
   expression  = "(cf.client.bot) or (cf.threat_score gt 14)"
 }
+
 resource "cloudflare_firewall_rule" "bots" {
   for_each    = toset(var.domains)
   zone_id     = data.cloudflare_zone.domain[each.key].id
