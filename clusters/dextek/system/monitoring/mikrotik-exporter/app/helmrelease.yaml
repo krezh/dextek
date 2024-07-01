@@ -77,3 +77,6 @@ spec:
           - path: /mktxp_config/mktxp.conf
             subPath: mktxp.conf
             readOnly: true
+          - path: /mktxp_config/_mktxp.conf
+            subPath: _mktxp.conf
+            readOnly: true
