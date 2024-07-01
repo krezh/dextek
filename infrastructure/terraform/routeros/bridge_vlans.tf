@@ -52,5 +52,5 @@ resource "routeros_interface_bridge_vlan" "vlan200" {
   vlan_ids = 200
   tagged   = ["bridge"]
   untagged = []
-  comment  = "VLAN200: ${var.comment}"
+  comment  = "FAST: ${var.comment}"
 }
