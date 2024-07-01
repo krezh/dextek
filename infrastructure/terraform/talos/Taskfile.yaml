@@ -14,7 +14,8 @@ tasks:
     desc: tofu apply
     interactive: true
     cmds:
-      - tofu apply {{.CLI_ARGS}}
+      - task: default
+      - tofu apply --auto-approve {{.CLI_ARGS}}
 
   bootstrap:
     desc: tofu apply --var bootstrap=true
@@ -32,3 +33,11 @@ tasks:
     interactive: true
     cmds:
       - tofu apply --var machine_yaml=true {{.CLI_ARGS}}
+
+  machine_apply:
+    desc: apply machine configs
+    interactive: true
+    vars:
+      namespace: "{{.node}}"
+    cmds:
+      - talosctl apply -f controlplane_{{ .node }}.yaml -n {{ .node }}.k8s.plexuz.xyz
