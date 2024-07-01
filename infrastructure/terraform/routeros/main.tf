@@ -16,7 +16,6 @@ resource "routeros_system_user_group" "mikrotik-exporter" {
 resource "routeros_system_user" "mikrotik-exporter" {
   depends_on = [routeros_system_user_group.mikrotik-exporter]
   name       = "mikrotik-exporter"
-  address    = "0.0.0.0/0"
   group      = "mikrotik-exporter"
   password   = data.doppler_secrets.prd_routeros.map.MIKROTIK_EXPORTER
   comment    = var.comment
