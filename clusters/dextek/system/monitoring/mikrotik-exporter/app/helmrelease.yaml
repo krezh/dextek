@@ -38,7 +38,8 @@ spec:
             image:
               repository: ghcr.io/akpw/mktxp
               tag: stable-20240612143640
-            args:
+            command:
+              - mktxp
               - --cfg-dir
               - /mktxp_config
               - export
