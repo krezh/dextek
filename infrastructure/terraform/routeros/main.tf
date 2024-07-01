@@ -8,16 +8,16 @@ resource "routeros_system_identity" "identity" {
   name = "yggdrasil"
 }
 
-resource "routeros_system_user_group" "prometheus_exporter" {
-  name   = "prometheus_exporter"
+resource "routeros_system_user_group" "mikrotik-exporter" {
+  name   = "mikrotik-exporter"
   policy = ["api", "!ftp", "!local", "!password", "!policy", "read", "!reboot", "!rest-api", "!romon", "!sensitive", "!sniff", "!ssh", "!telnet", "!test", "!web", "!winbox", "!write"]
 }
 
-resource "routeros_system_user" "prometheus_exporter" {
-  depends_on = [routeros_system_user_group.prometheus_exporter]
-  name       = "prometheus_exporter"
+resource "routeros_system_user" "mikrotik-exporter" {
+  depends_on = [routeros_system_user_group.mikrotik-exporter]
+  name       = "mikrotik-exporter"
   address    = "0.0.0.0/0"
-  group      = "prometheus_exporter"
-  password   = data.doppler_secrets.prd_routeros.map.PROMETHEUS_EXPORTER
+  group      = "mikrotik-exporter"
+  password   = data.doppler_secrets.prd_routeros.map.MIKROTIK_EXPORTER
   comment    = var.comment
 }
