@@ -11,7 +11,7 @@ resource "routeros_interface_bridge_vlan" "vlan10" {
     routeros_interface_bridge_port.ms01-03_eth0.interface,
   ]
   untagged = []
-  comment  = var.comment
+  comment  = "SRV: ${var.comment}"
 }
 
 resource "routeros_interface_bridge_vlan" "vlan20" {
@@ -19,7 +19,7 @@ resource "routeros_interface_bridge_vlan" "vlan20" {
   vlan_ids = 20
   tagged   = ["bridge", "ether1", "ether9"]
   untagged = []
-  comment  = var.comment
+  comment  = "K8S: ${var.comment}"
 }
 
 resource "routeros_interface_bridge_vlan" "vlan50" {
@@ -27,7 +27,7 @@ resource "routeros_interface_bridge_vlan" "vlan50" {
   vlan_ids = 50
   tagged   = ["bridge", "ether1", "ether23", "ether24"]
   untagged = []
-  comment  = var.comment
+  comment  = "WIFI: ${var.comment}"
 }
 
 resource "routeros_interface_bridge_vlan" "vlan100" {
@@ -44,7 +44,7 @@ resource "routeros_interface_bridge_vlan" "vlan100" {
     "ether23", "ether24"
   ]
   untagged = []
-  comment  = var.comment
+  comment  = "IoT: ${var.comment}"
 }
 
 resource "routeros_interface_bridge_vlan" "vlan200" {
@@ -52,5 +52,5 @@ resource "routeros_interface_bridge_vlan" "vlan200" {
   vlan_ids = 200
   tagged   = ["bridge"]
   untagged = []
-  comment  = var.comment
+  comment  = "VLAN200: ${var.comment}"
 }
