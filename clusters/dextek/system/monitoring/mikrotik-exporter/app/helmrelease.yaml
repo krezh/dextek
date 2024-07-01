@@ -74,6 +74,6 @@ spec:
         type: secret
         name: mikrotik-exporter-secret
         globalMounts:
-          - path: /mktxp_config
-            subPath: mktxp_config
+          - path: /mktxp_config/mktxp.conf
+            subPath: mktxp.conf
             readOnly: true
