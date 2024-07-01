@@ -17,3 +17,4 @@ resources:
   - ./node-problem-detector
   - ./netdata
   - ./kromgo
+  - ./mikrotik-exporter
