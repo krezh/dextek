@@ -125,6 +125,11 @@ spec:
           gnetId: 1860
           revision: 37
           datasource: Prometheus
+        Mikrotik:
+          # renovate: depName="Mikrotik MKTXP Exporter"
+          gnetId: 13679
+          revision: 22
+          datasource: Prometheus
         redis:
           # renovate: depName="Redis Dashboard for Prometheus Redis Exporter 1.x"
           gnetId: 763
@@ -143,7 +148,7 @@ spec:
           revision: 2
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-            - { name: VAR_REPLICATIONDESTNAME, value: '.*-dst'}
+            - { name: VAR_REPLICATIONDESTNAME, value: ".*-dst" }
         external-dns:
           # renovate: depName="External DNS"
           gnetId: 15038
