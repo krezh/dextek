@@ -35,28 +35,28 @@ locals {
     for i in range(var.sfpplus_range.start, var.sfpplus_range.end + 1) :
     "sfp-sfpplus${i}" => {
       name    = "sfp-sfpplus${i}"
-      comment = "sfp-sfpplus${i}: ${var.comment}"
+      comment = "${var.comment}"
     }
   }
   ether_interfaces = {
     for i in range(var.ether_range.start, var.ether_range.end + 1) :
     "ether${i}" => {
       name    = "ether${i}"
-      comment = "ether${i}: ${var.comment}"
+      comment = "${var.comment}"
     }
   }
   qsfpplus1_interfaces = {
     for i in range(var.qsfpplus1_range.start, var.qsfpplus1_range.end + 1) :
     "qsfpplus1-${i}" => {
       name    = "qsfpplus1-${i}"
-      comment = "qsfpplus1-${i}: ${var.comment}"
+      comment = "${var.comment}"
     }
   }
   qsfpplus2_interfaces = {
     for i in range(var.qsfpplus2_range.start, var.qsfpplus2_range.end + 1) :
     "qsfpplus2-${i}" => {
       name    = "qsfpplus2-${i}"
-      comment = "qsfpplus2-${i}: ${var.comment}"
+      comment = "${var.comment}"
     }
   }
 }
