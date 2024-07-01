@@ -3,5 +3,5 @@ resource "routeros_interface_bridge" "bridge" {
   vlan_filtering    = true
   protocol_mode     = "rstp"
   ingress_filtering = true
-  comment           = "Default Bridge: var.comment"
+  comment           = "Default Bridge: ${var.comment}"
 }
