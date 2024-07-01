@@ -22,6 +22,7 @@ data "talos_machine_configuration" "machine" {
   machine_secrets = talos_machine_secrets.talos.machine_secrets
   config_patches = [
     templatefile("talosPatches/general-patch.yaml", {
+      cluster_name       = var.cluster_name,
       talos_version      = var.talos_version,
       talos_factory_hash = local.talos_factory_id,
       zot_factory_url    = var.zot_factory_url,
