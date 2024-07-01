@@ -34,25 +34,29 @@ locals {
   sfpplus_interfaces = {
     for i in range(var.sfpplus_range.start, var.sfpplus_range.end + 1) :
     "sfp-sfpplus${i}" => {
-      name = "sfp-sfpplus${i}"
+      name    = "sfp-sfpplus${i}"
+      comment = "sfp-sfpplus${i}: ${var.comment}"
     }
   }
   ether_interfaces = {
     for i in range(var.ether_range.start, var.ether_range.end + 1) :
     "ether${i}" => {
-      name = "ether${i}"
+      name    = "ether${i}"
+      comment = "ether${i}: ${var.comment}"
     }
   }
   qsfpplus1_interfaces = {
     for i in range(var.qsfpplus1_range.start, var.qsfpplus1_range.end + 1) :
     "qsfpplus1-${i}" => {
-      name = "qsfpplus1-${i}"
+      name    = "qsfpplus1-${i}"
+      comment = "qsfpplus1-${i}: ${var.comment}"
     }
   }
   qsfpplus2_interfaces = {
     for i in range(var.qsfpplus2_range.start, var.qsfpplus2_range.end + 1) :
     "qsfpplus2-${i}" => {
-      name = "qsfpplus2-${i}"
+      name    = "qsfpplus2-${i}"
+      comment = "qsfpplus2-${i}: ${var.comment}"
     }
   }
 }
@@ -65,7 +69,7 @@ resource "routeros_interface_ethernet" "ether" {
   mtu          = 1500
   poe_out      = "auto-on"
   poe_priority = 10
-  comment      = var.comment
+  comment      = each.value.comment
 }
 
 resource "routeros_interface_ethernet" "sfpplus" {
@@ -75,7 +79,7 @@ resource "routeros_interface_ethernet" "sfpplus" {
   name                     = each.value.name
   mtu                      = 9000
   sfp_shutdown_temperature = 95
-  comment                  = var.comment
+  comment                  = each.value.comment
 }
 
 resource "routeros_interface_ethernet" "qsfpplus1" {
@@ -85,7 +89,7 @@ resource "routeros_interface_ethernet" "qsfpplus1" {
   name                     = each.value.name
   mtu                      = 9000
   sfp_shutdown_temperature = 95
-  comment                  = var.comment
+  comment                  = each.value.comment
 }
 
 resource "routeros_interface_ethernet" "qsfpplus2" {
@@ -95,5 +99,5 @@ resource "routeros_interface_ethernet" "qsfpplus2" {
   name                     = each.value.name
   mtu                      = 9000
   sfp_shutdown_temperature = 95
-  comment                  = var.comment
+  comment                  = each.value.comment
 }
