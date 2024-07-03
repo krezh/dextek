@@ -50,13 +50,24 @@ spec:
                 cpu: 10m
                 memory: 100Mi
               limits:
-                memory: 500Mi
+                memory: 1Gi
     service:
       app:
         controller: app
         ports:
           http:
             port: 49090
+
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.talos.plexuz.xyz"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
 
     serviceMonitor:
       app:
@@ -66,8 +77,8 @@ spec:
           - port: http
             scheme: http
             path: /
-            interval: 2m
-            scrapeTimeout: 5s
+            interval: 1m
+            scrapeTimeout: 10s
 
     persistence:
       config:
