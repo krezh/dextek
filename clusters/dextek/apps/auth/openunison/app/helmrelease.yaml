@@ -1,0 +1,122 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app openunison
+  namespace: auth
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: orchestra-login-portal
+      sourceRef:
+        kind: HelmRepository
+        name: openunison
+        namespace: flux-system
+      version: 3.2.1
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    network:
+      openunison_host: "ou.talos.plexuz.xyz"
+      dashboard_host: "db.talos.plexuz.xyz"
+      api_server_host: "api.talos.plexuz.xyz"
+      session_inactivity_timeout_seconds: 900
+      k8s_url: https://talos.k8s.plexuz.xyz:6443
+      force_redirect_to_tls: false
+      createIngressCertificate: false
+      ingress_type: nginx
+      ingress_annotations: {}
+
+    cert_template:
+      ou: "Kubernetes"
+      o: "MyOrg"
+      l: "My Cluster"
+      st: "State of Cluster"
+      c: "MyCountry"
+
+    myvd_config_path: "WEB-INF/myvd.conf"
+    k8s_cluster_name: talos-plexuz
+    enable_impersonation: false
+
+    impersonation:
+      use_jetstack: true
+      explicit_certificate_trust: true
+
+    dashboard:
+      enabled: false
+      namespace: "kubernetes-dashboard"
+      cert_name: "kubernetes-dashboard-certs"
+      label: "k8s-app=kubernetes-dashboard"
+      service_name: kubernetes-dashboard
+      require_session: true
+
+    certs:
+      use_k8s_cm: false
+
+    trusted_certs: []
+
+    monitoring:
+      prometheus_service_account: system:serviceaccount:monitoring:prometheus-k8s
+
+    oidc:
+      client_id: kubernetes
+      issuer: https://auth.plexuz.xyz/
+      user_in_idtoken: false
+      domain: ""
+      scopes: openid email profile groups
+      claims:
+        sub: sub
+        email: email
+        given_name: given_name
+        family_name: family_name
+        display_name: name
+        groups: groups
+
+    network_policies:
+      enabled: false
+
+    services:
+      enable_tokenrequest: false
+      token_request_audience: api
+      token_request_expiration_seconds: 600
+      node_selectors: []
+
+    openunison:
+      replicas: 3
+      non_secret_data:
+        K8S_DB_SSO: oidc
+        PROMETHEUS_SERVICE_ACCOUNT: system:serviceaccount:monitoring:prometheus-k8s
+        SHOW_PORTAL_ORGS: "false"
+      secrets: []
+      enable_provisioning: false
+      use_standard_jit_workflow: true
+      # enable_activemq: true
+      # activemq_use_pvc: true
+      # role_attribute: portalGroups
+      # groups:
+      #   areJson: "true"
+      #az_groups:
+      #- CN=k8s-users,CN=Users,DC=ent2k12,DC=domain,DC=com
+    #myvd_configmap: myvdconfig
+
+    # For Namespace as a Service
+
+    # database:
+    #   hibernate_dialect: org.hibernate.dialect.MariaDBDialect
+    #   quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+    #   driver: org.mariadb.jdbc.Driver
+    #   url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
+    #   user: unison
+    #   validation: SELECT 1
+
+    #smtp:
+    #  host: blackhole.blackhole.svc.cluster.local
+    #  port: 1025
+    #  user: "none"
+    #  from: donotreply@domain.com
+    #  tls: false
