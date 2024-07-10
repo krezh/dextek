@@ -9,11 +9,11 @@ spec:
   chart:
     spec:
       chart: orchestra-login-portal
+      version: 2.3.51
       sourceRef:
         kind: HelmRepository
         name: openunison
         namespace: flux-system
-      version: 3.2.1
   install:
     remediation:
       retries: 3
