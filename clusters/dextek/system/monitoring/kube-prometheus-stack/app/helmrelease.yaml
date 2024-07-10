@@ -94,6 +94,8 @@ spec:
       enabled: false
     kubeEtcd:
       enabled: true
+      endpoints: &cp
+        - localhost
     nodeExporter:
       enabled: true
     prometheus-node-exporter:
