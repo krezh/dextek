@@ -40,3 +40,4 @@ resources:
   - ./tailscale.yaml
   - ./ananace.yaml
   - ./netdata.yaml
+  - ./teleport.yaml
