@@ -53,7 +53,7 @@ spec:
     highAvailability:
       certManager:
         enabled: true
-        issuerName: cluster-selfsigned
+        issuerName: letsencrypt
         issuerKind: ClusterIssuer
 
     authentication:
