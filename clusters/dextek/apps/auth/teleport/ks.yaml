@@ -6,8 +6,11 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: rook-ceph-cluster
     - name: volsync
+  targetNamespace: auth
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/auth/teleport/app
   prune: true
   sourceRef:
@@ -30,6 +33,10 @@ metadata:
 spec:
   dependsOn:
     - name: teleport
+  targetNamespace: auth
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/auth/teleport/agent
   prune: true
   sourceRef:
