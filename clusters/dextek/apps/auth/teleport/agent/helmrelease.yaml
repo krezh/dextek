@@ -1,0 +1,57 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: teleport-kube-agent
+  namespace: auth
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: teleport-kube-agent
+      version: 16.0.4
+      sourceRef:
+        kind: HelmRepository
+        name: teleport
+        namespace: flux-system
+  values:
+    log:
+      level: DEBUG
+    roles: kube,app,discovery,node,windowsdesktop
+    insecureSkipProxyTLSVerify: true
+    proxyAddr: teleport.talos.plexuz.xyz:443
+    joinParams:
+      method: kubernetes
+      # Following must match the name of the token in token.yaml
+      tokenName: "kubernetes-token"
+    kubeClusterName: talos-plexuz
+    teleportConfig:
+      discovery_service:
+        kubernetes:
+          - types: ["app"]
+            namespaces: ["default"]
+            labels:
+              teleport: enabled
+      # windows_desktop_service:
+      #   enabled: yes
+      #   static_hosts:
+      #     - name: UNSC-PillarOfAutumn
+      #       addr: 10.0.20.10
+      #       ad: false
+      #     - name: UNSC-AllUnderHeaven
+      #       addr: 10.0.20.11
+      #       ad: false
+      #     - name: UNSC-Rubicon
+      #       addr: 10.0.20.14
+      #       ad: false
+      #     - name: UNSC-GhostFlag
+      #       addr: 10.0.20.15
+      #       ad: false
+      app_service:
+        enabled: "yes"
+        apps:
+          - name: pikvm
+            public_addr: pikvm.teleport.talos.plexuz.xyz
+            uri: https://pikvm.int.plexuz.xyz
+            insecure_skip_verify: true
