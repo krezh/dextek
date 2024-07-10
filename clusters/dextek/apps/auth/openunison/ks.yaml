@@ -3,12 +3,31 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: openunison
+  name: openunison-operator
   namespace: flux-system
 spec:
   dependsOn:
     - name: external-secrets-stores
-  path: ./clusters/dextek/apps/auth/openunison/app
+  path: ./clusters/dextek/apps/auth/openunison/operator
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dextek
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: openunison-orchestra
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: openunison-operator
+  path: ./clusters/dextek/apps/auth/openunison/orchestra
   prune: true
   sourceRef:
     kind: GitRepository
