@@ -6,7 +6,7 @@ metadata:
   name: kube-prometheus-stack
   namespace: flux-system
 spec:
-  targetNamespace: downloads
+  targetNamespace: monitoring
   path: ./clusters/dextek/system/monitoring/kube-prometheus-stack/app
   prune: true
   sourceRef:
