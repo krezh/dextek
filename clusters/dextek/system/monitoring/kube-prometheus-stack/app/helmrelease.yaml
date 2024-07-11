@@ -91,7 +91,7 @@ spec:
     kubeProxy:
       enabled: false
     kubeEtcd:
-      enabled: true
+      enabled: false
       endpoints: &cp
         - localhost
     nodeExporter:
