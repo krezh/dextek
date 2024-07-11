@@ -84,16 +84,20 @@ spec:
               replacement: $1
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
-    kubeControllerManager:
-      enabled: false
-    kubeScheduler:
-      enabled: false
     kubeProxy:
       enabled: false
-    kubeEtcd:
-      enabled: false
+    kubeControllerManager:
+      enabled: true
       endpoints: &cp
-        - localhost
+        - 10.10.0.13
+        - 10.10.0.14
+        - 10.10.0.15
+    kubeEtcd:
+      enabled: true
+      endpoints: *cp
+    kubeScheduler:
+      enabled: true
+      endpoints: *cp
     nodeExporter:
       enabled: true
     prometheus-node-exporter:
