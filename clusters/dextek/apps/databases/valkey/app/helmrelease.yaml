@@ -3,7 +3,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: immich-valkey
+  name: valkey
+  namespace: databases
 spec:
   interval: 30m
   chart:
@@ -12,7 +13,7 @@ spec:
       version: 3.2.1
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: bjw-s
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,7 +28,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      immich-valkey:
+      valkey:
         containers:
           app:
             image:
@@ -35,7 +36,7 @@ spec:
               tag: 7.2.5
     service:
       app:
-        controller: immich-valkey
+        controller: valkey
         ports:
           http:
             port: 6379
