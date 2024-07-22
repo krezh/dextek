@@ -6,7 +6,7 @@ resources:
   - ./namespace.yaml
   - ./grafana
   - ./kube-prometheus-stack
-  - ./vector
+  # - ./vector
   - ./loki
   - ./thanos
   - ./nut-exporter
@@ -18,3 +18,4 @@ resources:
   - ./netdata
   - ./kromgo
   - ./mikrotik-exporter
+  - ./promtail
