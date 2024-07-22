@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: ghcr.io/zhaofengli/attic
-              tag: latest@sha256:06d9ca943cfe38ef954cbe2dd453dac0788f55661f84c31254a3a8044aa3100f
+              tag: latest@sha256:907b90b1af4c37ba7f095564acbeb1c340dc4300a0e49d4e3a75ca8e489ffaa4
             env:
               TZ: Europe/Stockholm
             args: ["-f", "/config/server.toml", "--mode", "api-server"]
