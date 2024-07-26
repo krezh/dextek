@@ -35,5 +35,7 @@ spec:
         enableProcessNs: true
         prometheus:
           enabled: false
+          serviceMonitor:
+            enabled: true
     tetragonOperator:
       enabled: true
