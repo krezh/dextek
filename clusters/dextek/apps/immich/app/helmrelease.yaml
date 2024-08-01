@@ -63,7 +63,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.110.0
+              tag: v1.111.0
             envFrom: *envFrom
             env:
               IMMICH_WORKERS_INCLUDE: api
@@ -84,7 +84,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.110.0
+              tag: v1.111.0
             envFrom: *envFrom
             resources:
               requests:
@@ -102,7 +102,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.110.0
+              tag: v1.111.0
             envFrom: *envFrom
             env:
               IMMICH_WORKERS_EXCLUDE: api
