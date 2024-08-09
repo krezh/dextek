@@ -15,11 +15,11 @@ resource "cloudflare_zone_settings_override" "cloudflare_settings" {
     security_level           = "high"
     brotli                   = "on"
     browser_cache_ttl        = 0
-    minify {
-      css  = "on"
-      js   = "on"
-      html = "on"
-    }
+    # minify {
+    #   css  = "on"
+    #   js   = "on"
+    #   html = "on"
+    # }
     rocket_loader       = "on"
     always_online       = "off"
     development_mode    = "off"
