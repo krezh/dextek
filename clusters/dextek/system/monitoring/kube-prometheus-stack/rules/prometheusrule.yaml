@@ -39,5 +39,5 @@ spec:
             description: |
               Synchronization of the ExternalSecret `{{ $labels.name }}` in namespace `{{ $labels.exported_namespace }}` is failing.
               Check for errors in the Status field of the associated ExternalSecret object.
-          expr: max(increase(externalsecret_sync_calls_error[5m]) > 0) by (exported_namespace, name)
-          for: 5m
+          expr: max(increase(externalsecret_sync_calls_error[1h]) > 0) by (exported_namespace, name)
+          for: 1h
