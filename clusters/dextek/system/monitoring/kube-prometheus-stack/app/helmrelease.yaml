@@ -150,6 +150,13 @@ spec:
               resources:
                 requests:
                   storage: 50Gi
+        additionalScrapeConfigs:
+          - job_name: minio
+            metrics_path: /minio/v2/metrics/node
+            scheme: https
+            static_configs:
+              - targets: [minio.int.plexuz.xyz]
+
   postRenderers:
     - kustomize:
         patches:
