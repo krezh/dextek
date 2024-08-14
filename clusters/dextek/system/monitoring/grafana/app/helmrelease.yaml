@@ -167,6 +167,7 @@ spec:
           revision: 26
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+            - { name: scrape.jobs, value: "minio-bucket" }
         minio-bucket:
           # renovate: depName="MinIO Bucket Dashboard"
           gnetId: 19237
