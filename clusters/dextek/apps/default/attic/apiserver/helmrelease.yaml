@@ -31,7 +31,7 @@ spec:
     controllers:
       app:
         type: deployment
-        replicas: 3
+        replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -116,3 +116,9 @@ spec:
           - path: /config/server.toml
             subPath: server.toml
             readOnly: false
+      store:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        globalMounts:
+          - path: /config/store
