@@ -46,29 +46,6 @@ spec:
           multicluster:
             etcd:
               enabled: true
-    kubelet:
-      enabled: true
-      serviceMonitor:
-        metricRelabelings:
-          # Drop high cardinality labels
-          - action: labeldrop
-            regex: (uid)
-          - action: labeldrop
-            regex: (id|name)
-          - action: drop
-            sourceLabels: ["__name__"]
-            regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
-    kubeApiServer:
-      enabled: true
-      serviceMonitor:
-        metricRelabelings:
-          # Drop high cardinality labels
-          - action: drop
-            sourceLabels: ["__name__"]
-            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
-          - action: drop
-            sourceLabels: ["__name__"]
-            regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
       metricLabelsAllowlist:
@@ -84,20 +61,25 @@ spec:
               replacement: $1
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
+    kubeApiServer:
+      enabled: true
+      serviceMonitor:
+        selector:
+          k8s-app: kube-apiserver
     kubeProxy:
       enabled: false
-    kubeControllerManager:
-      enabled: true
-      endpoints: &cp
-        - 10.10.0.13
-        - 10.10.0.14
-        - 10.10.0.15
-    kubeEtcd:
-      enabled: true
-      endpoints: *cp
+    kubeControllerManager: &kubeControllerManager
+      service:
+        selector:
+          k8s-app: kube-controller-manager
     kubeScheduler:
       enabled: true
-      endpoints: *cp
+      service:
+        selector:
+          k8s-app: kube-scheduler
+    kubeEtcd:
+      enabled: true
+      <<: *kubeControllerManager # etcd runs on control plane nodes
     nodeExporter:
       enabled: true
     prometheus-node-exporter:
