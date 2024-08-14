@@ -48,9 +48,9 @@ spec:
               MINIO_UPDATE: "off"
               MINIO_BROWSER_REDIRECT_URL: https://minio.int.plexuz.xyz
               MINIO_SERVER_URL: https://s3.int.plexuz.xyz
-              #MINIO_PROMETHEUS_URL: https://prometheus.int.plexuz.xyz
-              #MINIO_PROMETHEUS_JOB_ID: minio
-              #MINIO_PROMETHEUS_AUTH_TYPE: public
+              MINIO_PROMETHEUS_URL: https://prometheus.talos.plexuz.xyz
+              MINIO_PROMETHEUS_JOB_ID: minio
+              MINIO_PROMETHEUS_AUTH_TYPE: public
               MINIO_API_CORS_ALLOW_ORIGIN: https://minio.int.plexuz.xyz,https://s3.int.plexuz.xyz
             envFrom: &envFrom
               - secretRef:
