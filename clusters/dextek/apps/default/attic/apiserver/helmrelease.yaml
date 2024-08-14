@@ -43,6 +43,24 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: attic-secret
+          migrations:
+            image:
+              repository: ghcr.io/zhaofengli/attic
+              tag: latest@sha256:7fc9a7ea9a60e8c71a688997d4dec415f02203e4e0e6dc527660d41642218b3f
+              pullPolicy: IfNotPresent
+            args: ["-f", "/config/server.toml", "--mode", "db-migrations"]
+            env:
+              TZ: Europe/Stockholm
+            envFrom: *envFrom
+          check-config:
+            image:
+              repository: ghcr.io/zhaofengli/attic
+              tag: latest@sha256:7fc9a7ea9a60e8c71a688997d4dec415f02203e4e0e6dc527660d41642218b3f
+              pullPolicy: IfNotPresent
+            args: ["-f", "/config/server.toml", "--mode", "check-config"]
+            env:
+              TZ: Europe/Stockholm
+            envFrom: *envFrom
         pod:
           topologySpreadConstraints:
             - maxSkew: 1
@@ -116,9 +134,9 @@ spec:
           - path: /config/server.toml
             subPath: server.toml
             readOnly: false
-      store:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 50Gi
-        globalMounts:
-          - path: /config/store
+      # store:
+      #   type: persistentVolumeClaim
+      #   accessMode: ReadWriteOnce
+      #   size: 50Gi
+      #   globalMounts:
+      #     - path: /config/store
