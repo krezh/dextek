@@ -19,7 +19,7 @@ resource "cloudflare_filter" "allowed_paths" {
   for_each    = toset(var.domains)
   zone_id     = data.cloudflare_zone.domain[each.key].id
   description = "Allow Specified paths"
-  expression  = "(http.request.uri.path contains \"/feed/\") or (http.request.uri.path contains \"/api/\") or (http.user_agent eq \"Google-Calendar-Importer\") or (http.request.uri.path contains \"/image/\") or (http.request.uri.path contains \"/api2/json/\") or (http.user_agent contains \"Shields.io\")"
+  expression  = "(http.request.uri.path contains \"/feed/\") or (http.request.uri.path contains \"/api/\") or (http.user_agent eq \"Google-Calendar-Importer\") or (http.request.uri.path contains \"/image/\") or (http.request.uri.path contains \"/api2/json/\") or (http.user_agent contains \"Shields.io\") or (http.host eq \"nix-cache.plexuz.xyz\")"
 }
 resource "cloudflare_firewall_rule" "allowed_paths" {
   for_each    = toset(var.domains)
