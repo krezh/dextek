@@ -129,6 +129,9 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
+        scrapeConfigSelector:
+          matchLabels:
+            prometheus: system-monitoring-prometheus
         enableAdminAPI: true
         walCompression: true
         enableFeatures:
