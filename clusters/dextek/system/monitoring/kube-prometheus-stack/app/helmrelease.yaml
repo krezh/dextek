@@ -154,8 +154,13 @@ spec:
                 requests:
                   storage: 50Gi
         additionalScrapeConfigs:
-          - job_name: minio
+          - job_name: minio-cluster
             metrics_path: /minio/v2/metrics/cluster
+            scheme: https
+            static_configs:
+              - targets: [s3.int.plexuz.xyz]
+          - job_name: minio-bucket
+            metrics_path: /minio/v2/metrics/bucket
             scheme: https
             static_configs:
               - targets: [s3.int.plexuz.xyz]
