@@ -47,10 +47,10 @@ spec:
         default-ssl-certificate: ingress-nginx/plexuz-default-tls
       extraEnvs:
         - name: TZ
-          value: ${TIMEZONE}
+          value: Europe/Stockholm
       ingressClassResource:
         default: true
-      kind: DaemonSet
+      kind: Deployment
       metrics:
         enabled: false
       service:
