@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: ["infrastructure/terraform/**", "clusters/*/terraform/**/*"]
+    paths: ["infrastructure/terraform/**", "clusters/*/terraform/**"]
 
 jobs:
   publish-infrastructure:
@@ -49,9 +49,9 @@ jobs:
       - name: Publish manifests
         shell: bash
         run: |
+          mkdir /tmp/terraform && cp -r infrastructure/terraform clusters/*/terraform /tmp/terraform
           flux push artifact oci://${{ steps.generate-tag.outputs.tag }} \
-              --path="./infrastructure/terraform" \
-              --path="./clusters/dextek/terraform" \
+              --path="/tmp/terraform" \
               --source="$(git config --get remote.origin.url)" \
               --revision="$(git branch --show-current)/$(git rev-parse HEAD)"
 
