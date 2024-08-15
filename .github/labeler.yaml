@@ -22,8 +22,6 @@ area/terraform:
 cluster/dextek:
   - changed-files:
       - any-glob-to-any-file: clusters/dextek/**/*
-      - any-glob-to-any-file: clusters/dextek/terraform/**/*
 cluster/jotunheim:
   - changed-files:
       - any-glob-to-any-file: clusters/jotunheim/**/*
-      - any-glob-to-any-file: clusters/jotunheim/terraform/**/*
