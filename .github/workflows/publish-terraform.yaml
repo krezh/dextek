@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: ["infrastructure/terraform/**"]
+    paths: ["infrastructure/terraform/**", "clusters/*/terraform/**/*"]
 
 jobs:
   publish-infrastructure:
@@ -51,6 +51,8 @@ jobs:
         run: |
           flux push artifact oci://${{ steps.generate-tag.outputs.tag }} \
               --path="./infrastructure/terraform" \
+              --path="./clusters/dextek/terraform" \
+              --path="./clusters/jotunheim/terraform" \
               --source="$(git config --get remote.origin.url)" \
               --revision="$(git branch --show-current)/$(git rev-parse HEAD)"
 

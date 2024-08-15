@@ -8,7 +8,6 @@ vars:
   TASKS_DIR: ".taskfiles"
   CLUSTER_DIR: "cluster"
   TERRAFORM_DIR: "infrastructure/terraform"
-  BOOTSTRAP_DIR: "clusters/dextek/bootstrap"
 
 includes:
   k8s: "{{.TASKS_DIR}}/Kubernetes"
@@ -18,9 +17,6 @@ includes:
   volsync: "{{.TASKS_DIR}}/VolSync"
   bootstrap: "{{.TASKS_DIR}}/Bootstrap"
   talos: "{{.TASKS_DIR}}/Talos"
-  terraform:
-    taskfile: "{{.TERRAFORM_DIR}}/talos"
-    dir: "{{.TERRAFORM_DIR}}/talos"
 
 tasks:
   default:
