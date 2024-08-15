@@ -114,7 +114,13 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            chunked_transfer_encoding off;
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
         hosts:
           - host: &HOST "nix-cache.plexuz.xyz"
             paths:
@@ -134,9 +140,9 @@ spec:
           - path: /config/server.toml
             subPath: server.toml
             readOnly: false
-      # store:
-      #   type: persistentVolumeClaim
-      #   accessMode: ReadWriteOnce
-      #   size: 50Gi
-      #   globalMounts:
-      #     - path: /config/store
+      store:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        globalMounts:
+          - path: /config/store
