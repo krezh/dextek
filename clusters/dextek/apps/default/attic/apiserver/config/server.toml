@@ -58,7 +58,7 @@ api-endpoint = "https://nix-cache.plexuz.xyz/"
 # Storage type
 #
 # Can be "local" or "s3".
-type = "s3"
+type = "local"
 
 # ## Local storage
 
@@ -67,16 +67,16 @@ path = "/config/store"
 
 # ## S3 Storage (set type to "s3" and uncomment below)
 
-# The AWS region
-region = "us-east-1"
+# # The AWS region
+# region = "us-east-1"
 
-# The name of the bucket
-bucket = "attic"
+# # The name of the bucket
+# bucket = "attic"
 
-# Custom S3 endpoint
-#
-# Set this if you are using an S3-compatible object storage (e.g., Minio).
-endpoint = "https://s3.int.plexuz.xyz"
+# # Custom S3 endpoint
+# #
+# # Set this if you are using an S3-compatible object storage (e.g., Minio).
+# endpoint = "https://s3.int.plexuz.xyz"
 
 # Credentials
 #
