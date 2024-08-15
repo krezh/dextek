@@ -50,6 +50,7 @@ jobs:
         shell: bash
         run: |
           mkdir /tmp/terraform && cp -r infrastructure/terraform/* clusters/*/terraform/* /tmp/terraform
+          ls /tmp/terraform
           flux push artifact oci://${{ steps.generate-tag.outputs.tag }} \
               --path="/tmp/terraform" \
               --source="$(git config --get remote.origin.url)" \
