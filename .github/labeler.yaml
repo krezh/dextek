@@ -17,12 +17,13 @@ area/taskfile:
 area/terraform:
   - changed-files:
       - any-glob-to-any-file: infrastructure/terraform/**/*
+      - any-glob-to-any-file: clusters/*/terraform/**/*
 # Cluster
 cluster/dextek:
   - changed-files:
       - any-glob-to-any-file: clusters/dextek/**/*
-      - any-glob-to-any-file: infrastructure/terraform/dextek/**/*
+      - any-glob-to-any-file: clusters/dextek/terraform/**/*
 cluster/jotunheim:
   - changed-files:
       - any-glob-to-any-file: clusters/jotunheim/**/*
-      - any-glob-to-any-file: infrastructure/terraform/jotunheim/**/*
+      - any-glob-to-any-file: clusters/jotunheim/terraform/**/*
