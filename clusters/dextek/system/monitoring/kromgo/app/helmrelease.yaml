@@ -83,6 +83,8 @@ spec:
         ports:
           http:
             port: *port
+          health:
+            port: *hport
     ingress:
       kromgo:
         annotations:
