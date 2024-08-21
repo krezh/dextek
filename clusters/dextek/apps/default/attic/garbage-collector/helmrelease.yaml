@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: ghcr.io/zhaofengli/attic
-              tag: latest@sha256:19e53f9465ca31515bed832bb1e0c9a3376498c46fc814ffcba7b748823234d9
+              tag: latest@sha256:64082e643f9250f86eca6160e498fae0f7559a62fcc57ac53c1830671a0213a3
             env:
               TZ: Europe/Stockholm
             args: ["-f", "/config/server.toml", "--mode", "garbage-collector"]
