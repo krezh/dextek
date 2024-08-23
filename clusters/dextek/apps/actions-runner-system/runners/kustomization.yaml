@@ -9,3 +9,4 @@ resources:
   - ./dots.yaml
   - ./containers.yaml
   - ./renovate-config.yaml
+  - ./nix-config.yaml
