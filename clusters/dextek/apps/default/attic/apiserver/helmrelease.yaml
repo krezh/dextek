@@ -113,13 +113,13 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
+          #external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
           nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
           nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
         hosts:
-          - host: &HOST "nix-cache.plexuz.xyz"
+          - host: &HOST "nix-cache.talos.plexuz.xyz"
             paths:
               - path: /
                 pathType: Prefix
