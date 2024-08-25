@@ -127,7 +127,7 @@ type = "zstd"
 #
 # If zero, automatic garbage collection is disabled, but
 # it can still be run manually with `atticd --mode garbage-collector-once`.
-interval = "12 hours"
+interval = "7 days"
 
 # Default retention period
 #
