@@ -1,0 +1,92 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: arc-nix-config
+  namespace: actions-runner-system
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: gha-runner-scale-set
+      version: 0.9.3
+      sourceRef:
+        kind: HelmRepository
+        name: actions-runner-controller
+        namespace: flux-system
+
+  values:
+    runnerScaleSetName: nix-config-runner
+
+    githubConfigUrl: https://github.com/krezh/nix-config
+
+    minRunners: 0
+    maxRunners: 25
+
+    containerMode:
+      type: dind
+
+    template:
+      spec:
+        securityContext:
+          fsGroup: 123
+        containers:
+          - name: runner
+            image: ghcr.io/krezh/actions-runner:2.319.1@sha256:189c5846c8585b6d49dfc7ee4d3aa6c3b7b50f1f8c131acb9fa86f48889b934b
+            command: ["/home/runner/run.sh"]
+            volumeMounts:
+              - name: work
+                mountPath: /home/runner/_work
+              - name: nix
+                mountPath: /nix
+              - name: tool
+                mountPath: /home/runner/_work/_tool
+          - name: dind
+            volumeMounts:
+              - name: work
+                mountPath: /home/runner/_work
+              - name: nix
+                mountPath: /nix
+              - name: tool
+                mountPath: /home/runner/_work/_tool
+        volumes:
+          - name: work
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "ceph-block"
+                  resources:
+                    requests:
+                      storage: 100Gi
+          - name: nix
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "ceph-block"
+                  resources:
+                    requests:
+                      storage: 100Gi
+          - name: tool
+            persistentVolumeClaim:
+              claimName: containers-tool
+
+    controllerServiceAccount:
+      name: actions-runner-controller-gha-rs-controller
+      namespace: actions-runner-system
+
+  valuesFrom:
+    - kind: Secret
+      name: actions-runner-controller
+      valuesKey: github_app_id
+      targetPath: githubConfigSecret.github_app_id
+    - kind: Secret
+      name: actions-runner-controller
+      valuesKey: github_app_installation_id
+      targetPath: githubConfigSecret.github_app_installation_id
+    - kind: Secret
+      name: actions-runner-controller
+      valuesKey: github_app_private_key
+      targetPath: githubConfigSecret.github_app_private_key
