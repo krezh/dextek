@@ -25,59 +25,28 @@ spec:
     maxRunners: 25
 
     containerMode:
-      type: kubernetes
+      type: dind
 
     template:
-      metadata:
-        annotations:
-          k8tz.io/inject: "false"
       spec:
         securityContext:
-          privileged: true
-          runAsUser: 0
-          runAsGroup: 0
-          fsGroup: 0
-        # initContainers:
-        #   - name: kube-init
-        #     image: ghcr.io/krezh/actions-runner:2.319.1@sha256:189c5846c8585b6d49dfc7ee4d3aa6c3b7b50f1f8c131acb9fa86f48889b934b
-        #     command: ["/bin/sh", "-c"]
-        #     args:
-        #       - |
-        #         chown -R 0:0 /home/runner/_work
-        #     volumeMounts:
-        #       - name: work
-        #         mountPath: /home/runner/_work
+          fsGroup: 123
         containers:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.319.1@sha256:189c5846c8585b6d49dfc7ee4d3aa6c3b7b50f1f8c131acb9fa86f48889b934b
             command: ["/home/runner/run.sh"]
-
-            env:
-              - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
-                value: "false"
-              - name: ACTIONS_RUNNER_CONTAINER_HOOKS
-                value: /home/runner/k8s/index.js
-              - name: ACTIONS_RUNNER_POD_NAME
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
             volumeMounts:
-              - name: nix
-                mountPath: /nix
               - name: work
                 mountPath: /home/runner/_work
-              - name: tmp
-                mountPath: /tmp
+              - name: nix
+                mountPath: /nix
+          - name: dind
+            volumeMounts:
+              - name: work
+                mountPath: /home/runner/_work
+              - name: nix
+                mountPath: /nix
         volumes:
-          - name: nix
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: "ceph-block"
-                  resources:
-                    requests:
-                      storage: 100Gi
           - name: work
             ephemeral:
               volumeClaimTemplate:
@@ -87,7 +56,7 @@ spec:
                   resources:
                     requests:
                       storage: 100Gi
-          - name: tmp
+          - name: nix
             ephemeral:
               volumeClaimTemplate:
                 spec:
