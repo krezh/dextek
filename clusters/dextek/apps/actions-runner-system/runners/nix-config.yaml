@@ -44,43 +44,19 @@ spec:
             env:
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
                 value: "false"
-          #   volumeMounts:
-          #     # - name: work
-          #     #   mountPath: /home/runner/_work
-          #     - name: nix
-          #       mountPath: /nix
-          #     - name: tool
-          #       mountPath: /home/runner/_work/_tool
-          # #   - name: work
-          # #     volumeMounts:
-          # #       - name: work
-          # #         mountPath: /home/runner/_work
-          # #       - name: nix
-          # #         mountPath: /nix
-          # #       - name: tool
-          # #         mountPath: /home/runner/_work/_tool
-          # # volumes:
-          # #   - name: work
-          # #     ephemeral:
-          # #       volumeClaimTemplate:
-          # #         spec:
-          # #           accessModes: ["ReadWriteOnce"]
-          # #           storageClassName: "ceph-block"
-          # #           resources:
-          # #             requests:
-          # #               storage: 100Gi
-          # - name: nix
-          #   ephemeral:
-          #     volumeClaimTemplate:
-          #       spec:
-          #         accessModes: ["ReadWriteOnce"]
-          #         storageClassName: "ceph-block"
-          #         resources:
-          #           requests:
-          #             storage: 100Gi
-          # - name: tool
-          #   persistentVolumeClaim:
-          #     claimName: containers-tool
+            volumeMounts:
+              - name: nix
+                mountPath: /nix
+        volumes:
+          - name: nix
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "ceph-block"
+                  resources:
+                    requests:
+                      storage: 100Gi
 
     controllerServiceAccount:
       name: actions-runner-controller-gha-rs-controller
