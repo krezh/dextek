@@ -34,16 +34,16 @@ spec:
           runAsUser: 0
           runAsGroup: 0
           fsGroup: 0
-        initContainers:
-          - name: kube-init
-            image: ghcr.io/krezh/actions-runner:2.319.1@sha256:189c5846c8585b6d49dfc7ee4d3aa6c3b7b50f1f8c131acb9fa86f48889b934b
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                chown -R 0:0 /home/runner/_work
-            volumeMounts:
-              - name: work
-                mountPath: /home/runner/_work
+        # initContainers:
+        #   - name: kube-init
+        #     image: ghcr.io/krezh/actions-runner:2.319.1@sha256:189c5846c8585b6d49dfc7ee4d3aa6c3b7b50f1f8c131acb9fa86f48889b934b
+        #     command: ["/bin/sh", "-c"]
+        #     args:
+        #       - |
+        #         chown -R 0:0 /home/runner/_work
+        #     volumeMounts:
+        #       - name: work
+        #         mountPath: /home/runner/_work
         containers:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.319.1@sha256:189c5846c8585b6d49dfc7ee4d3aa6c3b7b50f1f8c131acb9fa86f48889b934b
