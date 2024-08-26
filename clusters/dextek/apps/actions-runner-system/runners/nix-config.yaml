@@ -25,7 +25,13 @@ spec:
     maxRunners: 25
 
     containerMode:
-      type: dind
+      type: kubernetes
+      kubernetesModeWorkVolumeClaim:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "ceph-block"
+        resources:
+          requests:
+            storage: 100Gi
 
     template:
       spec:
@@ -42,7 +48,7 @@ spec:
                 mountPath: /nix
               - name: tool
                 mountPath: /home/runner/_work/_tool
-          - name: dind
+          - name: work
             volumeMounts:
               - name: work
                 mountPath: /home/runner/_work
