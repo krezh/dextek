@@ -30,7 +30,7 @@ spec:
     template:
       metadata:
         annotations:
-          k8tz.io/inject: false
+          k8tz.io/inject: "false"
       spec:
         securityContext:
           privileged: true
