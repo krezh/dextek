@@ -47,8 +47,19 @@ spec:
             volumeMounts:
               - name: nix
                 mountPath: /nix
+              - name: work
+                mountPath: /home/runner/_work
         volumes:
           - name: nix
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "ceph-block"
+                  resources:
+                    requests:
+                      storage: 100Gi
+          - name: work
             ephemeral:
               volumeClaimTemplate:
                 spec:
