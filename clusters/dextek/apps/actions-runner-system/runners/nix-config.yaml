@@ -33,7 +33,7 @@ spec:
           privileged: true
           runAsUser: 1001
           runAsGroup: 1001
-          fsGroup: 123
+          fsGroup: 1001
         containers:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.319.1@sha256:189c5846c8585b6d49dfc7ee4d3aa6c3b7b50f1f8c131acb9fa86f48889b934b
