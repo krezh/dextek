@@ -40,7 +40,7 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
               - |
-                sudo chown -R 0:0 /home/runner/_work
+                chown -R 0:0 /home/runner/_work
             volumeMounts:
               - name: work
                 mountPath: /home/runner/_work
