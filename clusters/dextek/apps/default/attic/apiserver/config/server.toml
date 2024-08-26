@@ -17,7 +17,7 @@ allowed-hosts = []
 #
 # The API endpoint _must_ end with a slash (e.g., `https://domain.tld/attic/`
 # not `https://domain.tld/attic`).
-api-endpoint = "https://nix-cache.talos.plexuz.xyz/"
+api-endpoint = "https://nix-cache.plexuz.xyz/"
 
 # Whether to soft-delete caches
 #
