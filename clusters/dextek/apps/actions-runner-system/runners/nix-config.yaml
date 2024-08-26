@@ -28,9 +28,10 @@ spec:
       type: kubernetes
 
     template:
-      spec:
+      metadata:
         annotations:
           k8tz.io/inject: false
+      spec:
         securityContext:
           privileged: true
           runAsUser: 0
