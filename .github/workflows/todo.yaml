@@ -21,7 +21,7 @@ jobs:
           token: "${{ steps.app-token.outputs.token }}"
 
       - name: Run tdg-github-action
-        uses: ribtoks/tdg-github-action@v0.4.11-beta
+        uses: ribtoks/tdg-github-action@v0.4.12-beta
         with:
           TOKEN: "${{ steps.app-token.outputs.token }}"
           REPO: "${{ github.repository }}"
