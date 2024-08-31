@@ -46,7 +46,7 @@ spec:
           migrations:
             image:
               repository: ghcr.io/zhaofengli/attic
-              tag: latest@sha256:bfed2a5d5535cf844f5af658394e4de89f447b33f7b733473e8d63f913f82833
+              tag: latest@sha256:a56ebc7d1cf188456b4cb0296c4f586557df859ec107ea902ad39250ceea6175
               pullPolicy: IfNotPresent
             args: ["-f", "/config/server.toml", "--mode", "db-migrations"]
             env:
@@ -55,7 +55,7 @@ spec:
           check-config:
             image:
               repository: ghcr.io/zhaofengli/attic
-              tag: latest@sha256:bfed2a5d5535cf844f5af658394e4de89f447b33f7b733473e8d63f913f82833
+              tag: latest@sha256:a56ebc7d1cf188456b4cb0296c4f586557df859ec107ea902ad39250ceea6175
               pullPolicy: IfNotPresent
             args: ["-f", "/config/server.toml", "--mode", "check-config"]
             env:
@@ -73,7 +73,7 @@ spec:
           app:
             image:
               repository: ghcr.io/zhaofengli/attic
-              tag: latest@sha256:bfed2a5d5535cf844f5af658394e4de89f447b33f7b733473e8d63f913f82833
+              tag: latest@sha256:a56ebc7d1cf188456b4cb0296c4f586557df859ec107ea902ad39250ceea6175
             env:
               TZ: Europe/Stockholm
             args: ["-f", "/config/server.toml", "--mode", "api-server"]
