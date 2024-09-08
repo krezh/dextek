@@ -9,11 +9,11 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: app-template
-      version: 3.4.0
+      chart: valkey
+      version: 1.0.2
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: groundhog2k
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,16 +27,21 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controllers:
-      valkey:
-        containers:
-          app:
-            image:
-              repository: ghcr.io/krezh/valkey
-              tag: 7.2.6
+    image:
+      registry: ghcr.io
+      repository: krezh/valkey
+      tag: 7.2.6
+    metrics:
+      enabled: true
     service:
-      app:
-        controller: valkey
-        ports:
-          http:
-            port: 6379
+      type: ClusterIP
+      serverPort: 6379
+      sentinelPort: 26379
+    haMode:
+      enabled: true
+      useDnsNames: true
+      masterGroupName: valkeyha
+      replicas: 3
+      quorum: 2
+    storage:
+      className: ceph-block

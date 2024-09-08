@@ -41,3 +41,4 @@ resources:
   - ./ananace.yaml
   - ./netdata.yaml
   - ./openunison.yaml
+  - ./groundhog2k.yaml
