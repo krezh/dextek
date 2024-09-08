@@ -27,10 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      registry: ghcr.io
-      repository: krezh/valkey
-      tag: 7.2.6
+    # image:
+    #   registry: ghcr.io
+    #   repository: krezh/valkey
+    #   tag: 7.2.6
     metrics:
       enabled: true
     service:
