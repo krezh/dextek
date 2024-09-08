@@ -28,3 +28,4 @@ resources:
   - ./obsidian-couchdb
   - ./it-tools
   - ./attic
+  - ./backrest
