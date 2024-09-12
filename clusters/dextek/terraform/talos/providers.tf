@@ -17,7 +17,7 @@ terraform {
     }
     local = {
       source  = "hashicorp/local"
-      version = "2.5.2"
+      version = "2.5.1"
     }
     matchbox = {
       source  = "poseidon/matchbox"
