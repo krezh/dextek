@@ -17,12 +17,12 @@ spec:
         namespace: flux-system
   values:
     controllers:
-      app:
+      qbittorrent:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          qbittorrent:
             nameOverride: qbittorrent
             image:
               repository: ghcr.io/onedr0p/qbittorrent
@@ -119,14 +119,14 @@ spec:
                 drop:
                   - ALL
     service:
-      app:
-        controller: app
+      qbittorrent:
+        controller: qbittorrent
         ports:
           http:
             port: 80
             targetPort: *port
     ingress:
-      app:
+      qbittorrent:
         enabled: true
         className: external
         annotations:
@@ -145,7 +145,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: qbittorrent
         tls:
           - hosts:
               - *host
