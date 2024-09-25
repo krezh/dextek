@@ -5,3 +5,11 @@ resources:
   - ../../../../templates/volsync
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: qbittorrent-dnsdist
+    files:
+      - ./config/dnsdist.conf
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
