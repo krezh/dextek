@@ -92,10 +92,11 @@ spec:
               - secretRef:
                   name: qbittorrent-secret
             securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-              allowPrivilegeEscalation: true
+              privileged: true
+              # capabilities:
+              #   add:
+              #     - NET_ADMIN
+              # allowPrivilegeEscalation: true
 
           port-forward:
             image:
