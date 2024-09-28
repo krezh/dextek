@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: *app
-      version: 1.16.1
+      version: 1.16.2
       sourceRef:
         kind: HelmRepository
         name: cilium
@@ -65,7 +65,6 @@ spec:
     l7Proxy: true
 
     enableRuntimeDeviceDetection: true
-    enableCnpStatusUpdates: true
 
     ipam:
       mode: "kubernetes"
