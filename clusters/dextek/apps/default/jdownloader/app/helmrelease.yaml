@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: docker.io/jlesage/jdownloader-2
-              tag: v24.08.1
+              tag: v24.09.1
             env:
               TZ: Europe/Stockholm
               DARK_MODE: 1
