@@ -13,7 +13,7 @@ terraform {
     }
     talos = {
       source  = "siderolabs/talos"
-      version = "0.6.0"
+      version = "0.6.1"
     }
     local = {
       source  = "hashicorp/local"
