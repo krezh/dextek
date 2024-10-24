@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/kubernetes-schemas
-              tag: latest@sha256:69814e3cfa44e537fda9d2423e080a75088ba930662a9a1421e51344e432c2b2
+              tag: latest@sha256:51ebcc23c157bacc4278abbfbd5162702292db2cc2250e6b728d8036cb2a2f63
             resources:
               requests:
                 cpu: 10m
