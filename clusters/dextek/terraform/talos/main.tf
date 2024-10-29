@@ -1,7 +1,7 @@
 resource "talos_machine_secrets" "talos" {
   talos_version = var.talos_version
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 
