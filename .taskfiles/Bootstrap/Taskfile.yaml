@@ -3,21 +3,20 @@
 version: "3"
 
 vars:
-  BOOTSTRAP_DIR: "./clusters/dextek"
+  CLUSTER_DIR: "./clusters/dextek"
+  BOOTSTRAP_DIR: "{{.CLUSTER_DIR}}/bootstrap"
 
 tasks:
   all:
     desc: Bootstrap all required resources
     cmds:
       - task: talos
-      - task: kubelet-csr-approver
-      - task: cilium
-      - task: flux
       - task: helmfile
+      - task: flux
 
   talos:
     desc: Bootstrap Talos
-    dir: "{{.BOOTSTRAP_DIR}}/terraform/talos"
+    dir: "{{.CLUSTER_DIR}}/terraform/talos"
     cmds:
       - tofu init --upgrade
       - tofu apply --auto-approve
@@ -36,7 +35,7 @@ tasks:
       - until kubectl apply --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux; do sleep 10; done
       - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply -f -
       - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply -f -
-      - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
-      - until kubectl apply -f {{.BOOTSTRAP_DIR}}/flux/vars/cluster-settings.yaml; do sleep 10; done
+      - sops --decrypt {{.CLUSTER_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
+      - until kubectl apply -f {{.CLUSTER_DIR}}/flux/vars/cluster-settings.yaml; do sleep 10; done
       - sleep 10
-      - until kubectl apply --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux/config; do sleep 10; done
+      - until kubectl apply --server-side --kustomize {{.CLUSTER_DIR}}/flux/config; do sleep 10; done
