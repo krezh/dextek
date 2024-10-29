@@ -30,6 +30,9 @@ spec:
     cni:
       exclusive: false
 
+    endpointRoutes:
+      enabled: true
+
     bgp:
       enabled: false
       announce:
@@ -42,7 +45,7 @@ spec:
     pmtuDiscovery:
       enabled: false
 
-    k8sServiceHost: localhost
+    k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
 
     rollOutCiliumPods: true
