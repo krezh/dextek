@@ -43,7 +43,7 @@ spec:
       endpointURL: https://s3.int.plexuz.xyz
       # Note: serverName version needs to be inclemented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster cnpg-v17
+      serverName: &currentCluster cnpg-v18
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -55,7 +55,7 @@ spec:
   # # cluster when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster cnpg-v16
+      source: &previousCluster cnpg-v17
   # externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
