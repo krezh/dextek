@@ -20,17 +20,16 @@ tasks:
     cmds:
       - tofu init --upgrade
       - tofu apply --auto-approve
-      - tofu apply --var bootstrap=true --auto-approve
+      - tofu apply --var bootstrap=true --var talosconfig=true --auto-approve
 
   helmfile:
     desc: Bootstrap Helmfile resources
-    preconditions: [talos]
+    # preconditions: [talos]
     cmds:
       - until helmfile -f {{.BOOTSTRAP_DIR}}/helmfile.yaml apply; do sleep 10; done
 
   flux:
     desc: Bootstrap Flux resources
-    preconditions: [helmfile]
     cmds:
       - until kubectl apply --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux; do sleep 10; done
       - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply -f -
