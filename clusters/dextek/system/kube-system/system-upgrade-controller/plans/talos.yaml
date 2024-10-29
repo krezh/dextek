@@ -34,10 +34,10 @@ spec:
         valueFrom:
           fieldRef:
             fieldPath: status.hostIP
-      - name: NODE_SCHEMATIC_ID
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.annotations["extensions.talos.dev/schematic"]
+      # - name: NODE_SCHEMATIC_ID
+      #   valueFrom:
+      #     fieldRef:
+      #       fieldPath: metadata.annotations["extensions.talos.dev/schematic"]
     args:
       - --nodes=$(NODE_IP)
       - health
@@ -47,6 +47,5 @@ spec:
     args:
       - --nodes=$(NODE_IP)
       - upgrade
-      - --image=factory.talos.dev/installer/$(NODE_SCHEMATIC_ID):$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
-      - --preserve=true
+      - --image=factory.talos.dev/installer/${SCHEMATIC_ID}:$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
       - --wait=false
