@@ -21,6 +21,7 @@ releases:
     values:
       - ./cilium/values.yaml
     needs: []
+
   - name: kubelet-csr-approver
     namespace: kube-system
     chart: postfinance/kubelet-csr-approver
