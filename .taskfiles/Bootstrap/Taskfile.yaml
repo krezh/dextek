@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  BOOTSTRAP_DIR: "{{ .BOOTSTRAP_DIR }}"
+  BOOTSTRAP_DIR: "./clusters/dextek"
 
 tasks:
   all:
@@ -36,7 +36,7 @@ tasks:
       - until kubectl apply --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux; do sleep 10; done
       - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply -f -
       - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply -f -
-      - sops --decrypt ./clusters/dextek/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
-      - until kubectl apply -f ./clusters/dextek/flux/vars/cluster-settings.yaml; do sleep 10; done
+      - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
+      - until kubectl apply -f {{.BOOTSTRAP_DIR}}/flux/vars/cluster-settings.yaml; do sleep 10; done
       - sleep 10
-      - until kubectl apply --server-side --kustomize ./clusters/dextek/flux/config; do sleep 10; done
+      - until kubectl apply --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux/config; do sleep 10; done
