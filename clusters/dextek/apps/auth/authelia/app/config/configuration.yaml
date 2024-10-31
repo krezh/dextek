@@ -170,8 +170,8 @@ identity_providers:
 
       - client_id: mealie
         client_name: Mealie Recipes
-        # client_secret: "$${MEALIE_OAUTH_CLIENT_SECRET}"
-        public: true
+        client_secret: "$${MEALIE_OAUTH_CLIENT_SECRET}"
+        public: false
         consent_mode: auto # explicit, implicit, auto/default, preconfigured
         authorization_policy: one_factor
         pre_configured_consent_duration: 1y
