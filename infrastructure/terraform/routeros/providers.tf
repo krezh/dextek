@@ -9,7 +9,7 @@ terraform {
   required_providers {
     routeros = {
       source  = "terraform-routeros/routeros"
-      version = "1.67.0"
+      version = "1.68.0"
     }
     sops = {
       source  = "carlpett/sops"
