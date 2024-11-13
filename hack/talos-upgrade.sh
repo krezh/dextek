@@ -18,7 +18,7 @@ REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
 
 # Default Variables
-NEW_VERSION="v1.8.2" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+NEW_VERSION="v1.8.3" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 IMAGE="zot.int.plexuz.xyz/factory.talos.dev/installer/cd05f774d6ae8a21e56330879f2fbd649a76aeda3e073edefc0330454a1458d8"
 NODE=""
 CHECK_SLEEP=3
