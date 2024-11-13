@@ -33,7 +33,7 @@ spec:
           fsGroup: 123
         containers:
           - name: runner
-            image: ghcr.io/krezh/actions-runner:2.320.0@sha256:8eaf0673ac6db3f37d2132b39aa687bdbe745675f0f7a56d0d46e4e5568e51c6
+            image: ghcr.io/krezh/actions-runner:2.321.0@sha256:db74f6a131bef60c9b01b136d0d5a1b8c4f7b819cd03ab57d34ea13cd77abe76
             command: ["/home/runner/run.sh"]
             volumeMounts:
               - name: work
