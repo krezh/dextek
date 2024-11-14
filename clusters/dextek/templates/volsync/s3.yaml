@@ -15,7 +15,7 @@ spec:
     template:
       engineVersion: v2
       data:
-        RESTIC_REPOSITORY: "{{ .REPOSITORY_TEMPLATE }}/${APP}"
+        RESTIC_REPOSITORY: "{{ .RESTIC_REPOSITORY }}/${APP}"
         RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
         AWS_ACCESS_KEY_ID: "{{ .AWS_ACCESS_KEY_ID }}"
         AWS_SECRET_ACCESS_KEY: "{{ .AWS_SECRET_ACCESS_KEY }}"
@@ -38,7 +38,7 @@ spec:
     pruneIntervalDays: 7
     repository: "${APP}-volsync-secret"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-10Gi}"
     cacheStorageClassName: "${VOLSYNC_CACHE_STORAGECLASS:-ceph-block}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
@@ -61,11 +61,11 @@ spec:
     manual: restore-once
   restic:
     repository: "${APP}-volsync-secret"
-    copyMethod: Snapshot # must be Snapshot
+    copyMethod: Snapshot
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
     cacheStorageClassName: "${VOLSYNC_CACHE_STORAGECLASS:-ceph-block}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-10Gi}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     capacity: "${VOLSYNC_CAPACITY}"
@@ -73,3 +73,6 @@ spec:
       runAsUser: ${APP_UID:-568}
       runAsGroup: ${APP_UID:-568}
       fsGroup: ${APP_UID:-568}
+    enableFileDeletion: true
+    cleanupCachePVC: true
+    cleanupTempPVC: true
