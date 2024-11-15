@@ -172,3 +172,26 @@ tasks:
     desc: Trigger all Restic ReplicationSource restore
     cmds:
       - kubectl get replicationsources --all-namespaces --no-headers | awk '{print $2, $1}' | xargs --max-procs=4 -l bash -c 'task volsync:restore rsrc=$0 namespace=$1'
+
+  cleanup:
+    desc: Delete volume populator PVCs in all namespaces
+    cmds:
+      - for: { var: dest }
+        cmd: |
+          {{- $items := (split "/" .ITEM) }}
+          kubectl delete pvc -n {{ $items._0 }} {{ $items._1 }}
+      - for: { var: cache }
+        cmd: |
+          {{- $items := (split "/" .ITEM) }}
+          kubectl delete pvc -n {{ $items._0 }} {{ $items._1 }}
+      - for: { var: snaps }
+        cmd: |
+          {{- $items := (split "/" .ITEM) }}
+          kubectl delete volumesnapshot -n {{ $items._0 }} {{ $items._1 }}
+    vars:
+      dest:
+        sh: kubectl get pvc --all-namespaces --no-headers | grep "dst-dest" | awk '{print $1 "/" $2}'
+      cache:
+        sh: kubectl get pvc --all-namespaces --no-headers | grep "dst-cache" | awk '{print $1 "/" $2}'
+      snaps:
+        sh: kubectl get volumesnapshot --all-namespaces --no-headers | grep "dst-dest" | awk '{print $1 "/" $2}'
