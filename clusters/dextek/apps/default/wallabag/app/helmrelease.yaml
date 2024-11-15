@@ -50,10 +50,11 @@ spec:
             env:
               SYMFONY__ENV__DATABASE_DRIVER: pdo_pgsql
               SYMFONY__ENV__DOMAIN_NAME: https://wallabag.plexuz.xyz
-              SYMFONY__ENV__FOSUSER_REGISTRATION: "true"
-              SYMFONY__ENV__FOSUSER_CONFIRMATION: "true"
+              SYMFONY__ENV__FOSUSER_REGISTRATION: "false"
+              SYMFONY__ENV__FOSUSER_CONFIRMATION: "false"
               SYMFONY__ENV__REDIS_HOST: redis.databases.svc.cluster.local
               SYMFONY__ENV__SERVER_NAME: Wallabag
+              POPULATE_DATABASE: "false"
             resources:
               requests:
                 cpu: 100m
