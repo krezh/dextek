@@ -32,8 +32,6 @@ spec:
       wallabag:
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          enableServiceLinks: false
         initContainers:
           init-db:
             image:
@@ -43,30 +41,19 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: wallabag-secret
-          migrations:
-            image:
-              repository: wallabag/wallabag
-              tag: 2.6.9@sha256:d482b139bab164afef0e8bbfbeb7c55cd3e10e848b95d7d167e4ffcbc847f4b9
-            envFrom: *envFrom
-            env: &env
-              SYMFONY__ENV__DATABASE_DRIVER: pdo_pgsql
-              SYMFONY__ENV__DOMAIN_NAME: https://wallabag.plexuz.xyz
-              SYMFONY__ENV__FOSUSER_REGISTRATION: "true"
-              SYMFONY__ENV__FOSUSER_CONFIRMATION: "true"
-              SYMFONY__ENV__REDIS_HOST: redis.databases.svc.cluster.local
-              SYMFONY__ENV__SERVER_NAME: Wallabag
-            command:
-              - /var/www/wallabag/bin/console
-              - doctrine:migrations:migrate
-              - --env=prod
-              - --no-interaction
         containers:
           app:
             image:
               repository: wallabag/wallabag
               tag: 2.6.9@sha256:d482b139bab164afef0e8bbfbeb7c55cd3e10e848b95d7d167e4ffcbc847f4b9
             envFrom: *envFrom
-            env: *env
+            env:
+              SYMFONY__ENV__DATABASE_DRIVER: pdo_pgsql
+              SYMFONY__ENV__DOMAIN_NAME: https://wallabag.plexuz.xyz
+              SYMFONY__ENV__FOSUSER_REGISTRATION: "true"
+              SYMFONY__ENV__FOSUSER_CONFIRMATION: "true"
+              SYMFONY__ENV__REDIS_HOST: redis.databases.svc.cluster.local
+              SYMFONY__ENV__SERVER_NAME: Wallabag
             resources:
               requests:
                 cpu: 100m
