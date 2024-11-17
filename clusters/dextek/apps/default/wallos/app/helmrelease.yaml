@@ -37,14 +37,12 @@ spec:
               requests:
                 cpu: 50m
                 memory: 256Mi
-
     service:
       app:
         controller: *app
         ports:
           http:
             port: 80
-
     ingress:
       main:
         enabled: true
@@ -71,9 +69,9 @@ spec:
         tls:
           - hosts:
               - *host
-
     persistence:
       config:
         existingClaim: wallos-config
         globalMounts:
           - path: /var/www/html/db
+          - path: /var/www/html/images/uploads/logos
