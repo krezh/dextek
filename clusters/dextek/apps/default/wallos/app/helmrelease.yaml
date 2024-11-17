@@ -69,4 +69,6 @@ spec:
         existingClaim: wallos-config
         globalMounts:
           - path: /var/www/html/db
+            subPath: db
           - path: /var/www/html/images/uploads/logos
+            subPath: logos
