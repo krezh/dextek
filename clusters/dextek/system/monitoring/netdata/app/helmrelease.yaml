@@ -27,9 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: netdata/netdata
-      tag: v2.0.1
     ingress:
       enabled: true
       annotations:
