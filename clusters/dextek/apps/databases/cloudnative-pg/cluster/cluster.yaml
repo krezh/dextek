@@ -56,10 +56,6 @@ spec:
   bootstrap:
     recovery:
       source: &previousCluster cnpg-v17
-    initdb:
-      postInitSQL:
-        - ALTER SYSTEM SET search_path TO "$user", public, vectors;
-        - CREATE EXTENSION IF NOT EXISTS "vectors";
   # externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
