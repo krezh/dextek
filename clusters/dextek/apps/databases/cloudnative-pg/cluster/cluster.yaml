@@ -7,7 +7,7 @@ metadata:
   namespace: databases
 spec:
   instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.2.1
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
   enableSuperuserAccess: true
   primaryUpdateStrategy: unsupervised
   storage:
@@ -56,6 +56,10 @@ spec:
   bootstrap:
     recovery:
       source: &previousCluster cnpg-v17
+    initdb:
+      postInitSQL:
+        - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+        - CREATE EXTENSION IF NOT EXISTS "vectors";
   # externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
