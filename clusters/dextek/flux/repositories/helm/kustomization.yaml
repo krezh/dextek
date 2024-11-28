@@ -42,3 +42,4 @@ resources:
   - ./netdata.yaml
   - ./openunison.yaml
   - ./groundhog2k.yaml
+  - ./intel.yaml

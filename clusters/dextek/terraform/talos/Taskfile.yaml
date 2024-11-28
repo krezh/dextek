@@ -39,5 +39,7 @@ tasks:
     interactive: true
     vars:
       namespace: "{{.node}}"
+    deps:
+      - machine
     cmds:
       - talosctl apply -f controlplane_{{ .node }}.yaml -n {{ .node }}.k8s.plexuz.xyz
