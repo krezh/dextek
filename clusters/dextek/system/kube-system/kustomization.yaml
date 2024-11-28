@@ -18,4 +18,5 @@ resources:
   #- ./tetragon
   - ./kubelet-csr-approver
   - ./system-upgrade-controller
+  - ./intel-device-plugin
   #- ./spegel
