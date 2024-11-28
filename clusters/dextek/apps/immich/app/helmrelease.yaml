@@ -32,6 +32,7 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44]
       automountServiceAccountToken: false
     controllers:
       app:
@@ -73,6 +74,7 @@ spec:
                 memory: 512M
               limits:
                 memory: 2Gi
+                gpu.intel.com/i915: 1
 
       ml:
         type: deployment
@@ -91,6 +93,7 @@ spec:
                 memory: 2150M
               limits:
                 memory: 8Gi
+                gpu.intel.com/i915: 1
 
       micro:
         type: deployment
@@ -111,6 +114,7 @@ spec:
                 memory: 512M
               limits:
                 memory: 2Gi
+                gpu.intel.com/i915: 1
 
     service:
       app:
