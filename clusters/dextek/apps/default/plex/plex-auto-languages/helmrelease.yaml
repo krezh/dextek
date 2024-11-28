@@ -34,7 +34,7 @@ spec:
               tag: main@sha256:c59979695682308876a0c3096f4dcb4a7e3119a9f227d785860a1f8f3c18ac95
             env:
               TZ: Europe/Stockholm
-              PLEX_URL: "https://plex.talos.plexuz.xyz:32400"
+              PLEX_URL: "https://plex.talos.plexuz.xyz:443"
             envFrom:
               - secretRef:
                   name: plex-auto-languages-secret
