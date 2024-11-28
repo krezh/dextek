@@ -1,30 +1,21 @@
 #!/usr/bin/env bash
 
 # Colors & Text
-BLACK=$(tput setaf 0)
 RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
 YELLOW=$(tput setaf 3)
-LIME_YELLOW=$(tput setaf 190)
-POWDER_BLUE=$(tput setaf 153)
 BLUE=$(tput setaf 4)
 MAGENTA=$(tput setaf 5)
-CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 7)
 BRIGHT=$(tput bold)
 NORMAL=$(tput sgr0)
-BLINK=$(tput blink)
-REVERSE=$(tput smso)
-UNDERLINE=$(tput smul)
 
 # Default Variables
 NEW_VERSION="v1.8.3" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-IMAGE="zot.int.plexuz.xyz/factory.talos.dev/installer/cd05f774d6ae8a21e56330879f2fbd649a76aeda3e073edefc0330454a1458d8"
+IMAGE="zot.int.plexuz.xyz/factory.talos.dev/installer/712d1faee0ce00bb5014ab23147582f9155e6ad0db8e204cb8e53d489a687f6f"
 NODE=""
 CHECK_SLEEP=3
 UPGRADE_INTERVAL=300 # 5m
 FORCE=false
-ALL=false
 SERVICE=false
 
 shutdown() {
