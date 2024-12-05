@@ -43,3 +43,4 @@ resources:
   - ./openunison.yaml
   - ./groundhog2k.yaml
   - ./intel.yaml
+  - ./teleport.yaml
