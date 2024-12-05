@@ -54,7 +54,7 @@ spec:
     highAvailability:
       certManager:
         enabled: true
-        issuerName: letsencrypt-production
+        issuerName: cluster-selfsigned
         issuerKind: ClusterIssuer
         issuerGroup: cert-manager.io
 
