@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: orchestra
-      version: 2.10.51
+      version: 2.10.61
       sourceRef:
         kind: HelmRepository
         name: openunison
