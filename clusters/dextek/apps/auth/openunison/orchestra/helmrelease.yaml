@@ -27,17 +27,10 @@ spec:
       api_server_host: "api.talos.plexuz.xyz"
       session_inactivity_timeout_seconds: 900
       k8s_url: https://talos.k8s.plexuz.xyz:6443
-      force_redirect_to_tls: false
-      createIngressCertificate: false
       ingress_type: internal
-      ingress_annotations: {}
 
     k8s_cluster_name: talos-plexuz
     enable_impersonation: false
-
-    impersonation:
-      use_jetstack: true
-      explicit_certificate_trust: true
 
     dashboard:
       enabled: false
@@ -61,12 +54,6 @@ spec:
 
     network_policies:
       enabled: false
-
-    services:
-      enable_tokenrequest: false
-      token_request_audience: api
-      token_request_expiration_seconds: 600
-      node_selectors: []
 
     openunison:
       replicas: 1
