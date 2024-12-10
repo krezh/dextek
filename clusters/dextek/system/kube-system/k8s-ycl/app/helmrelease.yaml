@@ -18,7 +18,7 @@ spec:
   values:
     controllers:
       app:
-        replicas: 3
+        replicas: 2
         containers:
           app:
             image:
