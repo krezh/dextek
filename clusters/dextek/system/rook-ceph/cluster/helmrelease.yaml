@@ -35,7 +35,7 @@ spec:
           failureDomain: host
           enableRBDStats: true
           replicated:
-            size: 2
+            size: 3
             targetSizeRatio: 1
         storageClass:
           allowVolumeExpansion: true
@@ -74,12 +74,12 @@ spec:
         urlPrefix: /
         ssl: false
       mgr:
-        count: 2
+        count: 3
         modules:
           - enabled: true
             name: pg_autoscaler
       mon:
-        count: 2
+        count: 3
       network:
         provider: host
         connections:
@@ -116,11 +116,11 @@ spec:
             - failureDomain: host
               name: data0
               replicated:
-                size: 2
+                size: 3
                 targetSizeRatio: 1
           metadataPool:
             replicated:
-              size: 2
+              size: 3
           metadataServer:
             activeCount: 1
             activeStandby: true
@@ -153,13 +153,13 @@ spec:
               dataChunks: 2
             failureDomain: host
           gateway:
-            instances: 2
+            instances: 3
             port: 80
             priorityClassName: system-cluster-critical
           metadataPool:
             failureDomain: host
             replicated:
-              size: 2
+              size: 3
           preservePoolsOnDelete: true
         storageClass:
           enabled: true
