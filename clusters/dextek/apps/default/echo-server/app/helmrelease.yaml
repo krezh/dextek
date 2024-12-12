@@ -26,7 +26,7 @@ spec:
   values:
     controllers:
       app:
-        replicas: 2
+        replicas: 3
         strategy: RollingUpdate
         containers:
           app:

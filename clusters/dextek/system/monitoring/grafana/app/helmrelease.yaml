@@ -423,7 +423,7 @@ spec:
       - grafana-clock-panel
     rbac:
       pspEnabled: false
-    replicas: 2
+    replicas: 3
     serviceMonitor:
       enabled: true
     sidecar:

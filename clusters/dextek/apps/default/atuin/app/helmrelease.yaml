@@ -34,7 +34,7 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
     controllers:
       app:
-        replicas: 2
+        replicas: 3
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
