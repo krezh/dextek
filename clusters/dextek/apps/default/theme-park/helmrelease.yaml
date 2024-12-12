@@ -39,7 +39,7 @@ spec:
     controllers:
       app:
         type: deployment
-        replicas: 2
+        replicas: 3
         strategy: RollingUpdate
         containers:
           app:
