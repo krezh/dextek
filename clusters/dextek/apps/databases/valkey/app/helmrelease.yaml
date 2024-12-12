@@ -41,7 +41,7 @@ spec:
       enabled: true
       useDnsNames: true
       masterGroupName: valkeyha
-      replicas: 2
+      replicas: 3
       quorum: 2
     storage:
       className: ceph-block

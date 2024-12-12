@@ -103,12 +103,12 @@ spec:
         analytics:
           reporting_enabled: false
     backend:
-      replicas: 2
+      replicas: 3
       persistence:
         size: 20Gi
         storageClass: ceph-block
     gateway:
-      replicas: 2
+      replicas: 3
       deploymentStrategy:
         type: Recreate
       image:
@@ -126,9 +126,9 @@ spec:
         tls:
           - hosts: [*host]
     read:
-      replicas: 2
+      replicas: 3
     write:
-      replicas: 2
+      replicas: 3
       persistence:
         storageClass: ceph-block
         size: 50Gi
