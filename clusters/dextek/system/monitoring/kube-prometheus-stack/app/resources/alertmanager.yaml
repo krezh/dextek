@@ -71,7 +71,6 @@ alertmanager:
   alertmanagerSpec:
     replicas: 3
     useExistingSecret: false
-    #configSecret: alertmanager-secret
     storage:
       volumeClaimTemplate:
         spec:
