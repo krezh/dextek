@@ -8,7 +8,6 @@ resources:
   - ./kube-prometheus-stack
   - ./vector
   - ./loki
-  - ./thanos
   - ./nut-exporter
   - ./smartctl-exporter
   - ./blackbox-exporter
