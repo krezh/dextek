@@ -25,6 +25,7 @@ spec:
     keepHistory: false
   values:
     spegel:
+      appendMirrors: false
       containerdSock: /run/containerd/containerd.sock
       containerdRegistryConfigPath: /etc/cri/conf.d/hosts
       additionalMirrorRegistries:
@@ -38,4 +39,6 @@ spec:
       registry:
         hostPort: 29999
     serviceMonitor:
+      enabled: true
+    grafanaDashboard:
       enabled: true
