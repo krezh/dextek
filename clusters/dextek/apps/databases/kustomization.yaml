@@ -7,5 +7,4 @@ resources:
   - ./cloudnative-pg
   - ./redis
   - ./dbman
-  - ./dragonfly
   - ./valkey
