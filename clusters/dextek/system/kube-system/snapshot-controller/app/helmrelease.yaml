@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: snapshot-controller
-      version: 3.0.6
+      version: 4.0.0
       sourceRef:
         kind: HelmRepository
         name: piraeus
@@ -25,9 +25,6 @@ spec:
     remediation:
       retries: 3
   values:
-    webhook:
-      enabled: false
-      replicaCount: 3
     controller:
       enabled: true
       replicaCount: 3
