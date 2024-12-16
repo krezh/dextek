@@ -29,24 +29,10 @@ spec:
       provisionerReplicas: 3
       serviceMonitor:
         enabled: true
-      #readAffinity:
-      #  enabled: true
-      #provisioner:
-      #  image: registry.k8s.io/sig-storage/csi-provisioner:v4.0.1
-      #cephcsi:
-      #  image: quay.io/cephcsi/cephcsi:v3.11.0
-      #registrar:
-      #  image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
-      #snapshotter:
-      #  image: registry.k8s.io/sig-storage/csi-snapshotter:v7.0.2
-      #attacher:
-      #  image: registry.k8s.io/sig-storage/csi-attacher:v4.5.1
-      #resizer:
-      #  image: registry.k8s.io/sig-storage/csi-resizer:v1.10.1
+      enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
     crds:
       enabled: true
     disableDeviceHotplug: false
     enableDiscoveryDaemon: true
     monitoring:
       enabled: true
-    pspEnable: false
