@@ -25,6 +25,8 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  driftDetection:
+    mode: enabled
   dependsOn:
     - name: snapshot-controller
       namespace: kube-system
