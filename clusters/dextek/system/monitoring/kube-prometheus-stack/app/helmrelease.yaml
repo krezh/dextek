@@ -35,6 +35,16 @@ spec:
         ingressClassName: internal
         hosts: ["alertmanager.talos.plexuz.xyz"]
         pathType: Prefix
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Alert Manager"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Monitoring"
+          gethomepage.dev/icon: "alertmanager.png"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/name in (
+              alertmanager
+            )
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
