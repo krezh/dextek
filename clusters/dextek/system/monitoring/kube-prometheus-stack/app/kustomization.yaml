@@ -7,3 +7,4 @@ resources:
   - ./helmrelease.yaml
   - ./dashboards
   - ./alertmanagerconfig.yaml
+  - ./externalsecret.yaml
