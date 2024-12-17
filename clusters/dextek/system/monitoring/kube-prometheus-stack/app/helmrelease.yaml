@@ -25,13 +25,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  valuesFrom:
-    - kind: ConfigMap
-      name: alertmanager-configmap
-      valuesKey: alertmanager.yaml
   values:
     crds:
-      enabled: false
+      enabled: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:
