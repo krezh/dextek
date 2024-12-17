@@ -10,7 +10,7 @@ BRIGHT=$(tput bold)
 NORMAL=$(tput sgr0)
 
 # Default Variables
-NEW_VERSION="v1.9.0" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+NEW_VERSION="v1.8.4" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 IMAGE="zot.int.plexuz.xyz/factory.talos.dev/installer/712d1faee0ce00bb5014ab23147582f9155e6ad0db8e204cb8e53d489a687f6f"
 NODE=""
 CHECK_SLEEP=3
