@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: rook-release
         namespace: flux-system
-      version: v1.15.6
+      version: v1.15.7
   install:
     crds: Create
   upgrade:
