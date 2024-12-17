@@ -6,12 +6,4 @@ namespace: monitoring
 resources:
   - ./helmrelease.yaml
   - ./dashboards
-configMapGenerator:
-  # - name: kube-state-metrics-configmap
-  #   files:
-  #     - kube-state-metrics.yaml=./resources/kube-state-metrics.yaml
-  - name: alertmanager-configmap
-    files:
-      - alertmanager.yaml=./resources/alertmanager.yaml
-generatorOptions:
-  disableNameSuffixHash: true
+  - ./alertmanagerconfig.yaml
