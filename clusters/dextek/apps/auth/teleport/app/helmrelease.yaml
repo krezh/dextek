@@ -40,12 +40,15 @@ spec:
       extraFields: ["timestamp", "level", "component", "caller"]
 
     ingress:
-      enabled: true
+      enabled: false
       suppressAutomaticWildcards: true
       spec:
         ingressClassName: internal
 
     annotations:
+      service:
+        coredns.io/hostname: teleport
+
       ingress:
         nginx.ingress.kubernetes.io/backend-protocol: "https"
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
@@ -80,4 +83,4 @@ spec:
       create: true
 
     service:
-      type: ClusterIP
+      type: LoadBalancer
