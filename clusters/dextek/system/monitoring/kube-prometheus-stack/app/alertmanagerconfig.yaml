@@ -17,7 +17,7 @@ spec:
         matchers:
           - name: alertname
             value: "InfoInhibitor|Watchdog"
-            matchType: =
+            matchType: =~
       # - receiver: heartbeat
       #   groupInterval: 5m
       #   groupWait: 0s
