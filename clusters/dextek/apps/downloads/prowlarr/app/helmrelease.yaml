@@ -87,7 +87,6 @@ spec:
             ports:
               - name: metrics
                 containerPort: &metrics 3000
-
             resources:
               requests:
                 cpu: 100m
@@ -99,9 +98,7 @@ spec:
               PORT: *metrics
               URL: http://localhost:9696
               ENABLE_ADDITIONAL_METRICS: false
-            envFrom:
-              - secretRef:
-                  name: &secret prowlarr-secret
+            envFrom: *envFrom
 
     service:
       app:
