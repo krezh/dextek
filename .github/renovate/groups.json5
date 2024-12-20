@@ -83,6 +83,16 @@
       separateMinorPatch: true,
     },
     {
+      description: "Kubernetes Group",
+      groupName: "Kubernetes",
+      matchPackagePatterns: ["siderolabs/kubelet"],
+      matchDatasources: ["docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
       description: "Maintainerr Images",
       groupName: "Maintainerr",
       matchPackagePatterns: ["maintainerr"],
