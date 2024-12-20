@@ -59,7 +59,7 @@ jobs:
           anonymous-telemetry: 0
 
       - name: test kubectl
-        run: kubectl get pods
+        run: tsh kubectl get pods
 
       - name: Download and run crd-extractor
         shell: bash
