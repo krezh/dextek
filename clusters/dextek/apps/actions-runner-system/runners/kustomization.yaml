@@ -6,7 +6,4 @@ resources:
   - ./tool-pvc.yaml
   - ./dextek.yaml
   - ./talup.yaml
-  - ./dots.yaml
   - ./containers.yaml
-  - ./renovate-config.yaml
-  - ./nix-config.yaml
