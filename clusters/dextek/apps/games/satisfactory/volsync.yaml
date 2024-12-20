@@ -24,7 +24,7 @@ spec:
     - extract:
         key: VOLSYNC_RESTIC_TEMPLATE
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/replicationsource_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
