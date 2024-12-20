@@ -419,12 +419,3 @@ spec:
           enabled: false
           # existingClaim: nil
           Size: 1Gi
-  postRenderers:
-    - kustomize:
-        patchesStrategicMerge:
-          - kind: Service
-            apiVersion: v1
-            metadata:
-              name: minecraft-minecraft
-              annotations:
-                coredns.io/hostname: minecraft-lb
