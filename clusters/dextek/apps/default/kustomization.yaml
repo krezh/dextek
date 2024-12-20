@@ -12,7 +12,6 @@ resources:
   - ./evobot
   - ./home-assistant
   - ./homepage
-  - ./kubernetes-schemas
   - ./media-browser
   - ./ntfy
   - ./overseerr
