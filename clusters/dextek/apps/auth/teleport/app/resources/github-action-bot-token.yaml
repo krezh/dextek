@@ -1,0 +1,11 @@
+kind: token
+version: v2
+metadata:
+  name: github-action-bot
+spec:
+  roles: ["bot"]
+  join_method: github
+  bot_name: github-action-bot
+  github:
+    allow:
+      - repository: krezh/dextek
