@@ -3,4 +3,4 @@ version: v1
 metadata:
   name: github-action-bot
 spec:
-  roles: ["kube_read"]
+  roles: ["member"]
