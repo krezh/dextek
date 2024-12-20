@@ -145,6 +145,7 @@
         commitMessageTopic: "{{{groupName}}} group",
       },
       separateMinorPatch: true,
+      sourceUrl: "https://github.com/gravitational/teleport",
     },
   ],
 }
