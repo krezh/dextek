@@ -91,8 +91,8 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/description: Media stack management
           gethomepage.dev/widget.type: dashbrr
-          gethomepage.dev/widget.url: http://dashbrr.downloads.svc.cluster.local
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_DASHBRR_TOKEN}}` }}"
+          # gethomepage.dev/widget.url: http://dashbrr.downloads.svc.cluster.local
+          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_DASHBRR_TOKEN}}` }}"
         hosts:
           - host: "{{ .Release.Name }}.plexuz.xyz"
             paths:
