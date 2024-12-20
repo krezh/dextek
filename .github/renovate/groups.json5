@@ -75,7 +75,7 @@
     {
       description: "Talos Group",
       groupName: "Talos",
-      matchPackagePatterns: ["siderolabs/*"],
+      matchPackagePatterns: ["siderolabs/installer"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
