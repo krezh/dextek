@@ -33,6 +33,8 @@ jobs:
 
       - name: Fetch kubectl
         uses: azure/setup-kubectl@v4
+        with:
+          version: v1.31.4 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -47,19 +49,23 @@ jobs:
       - name: Install Teleport
         uses: teleport-actions/setup@v1
         with:
-          version: 17.1.0
+          version: 17.1.0 # renovate: datasource=github-releases depName=gravitational/teleport
 
-      - name: Authorize against Teleport
-        uses: teleport-actions/auth-k8s@v2
+      # - name: Authorize against Teleport # FIXME: Uncomment when Teleport fixes "ERROR: invalid symlinks mode"
+      #   uses: teleport-actions/auth-k8s@v2
+      #   with:
+      #     proxy: teleport.talos.plexuz.xyz:443
+      #     token: github-action-bot
+      #     certificate-ttl: 1h
+      #     kubernetes-cluster: talos-plexuz
+      #     anonymous-telemetry: 0
+
+      - name: Write kubeconfig
+        id: kubeconfig
+        uses: timheuer/base64-to-file@v1
         with:
-          proxy: teleport.talos.plexuz.xyz:443
-          token: github-action-bot
-          certificate-ttl: 1h
-          kubernetes-cluster: talos-plexuz
-          anonymous-telemetry: 0
-
-      - name: test kubectl
-        run: tsh kubectl get pods
+          encodedString: "${{ secrets.KUBECONFIG }}"
+          fileName: kubeconfig
 
       - name: Download and run crd-extractor
         shell: bash
