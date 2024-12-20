@@ -24,17 +24,6 @@
       sourceUrl: "https://github.com/immich-app/immich",
     },
     {
-      description: "Weave Gitops",
-      groupName: "Weave-Gitops",
-      matchPackagePatterns: ["weave-gitops"],
-      matchDatasources: ["helm", "docker", "github-releases"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      separateMinorPatch: true,
-      sourceUrl: "https://github.com/weaveworks/weave-gitops",
-    },
-    {
       description: "Rook-Ceph charts and image",
       groupName: "Rook-Ceph",
       matchPackagePatterns: ["rook.ceph"],
@@ -86,7 +75,7 @@
     {
       description: "Talos Group",
       groupName: "Talos",
-      matchPackagePatterns: ["siderolabs/talos", "siderolabs/talosctl"],
+      matchPackagePatterns: ["siderolabs/*"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
