@@ -146,6 +146,7 @@ identity_providers:
         redirect_uris:
           - "http://localhost:8000"
           - "http://localhost:18000"
+          - "https://kubenav.io/auth/oidc.html"
         userinfo_signed_response_alg: none
 
       - client_id: minio
