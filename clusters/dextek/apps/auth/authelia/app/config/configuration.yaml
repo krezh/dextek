@@ -142,6 +142,8 @@ identity_providers:
         authorization_policy: one_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email", "offline_access"]
+        pkce_challenge_method: S256
+        require_pkce: true
         #grant_types:
         #  - authorization_code
         redirect_uris:
