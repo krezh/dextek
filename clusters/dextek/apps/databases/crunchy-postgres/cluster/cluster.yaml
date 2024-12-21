@@ -4,6 +4,7 @@ apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: &name postgres
+  namespace: databases
 spec:
   metadata:
     labels:
@@ -98,6 +99,22 @@ spec:
         type: AlphaNumeric
     - name: "sonarr"
       databases: ["sonarr_main"]
+      password:
+        type: AlphaNumeric
+    - name: "atuin"
+      databases: ["atuin"]
+      password:
+        type: AlphaNumeric
+    - name: "authelia"
+      databases: ["authelia"]
+      password:
+        type: AlphaNumeric
+    - name: "immich"
+      databases: ["immich"]
+      password:
+        type: AlphaNumeric
+    - name: "lldap"
+      databases: ["lldap"]
       password:
         type: AlphaNumeric
   backups:
