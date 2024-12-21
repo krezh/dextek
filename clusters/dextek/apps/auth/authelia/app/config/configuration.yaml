@@ -137,7 +137,7 @@ identity_providers:
       - client_id: kubernetes
         client_name: Kubernetes OIDC
         client_secret: "$${SECRET_KUBERNETES_OAUTH_CLIENT_SECRET}"
-        public: true
+        public: false
         consent_mode: implicit # explicit, implicit, auto/default, preconfigured
         authorization_policy: one_factor
         pre_configured_consent_duration: 1y
