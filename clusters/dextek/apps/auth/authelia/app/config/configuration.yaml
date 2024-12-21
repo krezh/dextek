@@ -136,7 +136,7 @@ identity_providers:
 
       - client_id: kubernetes
         client_name: Kubernetes OIDC
-        client_secret: "$${SECRET_KUBERNETES_OAUTH_CLIENT_SECRET}"
+        client_secret: "$${KUBERNETES_OAUTH_CLIENT_SECRET}"
         public: false
         consent_mode: implicit # explicit, implicit, auto/default, preconfigured
         authorization_policy: one_factor
@@ -144,8 +144,8 @@ identity_providers:
         scopes: ["openid", "profile", "groups", "email", "offline_access"]
         pkce_challenge_method: S256
         require_pkce: true
-        #grant_types:
-        #  - authorization_code
+        grant_types:
+          - authorization_code
         redirect_uris:
           - "http://localhost:8000"
           - "http://localhost:18000"
