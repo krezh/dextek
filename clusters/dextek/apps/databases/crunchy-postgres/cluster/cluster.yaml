@@ -10,6 +10,7 @@ spec:
       crunchy-userinit.ramblurr.github.com/enabled: "true"
       crunchy-userinit.ramblurr.github.com/superuser: &superuser "postgres"
   postgresVersion: 16
+  image: ghcr.io/budimanjojo/cdpgvecto.rs:16-v0.3.0
   monitoring:
     pgmonitor:
       exporter:
@@ -27,6 +28,8 @@ spec:
         synchronous_commit: "on"
         parameters:
           max_connections: 500
+          shared_preload_libraries: "vectors.so"
+          search_path: '"$user", public, vectors'
   instances:
     - name: postgres
       metadata:
