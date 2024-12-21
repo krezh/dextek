@@ -94,6 +94,7 @@ duo_api:
 
 identity_providers:
   oidc:
+    minimum_parameter_entropy: -1
     cors:
       endpoints:
         - "authorization"
