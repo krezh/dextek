@@ -101,10 +101,6 @@ spec:
       databases: ["sonarr_main"]
       password:
         type: AlphaNumeric
-    - name: "atuin"
-      databases: ["atuin"]
-      password:
-        type: AlphaNumeric
     - name: "authelia"
       databases: ["authelia"]
       password:
