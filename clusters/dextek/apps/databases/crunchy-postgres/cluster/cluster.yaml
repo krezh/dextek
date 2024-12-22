@@ -34,11 +34,11 @@ spec:
           max_connections: 500
           shared_preload_libraries: "vectors.so"
           search_path: '"$user", public, vectors'
-  service:
-    type: LoadBalancer
-    metadata:
-      annotations:
-        coredns.io/hostname: cpgo
+  # service:
+  #   type: LoadBalancer
+  #   metadata:
+  #     annotations:
+  #       coredns.io/hostname: cpgo
   instances:
     - name: postgres
       metadata:
