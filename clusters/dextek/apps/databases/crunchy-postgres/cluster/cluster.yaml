@@ -34,6 +34,11 @@ spec:
           max_connections: 500
           shared_preload_libraries: "vectors.so"
           search_path: '"$user", public, vectors'
+  service:
+    type: LoadBalancer
+    metadata:
+      annotations:
+        coredns.io/hostname: cpgo
   instances:
     - name: postgres
       metadata:
@@ -155,7 +160,7 @@ spec:
         - name: repo2
           s3: &r2
             bucket: crunchy-pgo
-            endpoint: https://520cf607cd37fea3cd09cd71aa255f6d.r2.cloudflarestorage.com
+            endpoint: 520cf607cd37fea3cd09cd71aa255f6d.r2.cloudflarestorage.com
             region: us-east-1 #https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
           schedules:
             full: "0 2 * * 0" # Sunday at 02:00
@@ -173,7 +178,7 @@ spec:
       service:
         metadata:
           annotations:
-            coredns.io/hostname: cpgo
+            coredns.io/hostname: pgbouncer
         type: LoadBalancer
       port: 5432
       replicas: *replicas
