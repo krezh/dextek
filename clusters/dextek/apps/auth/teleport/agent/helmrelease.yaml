@@ -40,7 +40,7 @@ spec:
             addr: ""
             ad: false
       app_service:
-        enabled: true
+        enabled: false
         apps:
           - name: pikvm
             public_addr: pikvm.int.plexuz.xyz
