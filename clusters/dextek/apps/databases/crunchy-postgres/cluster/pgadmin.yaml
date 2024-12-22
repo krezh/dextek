@@ -1,0 +1,26 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PGAdmin
+metadata:
+  name: postgres
+  namespace: databases
+spec:
+  dataVolumeClaimSpec:
+    accessModes:
+      - "ReadWriteOnce"
+    resources:
+      requests:
+        storage: 1Gi
+  serverGroups:
+    - name: postgres
+      postgresClusterSelector: {}
+  config:
+    settings:
+      AUTHENTICATION_SOURCES: ["ldap"]
+      LDAP_AUTO_CREATE_USER: True
+      LDAP_SERVER_URI: ldaps://lldap.auth.svc.cluster.local:636
+    ldapBindPassword:
+      name: crunchy-pgo-ldap-secret
+      key: LDAP_BIND_PASSWORD
+    ldapBindUser:
+      name: crunchy-pgo-ldap-secret
+      key: LDAP_BIND_USER
