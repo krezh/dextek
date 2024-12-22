@@ -150,9 +150,9 @@ spec:
       repos:
         - name: repo1
           s3: &minio
-            bucket: postgresql
+            bucket: crunchy-pgo
             endpoint: s3.int.plexuz.xyz
-            region: us-east-1
+            region: eu-north-1
           schedules:
             full: "0 1 * * 0" # Sunday at 01:00
             differential: "0 1 * * 1-6" # Mon-Sat at 01:00
