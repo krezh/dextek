@@ -28,7 +28,7 @@ spec:
         auth_service:
           client_idle_timeout: 2h
           client_idle_timeout_message: "Connection closed after 2hours without activity"
-          session_recording: "off" # Leaving this on will fill up too much space.
+          session_recording: "true" # Leaving this on will fill up too much space.
 
     podSecurityPolicy:
       enabled: false
@@ -70,7 +70,7 @@ spec:
       enabled: true
       additionalLabels:
         prometheus: default
-      interval: 30s
+      interval: 1m
 
     persistence:
       enabled: true
