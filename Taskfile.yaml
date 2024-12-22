@@ -17,6 +17,7 @@ includes:
   volsync: "{{.TASKS_DIR}}/VolSync"
   bootstrap: "{{.TASKS_DIR}}/Bootstrap"
   talos: "{{.TASKS_DIR}}/Talos"
+  postgres: "{{.TASKS_DIR}}/Postgres"
 
 tasks:
   default:
