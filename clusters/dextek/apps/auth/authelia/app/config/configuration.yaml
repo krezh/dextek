@@ -37,7 +37,7 @@ authentication_backend:
     additional_groups_dn: ou=groups
     groups_filter: (member={dn})
     group_search_mode: filter
-    user: uid=admin,ou=people,dc=plexuz,dc=xyz
+    user: uid=readonly,ou=people,dc=plexuz,dc=xyz
     password: password
     attributes:
       username: uid
