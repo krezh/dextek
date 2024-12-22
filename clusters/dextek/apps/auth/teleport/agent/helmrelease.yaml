@@ -43,6 +43,6 @@ spec:
         enabled: true
         apps:
           - name: pikvm
-            public_addr: pikvm.talos.plexuz.xyz
+            public_addr: pikvm.int.plexuz.xyz
             uri: https://192.168.1.15
             insecure_skip_verify: true
