@@ -37,11 +37,11 @@ spec:
         pg_hba:
           - hostnossl all all 10.244.0.0/16 md5 # Needed because dbman does not support SSL yet
           - hostssl all all all md5
-  # service:
-  #   type: LoadBalancer
-  #   metadata:
-  #     annotations:
-  #       coredns.io/hostname: cpgo
+  service:
+    type: LoadBalancer
+    metadata:
+      annotations:
+        coredns.io/hostname: cpgo
   instances:
     - name: postgres
       metadata:
