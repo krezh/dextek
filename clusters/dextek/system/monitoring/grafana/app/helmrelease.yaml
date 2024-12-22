@@ -20,13 +20,6 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
-    extraInitContainers:
-      - name: init-db
-        image: ghcr.io/onedr0p/postgres-init:16.6@sha256:c1d3a845d47fe1aeebd110fefb5f43f54c4735aec1d2b0c01de8d4d5e8cdd6a4
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: &secret grafana-secret
     env:
       GF_DATE_FORMATS_FULL_DATE: MMM Do, YYYY hh:mm:ss a
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
@@ -41,7 +34,8 @@ spec:
       GF_FEATURE_TOGGLES_ENABLE: publicDashboards
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
     envFromSecrets:
-      - name: *secret
+      - name: grafana-secret
+      - name: grafana-postgres-secret
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
