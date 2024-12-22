@@ -41,14 +41,6 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.6@sha256:c1d3a845d47fe1aeebd110fefb5f43f54c4735aec1d2b0c01de8d4d5e8cdd6a4
-            envFrom: &envFrom
-              - secretRef:
-                  name: lldap-secret
         containers:
           app:
             image:
@@ -60,7 +52,11 @@ spec:
               LLDAP_HTTP_URL: https://lldap.talos.plexuz.xyz
               LLDAP_LDAP_PORT: &ldap-port 389
               LLDAP_LDAP_BASE_DN: dc=plexuz,dc=xyz
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: lldap-secret
+              - secretRef:
+                  name: lldap-postgres-secret
             resources:
               requests:
                 cpu: 100m
