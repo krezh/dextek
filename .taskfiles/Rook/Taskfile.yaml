@@ -31,10 +31,3 @@ tasks:
         cephnfses.ceph.rook.io cephobjectrealms.ceph.rook.io cephobjectstores.ceph.rook.io \
         cephobjectstoreusers.ceph.rook.io cephobjectzonegroups.ceph.rook.io cephobjectzones.ceph.rook.io \
         cephrbdmirrors.ceph.rook.io objectbucketclaims.objectbucket.io objectbuckets.objectbucket.io
-
-      #- kubectl delete -Rf hack/disk-wipe
-      #- kubectl apply -Rf hack/disk-wipe
-      #- kubectl wait job --for=condition=Ready --timeout=10s -n kube-system -l job=disk-wipe
-      #- kubectl logs -f -l job=disk-wipe --all-containers -n kube-system
-      #- kubectl delete -Rf hack/disk-wipe
-      #- kubectl delete ns rook-ceph
