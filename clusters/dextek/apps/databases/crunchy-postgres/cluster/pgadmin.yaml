@@ -21,6 +21,3 @@ spec:
     ldapBindPassword:
       name: crunchy-pgo-ldap-secret
       key: LDAP_BIND_PASSWORD
-    ldapBindUser:
-      name: crunchy-pgo-ldap-secret
-      key: LDAP_BIND_USER
