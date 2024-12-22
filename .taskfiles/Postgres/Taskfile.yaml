@@ -8,10 +8,15 @@ vars:
   CRUNCHY_PRIMARY_POD:
     sh: |-
       kubectl get pods -n {{.NS | default .CRUNCHY_DEFAULT_NS}} -l postgres-operator.crunchydata.com/role=master,postgres-operator.crunchydata.com/cluster={{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER}} -o jsonpath='{.items[0].metadata.name}'
+  CNPG_DEFAULT_NS: databases
+  CNPG_DEFAULT_DB_CLUSTER: postgres
+  CNPG_PRIMARY_POD:
+    sh: |-
+      kubectl get pods -n {{.NS | default .CNPG_DEFAULT_NS}} -l cnpg.io/instanceRole=primary,cnpg.io/cluster={{.DB_CLUSTER | default .CNPG_DEFAULT_DB_CLUSTER}} -o jsonpath='{.items[0].metadata.name}'
 
 tasks:
   crunchy-dump:
-    desc: Run pg_dump on the master instance of a CrunchyData Postgres cluster. [K8S_CLUSTER={{.K8S_CLUSTER}}] [DB_NAME=required] [OUTPUT_DIR=.] [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
+    desc: Run pg_dump on the master instance of a CrunchyData Postgres cluster. [DB_NAME=required] [OUTPUT_DIR=.] [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
     preconditions:
       - which kubectl
       - kubectl get pods --namespace {{.NS}} -l postgres-operator.crunchydata.com/role=master,postgres-operator.crunchydata.com/cluster={{.DB_CLUSTER}}
@@ -19,24 +24,23 @@ tasks:
       vars:
         - DB_NAME
     vars:
-      DB_CLUSTER: "{{.DB_CLUSTER | default .CRUNCHY_DEFAULT_NS }}" # postgres cluster name
-      NS: "{{.NS | default .CRUNCHY_DEFAULT_DB_CLUSTER }}" # database namespace
+      DB_CLUSTER: "{{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER }}" # postgres cluster name
+      NS: "{{.NS | default .CRUNCHY_DEFAULT_NS }}" # database namespace
       OUTPUT_DIR: '{{ .OUTPUT_DIR | default "." }}'
-      CLI_ARGS: '{{ .CLI_ARGS | default "--verbose --format=c --no-comments --clean --if-exists --no-owner --extension plpgsql" }}'
+      CLI_ARGS: '{{ .CLI_ARGS | default "--verbose --format=c --no-comments --clean --if-exists --no-owner" }}'
     cmds:
       - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'pg_dump --dbname {{.DB_NAME}} {{.CLI_ARGS}} --file /pgdata/{{.DB_NAME}}.psql'
       - kubectl cp --container database "{{.NS}}/{{.CRUNCHY_PRIMARY_POD}}:/pgdata/{{.DB_NAME}}.psql" "{{.OUTPUT_DIR}}/{{.DB_NAME}}.psql"
       - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'rm -rf /pgdata/{{.DB_NAME}}.psql'
 
   crunchy-restore:
-    desc: Restore a pg_dump to a CrunchyData Postgres cluster, writing to the master instance. [K8S_CLUSTER={{.K8S_CLUSTER}}] [DB_NAME=required] [DB_USER=required] [FILE=required] [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
+    desc: Restore a pg_dump to a CrunchyData Postgres cluster, writing to the master instance. [DB_NAME=required] [DB_USER=required] [FILE=required] [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
     preconditions:
       - which kubectl
       - kubectl get pods --namespace {{.NS}} -l postgres-operator.crunchydata.com/role=master,postgres-operator.crunchydata.com/cluster={{.DB_CLUSTER}}
       - test -f "{{.FILE}}"
     requires:
       vars:
-        - K8S_CLUSTER
         - DB_NAME
         - DB_USER
         - FILE
@@ -48,7 +52,7 @@ tasks:
       - kubectl cp --container database "{{.FILE}}" "{{.NS}}/{{.CRUNCHY_PRIMARY_POD}}:/pgdata/restore-{{.DB_NAME}}.psql"
       - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'echo "ALTER DATABASE \"{{.DB_NAME}}\" OWNER TO \"{{.DB_USER}}\";" | psql'
       - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'pg_restore --dbname {{.DB_NAME}} {{.CLI_ARGS}} /pgdata/restore-{{.DB_NAME}}.psql'
-      - defer: kubectl exec -it --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'rm -rf /pgdata/restore-{{.DB_NAME}}.psql'
+      - defer: kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'rm -rf /pgdata/restore-{{.DB_NAME}}.psql'
 
   crunchy-exec:
     desc: Exec in to the master instance of a CrunchyData Postgres cluster. [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
@@ -70,3 +74,40 @@ tasks:
       NS: "{{.NS | default .CRUNCHY_DEFAULT_NS }}"
     cmds:
       - kubectl annotate --namespace {{.NS}} postgrescluster {{.DB_CLUSTER}} postgres-operator.crunchydata.com/pgbackrest-backup="$(date)" --overwrite
+
+  cnpg-dump:
+    desc: Run pg_dump on the master instance of a CrunchyData Postgres cluster. [DB_NAME=required] [OUTPUT_DIR=.] [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
+    preconditions:
+      - which kubectl
+      - kubectl get pods --namespace {{.NS}} {{.CNPG_PRIMARY_POD}}
+    requires:
+      vars:
+        - DB_NAME
+    vars:
+      DB_CLUSTER: "{{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER }}" # postgres cluster name
+      NS: "{{.NS | default .CRUNCHY_DEFAULT_NS }}" # database namespace
+      OUTPUT_DIR: '{{ .OUTPUT_DIR | default "." }}'
+      CLI_ARGS: '{{ .CLI_ARGS | default "--verbose --format=c --no-comments --clean --if-exists --no-owner" }}'
+    cmds:
+      - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- pg_dump --dbname {{.DB_NAME}} {{.CLI_ARGS}} > {{.DB_NAME}}.dump
+
+  cnpg-restore:
+    desc: Restore a pg_dump to a CrunchyData Postgres cluster, writing to the master instance. [DB_NAME=required] [DB_USER=required] [FILE=required] [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
+    preconditions:
+      - which kubectl
+      - kubectl get pods --namespace {{.NS}} {{.CNPG_PRIMARY_POD}}
+      - test -f "{{.FILE}}"
+    requires:
+      vars:
+        - DB_NAME
+        - DB_USER
+        - FILE
+    vars:
+      DB_CLUSTER: "{{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER }}"
+      NS: "{{.NS | default .CRUNCHY_DEFAULT_NS }}"
+      CLI_ARGS: '{{ .CLI_ARGS | default (printf "--verbose --format=c --clean --if-exists --no-owner --role %s" .DB_USER) }}'
+    cmds:
+      - kubectl cp --container database "{{.FILE}}" "{{.NS}}/{{.CRUNCHY_PRIMARY_POD}}:/pgdata/restore-{{.DB_NAME}}.psql"
+      - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'echo "ALTER DATABASE \"{{.DB_NAME}}\" OWNER TO \"{{.DB_USER}}\";" | psql'
+      - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'pg_restore --dbname {{.DB_NAME}} {{.CLI_ARGS}} /pgdata/restore-{{.DB_NAME}}.psql'
+      - defer: kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash -c 'rm -rf /pgdata/restore-{{.DB_NAME}}.psql'
