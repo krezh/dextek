@@ -29,14 +29,6 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.6@sha256:c1d3a845d47fe1aeebd110fefb5f43f54c4735aec1d2b0c01de8d4d5e8cdd6a4
-            envFrom: &envFrom
-              - secretRef:
-                  name: authelia-secret
         containers:
           app:
             image:
@@ -50,7 +42,11 @@ spec:
               AUTHELIA_THEME: dark
               X_AUTHELIA_CONFIG: /config/configuration.yaml
               X_AUTHELIA_CONFIG_FILTERS: expand-env
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: authelia-secret
+              - secretRef:
+                  name: authelia-postgres-secret
             probes:
               liveness: &probes
                 enabled: true
