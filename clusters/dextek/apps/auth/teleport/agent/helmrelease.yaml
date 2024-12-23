@@ -18,7 +18,7 @@ spec:
   values:
     log:
       level: DEBUG
-    roles: kube,app,discovery,node,windowsdesktop
+    roles: kube,app,discovery,node,windowsdesktop,db
     insecureSkipProxyTLSVerify: true
     proxyAddr: teleport.talos.plexuz.xyz:443
     joinParams:
@@ -33,6 +33,10 @@ spec:
             namespaces: ["default", "databases"]
             labels:
               teleport: enabled
+          - types: ["db"]
+            namespaces: ["databases"]
+            labels:
+              teleport-db: enabled
       windows_desktop_service:
         enabled: false
         static_hosts:
