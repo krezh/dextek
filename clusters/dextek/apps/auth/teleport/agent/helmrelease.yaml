@@ -47,7 +47,7 @@ spec:
           - types: ["app"]
             namespaces: ["default"]
             labels:
-              "*": "*"
+              "teleport/enable": "true"
       db_service:
         enabled: true
         resources:
