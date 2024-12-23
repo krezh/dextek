@@ -62,13 +62,6 @@ jobs:
           kubernetes-cluster: talos-plexuz
           anonymous-telemetry: 0
 
-      - name: Write kubeconfig
-        id: kubeconfig
-        uses: timheuer/base64-to-file@v1
-        with:
-          encodedString: "${{ secrets.KUBECONFIG }}"
-          fileName: kubeconfig
-
       - name: Download and run crd-extractor
         # env:
         #   KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
