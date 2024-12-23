@@ -30,16 +30,16 @@ spec:
       - name: my-postgres
         uri: postgres.example.com:5432
         protocol: postgres
-        tls:
-          ca_cert_file: "/etc/teleport-tls-db/my-postgres/ca.pem"
-    extraVolumes:
-      - name: my-postgres-ca
-        secret:
-          secretName: my-postgres-ca
-    extraVolumeMounts:
-      - name: my-postgres-ca
-        mountPath: /etc/teleport-tls-db/my-postgres
-        readOnly: true
+    #    tls:
+    #      ca_cert_file: "/etc/teleport-tls-db/my-postgres/ca.pem"
+    #extraVolumes:
+    #  - name: my-postgres-ca
+    #    secret:
+    #      secretName: my-postgres-ca
+    #extraVolumeMounts:
+    #  - name: my-postgres-ca
+    #    mountPath: /etc/teleport-tls-db/my-postgres
+    #    readOnly: true
     teleportConfig:
       discovery_service:
         enabled: true
