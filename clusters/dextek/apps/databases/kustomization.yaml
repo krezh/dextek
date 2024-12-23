@@ -5,5 +5,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./crunchy-postgres
-  - ./redis
   - ./valkey
