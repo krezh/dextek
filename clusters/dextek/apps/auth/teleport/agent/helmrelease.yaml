@@ -30,7 +30,7 @@ spec:
       discovery_service:
         kubernetes:
           - types: ["app"]
-            namespaces: ["default"]
+            namespaces: ["default", "databases"]
             labels:
               teleport: enabled
       windows_desktop_service:
