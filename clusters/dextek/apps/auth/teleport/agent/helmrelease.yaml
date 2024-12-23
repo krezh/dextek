@@ -39,10 +39,6 @@ spec:
             namespaces: ["default", "databases"]
             labels:
               teleport: enabled
-          - types: ["db"]
-            namespaces: ["databases"]
-            labels:
-              teleport-db: enabled
       windows_desktop_service:
         enabled: false
         static_hosts:
