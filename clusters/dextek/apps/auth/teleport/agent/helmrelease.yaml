@@ -33,7 +33,7 @@ spec:
           - types: ["app"]
             namespaces: ["default"]
             labels:
-              teleport: enabled
+              "*": "*"
       db_service:
         enabled: true
         resources:
