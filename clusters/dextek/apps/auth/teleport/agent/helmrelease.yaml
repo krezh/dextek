@@ -26,19 +26,19 @@ spec:
       # Following must match the name of the token in token.yaml
       tokenName: "kubernetes-token"
     kubeClusterName: talos-plexuz
-    databases:
-      - name: test
-        uri: postgres.example.com:5432
-        protocol: postgres
-        static_labels:
-          env: dev
     teleportConfig:
       discovery_service:
         kubernetes:
           - types: ["app"]
-            namespaces: ["default", "databases"]
+            namespaces: ["default"]
             labels:
               teleport: enabled
+      database_service:
+        kubernetes:
+          - types: ["db"]
+            namespaces: ["databases"]
+            labels:
+              teleport-db: enabled
       windows_desktop_service:
         enabled: false
         static_hosts:
@@ -46,7 +46,7 @@ spec:
             addr: ""
             ad: false
       app_service:
-        enabled: false
+        enabled: true
         apps:
           - name: pikvm
             public_addr: pikvm.int.plexuz.xyz
