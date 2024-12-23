@@ -34,7 +34,8 @@ jobs:
       - name: Fetch kubectl
         uses: azure/setup-kubectl@v4
         with:
-          version: v1.31.4 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+          # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+          version: "v1.31.4"
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -49,7 +50,8 @@ jobs:
       - name: Install Teleport
         uses: teleport-actions/setup@v1
         with:
-          version: 17.1.0 # renovate: datasource=github-releases depName=gravitational/teleport
+          # renovate: datasource=github-releases depName=gravitational/teleport
+          version: "v17.1.0"
 
       # - name: Authorize against Teleport # FIXME: Uncomment when Teleport fixes "ERROR: invalid symlinks mode"
       #   uses: teleport-actions/auth-k8s@v2
