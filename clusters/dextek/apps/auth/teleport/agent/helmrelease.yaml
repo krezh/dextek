@@ -28,17 +28,17 @@ spec:
     kubeClusterName: talos-plexuz
     teleportConfig:
       discovery_service:
+        enabled: true
         kubernetes:
           - types: ["app"]
             namespaces: ["default"]
             labels:
               teleport: enabled
-      database_service:
-        kubernetes:
-          - types: ["db"]
-            namespaces: ["databases"]
-            labels:
-              teleport-db: enabled
+      db_service:
+        enabled: true
+        resources:
+          - labels:
+              "*": "*"
       windows_desktop_service:
         enabled: false
         static_hosts:
