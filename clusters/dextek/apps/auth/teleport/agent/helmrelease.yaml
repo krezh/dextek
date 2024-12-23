@@ -26,6 +26,12 @@ spec:
       # Following must match the name of the token in token.yaml
       tokenName: "kubernetes-token"
     kubeClusterName: talos-plexuz
+    databases:
+      - name: test
+        uri: postgres.example.com:5432
+        protocol: postgres
+        static_labels:
+          env: dev
     teleportConfig:
       discovery_service:
         kubernetes:
