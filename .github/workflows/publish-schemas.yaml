@@ -70,8 +70,8 @@ jobs:
           fileName: kubeconfig
 
       - name: Download and run crd-extractor
-        env:
-          KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
+        # env:
+        #   KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
         shell: bash
         run: |
           curl -fsSL -o $GITHUB_WORKSPACE/crd-extractor.sh \
