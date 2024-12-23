@@ -26,5 +26,4 @@ resources:
   - ./mealie
   - ./obsidian-couchdb
   - ./it-tools
-  - ./attic
   - ./wallos
