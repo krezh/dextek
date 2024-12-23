@@ -25,15 +25,6 @@ spec:
   values:
     controllers:
       dashbrr:
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.6@sha256:c1d3a845d47fe1aeebd110fefb5f43f54c4735aec1d2b0c01de8d4d5e8cdd6a4
-              pullPolicy: IfNotPresent
-            envFrom: &envFrom
-              - secretRef:
-                  name: dashbrr-secret
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -47,7 +38,9 @@ spec:
               DASHBRR__DB_PATH: /cache/._ # cache path is derived from DASHBRR__DB_PATH
               DASHBRR__LISTEN_ADDR: 0.0.0.0:80
               GIN_MODE: debug
-            envFrom: *envFrom
+            envFrom: &envFrom
+              - secretRef:
+                  name: dashbrr-secret
             probes:
               liveness: &probes
                 enabled: true
