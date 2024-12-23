@@ -51,20 +51,27 @@ jobs:
         uses: teleport-actions/setup@v1
         with:
           # renovate: datasource=github-releases depName=gravitational/teleport
-          version: 17.1.1
+          version: 17.1.0
 
-      - name: Authorize against Teleport # FIXME: Uncomment when Teleport fixes "ERROR: invalid symlinks mode"
-        uses: teleport-actions/auth-k8s@v2
+      # - name: Authorize against Teleport # FIXME: Uncomment when Teleport fixes "ERROR: invalid symlinks mode"
+      #   uses: teleport-actions/auth-k8s@v2
+      #   with:
+      #     proxy: teleport.talos.plexuz.xyz:443
+      #     token: github-action-bot
+      #     certificate-ttl: 1h
+      #     kubernetes-cluster: talos-plexuz
+      #     anonymous-telemetry: 0
+
+      - name: Write kubeconfig
+        id: kubeconfig
+        uses: timheuer/base64-to-file@v1
         with:
-          proxy: teleport.talos.plexuz.xyz:443
-          token: github-action-bot
-          certificate-ttl: 1h
-          kubernetes-cluster: talos-plexuz
-          anonymous-telemetry: 0
+          encodedString: "${{ secrets.KUBECONFIG }}"
+          fileName: kubeconfig
 
       - name: Download and run crd-extractor
-        # env:
-        #   KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
+        env:
+          KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
         shell: bash
         run: |
           curl -fsSL -o $GITHUB_WORKSPACE/crd-extractor.sh \

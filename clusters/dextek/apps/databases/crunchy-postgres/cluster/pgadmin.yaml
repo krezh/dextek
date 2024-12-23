@@ -4,9 +4,6 @@ metadata:
   name: postgres
   namespace: databases
 spec:
-  metadata:
-    labels:
-      teleport: enabled
   dataVolumeClaimSpec:
     accessModes:
       - "ReadWriteOnce"
