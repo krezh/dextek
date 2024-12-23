@@ -7,8 +7,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cloudnative-pg-cluster
-    - name: redis
+    - name: crunchy-postgres-operator-cluster
+    - name: valkey
   path: ./clusters/dextek/apps/immich/app
   prune: true
   sourceRef:
