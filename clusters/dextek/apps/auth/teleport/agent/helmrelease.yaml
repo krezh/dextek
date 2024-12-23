@@ -45,7 +45,7 @@ spec:
         enabled: true
         kubernetes:
           - types: ["app"]
-            namespaces: ["default"]
+            namespaces: ["*"]
             labels:
               "teleport/enable": "true"
       db_service:
