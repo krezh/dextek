@@ -42,6 +42,8 @@ spec:
     metadata:
       annotations:
         coredns.io/hostname: cpgo
+      labels:
+        teleport-db: enabled
   instances:
     - name: postgres
       metadata:
