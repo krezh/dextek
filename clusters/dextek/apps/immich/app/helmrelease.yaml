@@ -59,6 +59,8 @@ spec:
                   name: immich-configmap
               - secretRef:
                   name: immich-secret
+              - secretRef:
+                  name: immich-postgres-secret
             env:
               IMMICH_WORKERS_INCLUDE: api
             resources:
