@@ -57,16 +57,16 @@ session:
       authelia_url: https://auth.plexuz.xyz
       default_redirection_url: https://plexuz.xyz
   redis:
-    host: redis.databases.svc.cluster.local
+    host: valkey.databases.svc.cluster.local
     database_index: 0
     high_availability:
-      sentinel_name: redis-master
+      sentinel_name: valkeyha
       nodes:
-        - host: redis-node-0.redis-headless.databases.svc.cluster.local
+        - host: valkey-0.valkey-headless.databases.svc.cluster.local
           port: 26379
-        - host: redis-node-1.redis-headless.databases.svc.cluster.local
+        - host: valkey-1.valkey-headless.databases.svc.cluster.local
           port: 26379
-        - host: redis-node-2.redis-headless.databases.svc.cluster.local
+        - host: valkey-2.valkey-headless.databases.svc.cluster.local
           port: 26379
 
 ntp:
