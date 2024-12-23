@@ -51,7 +51,7 @@ jobs:
         uses: teleport-actions/setup@v1
         with:
           # renovate: datasource=github-releases depName=gravitational/teleport
-          version: 17.1.0
+          version: 17.1.1
 
       - name: Authorize against Teleport # FIXME: Uncomment when Teleport fixes "ERROR: invalid symlinks mode"
         uses: teleport-actions/auth-k8s@v2
