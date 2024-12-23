@@ -98,15 +98,15 @@ spec:
       password:
         type: AlphaNumeric
     - name: "prowlarr"
-      databases: ["prowlarr_main"]
+      databases: ["prowlarr"]
       password:
         type: AlphaNumeric
     - name: "radarr"
-      databases: ["radarr_main"]
+      databases: ["radarr"]
       password:
         type: AlphaNumeric
     - name: "sonarr"
-      databases: ["sonarr_main"]
+      databases: ["sonarr"]
       password:
         type: AlphaNumeric
     - name: "authelia"
