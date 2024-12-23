@@ -140,7 +140,7 @@
       description: ["Teleport Group"],
       groupName: "Teleport",
       matchPackagePatterns: ["teleport"],
-      matchDatasources: ["docker", "helm"],
+      matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
