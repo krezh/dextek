@@ -7,8 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cloudnative-pg-cluster
-    - name: external-secrets-stores
+    - name: rook-ceph-cluster
   targetNamespace: auth
   path: ./clusters/dextek/apps/auth/teleport/app
   prune: true
