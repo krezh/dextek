@@ -22,6 +22,21 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: cluster-shared
+  namespace: flux-system
+spec:
+  interval: 30m
+  path: ./clusters/shared
+  prune: true
+  wait: false
+  sourceRef:
+    kind: GitRepository
+    name: dextek
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: cluster
   namespace: flux-system
 spec:

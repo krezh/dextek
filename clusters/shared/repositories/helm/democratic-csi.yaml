@@ -3,8 +3,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: k8tz
+  name: democratic-csi
   namespace: flux-system
 spec:
   interval: 2h
-  url: https://k8tz.github.io/k8tz/
+  url: https://democratic-csi.github.io/charts/
