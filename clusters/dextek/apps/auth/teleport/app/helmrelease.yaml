@@ -25,6 +25,9 @@ spec:
 
     auth:
       teleportConfig:
+        teleport:
+          cache:
+            enabled: true
         auth_service:
           client_idle_timeout: 2h
           client_idle_timeout_message: "Connection closed after 2hours without activity"
@@ -55,6 +58,7 @@ spec:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 
     highAvailability:
+      replicaCount: 1
       certManager:
         enabled: true
         issuerName: letsencrypt
