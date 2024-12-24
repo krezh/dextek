@@ -3,8 +3,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: bjw-s
+  name: crunchy-userinit
   namespace: flux-system
 spec:
   interval: 2h
-  url: https://bjw-s.github.io/helm-charts
+  url: https://ramblurr.github.io/crunchy-userinit-controller
+  timeout: 3m
