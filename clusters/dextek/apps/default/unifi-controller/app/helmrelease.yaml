@@ -27,7 +27,6 @@ spec:
               repository: ghcr.io/goofball222/unifi
               tag: 8.6.9
             env:
-              TZ: Europe/Stockholm
               RUNAS_UID0: false
               RUN_CHOWN: false
               PGID: "568"

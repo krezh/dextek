@@ -43,8 +43,6 @@ spec:
               - --cfg-dir
               - /mktxp_config
               - export
-            env:
-              TZ: Europe/Stockholm
             resources:
               requests:
                 cpu: 10m
