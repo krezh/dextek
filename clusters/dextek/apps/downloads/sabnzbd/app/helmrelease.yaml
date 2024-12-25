@@ -33,7 +33,6 @@ spec:
               repository: ghcr.io/krezh/sabnzbd
               tag: 4.4.1
             env:
-              TZ: Europe/Stockholm
               SABNZBD__PORT: &port 8080
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
                 sabnzbd,
@@ -82,7 +81,6 @@ spec:
               limits:
                 memory: 256M
             env:
-              TZ: Europe/Stockholm
               PORT: *metrics
               URL: http://localhost:8080
               ENABLE_ADDITIONAL_METRICS: false

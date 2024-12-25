@@ -39,7 +39,6 @@ spec:
               repository: ghcr.io/unpoller/unpoller
               tag: v2.11.2
             env:
-              TZ: Europe/Stockholm
               #UP_UNIFI_DEFAULT_ROLE: home-ops
               UP_UNIFI_DEFAULT_URL: https://unifi-controller.default.svc.cluster.local:8443
               UP_UNIFI_DEFAULT_VERIFY_SSL: false

@@ -31,8 +31,6 @@ spec:
             image:
               repository: bellamy/wallos
               tag: 2.42.2
-            env:
-              TZ: Europe/Stockholm
             resources:
               requests:
                 cpu: 50m

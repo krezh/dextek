@@ -47,7 +47,6 @@ spec:
               repository: ghcr.io/lldap/lldap
               tag: v0.6.1
             env:
-              TZ: Europe/Stockholm
               LLDAP_HTTP_PORT: &http-port 80
               LLDAP_HTTP_URL: https://lldap.talos.plexuz.xyz
               LLDAP_LDAP_PORT: &ldap-port 389

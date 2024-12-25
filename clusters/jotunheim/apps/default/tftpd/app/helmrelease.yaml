@@ -39,7 +39,6 @@ spec:
               repository: docker.io/kalaksi/tftpd
               tag: 1.6
             env:
-              TZ: Europe/Stockholm
               TFTPD_BIND_ADDRESS: "0.0.0.0:1069"
             probes:
               liveness: &probes

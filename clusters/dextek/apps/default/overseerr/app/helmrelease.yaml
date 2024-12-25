@@ -37,7 +37,6 @@ spec:
               repository: ghcr.io/sct/overseerr
               tag: 1.33.2
             env:
-              TZ: Europe/Stockholm
               LOG_LEVEL: "info"
               PORT: &port 5055
             resources:

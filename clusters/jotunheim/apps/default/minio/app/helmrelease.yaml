@@ -44,7 +44,6 @@ spec:
               - --console-address
               - :9001
             env:
-              TZ: Europe/Stockholm
               MINIO_UPDATE: "off"
               MINIO_BROWSER_REDIRECT_URL: https://minio.int.plexuz.xyz
               MINIO_SERVER_URL: https://s3.int.plexuz.xyz
