@@ -9,11 +9,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/kube-system/irqbalance/app
+  path: ./clusters/dextek/system/kube-system/irqbalance/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: k8s-gitops
+    name: dextek
   wait: true
   interval: 30m
   retryInterval: 1m
