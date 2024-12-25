@@ -4,19 +4,21 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./cilium/ks.yaml
-  - ./k8s-gateway/ks.yaml
-  - ./metrics-server/ks.yaml
-  - ./reloader/ks.yaml
-  - ./snapshot-controller/ks.yaml
-  - ./node-feature-discovery/ks.yaml
-  - ./external-secrets/ks.yaml
-  - ./descheduler/ks.yaml
-  - ./k8tz/ks.yaml
+  - ./cilium
+  - ./k8s-gateway
+  - ./metrics-server
+  - ./reloader
+  - ./snapshot-controller
+  - ./node-feature-discovery
+  - ./external-secrets
+  - ./descheduler
+  - ./k8tz
   - ./multus
-  - ./k8s-ycl/ks.yaml
-  #- ./tetragon
+  - ./k8s-ycl
+  - ./tetragon
   - ./kubelet-csr-approver
   - ./system-upgrade-controller
   - ./intel-device-plugin
   - ./spegel
+  - ./fstrim
+  - ./irqbalance
