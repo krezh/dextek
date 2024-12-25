@@ -35,7 +35,6 @@ spec:
               repository: docker.io/filebrowser/filebrowser
               tag: v2.31.2
             env:
-              TZ: Europe/Stockholm
               FB_DATABASE: /config/filebrowser.db
               FB_LOG: stdout
               FB_NOAUTH: "true"

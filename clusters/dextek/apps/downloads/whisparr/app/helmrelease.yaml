@@ -39,7 +39,6 @@ spec:
               repository: ghcr.io/krezh/whisparr-nightly
               tag: 2.0.0.548
             env:
-              TZ: Europe/Stockholm
               WHISPARR__INSTANCE_NAME: whisparr
               WHISPARR__PORT: &port 8989
               WHISPARR__LOG_LEVEL: info
