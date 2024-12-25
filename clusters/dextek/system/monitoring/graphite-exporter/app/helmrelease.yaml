@@ -52,8 +52,6 @@ spec:
                 "--graphite.listen-address=:2003",
                 --graphite.mapping-config=/config/graphite_mapping.yml,
               ]
-            env:
-              TZ: Europe/Stockholm
     persistence:
       config:
         enabled: true

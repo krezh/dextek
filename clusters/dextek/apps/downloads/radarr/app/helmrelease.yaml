@@ -39,7 +39,6 @@ spec:
               repository: ghcr.io/onedr0p/radarr-develop
               tag: 5.17.0.9555@sha256:d29684557a373f6efd8ac98f0b7b3007264599d3d83160bdaef9366a3b4f5d5a
             env:
-              TZ: Europe/Stockholm
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__APP__THEME: dark
               RADARR__SERVER__PORT: &port 7878
@@ -77,7 +76,6 @@ spec:
               - name: metrics
                 containerPort: &metrics 3000
             env:
-              TZ: Europe/Stockholm
               PORT: *metrics
               URL: http://localhost:7878
               ENABLE_ADDITIONAL_METRICS: false

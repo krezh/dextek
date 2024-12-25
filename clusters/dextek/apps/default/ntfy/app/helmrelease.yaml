@@ -38,7 +38,6 @@ spec:
               repository: docker.io/binwiederhier/ntfy
               tag: v2.11.0
             env:
-              TZ: Europe/Stockholm
               NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
               NTFY_BEHIND_PROXY: true
               NTFY_BASE_URL: https://ntfy.plexuz.xyz

@@ -36,7 +36,6 @@ spec:
               repository: docker.io/jlesage/jdownloader-2
               tag: v24.12.1
             env:
-              TZ: Europe/Stockholm
               DARK_MODE: 1
               JDOWNLOADER_HEADLESS: 1
             envFrom:

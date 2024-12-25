@@ -40,7 +40,6 @@ spec:
               repository: ghcr.io/kiranshila/doplarr
               tag: v3.6.3@sha256:426517f9913bc330dd3a52830a7fc37ff49eb4ba5782eeee1ea70787f3dce12c
             env:
-              TZ: Europe/Stockholm
               DISCORD__REQUESTED_MSG_STYLE: ":none"
               LOG_LEVEL: ":info"
               OVERSEERR__URL: "http://overseerr"
