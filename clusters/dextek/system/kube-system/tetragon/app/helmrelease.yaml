@@ -21,11 +21,13 @@ spec:
   upgrade:
     remediation:
       retries: 3
-  # Values: https://github.com/cilium/tetragon/blob/main/install/kubernetes/values.yaml
+  # Values: https://github.com/cilium/tetragon/blob/main/install/kubernetes/tetragon/values.yaml
   values:
     enabled: true
     tetragon:
       enabled: true
+      clusterName: talos-plexuz
+      enableProcessNs: true
       image:
         securityContext:
           privileged: true

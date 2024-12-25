@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: reloader
+  name: &app reloader
   namespace: kube-system
 spec:
   interval: 30m
@@ -16,15 +16,19 @@ spec:
         name: reloader
         namespace: flux-system
   install:
-    crds: Create
+    remediation:
+      retries: 3
   upgrade:
-    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
-    fullnameOverride: reloader
+    fullnameOverride: *app
     reloader:
       enableHA: true
       deployment:
-        replicas: 3
+        replicas: 2
       readOnlyRootFileSystem: true
       podMonitor:
         enabled: true
