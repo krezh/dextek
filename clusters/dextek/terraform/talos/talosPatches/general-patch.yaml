@@ -33,7 +33,7 @@ machine:
   kubelet:
     extraArgs:
       rotate-server-certificates: true
-      feature-gates: GracefulNodeShutdown=true,UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true
+      feature-gates: UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true
     extraConfig:
       maxPods: 150
       serializeImagePulls: false
@@ -142,6 +142,7 @@ cluster:
       rules:
         - level: Metadata
     extraArgs:
+      feature-gates: AuthorizeNodeWithSelectors=false
       oidc-client-id: kubernetes
       oidc-groups-claim: groups
       oidc-issuer-url: https://auth.plexuz.xyz
