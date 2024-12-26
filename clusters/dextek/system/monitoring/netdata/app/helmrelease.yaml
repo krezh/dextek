@@ -59,4 +59,4 @@ spec:
     child:
       enabled: true
     k8sState:
-      enabled: false
+      enabled: true
