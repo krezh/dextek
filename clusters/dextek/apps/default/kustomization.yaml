@@ -9,7 +9,7 @@ resources:
   - ./cyberchef
   - ./doplarr
   - ./dota-items
-  - ./evobot
+  - ./redbot
   - ./home-assistant
   - ./homepage
   - ./media-browser
