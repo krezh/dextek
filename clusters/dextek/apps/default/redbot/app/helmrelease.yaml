@@ -52,6 +52,6 @@ spec:
                   - ALL
     persistence:
       config:
-        existingClaim: rebot-config
+        existingClaim: redbot-config
         globalMounts:
           - path: /data
