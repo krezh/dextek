@@ -23,6 +23,7 @@ machine:
     vm.nr_hugepages: 1024 # PostgreSQL
     net.ipv6.conf.all.disable_ipv6: 1 # Disable IPv6
     net.ipv6.conf.default.disable_ipv6: 1 # Disable IPv6
+    user.max_user_namespaces: "11255" # UserNamespacesSupport
   sysfs:
     devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
   udev:
@@ -32,10 +33,13 @@ machine:
   kubelet:
     extraArgs:
       rotate-server-certificates: true
-      feature-gates: GracefulNodeShutdown=true
+      feature-gates: GracefulNodeShutdown=true,UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true
     extraConfig:
       maxPods: 150
       serializeImagePulls: false
+      featureGates:
+        UserNamespacesSupport: true
+        UserNamespacesPodSecurityStandards: true
     nodeIP:
       validSubnets:
         - "10.10.0.0/27"
