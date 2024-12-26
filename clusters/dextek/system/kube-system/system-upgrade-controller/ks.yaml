@@ -51,7 +51,7 @@ spec:
   postBuild:
     substitute:
       # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-      TALOS_VERSION: v1.9.0
+      TALOS_VERSION: v1.9.1
       # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
       KUBERNETES_VERSION: v1.32.0
       SCHEMATIC_ID: 712d1faee0ce00bb5014ab23147582f9155e6ad0db8e204cb8e53d489a687f6f
