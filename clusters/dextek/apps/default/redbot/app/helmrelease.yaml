@@ -32,6 +32,9 @@ spec:
             image:
               repository: phasecorex/red-discordbot
               tag: extra-audio-py311@sha256:ebdac95cbccccc461361256ae437f1676e9f8e70b8a2032adc84e18526ad7f7e
+            env:
+              PUID: 568
+              PGID: 568
             envFrom:
               - secretRef:
                   name: redbot-secret
@@ -41,15 +44,6 @@ spec:
                 memory: 400Mi
               limits:
                 memory: 1Gi
-            securityContext:
-              runAsNonRoot: true
-              runAsUser: 568
-              runAsGroup: 568
-              readOnlyRootFilesystem: true
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
     persistence:
       config:
         existingClaim: redbot-config
