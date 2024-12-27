@@ -1,7 +1,5 @@
 locals {
-  kernel_cached         = "${var.matchbox_url}/assets/talos/${var.talos_version}/vmlinuz-amd64"
-  initrd_cached         = "${var.matchbox_url}/assets/talos/${var.talos_version}/initramfs-amd64.xz"
-  talos_factory_id      = jsondecode(data.http.factory_id.response_body).id
+  talos_factory_id      = talos_image_factory_schematic.machine.id
   hash_short            = substr("${local.talos_factory_id}", 0, 10)
   kernel_cached_factory = "${var.matchbox_url}/assets/talos/factory/${local.hash_short}/${var.talos_version}/kernel-amd64"
   initrd_cached_factory = "${var.matchbox_url}/assets/talos/factory/${local.hash_short}/${var.talos_version}/initramfs-amd64.xz"

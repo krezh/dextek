@@ -12,3 +12,7 @@ resource "local_sensitive_file" "machine_config" {
   content         = data.talos_machine_configuration.machine[each.key].machine_configuration
   file_permission = 0600
 }
+
+output "schematic_id" {
+  value = talos_image_factory_schematic.machine.id
+}
