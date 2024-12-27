@@ -5,6 +5,10 @@ resource "talos_machine_secrets" "talos" {
   }
 }
 
+resource "talos_image_factory_schematic" "machine" {
+  schematic = file("schematic.yaml")
+}
+
 data "talos_machine_configuration" "machine" {
   for_each = var.nodes
   depends_on = [
@@ -24,7 +28,7 @@ data "talos_machine_configuration" "machine" {
     templatefile("talosPatches/general-patch.yaml", {
       cluster_name       = var.cluster_name,
       talos_version      = var.talos_version,
-      talos_factory_hash = local.talos_factory_id,
+      talos_factory_hash = talos_image_factory_schematic.machine.id,
       zot_factory_url    = var.zot_factory_url,
       upsmonHost         = data.sops_file.secrets.data["nut.host"],
       upsmonPasswd       = data.sops_file.secrets.data["nut.password"],
