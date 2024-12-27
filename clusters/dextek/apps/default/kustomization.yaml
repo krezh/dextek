@@ -27,4 +27,3 @@ resources:
   - ./obsidian-couchdb
   - ./it-tools
   - ./wallos
-  - ./zigbee2mqtt
