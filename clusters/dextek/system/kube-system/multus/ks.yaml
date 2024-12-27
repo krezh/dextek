@@ -21,13 +21,13 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: multus-config
+  name: multus-networks
   namespace: flux-system
 spec:
   targetNamespace: kube-system
   dependsOn:
     - name: multus
-  path: ./clusters/dextek/system/kube-system/multus/config
+  path: ./clusters/dextek/system/kube-system/multus/networks
   prune: true
   sourceRef:
     kind: GitRepository
