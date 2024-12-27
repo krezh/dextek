@@ -17,3 +17,4 @@ resources:
   - ./netdata
   - ./kromgo
   - ./mikrotik-exporter
+  - ./prometheus-operator-crds
