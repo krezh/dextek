@@ -17,6 +17,15 @@ tasks:
     desc: Reset Talos and Clear all user disks
     ignore_error: true
     cmds:
-      - talosctl reset -n ms01-01.k8s.plexuz.xyz -e ms01-01.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all
-      - talosctl reset -n ms01-02.k8s.plexuz.xyz -e ms01-02.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all
-      - talosctl reset -n ms01-03.k8s.plexuz.xyz -e ms01-03.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all
+      - until talosctl reset -n ms01-01.k8s.plexuz.xyz -e ms01-01.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all; do sleep 3; done
+      - until talosctl reset -n ms01-02.k8s.plexuz.xyz -e ms01-02.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all; do sleep 3; done
+      - until talosctl reset -n ms01-03.k8s.plexuz.xyz -e ms01-03.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all; do sleep 3; done
+
+  wipe:
+    desc: Wipe all user disks
+    ignore_error: true
+    vars:
+      disks: "nvme0n1 nvme1n1 nvme2n1"
+      nodes: "ms01-01.k8s.plexuz.xyz ms01-02.k8s.plexuz.xyz ms01-03.k8s.plexuz.xyz"
+    cmds:
+      - for node in {{ .nodes }}; do for disk in {{ .disks }}; do talosctl wipe disk $disk -n $node; sleep 1; done; done
