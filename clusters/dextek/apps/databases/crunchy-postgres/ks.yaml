@@ -29,6 +29,7 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator
     - name: external-secrets-stores
+    - name: rook-ceph-cluster
   targetNamespace: databases
   commonMetadata:
     labels:
