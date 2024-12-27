@@ -104,7 +104,7 @@ spec:
             paths: *paths
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: zigbee2mqtt-config
       logs:
         type: emptyDir
         globalMounts:
