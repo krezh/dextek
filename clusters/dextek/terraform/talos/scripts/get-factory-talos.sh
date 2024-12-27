@@ -24,26 +24,28 @@ if [ -z "$hash" ]; then
   exit 1
 fi
 
-DIR="$DIR/$(echo "$hash" | cut -c -10)/$version"
+DIR="$DIR/$(echo $hash | cut -c -10)/$version"
 
 function get() {
   local file_name="$1"
   local url="$2"
 
   mkdir -p "$DIR"
-  if curl --fail -# -Lo "$file_name" "$url"; then
+  curl --fail -# -Lo "$file_name" "$url"
+  if [ $? -ne 0 ]; then
     echo "Error downloading $url. Exiting."
-    rm -rf "$DIR"
+    rm -rf $DIR
     exit 1
   fi
 }
 
 function set_ownership_recursively() {
   local directory="$1"
-  chown -R "$USER":"$USER" "$directory"
+  chown -R $USER:$USER "$directory"
 }
 
 function download() {
+
   # Check if force flag is set or files do not exist
   if $force || [ ! -f "$DIR/initramfs-amd64.xz" ] || [ ! -f "$DIR/kernel-amd64" ]; then
     get "$DIR/initramfs-amd64.xz" "https://factory.talos.dev/image/$hash/$version/initramfs-amd64.xz"
