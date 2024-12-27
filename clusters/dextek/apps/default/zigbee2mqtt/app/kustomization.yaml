@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./volsync.yaml
   - ../../../../../shared/templates/volsync
 configMapGenerator:
   - name: zigbee2mqtt-loki-rules
