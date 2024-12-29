@@ -6,7 +6,7 @@ metadata:
   name: smartctl-exporter
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/monitoring/smartctl-exporter/app
+  path: ./clusters/dextek/apps/monitoring/smartctl-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

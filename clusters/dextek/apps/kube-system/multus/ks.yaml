@@ -7,7 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: kube-system
-  path: ./clusters/dextek/system/kube-system/multus/app
+  path: ./clusters/dextek/apps/kube-system/multus/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,7 +27,7 @@ spec:
   targetNamespace: kube-system
   dependsOn:
     - name: multus
-  path: ./clusters/dextek/system/kube-system/multus/config
+  path: ./clusters/dextek/apps/kube-system/multus/config
   prune: true
   sourceRef:
     kind: GitRepository

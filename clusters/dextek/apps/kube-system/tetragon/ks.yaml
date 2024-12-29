@@ -6,7 +6,7 @@ metadata:
   name: tetragon
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/kube-system/tetragon/app
+  path: ./clusters/dextek/apps/kube-system/tetragon/app
   prune: true
   wait: true
   sourceRef:
