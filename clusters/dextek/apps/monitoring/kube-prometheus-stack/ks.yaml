@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: prometheus-operator-crds
   targetNamespace: monitoring
-  path: ./clusters/dextek/system/monitoring/kube-prometheus-stack/app
+  path: ./clusters/dextek/apps/monitoring/kube-prometheus-stack/app
   prune: true
   sourceRef:
     kind: GitRepository

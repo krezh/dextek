@@ -6,7 +6,7 @@ metadata:
   name: k8s-gateway
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/kube-system/k8s-gateway/app
+  path: ./clusters/dextek/apps/kube-system/k8s-gateway/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: kube-prometheus-stack
-  path: ./clusters/dextek/system/monitoring/graphite-exporter/app
+  path: ./clusters/dextek/apps/monitoring/graphite-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

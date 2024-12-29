@@ -6,7 +6,7 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/cert-manager/app
+  path: ./clusters/dextek/apps/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ metadata:
 spec:
   dependsOn:
     - name: cert-manager
-  path: ./clusters/dextek/system/cert-manager/issuers
+  path: ./clusters/dextek/apps/cert-manager/issuers
   prune: true
   sourceRef:
     kind: GitRepository

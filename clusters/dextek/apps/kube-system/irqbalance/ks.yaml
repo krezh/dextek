@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./clusters/dextek/system/kube-system/irqbalance/app
+  path: ./clusters/dextek/apps/kube-system/irqbalance/app
   prune: true
   sourceRef:
     kind: GitRepository
