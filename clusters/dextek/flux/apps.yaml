@@ -10,8 +10,6 @@ spec:
   path: ./clusters/dextek/apps
   wait: false
   prune: false
-  dependsOn:
-    - name: system
   sourceRef:
     kind: GitRepository
     name: dextek
