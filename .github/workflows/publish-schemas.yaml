@@ -47,6 +47,9 @@ jobs:
         with:
           node-version: 18.x
 
+      - name: Install Python Dependencies
+        run: pip install pyyaml
+
       # - name: Install Teleport
       #   uses: teleport-actions/setup@v1
       #   with:
