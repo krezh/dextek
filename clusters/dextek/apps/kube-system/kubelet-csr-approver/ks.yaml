@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./clusters/dextek/system/kube-system/kubelet-csr-approver/app
+  path: ./clusters/dextek/apps/kube-system/kubelet-csr-approver/app
   prune: true
   sourceRef:
     kind: GitRepository

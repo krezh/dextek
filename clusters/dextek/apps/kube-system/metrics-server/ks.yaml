@@ -6,7 +6,7 @@ metadata:
   name: metrics-server
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/kube-system/metrics-server/app
+  path: ./clusters/dextek/apps/kube-system/metrics-server/app
   prune: true
   sourceRef:
     kind: GitRepository

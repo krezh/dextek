@@ -6,7 +6,7 @@ metadata:
   name: rook-ceph
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/rook-ceph/app
+  path: ./clusters/dextek/apps/rook-ceph/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ metadata:
 spec:
   dependsOn:
     - name: rook-ceph
-  path: ./clusters/dextek/system/rook-ceph/cluster
+  path: ./clusters/dextek/apps/rook-ceph/cluster
   prune: true
   sourceRef:
     kind: GitRepository

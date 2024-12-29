@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./clusters/dextek/system/kube-system/intel-device-plugin/app
+  path: ./clusters/dextek/apps/kube-system/intel-device-plugin/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -34,7 +34,7 @@ spec:
   dependsOn:
     - name: intel-device-plugin-operator
     - name: node-feature-discovery-features
-  path: ./clusters/dextek/system/kube-system/intel-device-plugin/gpu
+  path: ./clusters/dextek/apps/kube-system/intel-device-plugin/gpu
   prune: true
   sourceRef:
     kind: GitRepository

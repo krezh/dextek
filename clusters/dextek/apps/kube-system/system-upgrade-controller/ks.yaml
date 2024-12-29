@@ -15,7 +15,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  path: ./clusters/dextek/system/kube-system/system-upgrade-controller/app
+  path: ./clusters/dextek/apps/kube-system/system-upgrade-controller/app
   prune: true
   wait: true
   sourceRef:
@@ -42,7 +42,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  path: ./clusters/dextek/system/kube-system/system-upgrade-controller/plans
+  path: ./clusters/dextek/apps/kube-system/system-upgrade-controller/plans
   prune: true
   wait: true
   sourceRef:

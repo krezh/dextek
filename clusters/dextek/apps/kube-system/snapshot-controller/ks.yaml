@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cert-manager
-  path: ./clusters/dextek/system/kube-system/snapshot-controller/app
+  path: ./clusters/dextek/apps/kube-system/snapshot-controller/app
   prune: true
   sourceRef:
     kind: GitRepository
