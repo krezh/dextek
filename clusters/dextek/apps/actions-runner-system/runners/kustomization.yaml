@@ -7,3 +7,4 @@ resources:
   - ./dextek.yaml
   - ./talup.yaml
   - ./containers.yaml
+  - ./rbac.yaml
