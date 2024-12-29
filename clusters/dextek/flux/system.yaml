@@ -8,7 +8,7 @@ spec:
   interval: 30m
   path: ./clusters/dextek/system
   wait: false
-  prune: true
+  prune: false
   dependsOn:
     - name: cluster
   sourceRef:
