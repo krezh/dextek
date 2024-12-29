@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cert-manager-issuers
-  path: ./clusters/dextek/system/ingress-nginx/certificates
+  path: ./clusters/dextek/apps/ingress-nginx/certificates
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,7 +27,7 @@ metadata:
 spec:
   dependsOn:
     - name: ingress-nginx-certificates
-  path: ./clusters/dextek/system/ingress-nginx/external
+  path: ./clusters/dextek/apps/ingress-nginx/external
   prune: true
   sourceRef:
     kind: GitRepository
@@ -46,7 +46,7 @@ metadata:
 spec:
   dependsOn:
     - name: ingress-nginx-certificates
-  path: ./clusters/dextek/system/ingress-nginx/internal
+  path: ./clusters/dextek/apps/ingress-nginx/internal
   prune: true
   sourceRef:
     kind: GitRepository

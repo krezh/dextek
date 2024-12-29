@@ -6,7 +6,7 @@ metadata:
   name: node-problem-detector
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/monitoring/node-problem-detector/app
+  path: ./clusters/dextek/apps/monitoring/node-problem-detector/app
   prune: true
   sourceRef:
     kind: GitRepository

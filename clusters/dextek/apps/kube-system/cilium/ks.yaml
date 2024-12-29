@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: cilium
-  path: ./clusters/dextek/system/kube-system/cilium/app
+  path: ./clusters/dextek/apps/kube-system/cilium/app
   prune: true
   wait: true
   sourceRef:

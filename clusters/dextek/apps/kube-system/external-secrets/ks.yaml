@@ -6,7 +6,7 @@ metadata:
   name: external-secrets
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/kube-system/external-secrets/app
+  path: ./clusters/dextek/apps/kube-system/external-secrets/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets
-  path: ./clusters/dextek/system/kube-system/external-secrets/stores
+  path: ./clusters/dextek/apps/kube-system/external-secrets/stores
   prune: true
   sourceRef:
     kind: GitRepository

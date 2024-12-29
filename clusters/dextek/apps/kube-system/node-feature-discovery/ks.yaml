@@ -6,7 +6,7 @@ metadata:
   name: node-feature-discovery
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/kube-system/node-feature-discovery/app
+  path: ./clusters/dextek/apps/kube-system/node-feature-discovery/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ metadata:
 spec:
   dependsOn:
     - name: node-feature-discovery
-  path: ./clusters/dextek/system/kube-system/node-feature-discovery/features
+  path: ./clusters/dextek/apps/kube-system/node-feature-discovery/features
   prune: true
   sourceRef:
     kind: GitRepository

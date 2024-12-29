@@ -6,7 +6,7 @@ metadata:
   name: loki
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/monitoring/loki/app
+  path: ./clusters/dextek/apps/monitoring/loki/app
   prune: true
   sourceRef:
     kind: GitRepository

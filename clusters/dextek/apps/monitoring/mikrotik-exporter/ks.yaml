@@ -6,7 +6,7 @@ metadata:
   name: mikrotik-exporter
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/monitoring/mikrotik-exporter/app
+  path: ./clusters/dextek/apps/monitoring/mikrotik-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

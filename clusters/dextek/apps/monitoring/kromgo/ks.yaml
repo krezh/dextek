@@ -6,7 +6,7 @@ metadata:
   name: &app kromgo
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/monitoring/kromgo/app
+  path: ./clusters/dextek/apps/monitoring/kromgo/app
   targetNamespace: monitoring
   prune: true
   sourceRef:
