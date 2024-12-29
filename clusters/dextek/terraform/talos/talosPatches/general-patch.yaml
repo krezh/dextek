@@ -101,10 +101,8 @@ machine:
       forwardKubeDNSToHost: false # Incompatible with Cilium bpf masquerade
     kubernetesTalosAPIAccess:
       enabled: true
-      allowedRoles:
-        - os:admin
-      allowedKubernetesNamespaces:
-        - kube-system
+      allowedRoles: ["os:admin"]
+      allowedKubernetesNamespaces: ["actions-runner-system", "kube-system"]
 
 cluster:
   clusterName: ${cluster_name}
