@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./clusters/dextek/system/monitoring/prometheus-operator-crds/app
+  path: ./clusters/dextek/apps/monitoring/prometheus-operator-crds/app
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository

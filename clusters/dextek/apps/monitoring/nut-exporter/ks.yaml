@@ -6,7 +6,7 @@ metadata:
   name: nut-exporter
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/system/monitoring/nut-exporter/app
+  path: ./clusters/dextek/apps/monitoring/nut-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator-cluster
     - name: kube-prometheus-stack
-  path: ./clusters/dextek/system/monitoring/grafana/app
+  path: ./clusters/dextek/apps/monitoring/grafana/app
   prune: true
   sourceRef:
     kind: GitRepository
