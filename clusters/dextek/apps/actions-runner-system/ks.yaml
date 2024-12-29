@@ -25,6 +25,10 @@ metadata:
 spec:
   dependsOn:
     - name: actions-runner-controller
+  targetNamespace: actions-runner-system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/actions-runner-system/runners
   prune: true
   sourceRef:
