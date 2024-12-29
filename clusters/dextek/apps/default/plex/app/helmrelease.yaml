@@ -113,7 +113,6 @@ spec:
       media:
         enabled: true
         existingClaim: media
-
       local:
         enabled: true
         type: emptyDir
