@@ -50,6 +50,9 @@ jobs:
       - name: Install Python Dependencies
         run: pip install pyyaml
 
+      - name: test
+        run: kubectl get pods
+
       # - name: Install Teleport
       #   uses: teleport-actions/setup@v1
       #   with:
