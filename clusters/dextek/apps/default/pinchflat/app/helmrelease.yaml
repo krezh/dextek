@@ -88,7 +88,7 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: pinchflat
+        existingClaim: pinchflat-config
       tmp:
         type: emptyDir
       yt-dlp:
