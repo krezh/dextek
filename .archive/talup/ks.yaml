@@ -13,7 +13,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  path: ./clusters/dextek/system/kube-system/talup/app
+  path: ./clusters/dextek/apps/kube-system/talup/app
   prune: true
   wait: true
   sourceRef:
