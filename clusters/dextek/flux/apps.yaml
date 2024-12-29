@@ -9,7 +9,7 @@ spec:
   interval: 30m
   path: ./clusters/dextek/apps
   wait: false
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: dextek
