@@ -18,7 +18,7 @@ spec:
   values:
     log:
       level: DEBUG
-    roles: kube,app,discovery,node,windowsdesktop,db
+    roles: kube,app,discovery,node,windowsdesktop
     insecureSkipProxyTLSVerify: true
     proxyAddr: teleport.talos.plexuz.xyz:443
     joinParams:
@@ -26,22 +26,6 @@ spec:
       # Following must match the name of the token in token.yaml
       tokenName: kubernetes-token
     kubeClusterName: talos-plexuz
-    databases:
-      - name: CPGO
-        uri: postgres-ha.databases.svc.cluster.local:5432
-        protocol: postgres
-        static_labels:
-          env: prod
-        tls:
-          ca_cert_file: "/etc/teleport-tls-db/db-ca/ca.crt"
-    extraVolumes:
-      - name: db-ca
-        secret:
-          secretName: teleport-agent-postgres-secret
-    extraVolumeMounts:
-      - name: db-ca
-        mountPath: /etc/teleport-tls-db/db-ca
-        readOnly: true
     teleportConfig:
       discovery_service:
         enabled: true
@@ -50,11 +34,6 @@ spec:
             namespaces: ["*"]
             labels:
               "teleport/enable": "true"
-      db_service:
-        enabled: true
-        resources:
-          - labels:
-              "*": "*"
       windows_desktop_service:
         enabled: false
         static_hosts:
