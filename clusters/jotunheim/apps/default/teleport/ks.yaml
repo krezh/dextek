@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: default
-  path: ./clusters/dextek/apps/default/teleport/agent
+  path: ./clusters/jotunheim/apps/default/teleport/agent
   prune: true
   sourceRef:
     kind: GitRepository
