@@ -43,7 +43,6 @@ resource "opnsense_unbound_host_override" "matchbox" {
   server   = "192.168.1.52"
 }
 
-
 resource "opnsense_unbound_host_override" "zot" {
   enabled     = true
   description = "ZOT Pull Through Cache"

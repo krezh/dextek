@@ -70,6 +70,10 @@ spec:
 
     proxyListenerMode: multiplex
 
+    proxy:
+      highAvailability:
+        replicaCount: 5
+
     podMonitor:
       enabled: true
       additionalLabels:
