@@ -27,7 +27,7 @@ spec:
       tokenName: kubernetes-token
     kubeClusterName: talos-plexuz
     databases:
-      - name: CNPGO
+      - name: CPGO
         uri: postgres-ha.databases.svc.cluster.local:5432
         protocol: postgres
     teleportConfig:
