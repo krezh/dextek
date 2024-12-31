@@ -8,3 +8,4 @@ resources:
   - ./podmonitor.yaml
   - ./init-sql.yaml
   - ./pgadmin.yaml
+  - ./certs.yaml

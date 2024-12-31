@@ -12,6 +12,10 @@ spec:
       crunchy-userinit.ramblurr.github.com/superuser: &superuser "postgres"
   postgresVersion: 16
   image: ghcr.io/budimanjojo/cdpgvecto.rs:16-v0.3.0
+  customReplicationTLSSecret:
+    name: postgres-repl-tls
+  customTLSSecret:
+    name: postgres-tls
   databaseInitSQL:
     name: init-sql
     key: init.sql
