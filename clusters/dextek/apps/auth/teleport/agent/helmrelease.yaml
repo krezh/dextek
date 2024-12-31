@@ -24,9 +24,12 @@ spec:
     joinParams:
       method: kubernetes
       # Following must match the name of the token in token.yaml
-      tokenName: "kubernetes-token"
+      tokenName: kubernetes-token
     kubeClusterName: talos-plexuz
-    databases: []
+    databases:
+      - name: CNPGO
+        uri: postgres-ha.databases.svc.cluster.local:5432
+        protocol: postgres
     teleportConfig:
       discovery_service:
         enabled: true
@@ -48,4 +51,8 @@ spec:
             ad: false
       app_service:
         enabled: true
-        apps: []
+        apps:
+          - name: pikvm
+            public_addr: pikvm.teleport.talos.plexuz.xyz
+            uri: https://192.168.1.15
+            insecure_skip_verify: true
