@@ -30,6 +30,16 @@ spec:
       - name: CPGO
         uri: postgres-ha.databases.svc.cluster.local:5432
         protocol: postgres
+        tls:
+          ca_cert_file: "/etc/teleport-tls-db/db-ca/ca.crt"
+    extraVolumes:
+      - name: db-ca
+        secret:
+          secretName: teleport-agent-postgres-secret
+    extraVolumeMounts:
+      - name: db-ca
+        mountPath: /etc/teleport-tls-db/db-ca
+        readOnly: true
     teleportConfig:
       discovery_service:
         enabled: true
