@@ -30,6 +30,8 @@ spec:
       - name: CPGO
         uri: postgres-ha.databases.svc.cluster.local:5432
         protocol: postgres
+        static_labels:
+          env: prod
         tls:
           ca_cert_file: "/etc/teleport-tls-db/db-ca/ca.crt"
     extraVolumes:
