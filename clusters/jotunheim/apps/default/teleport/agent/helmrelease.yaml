@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: teleport-kube-agent
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: teleport-kube-agent
+      version: 17.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: teleport
+        namespace: flux-system
+  values:
+    log:
+      level: DEBUG
+    roles: kube,app,discovery
+    insecureSkipProxyTLSVerify: true
+    proxyAddr: teleport.talos.plexuz.xyz:443
+    joinTokenSecret:
+      create: false
+      name: teleport-kube-agent-auth-token
+    joinParams:
+      method: token
+      tokenName: ""
+    kubeClusterName: jotunheim
+    teleportConfig:
+      discovery_service:
+        enabled: true
+        kubernetes:
+          - types: ["app"]
+            namespaces: ["*"]
+            labels:
+              "teleport/enable": "true"
