@@ -50,20 +50,20 @@ jobs:
       - name: Install Python Dependencies
         run: pip install pyyaml
 
-      # - name: Install Teleport
-      #   uses: teleport-actions/setup@v1
-      #   with:
-      #     # renovate: datasource=github-releases depName=gravitational/teleport
-      #     version: 17.1.2
+      - name: Install Teleport
+        uses: teleport-actions/setup@v1
+        with:
+          # renovate: datasource=github-releases depName=gravitational/teleport
+          version: 17.1.2
 
-      # - name: Authorize against Teleport # FIXME: Uncomment when Teleport fixes "ERROR: invalid symlinks mode"
-      #   uses: teleport-actions/auth-k8s@v2
-      #   with:
-      #     proxy: teleport.talos.plexuz.xyz:443
-      #     token: github-action-bot
-      #     certificate-ttl: 1h
-      #     kubernetes-cluster: talos-plexuz
-      #     anonymous-telemetry: 0
+      - name: Authorize against Teleport # FIXME: Uncomment when Teleport fixes "ERROR: invalid symlinks mode"
+        uses: teleport-actions/auth-k8s@v2
+        with:
+          proxy: teleport.talos.plexuz.xyz:443
+          token: github-action-bot
+          certificate-ttl: 1h
+          kubernetes-cluster: talos-plexuz
+          anonymous-telemetry: 0
 
       - name: Download and run crd-extractor
         shell: bash
