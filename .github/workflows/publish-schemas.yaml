@@ -56,7 +56,7 @@ jobs:
           # renovate: datasource=github-releases depName=gravitational/teleport
           version: 17.1.2
 
-      - name: Authorize against Teleport # FIXME: Uncomment when Teleport fixes "ERROR: invalid symlinks mode"
+      - name: Authorize against Teleport
         uses: teleport-actions/auth-k8s@v2
         with:
           proxy: teleport.talos.plexuz.xyz:443
