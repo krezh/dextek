@@ -32,6 +32,9 @@ spec:
             image:
               repository: ghcr.io/hoarder-app/hoarder
               tag: 0.20.0
+            envFrom:
+              - secretRef:
+                  name: hoarder-secret
             env:
               BROWSER_WEB_URL: http://hoarder-chrome.default.svc.cluster.local:9222
               CRAWLER_DOWNLOAD_BANNER_IMAGE: true
@@ -40,16 +43,6 @@ spec:
               DATA_DIR: /data
               DISABLE_SIGNUPS: true
               MEILI_ADDR: http://hoarder-meilisearch.default.svc.cluster.local:7700
-              MEILI_MASTER_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: hoarder-secret
-                    key: meilisearch_master_key
-              NEXTAUTH_SECRET:
-                valueFrom:
-                  secretKeyRef:
-                    name: hoarder-secret
-                    key: encryption_key
               NEXTAUTH_URL: https://hoarder.plexuz.xyz
               DISABLE_NEW_RELEASE_CHECK: true
             probes:
@@ -105,7 +98,7 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: hoarder-secret
-                    key: meilisearch_master_key
+                    key: MEILI_MASTER_KEY
             resources:
               requests:
                 cpu: 10m
