@@ -28,3 +28,4 @@ resources:
   - ./it-tools
   - ./wallos
   - ./pinchflat
+  - ./hoarder
