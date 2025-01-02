@@ -41,7 +41,6 @@ spec:
               CRAWLER_ENABLE_ADBLOCKER: true
               CRAWLER_STORE_SCREENSHOT: true
               DATA_DIR: /data
-              DISABLE_SIGNUPS: true
               MEILI_ADDR: http://hoarder-meilisearch.default.svc.cluster.local:7700
               NEXTAUTH_URL: https://hoarder.plexuz.xyz
               DISABLE_NEW_RELEASE_CHECK: true
