@@ -245,6 +245,12 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
+        smartctl-exporter:
+          # renovate: depName="SMARTctl Exporter Dashboard"
+          gnetId: 22604
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
       nginx:
         nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
