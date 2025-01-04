@@ -45,6 +45,8 @@ metadata:
   name: rook-ceph-secretstore
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: external-secrets
   targetNamespace: rook-ceph
   path: ./clusters/dextek/apps/rook-ceph/secretstore
   prune: true
