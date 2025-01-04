@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kyoo-config
+  namespace: default
 data:
   # Library root can either be an absolute path or a relative path to your docker-compose.yml file.
   LIBRARY_ROOT: /data
