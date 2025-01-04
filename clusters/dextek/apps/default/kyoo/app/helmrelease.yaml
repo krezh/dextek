@@ -279,14 +279,14 @@ spec:
               - path: /metadata
       search:
         size: 10Gi
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
         advancedMounts:
           meilisearch:
             app:
               - path: /meili_data
       transcoder-metadata:
         size: 10Gi
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
         advancedMounts:
           transcoder:
             app:
