@@ -26,13 +26,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    # logLevel: debug
     provider: cloudflare
     env:
       - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: cloudflare-external-dns
+            name: &secret cloudflare-external-dns
             key: CLOUDFLARE_API_TOKEN
     extraArgs:
       - --cloudflare-proxied
@@ -40,6 +39,7 @@ spec:
       - --ingress-class=external
       - --ignore-ingress-tls-spec
       - --events
+    triggerLoopOnEvent: true
     policy: sync
     sources: ["ingress"]
     txtPrefix: k8s.
@@ -48,4 +48,4 @@ spec:
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: cloudflare-external-dns
+      secret.reloader.stakater.com/reload: *secret
