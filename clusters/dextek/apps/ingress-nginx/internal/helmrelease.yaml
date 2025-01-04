@@ -23,6 +23,10 @@ spec:
   values:
     fullnameOverride: nginx-internal
     controller:
+      service:
+        annotations:
+          coredns.io/hostname: ingress-internal
+        externalTrafficPolicy: Local
       ingressClassResource:
         name: internal
         default: true
@@ -33,8 +37,9 @@ spec:
             - key: ingress-class
               operator: In
               values: ["internal"]
-      allowSnippetAnnotations: true
       config:
+        allow-snippet-annotations: true
+        annotations-risk-level: Critical
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
@@ -54,7 +59,6 @@ spec:
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
         use-geoip2: true
-        #custom-http-errors: 401,403,404,500,501,502,503
         server-snippet: add_header X-Robots-Tag "noindex";
       extraArgs:
         default-ssl-certificate: ingress-nginx/plexuz-default-tls
@@ -69,34 +73,3 @@ spec:
           namespace: ingress-nginx
           namespaceSelector:
             any: true
-      service:
-        annotations:
-          coredns.io/hostname: ingress-internal
-        externalTrafficPolicy: Local
-    defaultBackend:
-      enabled: false
-      replicaCount: 3
-      image:
-        repository: ghcr.io/tarampampam/error-pages
-        tag: 3.3.1
-      extraEnvs:
-        - name: TEMPLATE_NAME
-          value: app-down
-        - name: SHOW_DETAILS
-          value: "false"
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/instance
-                      operator: In
-                      values:
-                        - ingress-nginx-internal
-                    - key: app.kubernetes.io/component
-                      operator: In
-                      values:
-                        - default-backend
-                topologyKey: kubernetes.io/hostname
-              weight: 100

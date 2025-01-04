@@ -26,5 +26,3 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
-      APP_UID: "568"
-      APP_GID: "568"
