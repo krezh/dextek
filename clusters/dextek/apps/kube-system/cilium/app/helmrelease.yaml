@@ -54,10 +54,7 @@ spec:
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 
-    enableIPv4BIGTCP: true
-
     loadBalancer:
-      acceleration: best-effort
       algorithm: maglev
       mode: dsr
 
@@ -65,9 +62,7 @@ spec:
       enabled: true
       bbr: true
     bpf:
-      datapathMode: netkit
       masquerade: true
-      preallocateMaps: true
       tproxy: true
 
     l7Proxy: true
