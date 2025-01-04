@@ -29,3 +29,4 @@ resources:
   - ./wallos
   - ./pinchflat
   - ./hoarder
+  - ./jellyseerr
