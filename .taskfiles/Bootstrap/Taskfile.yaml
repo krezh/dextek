@@ -5,14 +5,18 @@ version: "3"
 vars:
   CLUSTER_DIR: "./clusters/dextek"
   BOOTSTRAP_DIR: "{{.CLUSTER_DIR}}/bootstrap"
+  KUBECONFIG: "$(pwd)/kubeconfig"
 
 tasks:
   all:
     desc: Bootstrap all required resources
     cmds:
       - task: talos
+      - task: kubeconfig
       - task: helmfile
       - task: flux
+      - task: k9s
+      - defer: rm -f {{.KUBECONFIG}}
 
   talos:
     desc: Bootstrap Talos
@@ -22,19 +26,29 @@ tasks:
       - tofu apply --auto-approve
       - tofu apply --var bootstrap=true --var talosconfig=true --auto-approve
 
+  kubeconfig:
+    desc: Create Kubeconfig
+    dir: "."
+    cmds:
+      - until talosctl kubeconfig -n ms01-01.k8s.plexuz.xyz --force {{.KUBECONFIG}}; do sleep 3; done
+
   helmfile:
     desc: Bootstrap Helmfile resources
-    # preconditions: [talos]
     cmds:
-      - until helmfile -f {{.BOOTSTRAP_DIR}}/helmfile.yaml apply; do sleep 10; done
+      - until helmfile --kubeconfig {{.KUBECONFIG}} -f {{.BOOTSTRAP_DIR}}/helmfile.yaml apply; do sleep 3; done
 
   flux:
     desc: Bootstrap Flux resources
     cmds:
-      - until kubectl apply --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux; do sleep 10; done
-      - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply -f -
-      - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply -f -
-      - sops --decrypt {{.CLUSTER_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
-      - until kubectl apply -f {{.CLUSTER_DIR}}/flux/vars/cluster-settings.yaml; do sleep 10; done
+      - until kubectl apply --kubeconfig {{.KUBECONFIG}} --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux; do sleep 3; done
+      - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{.KUBECONFIG}} -f -
+      - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{.KUBECONFIG}} -f -
+      - sops --decrypt {{.CLUSTER_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl apply --kubeconfig {{.KUBECONFIG}} -f -
+      - until kubectl apply --kubeconfig {{.KUBECONFIG}} -f {{.CLUSTER_DIR}}/flux/vars/cluster-settings.yaml; do sleep 3; done
       - sleep 10
-      - until kubectl apply --server-side --kustomize {{.CLUSTER_DIR}}/flux/config; do sleep 10; done
+      - until kubectl apply --kubeconfig {{.KUBECONFIG}} --server-side --kustomize {{.CLUSTER_DIR}}/flux/config; do sleep 3; done
+
+  k9s:
+    desc: Watch pods with K9s
+    cmds:
+      - k9s --kubeconfig {{.KUBECONFIG}} --all-namespaces --command pods
