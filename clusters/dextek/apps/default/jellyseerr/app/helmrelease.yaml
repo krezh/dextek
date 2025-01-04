@@ -86,13 +86,7 @@ spec:
           gethomepage.dev/widget.type: "jellyseerr"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_JELLYSEERR_APIKEY}}` }}"
         hosts:
-          - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-          - host: &HOST2 "requests.plexuz.xyz"
+          - host: &HOST "requests.plexuz.xyz"
             paths:
               - path: /
                 pathType: Prefix
@@ -101,7 +95,7 @@ spec:
         tls:
           - hosts:
               - *HOST
-              - *HOST2
+              - *HOST
     persistence:
       config:
         enabled: true
