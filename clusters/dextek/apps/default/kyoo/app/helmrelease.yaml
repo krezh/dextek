@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app kyoo
+  namespace: default
 spec:
   interval: 15m
   chart:
@@ -277,13 +278,15 @@ spec:
             app:
               - path: /metadata
       search:
-        sizeLimit: 10Gi
+        size: 10Gi
+        accessMode: ReadWriteMany
         advancedMounts:
           meilisearch:
             app:
               - path: /meili_data
       transcoder-metadata:
-        sizeLimit: 10Gi
+        size: 10Gi
+        accessMode: ReadWriteMany
         advancedMounts:
           transcoder:
             app:
