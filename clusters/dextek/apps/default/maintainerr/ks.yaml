@@ -15,7 +15,7 @@ spec:
     - name: plex
     - name: sonarr
     - name: radarr
-    - name: overseerr
+    - name: jellyseerr
   interval: 30m
   retryInterval: 1m
   timeout: 5m
