@@ -49,7 +49,7 @@ spec:
             csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
-            imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
+            imageFeatures: layering #,fast-diff,object-map,deep-flatten,exclusive-lock #TODO add this when rebuilding the cluster
             imageFormat: "2"
           reclaimPolicy: Delete
     cephBlockPoolsVolumeSnapshotClass:
