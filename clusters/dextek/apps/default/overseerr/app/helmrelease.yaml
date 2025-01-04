@@ -82,7 +82,13 @@ spec:
           gethomepage.dev/widget.type: "overseerr"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_APIKEY}}` }}"
         hosts:
-          - host: &HOST "{{ .Release.Name }}.plexuz.xyz"
+          - host: &HOST "overseerr.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+          - host: &HOST2 "requests.plexuz.xyz"
             paths:
               - path: /
                 pathType: Prefix
@@ -91,6 +97,7 @@ spec:
         tls:
           - hosts:
               - *HOST
+              - *HOST2
     persistence:
       config:
         enabled: true
