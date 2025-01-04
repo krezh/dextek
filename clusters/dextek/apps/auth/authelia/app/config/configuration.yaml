@@ -202,3 +202,15 @@ identity_providers:
         redirect_uris:
           - "https://hoarder.plexuz.xyz/api/auth/callback/custom"
         userinfo_signed_response_alg: none
+
+      - client_id: kyoo
+        client_name: Kyoo
+        client_secret: "$${KYOO_OAUTH_CLIENT_SECRET}"
+        public: false
+        consent_mode: implicit # explicit, implicit, auto/default, preconfigured
+        authorization_policy: one_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "email", "groups"]
+        redirect_uris:
+          - "https://kyoo.plexuz.xyz/api/auth/logged/authelia"
+        userinfo_signed_response_alg: none
