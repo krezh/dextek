@@ -272,7 +272,7 @@ spec:
                   port: http
     persistence:
       kyoo:
-        existingClaim: *app
+        existingClaim: kyoo-config
         advancedMounts:
           back:
             app:
