@@ -31,5 +31,3 @@ spec:
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
       VOLSYNC_CLAIM: maintainerr-config
-      APP_UID: "1000"
-      APP_GID: "1000"
