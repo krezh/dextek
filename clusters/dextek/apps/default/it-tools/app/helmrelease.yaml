@@ -52,7 +52,6 @@ spec:
       it-tools:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "IT-Tools"
           #gethomepage.dev/instance: "krezh"

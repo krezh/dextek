@@ -82,7 +82,6 @@ spec:
             sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.plexuz.xyz/css/base/tautulli/organizr.css"></head>';
             sub_filter_once on;
             add_header Content-Security-Policy "frame-ancestors plexuz.xyz";
-          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Tautulli"
           #gethomepage.dev/instance: "krezh"
