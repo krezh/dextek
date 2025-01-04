@@ -14,7 +14,6 @@ resources:
   - ./homepage
   - ./media-browser
   - ./ntfy
-  - ./overseerr
   - ./plex
   - ./tautulli
   - ./theme-park
