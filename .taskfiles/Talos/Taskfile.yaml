@@ -15,6 +15,7 @@ tasks:
 
   reset:
     desc: Reset Talos and Clear all user disks
+    prompt: This is a dangerous command... Do you want to continue?
     ignore_error: true
     cmds:
       - until talosctl reset -n ms01-01.k8s.plexuz.xyz -e ms01-01.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=0 --wipe-mode=all; do sleep 3; done
@@ -28,4 +29,4 @@ tasks:
       disks: "nvme0n1 nvme1n1 nvme2n1"
       nodes: "ms01-01.k8s.plexuz.xyz ms01-02.k8s.plexuz.xyz ms01-03.k8s.plexuz.xyz"
     cmds:
-      - for node in {{ .nodes }}; do for disk in {{ .disks }}; do talosctl wipe disk $disk -n $node; sleep 1; done; done
+      - for node in {{ .nodes }}; do for disk in {{ .disks }}; do talosctl wipe disk $disk -n $node | true; echo $node $disk; sleep 1; done; done
