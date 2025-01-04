@@ -159,9 +159,6 @@ spec:
             failureDomain: host
             replicated:
               size: 3
-          healthCheck:
-            bucket:
-              interval: 60s
           preservePoolsOnDelete: true
         storageClass:
           enabled: true
