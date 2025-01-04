@@ -30,3 +30,13 @@ releases:
       - ./kubelet-csr-approver/values.yaml
     needs:
       - kube-system/cilium
+
+  - name: spegel
+    namespace: kube-system
+    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
+    version: v0.0.28
+    values:
+      - ../apps/kube-system/spegel/app/values.yaml
+    needs:
+      - kube-system/cilium
+      - kube-system/kubelet-csr-approver
