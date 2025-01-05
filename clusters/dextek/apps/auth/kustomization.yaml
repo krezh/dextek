@@ -7,3 +7,4 @@ resources:
   - ./authelia
   - ./lldap
   - ./teleport
+  - ./authentik
