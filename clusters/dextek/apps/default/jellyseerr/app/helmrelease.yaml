@@ -94,7 +94,6 @@ spec:
         tls:
           - hosts:
               - *HOST
-              - *HOST
     persistence:
       config:
         enabled: true
