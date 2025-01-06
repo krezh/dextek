@@ -52,9 +52,6 @@ spec:
           gethomepage.dev/group: Infrastructure
           gethomepage.dev/app: authentik
           gethomepage.dev/description: OIDC User Management
-          gethomepage.dev/widget.type: authentik
-          gethomepage.dev/widget.url: http://authentik-server.security
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
         hosts:
           - sso.plexuz.xyz
         https: false
