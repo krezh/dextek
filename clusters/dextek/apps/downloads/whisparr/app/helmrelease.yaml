@@ -104,6 +104,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
+                  port: http
         tls:
           - hosts:
               - *HOST
@@ -118,6 +119,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
+                  port: http
         tls:
           - hosts:
               - *HOST
