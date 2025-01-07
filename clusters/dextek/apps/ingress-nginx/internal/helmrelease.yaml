@@ -28,15 +28,15 @@ spec:
           coredns.io/hostname: ingress-internal
         externalTrafficPolicy: Local
       ingressClassResource:
-        name: internal
+        name: nginx-internal
         default: true
-        controllerValue: k8s.io/internal
+        controllerValue: k8s.io/nginx-internal
       admissionWebhooks:
         objectSelector:
           matchExpressions:
             - key: ingress-class
               operator: In
-              values: ["internal"]
+              values: ["nginx-internal"]
       config:
         allow-snippet-annotations: true
         annotations-risk-level: Critical

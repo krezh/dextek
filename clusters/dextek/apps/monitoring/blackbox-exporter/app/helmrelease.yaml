@@ -26,7 +26,7 @@ spec:
     pspEnabled: false
     ingress:
       enabled: true
-      className: internal
+      className: nginx-internal
       hosts:
         - host: &host "blackbox.talos.plexuz.xyz"
           paths:

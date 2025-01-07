@@ -176,7 +176,7 @@ spec:
       bdev_async_discard = true
     ingress:
       dashboard:
-        ingressClassName: internal
+        ingressClassName: nginx-internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Rook"

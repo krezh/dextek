@@ -122,9 +122,8 @@ spec:
             port: 7700
     ingress:
       app:
-        className: external
+        className: nginx-external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "hoarder"
           gethomepage.dev/instance: "krezh"
