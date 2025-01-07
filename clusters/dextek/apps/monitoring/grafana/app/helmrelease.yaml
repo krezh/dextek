@@ -300,6 +300,14 @@ spec:
             jsonData:
               timeInterval: 1m
             isDefault: true
+          - name: Mimir
+            type: prometheus
+            uid: mimir
+            access: proxy
+            url: http://mimir-nginx.monitoring.svc.cluster.local:80/prometheus
+            jsonData:
+              timeInterval: 1m
+            isDefault: false
           - name: Loki
             type: loki
             uid: loki
