@@ -36,7 +36,7 @@ spec:
     extraArgs:
       - --cloudflare-proxied
       - --cloudflare-dns-records-per-page=1000
-      - --ingress-class=external
+      - --ingress-class=nginx-external
       - --ignore-ingress-tls-spec
       - --events
     triggerLoopOnEvent: true
