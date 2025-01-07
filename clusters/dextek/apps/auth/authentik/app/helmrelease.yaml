@@ -34,14 +34,17 @@ spec:
     authentik:
       redis:
         host: dragonfly.databases.svc.cluster.local
+    prometheus:
+      rules:
+        enabled: true
     server:
       autoscaling:
         enabled: true
         minReplicas: 2
       metrics:
-        prometheus:
-          serviceMonitor:
-            enabled: true
+        enabled: true
+        serviceMonitor:
+          enabled: true
       ingress:
         enabled: true
         ingressClassName: external
