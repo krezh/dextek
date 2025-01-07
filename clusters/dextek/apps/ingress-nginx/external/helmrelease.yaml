@@ -29,9 +29,9 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: &hostname ingress.plexuz.xyz
         externalTrafficPolicy: Local
       ingressClassResource:
-        name: external
+        name: nginx-external
         default: true
-        controllerValue: k8s.io/external
+        controllerValue: k8s.io/nginx-external
       publishService:
         enabled: false
       admissionWebhooks:
@@ -39,7 +39,7 @@ spec:
           matchExpressions:
             - key: ingress-class
               operator: In
-              values: ["external"]
+              values: ["nginx-external"]
       config:
         allow-snippet-annotations: true
         annotations-risk-level: Critical

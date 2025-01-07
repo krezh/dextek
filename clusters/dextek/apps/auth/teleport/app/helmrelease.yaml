@@ -46,7 +46,7 @@ spec:
       enabled: false
       suppressAutomaticWildcards: true
       spec:
-        ingressClassName: internal
+        ingressClassName: nginx-internal
 
     annotations:
       service:

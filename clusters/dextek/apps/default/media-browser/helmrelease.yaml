@@ -68,7 +68,7 @@ spec:
             port: 80
     ingress:
       app:
-        className: internal
+        className: nginx-internal
         enabled: true
         annotations:
           gethomepage.dev/enabled: "true"

@@ -48,7 +48,7 @@ spec:
       ingress:
         enabled: true
         replicas: 3
-        ingressClassName: internal
+        ingressClassName: nginx-internal
         hosts:
           - host: &host mimir.talos.plexuz.xyz
             paths:

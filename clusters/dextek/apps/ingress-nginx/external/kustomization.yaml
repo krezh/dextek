@@ -5,4 +5,3 @@ kind: Kustomization
 namespace: ingress-nginx
 resources:
   - ./helmrelease.yaml
-  - ./externalsecret.yaml
