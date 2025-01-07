@@ -77,7 +77,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external
+        className: nginx-external
         annotations:
           nginx.ingress.kubernetes.io/auth-url: |-
             http://ak-outpost-authentik-embedded-outpost.auth.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx

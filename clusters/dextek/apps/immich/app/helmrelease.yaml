@@ -125,7 +125,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external
+        className: nginx-external
         annotations:
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
@@ -164,7 +164,7 @@ spec:
               - *host
       internal:
         enabled: true
-        className: internal
+        className: nginx-internal
         annotations:
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"

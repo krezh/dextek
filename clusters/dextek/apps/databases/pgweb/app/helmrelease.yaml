@@ -56,9 +56,8 @@ spec:
     ingress:
       app:
         enabled: true
-        className: internal
+        className: nginx-internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
           nginx.ingress.kubernetes.io/auth-url: |-
             http://ak-outpost-authentik-embedded-outpost.auth.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           nginx.ingress.kubernetes.io/auth-signin: |-

@@ -76,7 +76,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external
+        className: nginx-external
         annotations:
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
           gethomepage.dev/enabled: "true"

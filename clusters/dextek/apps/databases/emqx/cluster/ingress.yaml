@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: emqx
 spec:
-  ingressClassName: internal
+  ingressClassName: nginx-internal
   rules:
     - host: emqx.talos.plexuz.xyz
       http:

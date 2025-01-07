@@ -364,9 +364,8 @@ spec:
         root_url: *rhost
     ingress:
       enabled: true
-      ingressClassName: internal
+      ingressClassName: nginx-internal
       annotations:
-        #external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
         gethomepage.dev/enabled: "true"
         gethomepage.dev/name: "Grafana"
         gethomepage.dev/instance: "krezh"

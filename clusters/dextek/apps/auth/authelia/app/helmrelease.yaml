@@ -106,7 +106,7 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        className: external
+        className: nginx-external
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             add_header Cache-Control "no-store";

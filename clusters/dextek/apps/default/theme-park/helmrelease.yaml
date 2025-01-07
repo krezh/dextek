@@ -61,7 +61,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external
+        className: nginx-external
         annotations:
         hosts:
           - host: &host "{{ .Release.Name }}.plexuz.xyz"

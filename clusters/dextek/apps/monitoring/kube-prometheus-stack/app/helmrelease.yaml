@@ -32,7 +32,7 @@ spec:
     alertmanager:
       ingress:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: nginx-internal
         hosts: ["alertmanager.talos.plexuz.xyz"]
         pathType: Prefix
         annotations:
@@ -77,7 +77,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: nginx-internal
         hosts: ["prometheus.talos.plexuz.xyz"]
         pathType: Prefix
       prometheusSpec:

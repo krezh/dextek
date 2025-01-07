@@ -119,7 +119,7 @@ spec:
         rollOutPods: true
         ingress:
           enabled: true
-          className: internal
+          className: nginx-internal
           annotations:
             gethomepage.dev/enabled: "true"
             gethomepage.dev/name: "Hubble"

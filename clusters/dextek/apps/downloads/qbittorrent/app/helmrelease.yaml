@@ -128,7 +128,7 @@ spec:
     ingress:
       qbittorrent:
         enabled: true
-        className: external
+        className: nginx-external
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Qbittorrent"

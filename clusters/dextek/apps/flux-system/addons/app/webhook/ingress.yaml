@@ -3,10 +3,8 @@ kind: Ingress
 metadata:
   name: webhook-receiver
   namespace: flux-system
-  annotations:
-    external-dns.alpha.kubernetes.io/target: "ingress.plexuz.xyz"
 spec:
-  ingressClassName: external
+  ingressClassName: nginx-external
   rules:
     - host: fluxhook.plexuz.xyz
       http:

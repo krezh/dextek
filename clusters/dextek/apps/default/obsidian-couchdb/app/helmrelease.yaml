@@ -62,7 +62,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external
+        className: nginx-external
         annotations:
         hosts:
           - host: &host obsidian-db.plexuz.xyz
