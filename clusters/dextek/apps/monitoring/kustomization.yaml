@@ -14,7 +14,6 @@ resources:
   - ./unpoller
   - ./graphite-exporter
   - ./node-problem-detector
-  - ./netdata
   - ./kromgo
   - ./mikrotik-exporter
   - ./prometheus-operator-crds
