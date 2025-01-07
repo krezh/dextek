@@ -84,7 +84,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: internal
+        className: nginx-internal
         hosts:
           - host: &host sh.talos.plexuz.xyz
             paths:

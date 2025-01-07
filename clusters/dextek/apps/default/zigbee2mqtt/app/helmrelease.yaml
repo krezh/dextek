@@ -92,7 +92,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     ingress:
       app:
-        className: internal
+        className: nginx-internal
         hosts:
           - host: "{{ .Release.Name }}.talos.plexuz.xyz"
             paths: &paths
