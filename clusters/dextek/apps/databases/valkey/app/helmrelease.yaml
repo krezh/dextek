@@ -30,7 +30,7 @@ spec:
     image:
       registry: ghcr.io
       repository: krezh/valkey
-      tag: 8.0.1@sha256:ffe7ed006ee9491194c00b5a1f57561751fdd890801ccb6642c1f57cb3dbf60a
+      tag: 8.0.2@sha256:db0c98a8c31d9eeba074ca767398860a5cf9016a59d9c2671c58dd16220dad34
     metrics:
       enabled: true
     service:
