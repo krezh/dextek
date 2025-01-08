@@ -51,6 +51,7 @@ data:
     fiveColumns: true
     headerStyle: boxedWidgets
     target: _self
+    hideErrors: true
     layout:
       - Servers:
           header: false
