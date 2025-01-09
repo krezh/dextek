@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/journeydocker/plex-auto-languages
-              tag: main@sha256:4a5dada0c705a8abc0968d821fe09b4f60ed32486554b6d20ebf18584e037705
+              tag: main@sha256:9abc9e447c9953d8c6fb24c7fc2aa53f382583167e7e00f410d82ea6ea4ed0bc
             env:
               PLEX_URL: "https://plex.talos.plexuz.xyz:443"
             envFrom:
