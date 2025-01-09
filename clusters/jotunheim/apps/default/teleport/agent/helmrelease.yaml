@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
   values:
     labels:
-      teleport.internal/resource-id: 40d4b41b-813d-4067-980e-889c3bbc1340
+      teleport.internal/resource-id: 38a6225d-a794-4973-90cb-b45eedb6a4bb
     log:
       level: DEBUG
     roles: kube,app,discovery
