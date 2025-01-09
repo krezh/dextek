@@ -13,7 +13,7 @@ resource "opnsense_unbound_host_override" "s3" {
 
   hostname = "s3"
   domain   = "int.plexuz.xyz"
-  server   = "192.168.20.2"
+  server   = "192.168.1.19"
 }
 
 resource "opnsense_unbound_host_override" "minio" {
@@ -22,7 +22,7 @@ resource "opnsense_unbound_host_override" "minio" {
 
   hostname = "minio"
   domain   = "int.plexuz.xyz"
-  server   = "192.168.20.2"
+  server   = "192.168.1.19"
 }
 
 resource "opnsense_unbound_host_override" "pikvm" {
@@ -49,5 +49,5 @@ resource "opnsense_unbound_host_override" "zot" {
 
   hostname = "zot"
   domain   = "int.plexuz.xyz"
-  server   = "192.168.20.2"
+  server   = "192.168.1.19"
 }
