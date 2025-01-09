@@ -63,7 +63,7 @@ resource "routeros_interface_bridge_port" "ether10" {
 
 resource "routeros_interface_bridge_port" "ether11" {
   bridge    = routeros_interface_bridge.bridge.name
-  interface = "ether10"
+  interface = "ether11"
   pvid      = 20
   comment   = "Jotunheim: ${var.comment}"
 }
