@@ -2,18 +2,18 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
-vars:
-  CRUNCHY_DEFAULT_NS: databases
-  CRUNCHY_DEFAULT_DB_CLUSTER: postgres
-  CRUNCHY_PRIMARY_POD_LABELS: postgres-operator.crunchydata.com/role=master,postgres-operator.crunchydata.com/cluster={{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER}}
-  CRUNCHY_PRIMARY_POD:
-    sh: |-
-      kubectl get pods -n {{.NS | default .CRUNCHY_DEFAULT_NS}} -l {{.CRUNCHY_PRIMARY_POD_LABELS}} -o jsonpath='{.items[0].metadata.name}'
-  #CNPG_DEFAULT_NS: databases
-  #CNPG_DEFAULT_DB_CLUSTER: postgres
-  #CNPG_PRIMARY_POD:
-  #  sh: |-
-  #    kubectl get pods -n {{.NS | default .CNPG_DEFAULT_NS}} -l cnpg.io/instanceRole=primary,cnpg.io/cluster={{.DB_CLUSTER | default .CNPG_DEFAULT_DB_CLUSTER}} -o jsonpath='{.items[0].metadata.name}'
+# vars:
+#   CRUNCHY_DEFAULT_NS: databases
+#   CRUNCHY_DEFAULT_DB_CLUSTER: postgres
+#   CRUNCHY_PRIMARY_POD_LABELS: postgres-operator.crunchydata.com/role=master,postgres-operator.crunchydata.com/cluster={{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER}}
+#   CRUNCHY_PRIMARY_POD:
+#     sh: |-
+#       kubectl get pods -n {{.NS | default .CRUNCHY_DEFAULT_NS}} -l {{.CRUNCHY_PRIMARY_POD_LABELS}} -o jsonpath='{.items[0].metadata.name}'
+#CNPG_DEFAULT_NS: databases
+#CNPG_DEFAULT_DB_CLUSTER: postgres
+#CNPG_PRIMARY_POD:
+#  sh: |-
+#    kubectl get pods -n {{.NS | default .CNPG_DEFAULT_NS}} -l cnpg.io/instanceRole=primary,cnpg.io/cluster={{.DB_CLUSTER | default .CNPG_DEFAULT_DB_CLUSTER}} -o jsonpath='{.items[0].metadata.name}'
 
 tasks:
   crunchy-dump:

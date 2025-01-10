@@ -1,11 +1,10 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/helmfile
 helmDefaults:
+  force: true
+  timeout: 600
   wait: true
   waitForJobs: true
-  timeout: 600
-  recreatePods: true
-  force: true
 
 repositories:
   - name: cilium
@@ -26,7 +25,7 @@ releases:
     chart: cilium/cilium
     version: 1.16.5
     values:
-      - ./apps/kube-system/cilium/app/values.yaml
+      - ../apps/kube-system/cilium/app/values.yaml
     needs:
       - monitoring/kube-prometheus-stack-crds
 
@@ -55,5 +54,6 @@ releases:
     values:
       - ../apps/kube-system/spegel/app/values.yaml
     needs:
+      - monitoring/kube-prometheus-stack-crds
       - kube-system/cilium
       - kube-system/coredns
