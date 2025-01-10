@@ -10,7 +10,7 @@ spec:
     - name: crunchy-postgres-operator-cluster
     - name: valkey
   path: ./clusters/dextek/apps/immich/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

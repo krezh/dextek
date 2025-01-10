@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: kube-prometheus-stack
   path: ./clusters/dextek/apps/monitoring/graphite-exporter/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
