@@ -74,16 +74,13 @@ spec:
           url: "${SECRET_HEIMDALL_FQDN}"
         - name: jotunheim-icmp
           module: icmp
-          url: "${SECRET_JOTUNHEIM_FQDN}"
+          url: "https://jotunheim.srv.plexuz.xyz"
         - name: rpi01-icmp
           module: icmp
           url: "${SECRET_RPI01_FQDN}"
         - name: rpi02-icmp
           module: icmp
           url: "${SECRET_RPI02_FQDN}"
-        - name: ikea-hub-icmp
-          module: icmp
-          url: "${SECRET_IKEA_HUB_FQDN}"
         - name: mikrotik-icmp
           module: icmp
           url: "192.168.1.35"
@@ -110,7 +107,7 @@ spec:
             severity: critical
           annotations:
             description: |-
-              The SSL certificate for {{"{{ $labels.target }}"}} will expire in less than 3 days
+              The SSL certificate for {{ $labels.target }} will expire in less than 3 days
         - alert: BlackboxSslCertificateExpired
           expr: probe_ssl_earliest_cert_expiry - time() <= 0
           for: 15m
@@ -118,7 +115,7 @@ spec:
             severity: critical
           annotations:
             description: |-
-              The SSL certificate for {{"{{ $labels.target }}"}} has expired
+              The SSL certificate for {{ $labels.target }} has expired
         - alert: BlackboxProbeFailed
           expr: probe_success == 0
           for: 15m
@@ -126,4 +123,4 @@ spec:
             severity: critical
           annotations:
             description: |-
-              The host {{"{{ $labels.target }}"}} is currently unreachable
+              The host {{ $labels.target }} is currently unreachable
