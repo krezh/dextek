@@ -10,7 +10,7 @@ spec:
     - name: crunchy-postgres-operator-cluster
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/auth/lldap/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

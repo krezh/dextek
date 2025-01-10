@@ -7,7 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./clusters/dextek/apps/actions-runner-system/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -30,7 +30,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/actions-runner-system/runners
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

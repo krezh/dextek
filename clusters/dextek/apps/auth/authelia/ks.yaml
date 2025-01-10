@@ -11,7 +11,7 @@ spec:
     - name: external-secrets-stores
     - name: valkey
   path: ./clusters/dextek/apps/auth/authelia/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

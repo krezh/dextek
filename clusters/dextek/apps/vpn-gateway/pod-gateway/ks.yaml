@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./clusters/dextek/apps/vpn-gateway/pod-gateway/downloads
-  prune: false #FIXME: Revert
+  prune: true
   wait: true
   sourceRef:
     kind: GitRepository
