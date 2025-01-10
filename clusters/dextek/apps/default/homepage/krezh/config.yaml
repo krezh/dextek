@@ -27,7 +27,7 @@ data:
     ---
     - Servers:
         - Jotunheim:
-            href: https://jotunheim.usr.int.plexuz.xyz
+            href: https://jotunheim.srv.plexuz.xyz
             icon: truenas-scale.png
             widget:
               type: truenas
