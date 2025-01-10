@@ -31,7 +31,7 @@ data:
             icon: truenas-scale.png
             widget:
               type: truenas
-              url: https://jotunheim.usr.int.plexuz.xyz
+              url: https://jotunheim.srv.plexuz.xyz
               key: "{{HOMEPAGE_VAR_TRUENAS_APIKEY}}"
               enablePools: true
         - Heimdall:
