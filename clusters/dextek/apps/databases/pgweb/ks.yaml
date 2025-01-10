@@ -20,4 +20,4 @@ spec:
   wait: true
   sourceRef:
     kind: GitRepository
-    name: dextek
+    name: flux-system
