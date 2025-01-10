@@ -16,7 +16,7 @@ spec:
   prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
-    name: dextek
+    name: flux-system
   wait: false
   interval: 30m
   timeout: 5m
