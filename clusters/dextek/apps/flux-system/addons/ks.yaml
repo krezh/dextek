@@ -10,7 +10,7 @@ spec:
     - name: flux
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/flux-system/addons/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

@@ -16,7 +16,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   path: ./clusters/dextek/apps/downloads/radarr/app
-  prune: true
+  prune: false #FIXME: Revert
   wait: true
   sourceRef:
     kind: GitRepository

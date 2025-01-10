@@ -26,7 +26,7 @@ metadata:
 spec:
   interval: 30m
   path: ./clusters/shared
-  prune: true
+  prune: false #FIXME: Revert
   wait: false
   sourceRef:
     kind: GitRepository
@@ -41,7 +41,7 @@ metadata:
 spec:
   interval: 30m
   path: ./clusters/dextek/flux
-  prune: true
+  prune: false #FIXME: Revert
   wait: false
   sourceRef:
     kind: GitRepository

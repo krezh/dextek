@@ -10,7 +10,7 @@ spec:
     - name: rook-ceph-cluster
   targetNamespace: auth
   path: ./clusters/dextek/apps/auth/teleport/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
@@ -34,7 +34,7 @@ spec:
     - name: teleport
   targetNamespace: auth
   path: ./clusters/dextek/apps/auth/teleport/agent
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
