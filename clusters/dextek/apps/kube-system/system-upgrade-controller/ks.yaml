@@ -20,7 +20,7 @@ spec:
   wait: true
   sourceRef:
     kind: GitRepository
-    name: dextek
+    name: flux-system
   postBuild:
     substitute:
       # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
@@ -47,7 +47,7 @@ spec:
   wait: true
   sourceRef:
     kind: GitRepository
-    name: dextek
+    name: flux-system
   postBuild:
     substitute:
       # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
