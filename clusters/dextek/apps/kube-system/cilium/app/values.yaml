@@ -1,10 +1,14 @@
 ---
+# Values: https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
 cluster:
   name: talos-plexuz
   id: 1
 
 cni:
   exclusive: false
+
+endpointRoutes:
+  enabled: true
 
 bgp:
   enabled: false
@@ -27,9 +31,6 @@ localRedirectPolicy: true
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 
-endpointRoutes:
-  enabled: true
-
 loadBalancer:
   algorithm: maglev
   mode: dsr
@@ -46,7 +47,7 @@ l7Proxy: true
 enableRuntimeDeviceDetection: true
 
 ipam:
-  mode: "kubernetes"
+  mode: kubernetes
 
 ingressController:
   enabled: false
@@ -54,15 +55,23 @@ ingressController:
 
 operator:
   rollOutPods: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  dashboards:
+    enabled: true
+    annotations:
+      grafana_folder: Cilium
 
 autoDirectNodeRoutes: true
 ipv4NativeRoutingCIDR: 10.244.0.0/16
 routingMode: native
+
 hubble:
-  enabled: true
-  relay:
-    enabled: true
-    rollOutPods: true
+  enabled: false
+envoy:
+  enabled: false
 
 securityContext:
   capabilities:
@@ -74,6 +83,8 @@ securityContext:
       - IPC_LOCK
       - SYS_ADMIN
       - SYS_RESOURCE
+      - PERFMON
+      - BPF
       - DAC_OVERRIDE
       - FOWNER
       - SETGID
@@ -82,6 +93,16 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
+dashboards:
+  enabled: true
+  annotations:
+    grafana_folder: Cilium
 
 cgroup:
   autoMount:
