@@ -11,6 +11,7 @@ tasks:
   all:
     desc: Bootstrap all required resources
     cmds:
+      - task: tofu
       - task: talos
       - task: kubeconfig
       - task: helmfile
@@ -18,13 +19,20 @@ tasks:
       - task: k9s
       - defer: rm -f {{.KUBECONFIG}}
 
-  talos:
-    desc: Bootstrap Talos
+  tofu:
+    desc: Run Tofu
     dir: "{{.CLUSTER_DIR}}/terraform/talos"
     cmds:
       - tofu init --upgrade
       - tofu apply --auto-approve
-      - tofu apply --var bootstrap=true --var talosconfig=true --auto-approve
+
+  talos:
+    desc: Bootstrap Talos
+    vars:
+      TALOS_CONTROLLER:
+        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
+    cmds:
+      - until talosctl --nodes {{.TALOS_CONTROLLER}} bootstrap; do sleep 5; done
 
   kubeconfig:
     desc: Create Kubeconfig
@@ -35,7 +43,8 @@ tasks:
   helmfile:
     desc: Bootstrap Helmfile resources
     cmds:
-      - until helmfile --kubeconfig {{.KUBECONFIG}} -f {{.BOOTSTRAP_DIR}}/helmfile.yaml apply; do sleep 3; done
+      - until kubectl --kubeconfig {{.KUBECONFIG}} wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
+      - until helmfile --quiet --kubeconfig {{.KUBECONFIG}} --file {{.BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
 
   flux:
     desc: Bootstrap Flux resources
