@@ -57,3 +57,21 @@ releases:
       - monitoring/kube-prometheus-stack-crds
       - kube-system/cilium
       - kube-system/coredns
+
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.12.0
+    values:
+      - ../apps/flux-system/flux-operator/app/values.yaml
+    needs: []
+
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.12.0
+    wait: false
+    values:
+      - ../apps/flux-system/flux-operator/instance/values.yaml
+    needs:
+      - flux-system/flux-operator
