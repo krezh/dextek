@@ -16,7 +16,6 @@ tasks:
       - task: wipe
       - task: kubeconfig
       - task: helmfile
-      - task: flux
       - task: k9s
       - defer: rm -f {{.KUBECONFIG}}
 
@@ -57,18 +56,9 @@ tasks:
     cmds:
       - echo "Waiting for Nodes to be ready..."
       - until kubectl --kubeconfig {{.KUBECONFIG}} wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
-      - until helmfile --quiet --kubeconfig {{.KUBECONFIG}} --file {{.BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
-
-  flux:
-    desc: Bootstrap Flux resources
-    cmds:
-      - until kubectl apply --kubeconfig {{.KUBECONFIG}} --server-side --kustomize {{.BOOTSTRAP_DIR}}/flux; do sleep 3; done
       - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{.KUBECONFIG}} -f -
       - sops --decrypt {{.BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{.KUBECONFIG}} -f -
-      - sops --decrypt {{.CLUSTER_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl apply --kubeconfig {{.KUBECONFIG}} -f -
-      - until kubectl apply --kubeconfig {{.KUBECONFIG}} -f {{.CLUSTER_DIR}}/flux/vars/cluster-settings.yaml; do sleep 3; done
-      - sleep 10
-      - until kubectl apply --kubeconfig {{.KUBECONFIG}} --server-side --kustomize {{.CLUSTER_DIR}}/flux/config; do sleep 3; done
+      - until helmfile --quiet --kubeconfig {{.KUBECONFIG}} --file {{.BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
 
   k9s:
     desc: Watch pods with K9s
