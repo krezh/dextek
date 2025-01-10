@@ -20,7 +20,7 @@ metadata:
 spec:
   interval: 30m
   path: ./
-  prune: true
+  prune: false #FIXME: Revert
   wait: true
   sourceRef:
     kind: OCIRepository

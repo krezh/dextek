@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: volsync
   path: ./clusters/dextek/apps/default/jellyseerr/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

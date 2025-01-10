@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cert-manager
   path: ./clusters/dextek/apps/kube-system/k8tz/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

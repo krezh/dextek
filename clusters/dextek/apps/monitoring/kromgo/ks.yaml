@@ -8,7 +8,7 @@ metadata:
 spec:
   path: ./clusters/dextek/apps/monitoring/kromgo/app
   targetNamespace: monitoring
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
