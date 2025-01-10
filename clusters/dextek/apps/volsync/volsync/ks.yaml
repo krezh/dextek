@@ -10,7 +10,7 @@ spec:
     - name: snapshot-controller
     - name: rook-ceph-cluster
   path: ./clusters/dextek/apps/volsync/volsync/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

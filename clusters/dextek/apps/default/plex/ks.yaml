@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: volsync
   path: ./clusters/dextek/apps/default/plex/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
@@ -41,7 +41,7 @@ spec:
   dependsOn:
     - name: volsync
   path: ./clusters/dextek/apps/default/plex/plex-auto-languages
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/databases/dragonfly/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
@@ -36,7 +36,7 @@ spec:
   dependsOn:
     - name: dragonfly
   path: ./clusters/dextek/apps/databases/dragonfly/cluster
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

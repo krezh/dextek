@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cert-manager-issuers
   path: ./clusters/dextek/apps/ingress-nginx/certificates
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: ingress-nginx-certificates
   path: ./clusters/dextek/apps/ingress-nginx/external
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
@@ -47,7 +47,7 @@ spec:
   dependsOn:
     - name: ingress-nginx-certificates
   path: ./clusters/dextek/apps/ingress-nginx/internal
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

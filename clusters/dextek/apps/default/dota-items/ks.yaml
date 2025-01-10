@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/default/dota-items/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek

@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/databases/crunchy-postgres/app
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
@@ -35,7 +35,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/databases/crunchy-postgres/cluster
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
@@ -57,7 +57,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/databases/crunchy-postgres/userinit-controller
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
@@ -79,7 +79,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/databases/crunchy-postgres/clustersecretstore
-  prune: true
+  prune: false #FIXME: Revert
   sourceRef:
     kind: GitRepository
     name: dextek
