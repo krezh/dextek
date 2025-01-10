@@ -10,7 +10,7 @@ spec:
     - name: crunchy-postgres-operator-cluster
     - name: kube-prometheus-stack
   path: ./clusters/dextek/apps/monitoring/grafana/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -7,7 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./clusters/dextek/apps/cert-manager/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -26,7 +26,7 @@ spec:
   dependsOn:
     - name: cert-manager
   path: ./clusters/dextek/apps/cert-manager/issuers
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

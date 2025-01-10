@@ -8,7 +8,7 @@ metadata:
 spec:
   path: ./clusters/dextek/apps/monitoring/kromgo/app
   targetNamespace: monitoring
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

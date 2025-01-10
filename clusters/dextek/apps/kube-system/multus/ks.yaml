@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: kube-system
   path: ./clusters/dextek/apps/kube-system/multus/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: multus
   path: ./clusters/dextek/apps/kube-system/multus/config
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
