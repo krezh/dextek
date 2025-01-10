@@ -1,10 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app blackbox-exporter
-  namespace: monitoring
+  name: blackbox-exporter
 spec:
   interval: 30m
   chart:
@@ -19,34 +18,25 @@ spec:
     remediation:
       retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
-    fullnameOverride: *app
-    pspEnabled: false
+    fullnameOverride: blackbox-exporter
     ingress:
       enabled: true
       className: nginx-internal
       hosts:
-        - host: &host "blackbox.talos.plexuz.xyz"
+        - host: blackbox.talos.plexuz.xyz
           paths:
             - path: /
               pathType: Prefix
-      tls:
-        - hosts:
-            - *host
-
     securityContext:
       readOnlyRootFilesystem: true
       allowPrivilegeEscalation: false
       capabilities:
         add: ["NET_RAW"]
-
-    podSecurityContext:
-      sysctls:
-        - name: net.ipv4.ping_group_range
-          value: "0 2147483647"
-
     config:
       modules:
         http_2xx:
@@ -55,12 +45,17 @@ spec:
           http:
             valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
             follow_redirects: true
-            preferred_ip_protocol: "ip4"
+            preferred_ip_protocol: ipv4
         icmp:
           prober: icmp
-          timeout: 30s
+          timeout: 5s
           icmp:
-            preferred_ip_protocol: "ip4"
+            preferred_ip_protocol: ipv4
+        tcp_connect:
+          prober: tcp
+          timeout: 5s
+          tcp:
+            preferred_ip_protocol: ipv4
     serviceMonitor:
       enabled: true
       defaults:
@@ -74,13 +69,16 @@ spec:
           url: "${SECRET_HEIMDALL_FQDN}"
         - name: jotunheim-icmp
           module: icmp
-          url: "https://jotunheim.srv.plexuz.xyz"
+          url: "${SECRET_JOTUNHEIM_FQDN}"
         - name: rpi01-icmp
           module: icmp
           url: "${SECRET_RPI01_FQDN}"
         - name: rpi02-icmp
           module: icmp
           url: "${SECRET_RPI02_FQDN}"
+        - name: ikea-hub-icmp
+          module: icmp
+          url: "${SECRET_IKEA_HUB_FQDN}"
         - name: mikrotik-icmp
           module: icmp
           url: "192.168.1.35"
@@ -93,7 +91,6 @@ spec:
         - name: pikvm-http
           module: http_2xx
           url: "https://pikvm.int.plexuz.xyz"
-
     prometheusRule:
       enabled: true
       additionalLabels:
