@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
   path: ./clusters/dextek/apps/databases/valkey/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
