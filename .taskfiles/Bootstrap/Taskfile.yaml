@@ -13,6 +13,7 @@ tasks:
     cmds:
       - task: tofu
       - task: talos
+      - task: wipe
       - task: kubeconfig
       - task: helmfile
       - task: flux
@@ -34,6 +35,16 @@ tasks:
     cmds:
       - echo "Bootstrapping Node {{.TALOS_CONTROLLER}}..."
       - until talosctl --nodes {{.TALOS_CONTROLLER}} bootstrap; do sleep 5; done
+
+  wipe:
+    desc: Wipe all user disks
+    ignore_error: true
+    vars:
+      disks: "nvme0n1 nvme1n1 nvme2n1"
+      NODES:
+        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1'
+    cmds:
+      - for node in {{ .NODES }}; do for disk in {{ .disks }}; do talosctl wipe disk $disk -n $node | true; echo $node $disk; sleep 1; done; done
 
   kubeconfig:
     desc: Create Kubeconfig
