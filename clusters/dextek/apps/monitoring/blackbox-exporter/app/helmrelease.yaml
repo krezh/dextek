@@ -69,16 +69,13 @@ spec:
           url: "${SECRET_HEIMDALL_FQDN}"
         - name: jotunheim-icmp
           module: icmp
-          url: "${SECRET_JOTUNHEIM_FQDN}"
+          url: "jotunheim.srv.plexuz.xyz"
         - name: rpi01-icmp
           module: icmp
           url: "${SECRET_RPI01_FQDN}"
         - name: rpi02-icmp
           module: icmp
           url: "${SECRET_RPI02_FQDN}"
-        - name: ikea-hub-icmp
-          module: icmp
-          url: "${SECRET_IKEA_HUB_FQDN}"
         - name: mikrotik-icmp
           module: icmp
           url: "192.168.1.35"
