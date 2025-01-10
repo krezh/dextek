@@ -24,7 +24,7 @@ spec:
   wait: true
   sourceRef:
     kind: GitRepository
-    name: dextek
+    name: flux-system
   postBuild:
     substitute:
       APP: *app
