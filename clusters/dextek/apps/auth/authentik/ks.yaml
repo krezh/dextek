@@ -16,7 +16,7 @@ spec:
     - name: dragonfly-cluster
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/auth/authentik/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

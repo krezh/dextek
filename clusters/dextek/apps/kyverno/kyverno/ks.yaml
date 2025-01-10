@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./clusters/dextek/apps/kyverno/kyverno/app
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -32,7 +32,7 @@ spec:
   dependsOn:
     - name: kyverno
   path: ./clusters/dextek/apps/kyverno/kyverno/policies
-  prune: false #FIXME: Revert
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
