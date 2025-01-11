@@ -88,6 +88,9 @@ spec:
                 service:
                   identifier: main
                   port: http
+        tls:
+          - hosts:
+              - *host
     persistence:
       config:
         enabled: true
