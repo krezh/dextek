@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: changedetection
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/dgtlmoon/changedetection.io
+              tag: 0.48.06@sha256:c67332c39ac8f5c12af68a6205461f7ab487352f4a3bcda8e6f4c17e6cf3f47a
+            env:
+              PORT: &port 5000
+              USE_X_SETTINGS: 1
+              PLAYWRIGHT_DRIVER_URL: ws://localhost:3000/?stealth=1&--disable-web-security=true&--user-data-dir=~/browserless-cache-123
+          browser:
+            image:
+              repository: docker.io/browserless/chrome
+              tag: latest@sha256:57d19e414d9fe4ae9d2ab12ba768c97f38d51246c5b31af55a009205c136012f
+              pullPolicy: IfNotPresent
+            env:
+              - { name: SCREEN_WIDTH, value: "1920" }
+              - { name: SCREEN_HEIGHT, value: "1024" }
+              - { name: SCREEN_DEPTH, value: "16" }
+              - { name: ENABLE_DEBUGGER, value: "false" }
+              - { name: PREBOOT_CHROME, value: "true" }
+              - { name: CONNECTION_TIMEOUT, value: "300000" }
+              - { name: MAX_CONCURRENT_SESSIONS, value: "10" }
+              - { name: CHROME_REFRESH_TIME, value: "600000" }
+              - { name: DEFAULT_BLOCK_ADS, value: "true" }
+              - { name: DEFAULT_STEALTH, value: "true" }
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: *port
+    ingress:
+      main:
+        enabled: true
+        className: nginx-external
+        annotations:
+          nginx.ingress.kubernetes.io/auth-url: |-
+            http://ak-outpost-authentik-embedded-outpost.auth.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+          nginx.ingress.kubernetes.io/auth-signin: |-
+            /outpost.goauthentik.io/start?rd=$escaped_request_uri
+          nginx.ingress.kubernetes.io/auth-response-headers: |-
+            Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-entitlements,X-authentik-email,X-authentik-name,X-authentik-uid
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            proxy_set_header X-Forwarded-Host $http_host;
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "ChangeDetection"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "{{ .Release.Name }}.png"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
+        hosts:
+          - host: &host "{{ .Release.Name }}.talos.plexuz.xyz"
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+    persistence:
+      config:
+        enabled: true
+        existingClaim: ${VOLSYNC_CLAIM}
+        advancedMounts:
+          main:
+            main:
+              - path: /datastore
