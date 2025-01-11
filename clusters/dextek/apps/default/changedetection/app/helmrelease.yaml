@@ -82,7 +82,7 @@ spec:
               {{ .Release.Name }}
             )
         hosts:
-          - host: &host "{{ .Release.Name }}.talos.plexuz.xyz"
+          - host: &host "{{ .Release.Name }}.plexuz.xyz"
             paths:
               - path: /
                 service:
