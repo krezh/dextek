@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./flux-operator/ks.yaml
-  - ./github/ks.yaml
   - ./tf-controller/ks.yaml
   - ../../../shared/templates/flux
 transformers:
