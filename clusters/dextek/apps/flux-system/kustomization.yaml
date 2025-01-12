@@ -7,3 +7,12 @@ resources:
   - ./flux-operator/ks.yaml
   - ./github/ks.yaml
   - ./tf-controller/ks.yaml
+  - ../../../shared/templates/flux
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: flux-system
+    unsetOnly: true
