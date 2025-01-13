@@ -20,3 +20,7 @@ resource "routeros_system_user" "mikrotik-exporter" {
   password   = data.doppler_secrets.prd_routeros.map.MIKROTIK_EXPORTER
   comment    = var.comment
 }
+
+resource "routeros_ip_neighbor_discovery_settings" "disable" {
+  discover_interface_list = "none"
+}
