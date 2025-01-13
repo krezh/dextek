@@ -44,9 +44,12 @@ spec:
                 memory: 979M
               limits:
                 memory: 1500M
-            envFrom:
-              - secretRef:
-                  name: pgweb-postgres-secret
+            env:
+              PGWEB_DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-pguser-postgres
+                    key: uri
     service:
       app:
         controller: app
