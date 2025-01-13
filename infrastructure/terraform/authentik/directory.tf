@@ -13,11 +13,6 @@ resource "authentik_group" "grafana_admin" {
   is_superuser = false
 }
 
-resource "authentik_group" "headscale" {
-  name         = "Headscale"
-  is_superuser = false
-}
-
 resource "authentik_group" "home" {
   name         = "Home"
   is_superuser = false

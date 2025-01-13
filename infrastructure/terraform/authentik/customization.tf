@@ -4,7 +4,7 @@ resource "authentik_policy_password" "password-complexity" {
   amount_digits    = 1
   amount_lowercase = 1
   amount_uppercase = 1
-  error_message    = "Minimum password length: 10. At least 1 of each required: uppercase, lowercase, digit"
+  error_message    = "Minimum password length: 8. At least 1 of each required: uppercase, lowercase, digit"
 }
 
 resource "authentik_policy_expression" "user-settings-authorization" {

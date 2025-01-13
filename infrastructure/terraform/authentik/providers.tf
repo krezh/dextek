@@ -36,6 +36,6 @@ provider "doppler" {
 data "doppler_secrets" "tf_authentik" {}
 
 provider "authentik" {
-  url   = "https://sso.${var.cluster_domain}"
-  token = jsonDecode(data.doppler_secrets.tf_authentik.map.AUTHENTIK)
+  url   = "https://sso.${var.domain}"
+  token = jsondecode(data.doppler_secrets.tf_authentik.map.AUTHENTIK)
 }

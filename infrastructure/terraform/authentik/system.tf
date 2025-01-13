@@ -3,7 +3,7 @@ data "authentik_certificate_key_pair" "generated" {
 }
 
 resource "authentik_brand" "home" {
-  domain           = var.cluster_domain
+  domain           = var.domain
   default          = true
   branding_title   = "Home"
   branding_logo    = "/static/dist/assets/icons/icon_left_brand.svg"
