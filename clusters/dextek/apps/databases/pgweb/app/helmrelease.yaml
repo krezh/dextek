@@ -62,7 +62,7 @@ spec:
         className: nginx-internal
         annotations:
           nginx.ingress.kubernetes.io/auth-url: |-
-            http://ak-outpost-authentik-embedded-outpost.auth.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+            http://ak-internal-outpost.auth.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           nginx.ingress.kubernetes.io/auth-signin: |-
             /outpost.goauthentik.io/start?rd=$escaped_request_uri
           nginx.ingress.kubernetes.io/auth-response-headers: |-
@@ -70,7 +70,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-snippet: |
             proxy_set_header X-Forwarded-Host $http_host;
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Pgweb"
+          gethomepage.dev/name: "PGweb"
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Media"
           gethomepage.dev/icon: "pgweb.png"
