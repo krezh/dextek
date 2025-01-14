@@ -58,9 +58,9 @@ spec:
       syslog:
         name: syslog
         containerPort: 1514
+        annotations:
+          coredns.io/hostname: syslog
         service:
-          annotations:
-            coredns.io/hostname: syslog
           type: LoadBalancer
     serviceMonitor:
       enabled: true
