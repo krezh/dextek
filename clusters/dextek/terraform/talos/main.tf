@@ -25,7 +25,7 @@ data "talos_machine_configuration" "machine" {
 
   machine_secrets = talos_machine_secrets.talos.machine_secrets
   config_patches = [
-    templatefile("talosPatches/general-patch.yaml", {
+    templatefile("talosPatches/general.yaml", {
       cluster_name       = var.cluster_name,
       talos_version      = var.talos_version,
       talos_factory_hash = talos_image_factory_schematic.machine.id,
@@ -41,10 +41,10 @@ data "talos_machine_configuration" "machine" {
       matchboxUrl        = var.matchbox_url
     }),
     file("talosPatches/registries.yaml"),
-    (each.value.type == "controlplane") ? file("talosPatches/cp-patch.yaml") : null,
-    (each.value.type == "worker") ? file("talosPatches/worker-patch.yaml") : null,
+    (each.value.type == "controlplane") ? file("talosPatches/cp.yaml") : null,
+    (each.value.type == "worker") ? file("talosPatches/worker.yaml") : null,
     # This patch is for the NUT UPS monitoring
-    templatefile("talosPatches/nut-patch.yaml", {
+    templatefile("talosPatches/nut.yaml", {
       upsmonHost   = data.sops_file.secrets.data["nut.host"],
       upsmonPasswd = data.sops_file.secrets.data["nut.password"]
     })
