@@ -1,8 +1,0 @@
-kind: token
-metadata:
-  expires: "2050-01-01T00:00:00Z"
-  name: jotunheim-token
-spec:
-  join_method: token
-  roles: [kube, app, discovery]
-version: v2
