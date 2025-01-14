@@ -72,7 +72,7 @@ spec:
 
     proxy:
       highAvailability:
-        replicaCount: 3
+        replicaCount: 2
 
     podMonitor:
       enabled: true
