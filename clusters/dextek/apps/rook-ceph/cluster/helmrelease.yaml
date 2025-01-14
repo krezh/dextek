@@ -152,7 +152,7 @@ spec:
               dataChunks: 2
             failureDomain: host
           gateway:
-            instances: 3
+            instances: 2
             port: 80
             priorityClassName: system-cluster-critical
           metadataPool:

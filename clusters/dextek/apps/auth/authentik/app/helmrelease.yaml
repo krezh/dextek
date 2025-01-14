@@ -40,7 +40,7 @@ spec:
     server:
       autoscaling:
         enabled: true
-        minReplicas: 3
+        minReplicas: 2
       metrics:
         enabled: true
         serviceMonitor:
@@ -61,4 +61,4 @@ spec:
     worker:
       autoscaling:
         enabled: true
-        minReplicas: 3
+        minReplicas: 2
