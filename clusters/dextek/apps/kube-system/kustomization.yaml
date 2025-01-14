@@ -16,7 +16,6 @@ resources:
   - ./k8tz
   - ./multus
   - ./k8s-ycl
-  - ./tetragon
   - ./kubelet-csr-approver
   - ./system-upgrade-controller
   - ./intel-device-plugin
