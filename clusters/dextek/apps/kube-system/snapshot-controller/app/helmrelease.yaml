@@ -27,6 +27,6 @@ spec:
   values:
     controller:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       serviceMonitor:
         create: true
