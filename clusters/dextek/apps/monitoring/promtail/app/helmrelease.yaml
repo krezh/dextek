@@ -33,6 +33,7 @@ spec:
             syslog:
               listen_address: 0.0.0.0:1514
               label_structured_data: true
+              use_incoming_timestamp: true
               labels:
                 job: "syslog"
             relabel_configs:
@@ -54,6 +55,30 @@ spec:
                 target_label: 'destination_port'
               - source_labels: ['__syslog_message_DST']
                 target_label: 'destination_ip'
+            pipeline_stages:
+              - match:
+                  selector: '{syslog_app_name="filterlog"} !~ ".*icmp.*"'
+                  stages:
+                  - regex:
+                      expression: '^(?s)(?P<fw_rule>\d+),,,(?P<fw_rid>.+?),(?P<fw_interface>.+?),(?P<fw_reason>.+?),(?P<fw_action>(pass|block|reject)),(?P<fw_dir>(in|out)),(?P<fw_ipversion>\d+?),(?P<fw_tos>.+?),(?P<fw_>.+?)?,(?P<fw_ttl>\d.?),(?P<fw_id>\d+?),(?P<fw_offset>\d+?),(?P<fw_ipflags>.+?),(?P<fw_protonum>\d+?),(?P<fw_proto>(tcp|udp|icmp)),(?P<fw_length>\d+?),(?P<fw_src>\d+\.\d+\.\d+\.\d+?),(?P<fw_dst>\d+\.\d+\.\d+\.\d+?),(?P<fw_srcport>\d+?),(?P<fw_dstport>\d+?),(?P<fw_datalen>\d+),?(?P<fw_tcpflags>\w+)?,?(?P<fw_sequence>\d+)?'
+                  - labels:
+                      fw_src:
+                      fw_dst:
+                      fw_action:
+                      fw_dstport:
+                      fw_proto:
+                      fw_interface:
+              - match:
+                  selector: '{syslog_app_name="filterlog"} |~ ".*icmp.*"'
+                  stages:
+                  - regex:
+                      expression: '^(?s)(?P<fw_rule>\d+),,,(?P<fw_rid>.+?),(?P<fw_interface>.+?),(?P<fw_reason>.+?),(?P<fw_action>(pass|block|reject)),(?P<fw_dir>(in|out)),(?P<fw_ipversion>\d+?),(?P<fw_tos>.+?),(?P<fw_>.+?)?,(?P<fw_ttl>\d.?),(?P<fw_id>\d+?),(?P<fw_offset>\d+?),(?P<fw_ipflags>.+?),(?P<fw_protonum>\d+?),(?P<fw_proto>(tcp|udp|icmp)),(?P<fw_length>\d+?),(?P<fw_src>\d+\.\d+\.\d+\.\d+?),(?P<fw_dst>\d+\.\d+\.\d+\.\d+?),(?P<fw_datalen>datalength=\d+?)'
+                  - labels:
+                      fw_src:
+                      fw_dst:
+                      fw_action:
+                      fw_proto:
+                      fw_interface:
     extraPorts:
       syslog:
         name: syslog
