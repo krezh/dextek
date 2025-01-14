@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: &name node-exporter
+spec:
+  staticConfigs:
+    - targets:
+        - heimdall.k8s.plexuz.xyz:9100
+        - pikvm.usr.int.plexuz.xyz:9100
+  metricsPath: /metrics
+  relabelings:
+    - action: replace
+      targetLabel: job
+      replacement: *name
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: &name pikvm
+spec:
+  staticConfigs:
+    - targets:
+        - pikvm.usr.int.plexuz.xyz
+  metricsPath: /api/export/prometheus/metrics
+  relabelings:
+    - action: replace
+      targetLabel: job
+      replacement: *name
