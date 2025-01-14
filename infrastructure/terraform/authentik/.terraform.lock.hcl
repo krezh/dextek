@@ -59,24 +59,3 @@ provider "registry.opentofu.org/goauthentik/authentik" {
     "zh:f51e95a89995027fbf598ac83d2ee7d1a07ca141f4e60502f01ba74173f2b0a3",
   ]
 }
-
-provider "registry.opentofu.org/terraform-routeros/routeros" {
-  version = "1.74.0"
-  hashes = [
-    "h1:++C9P01ZMf0VMD8WLWqoVJA1+iLQINAeJHFNeqY9XL0=",
-    "zh:07a3d894fc898f15a7b313b36d47c33138a2b8f0752153ac4fc36fb19884fb80",
-    "zh:1656db229c649d973474965220ac83fa7fad2758d3409388b5b0be27cfb7de5c",
-    "zh:1e6d04e5ddaa2a82ab368b27dcead442ec07caa503bd699ab10660ff655c693b",
-    "zh:219f56c087bc9c566dff489ab231b8a98b735fd7679aa2b31c20811d76b76e52",
-    "zh:3aa7277ee7c847d4c20d85cb272176afc3aef1ac102dfacebaceae9400d92324",
-    "zh:3ab2787f009cf5f55bc6bb4dee2c38d15b34b7274782e5ea25e12d292f30d4a8",
-    "zh:417e57279e14691c7356029311ab17625ae7e187009ef137f332e01544aad5d6",
-    "zh:826f98f25b18e94a588d48b603a1caf3d93d7bc7bcb0d013edb3f964f566a268",
-    "zh:863a8556cc3bd13d8e2b780578fd90603f3b9615559c0d6d7aec808d47f8b912",
-    "zh:87d2fabccafdc2da4d925ec1cc795a7ef13fce0f9aecc8757be83f6afe5870a2",
-    "zh:b876d1b2c2b4f1fd0ee5afd3e4cb6c7435643aef185e31a13e576072fc090aa4",
-    "zh:be19ac213351a8a4940c58034bad327db07ae131f9488d4a3f199fda61e1d080",
-    "zh:f02be425053eeeea91b85179fa91cf39c2c1b155150cfd532524e62817f4b2eb",
-    "zh:f5eb7a8d2349ac7a30572424a5a2bfb52f9da317d608cf1e2c832f496ff7f44b",
-  ]
-}

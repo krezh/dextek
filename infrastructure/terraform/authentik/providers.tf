@@ -3,7 +3,7 @@ terraform {
     organization = "krezh"
     hostname     = "app.terraform.io"
     workspaces {
-      name = "routeros"
+      name = "authentik"
     }
   }
   required_providers {
@@ -37,5 +37,5 @@ data "doppler_secrets" "tf_authentik" {}
 
 provider "authentik" {
   url   = "https://sso.${var.domain}"
-  token = jsondecode(data.doppler_secrets.tf_authentik.map.AUTHENTIK)
+  token = jsondecode(data.doppler_secrets.tf_authentik.map.AUTHENTIK)["AUTHENTIK_TOKEN"]
 }

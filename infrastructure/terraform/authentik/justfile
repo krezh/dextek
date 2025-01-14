@@ -1,0 +1,14 @@
+#!/usr/bin/env just --justfile
+# ^ A shebang isn't required, but allows a justfile to be executed
+#   like a script, with `./justfile test`, for example.
+
+_default:
+  @just --list
+
+
+init:
+	@tofu init --upgrade
+
+apply: init
+  @tofu apply --auto-approve
+

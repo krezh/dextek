@@ -2,10 +2,9 @@ data "authentik_certificate_key_pair" "generated" {
   name = "authentik Self-signed Certificate"
 }
 
-resource "authentik_brand" "home" {
+resource "authentik_brand" "plexuz" {
   domain           = var.domain
-  default          = true
-  branding_title   = "Home"
+  branding_title   = "Plexuz"
   branding_logo    = "/static/dist/assets/icons/icon_left_brand.svg"
   branding_favicon = "/static/dist/assets/icons/icon.png"
 

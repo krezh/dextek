@@ -1,6 +1,6 @@
 
-data "authentik_group" "admins" {
-  name = "authentik Admins"
+data "authentik_group" "superuser" {
+  name = "superuser"
 }
 
 resource "authentik_group" "downloads" {
@@ -8,9 +8,10 @@ resource "authentik_group" "downloads" {
   is_superuser = false
 }
 
-resource "authentik_group" "grafana_admin" {
+resource "authentik_group" "grafana_admins" {
   name         = "Grafana Admins"
   is_superuser = false
+  parent       = data.authentik_group.superuser.id
 }
 
 resource "authentik_group" "home" {
@@ -26,7 +27,7 @@ resource "authentik_group" "infrastructure" {
 resource "authentik_group" "monitoring" {
   name         = "Monitoring"
   is_superuser = false
-  parent       = resource.authentik_group.grafana_admin.id
+  parent       = resource.authentik_group.grafana_admins.id
 }
 
 resource "authentik_group" "users" {
@@ -34,15 +35,13 @@ resource "authentik_group" "users" {
   is_superuser = false
 }
 
-data "authentik_group" "lookup" {
-  for_each = local.applications
-  name     = each.value.group
+resource "authentik_group" "mealie_users" {
+  name         = "mealie_users"
+  is_superuser = false
 }
 
-resource "authentik_policy_binding" "application_policy_binding" {
-  for_each = local.applications
-
-  target = authentik_application.application[each.key].uuid
-  group  = data.authentik_group.lookup[each.key].id
-  order  = 0
+resource "authentik_group" "mealie_admins" {
+  name         = "mealie_admins"
+  is_superuser = false
+  parent       = data.authentik_group.superuser.id
 }

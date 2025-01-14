@@ -1,15 +1,22 @@
-## Authentication flow
 data "authentik_flow" "default-source-authentication" {
   slug = "default-source-authentication"
 }
 
+data "authentik_flow" "default-provider-authorization-implicit-consent" {
+  slug = "default-provider-authorization-implicit-consent"
+}
+data "authentik_flow" "default-provider-invalidation-flow" {
+  slug = "default-provider-invalidation-flow"
+}
+
+## Authentication flow
 resource "authentik_flow" "authentication" {
   name               = "authentication-flow"
-  title              = "Welcome!"
+  title              = "Welcome to Plexuz!"
   slug               = "authentication-flow"
   designation        = "authentication"
   policy_engine_mode = "all"
-  # background         = "https://placeholder.jpeg"
+  # background         = "/media/background.png"
 }
 
 resource "authentik_flow_stage_binding" "authentication-flow-binding-00" {
@@ -31,10 +38,6 @@ resource "authentik_flow_stage_binding" "authentication-flow-binding-100" {
 }
 
 ## Invalidation flow
-data "authentik_flow" "default-provider-invalidation-flow" {
-  slug = "default-provider-invalidation-flow"
-}
-
 resource "authentik_flow" "invalidation" {
   name               = "invalidation-flow"
   title              = "Invalidation Flow"
@@ -86,11 +89,6 @@ resource "authentik_flow_stage_binding" "recovery-flow-binding-30" {
 }
 
 ## Invitation flow
-
-data "authentik_flow" "default-source-enrollment" {
-  slug = "default-source-enrollment"
-}
-
 resource "authentik_flow" "enrollment-invitation" {
   name               = "enrollment-invitation-flow"
   title              = "Enrollment invitation"

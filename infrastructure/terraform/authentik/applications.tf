@@ -1,104 +1,126 @@
-locals {
-  oauth_apps = [
-    "dashbrr",
-    "grafana",
-    "headscale",
-    "kyoo",
-    "lubelog",
-    "paperless",
-    "portainer"
-  ]
+module "echo_server" {
+  source = "./modules/forward-auth-application"
+  slug   = "echo_server"
+
+  name      = "Echo Server"
+  domain    = "echo-server.${var.domain}"
+  app_group = "Infrastructure"
+
+  access_groups = [resource.authentik_group.users.id]
+
+  policy_engine_mode      = "any"
+  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
+
+  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
 }
 
-# Step 2: Parse the secrets using regex to extract client_id and client_secret
-locals {
-  applications = {
-    dashbrr = {
-      client_id     = module.onepassword_application["dashbrr"].fields["DASHBRR_CLIENT_ID"]
-      client_secret = module.onepassword_application["dashbrr"].fields["DASHBRR_CLIENT_SECRET"]
-      group         = authentik_group.monitoring.name
-      icon_url      = "https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/dashbrr.png"
-      redirect_uri  = "https://dashbrr.${var.domain}/api/auth/callback"
-      launch_url    = "https://dashbrr.${var.domain}/api/auth/callback"
-    },
-    grafana = {
-      client_id     = module.onepassword_application["grafana"].fields["GRAFANA_CLIENT_ID"]
-      client_secret = module.onepassword_application["grafana"].fields["GRAFANA_CLIENT_SECRET"]
-      group         = authentik_group.monitoring.name
-      icon_url      = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
-      redirect_uri  = "https://grafana.${var.domain}/login/generic_oauth"
-      launch_url    = "https://grafana.${var.domain}/login/generic_oauth"
-    },
-    headscale = {
-      client_id     = module.onepassword_application["headscale"].fields["HEADSCALE_CLIENT_ID"]
-      client_secret = module.onepassword_application["headscale"].fields["HEADSCALE_CLIENT_SECRET"]
-      group         = authentik_group.infrastructure.name
-      icon_url      = "https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/headscale.png"
-      redirect_uri  = "https://headscale.${var.domain}/oidc/callback"
-      launch_url    = "https://headscale.${var.domain}/"
-    },
-    kyoo = {
-      client_id     = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_ID"]
-      client_secret = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_SECRET"]
-      group         = authentik_group.home.name
-      icon_url      = "https://raw.githubusercontent.com/zoriya/Kyoo/master/icons/icon-256x256.png"
-      redirect_uri  = "https://kyoo.${var.domain}/api/auth/logged/authentik"
-      launch_url    = "https://kyoo.${var.domain}/api/auth/login/authentik?redirectUrl=https://kyoo.${var.domain}/login/callback"
-    },
-    lubelog = {
-      client_id     = module.onepassword_application["lubelog"].fields["LUBELOG_CLIENT_ID"]
-      client_secret = module.onepassword_application["lubelog"].fields["LUBELOG_CLIENT_SECRET"]
-      group         = authentik_group.home.name
-      icon_url      = "https://demo.lubelogger.com/defaults/lubelogger_icon_72.png"
-      redirect_uri  = "https://lubelog.${var.domain}/Login/RemoteAuth"
-      launch_url    = "https://lubelog.${var.domain}/Login/RemoteAuth"
-    },
-    paperless = {
-      client_id     = module.onepassword_application["paperless"].fields["PAPERLESS_CLIENT_ID"]
-      client_secret = module.onepassword_application["paperless"].fields["PAPERLESS_CLIENT_SECRET"]
-      group         = authentik_group.home.name
-      icon_url      = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/paperless.png"
-      redirect_uri  = "https://paperless.${var.domain}/accounts/oidc/authentik/login/callback/"
-      launch_url    = "https://paperless.${var.domain}/"
-    },
-    portainer = {
-      client_id     = module.onepassword_application["portainer"].fields["PORTAINER_CLIENT_ID"]
-      client_secret = module.onepassword_application["portainer"].fields["PORTAINER_CLIENT_SECRET"]
-      group         = authentik_group.infrastructure.name
-      icon_url      = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/portainer.png"
-      redirect_uri  = "https://portainer.${var.domain}/"
-      launch_url    = "https://portainer.${var.domain}/"
-    }
-  }
-}
+module "grafana" {
+  source = "./modules/oidc-application"
+  slug   = "grafana"
 
-resource "authentik_provider_oauth2" "oauth2" {
-  for_each              = local.applications
-  name                  = each.key
-  client_id             = each.value.client_id
-  client_secret         = each.value.client_secret
-  authorization_flow    = authentik_flow.provider-authorization-implicit-consent.uuid
-  authentication_flow   = authentik_flow.authentication.uuid
-  invalidation_flow     = data.authentik_flow.default-provider-invalidation-flow.id
-  property_mappings     = data.authentik_property_mapping_provider_scope.oauth2.ids
+  name      = "Grafana"
+  domain    = "grafana.talos.${var.domain}"
+  app_group = "Monitoring"
+
+  access_groups = [data.authentik_group.superuser.id]
+
+  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.GRAFANA)["GRAFANA_OAUTH_CLIENT_ID"]
+  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.GRAFANA)["GRAFANA_OAUTH_CLIENT_SECRET"]
+
+  authentication_flow_id = authentik_flow.authentication.uuid
+  authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
+  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+
+  redirect_uris = ["https://grafana.talos.${var.domain}/login/generic_oauth"]
+
   access_token_validity = "hours=4"
-  signing_key           = data.authentik_certificate_key_pair.generated.id
-  allowed_redirect_uris = [
-    {
-      matching_mode = "strict",
-      url           = each.value.redirect_uri,
-    }
-  ]
+
+  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/grafana.png"
+  meta_launch_url = "https://grafana.talos.${var.domain}"
 }
 
-resource "authentik_application" "application" {
-  for_each           = local.applications
-  name               = title(each.key)
-  slug               = each.key
-  protocol_provider  = authentik_provider_oauth2.oauth2[each.key].id
-  group              = each.value.group
-  open_in_new_tab    = true
-  meta_icon          = each.value.icon_url
-  meta_launch_url    = each.value.launch_url
-  policy_engine_mode = "all"
+module "dashbrr" {
+  source = "./modules/oidc-application"
+  slug   = "dashbrr"
+
+  name      = "Dashbrr"
+  domain    = "dashbrr.${var.domain}"
+  app_group = "Downloads"
+
+  access_groups = [data.authentik_group.superuser.id]
+
+
+  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.DASHBRR)["DASHBRR_OAUTH_CLIENT_ID"]
+  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.DASHBRR)["DASHBRR_OAUTH_CLIENT_SECRET"]
+
+  authentication_flow_id = authentik_flow.authentication.uuid
+  authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
+  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+
+  redirect_uris = ["https://dashbrr.${var.domain}/api/auth/callback"]
+
+  access_token_validity = "hours=4"
+
+  #meta_icon = ""
+  meta_launch_url = "https://dashbrr.${var.domain}"
+}
+
+module "minio" {
+  source = "./modules/oidc-application"
+  slug   = "minio"
+
+  name      = "Minio"
+  domain    = "minio.${var.domain}"
+  app_group = "Infrastructure"
+
+  access_groups = [data.authentik_group.superuser.id]
+
+
+  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.MINIO)["MINIO_OAUTH_CLIENT_ID"]
+  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.MINIO)["MINIO_OAUTH_CLIENT_SECRET"]
+
+  authentication_flow_id = authentik_flow.authentication.uuid
+  authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
+  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+
+  redirect_uris = ["https://minio.int.${var.domain}/oauth_callback"]
+
+  access_token_validity = "hours=4"
+
+  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/minio.png"
+  meta_launch_url = "https://minio.int.${var.domain}"
+}
+
+module "mealie" {
+  source = "./modules/oidc-application"
+  slug   = "mealie"
+
+  name      = "Mealie"
+  domain    = "mealie.${var.domain}"
+  app_group = "Tools"
+
+  access_groups = [
+    data.authentik_group.superuser.id,
+    resource.authentik_group.mealie_admins.id,
+    resource.authentik_group.mealie_users.id
+  ]
+
+
+  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.MEALIE)["MEALIE_OAUTH_CLIENT_ID"]
+  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.MEALIE)["MEALIE_OAUTH_CLIENT_SECRET"]
+
+  authentication_flow_id = authentik_flow.authentication.uuid
+  authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
+  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+
+  redirect_uris = ["https://mealie.${var.domain}/login"]
+
+  access_token_validity = "hours=4"
+
+  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mealie.png"
+  meta_launch_url = "https://mealie.${var.domain}"
 }

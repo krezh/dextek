@@ -331,7 +331,7 @@ spec:
         news_feed_enabled: false
       auth:
         oauth_auto_login: true
-        signout_redirect_url: https://auth.plexuz.xyz/logout
+        signout_redirect_url: https://sso.plexuz.xyz/application/o/grafana/end-session/
         oauth_allow_insecure_email_lookup: true
       auth.basic:
         enabled: false
@@ -339,11 +339,11 @@ spec:
         enabled: false
       auth.generic_oauth:
         enabled: true
-        name: Authelia
+        name: Authentik
         icon: signin
-        api_url: https://auth.plexuz.xyz/api/oidc/userinfo
-        auth_url: https://auth.plexuz.xyz/api/oidc/authorization
-        token_url: https://auth.plexuz.xyz/api/oidc/token
+        api_url: https://sso.plexuz.xyz/application/o/userinfo/
+        auth_url: https://sso.plexuz.xyz/application/o/authorize/
+        token_url: https://sso.plexuz.xyz/application/o/token/
         client_id: grafana
         scopes: openid profile email groups
         disable_login_form: true
@@ -355,7 +355,7 @@ spec:
       auth.generic_oauth.group_mapping:
         org_id: 1
         role_attribute_path: |
-          contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
+          contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
       grafana_net:
         url: https://grafana.net
       log:
