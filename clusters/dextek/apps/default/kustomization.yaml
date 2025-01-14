@@ -16,7 +16,6 @@ resources:
   - ./ntfy
   - ./plex
   - ./tautulli
-  - ./theme-park
   - ./unifi-controller
   - ./atuin
   - ./maintainerr
