@@ -26,18 +26,18 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicaCount: 3
+    replicaCount: 1
     installCRDs: true
     serviceMonitor:
       enabled: true
       interval: 1m
     webhook:
-      replicaCount: 3
+      replicaCount: 1
       serviceMonitor:
         enabled: true
         interval: 1m
     certController:
-      replicaCount: 3
+      replicaCount: 1
       serviceMonitor:
         enabled: true
         interval: 1m
