@@ -38,7 +38,7 @@ spec:
       app:
         type: deployment
         strategy: RollingUpdate
-        replicas: 3
+        replicas: 2
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
@@ -74,7 +74,7 @@ spec:
       ml:
         type: deployment
         strategy: RollingUpdate
-        replicas: 3
+        replicas: 2
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -93,7 +93,7 @@ spec:
       micro:
         type: deployment
         strategy: RollingUpdate
-        replicas: 3
+        replicas: 2
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
