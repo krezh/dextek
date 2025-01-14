@@ -24,7 +24,7 @@ spec:
       retries: 3
   # https://github.com/backube/volsync/blob/main/helm/volsync/values.yaml
   values:
-    replicaCount: 3
+    replicaCount: 1
     manageCRDs: true
     #image: &image
     #  repository: ghcr.io/onedr0p/volsync

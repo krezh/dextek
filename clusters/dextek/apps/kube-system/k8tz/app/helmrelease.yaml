@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
   values:
     namespace: kube-system
-    replicaCount: 3
+    replicaCount: 2
 
     timezone: Europe/Stockholm
     cronJobTimeZone: false
