@@ -27,5 +27,3 @@ spec:
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
       VOLSYNC_CLAIM: mealie-config
-      APP_UID: "568"
-      APP_GID: "568"
