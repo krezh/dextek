@@ -17,7 +17,6 @@ resources:
   - ./kromgo
   - ./mikrotik-exporter
   - ./prometheus-operator-crds
-  - ./mimir
   - ../../../shared/templates/flux
 transformers:
   - |-
