@@ -29,12 +29,12 @@ spec:
               tag: v2.4.2
             env:
               ALLOW_SIGNUP: false
-              PUID: ${APP_UID}
-              PGID: ${APP_GID}
+              PUID: 568
+              PGID: 568
               BASE_URL: https://mealie.plexuz.xyz
               DB_ENGINE: sqlite
               OIDC_AUTH_ENABLED: true
-              OIDC_PROVIDER_NAME: Authelia
+              OIDC_PROVIDER_NAME: Authentik
               OIDC_USER_GROUP: mealie_users
               OIDC_ADMIN_GROUP: mealie_admins
               OIDC_CLIENT_ID: mealie
@@ -80,6 +80,6 @@ spec:
 
     persistence:
       data:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: mealie-config
         globalMounts:
           - path: /app/data
