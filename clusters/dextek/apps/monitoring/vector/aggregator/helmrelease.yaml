@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: docker.io/timberio/vector
-              tag: 0.43.1-distroless-static
+              tag: 0.44.0-distroless-static
             args:
               - "--config"
               - "/etc/vector/vector.yaml"
