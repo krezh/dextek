@@ -79,7 +79,7 @@ sinks:
     type: loki
     inputs:
       - kubernetes_remap
-    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
+    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
     encoding:
       codec: json
     out_of_order_action: accept
@@ -92,7 +92,7 @@ sinks:
 
   loki_journal:
     type: loki
-    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
+    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
     encoding:
       codec: json
     inputs:
@@ -109,7 +109,7 @@ sinks:
       - opnsense_split.therest
     encoding:
       codec: json
-    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
+    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
     labels:
       logtype: net
       server: opnsense
