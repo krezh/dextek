@@ -16,9 +16,9 @@ sources:
     address: 0.0.0.0:6002
     version: "2"
 
-  opnsense:
+  opnsense_source:
     type: syslog
-    address: "0.0.0.0:6001"
+    address: 0.0.0.0:6001
     mode: tcp
 
 # Transformations
@@ -33,10 +33,10 @@ transforms:
       # Drop pod_labels
       del(.pod_labels)
 
-  opnsense_filterlog:
+  opnsense_remap:
     type: remap
     inputs:
-      - opnsense
+      - opnsense_source
     source: |2
         if .appname == "filterlog" {
           message_array = parse_csv!(string!(.message))
@@ -65,13 +65,6 @@ transforms:
             }
           }
         }
-  opnsense_split:
-    type: route
-    inputs:
-      - opnsense_filterlog
-    route:
-      pass: .filteraction == "pass"
-      therest: .filteraction != "pass"
 
 # Sinks
 sinks:
@@ -106,7 +99,7 @@ sinks:
   loki_opnsense:
     type: loki
     inputs:
-      - opnsense_split.therest
+      - opnsense_remap
     encoding:
       codec: json
     endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
