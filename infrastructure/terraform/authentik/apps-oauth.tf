@@ -1,19 +1,3 @@
-module "echo_server" {
-  source = "./modules/forward-auth-application"
-  slug   = "echo_server"
-
-  name      = "Echo Server"
-  domain    = "echo-server.${var.domain}"
-  app_group = "Infrastructure"
-
-  access_groups = [resource.authentik_group.users.id]
-
-  policy_engine_mode      = "any"
-  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-
-  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
-}
-
 module "grafana" {
   source = "./modules/oidc-application"
   slug   = "grafana"
@@ -108,7 +92,6 @@ module "mealie" {
     resource.authentik_group.mealie_users.id
   ]
 
-
   client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.MEALIE)["MEALIE_OAUTH_CLIENT_ID"]
   client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.MEALIE)["MEALIE_OAUTH_CLIENT_SECRET"]
 
@@ -125,7 +108,6 @@ module "mealie" {
   meta_launch_url = "https://mealie.${var.domain}"
 }
 
-
 module "hoarder" {
   source = "./modules/oidc-application"
   slug   = "hoarder"
@@ -138,7 +120,6 @@ module "hoarder" {
     data.authentik_group.superuser.id,
     resource.authentik_group.users.id
   ]
-
 
   client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.HOARDER)["HOARDER_OAUTH_CLIENT_ID"]
   client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.HOARDER)["HOARDER_OAUTH_CLIENT_SECRET"]
