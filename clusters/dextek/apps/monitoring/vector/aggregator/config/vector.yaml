@@ -200,6 +200,8 @@ sinks:
       codec: json
     endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
     out_of_order_action: accept
+    remove_label_fields: true
+    remove_timestamp: true
     labels:
       # Need to differentiate between IDS and non-IDS logs
       job: "{{ jobname }}"
