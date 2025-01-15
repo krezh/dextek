@@ -213,3 +213,5 @@ sinks:
       dir: "{{ dir }}"
       ipversion: "{{ ipversion }}"
       protocol: "{{ protocol }}"
+      src: "{{ src }}"
+      dst: "{{ dst }}"
