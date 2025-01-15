@@ -100,6 +100,9 @@ sinks:
     type: loki
     inputs:
       - opnsense_remap
+    out_of_order_action: accept
+    remove_label_fields: true
+    remove_timestamp: true
     encoding:
       codec: json
     endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
