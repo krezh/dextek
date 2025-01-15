@@ -1,0 +1,114 @@
+data_dir: /vector-data-dir
+
+api:
+  enabled: true
+  address: 0.0.0.0:8686
+
+# Sources
+sources:
+  kubernetes_source:
+    type: vector
+    address: 0.0.0.0:6000
+    version: "2"
+
+  journald_source:
+    type: vector
+    address: 0.0.0.0:6002
+    version: "2"
+
+  opnsense:
+    type: syslog
+    address: "0.0.0.0:6001"
+
+# Transformations
+transforms:
+  kubernetes_remap:
+    type: remap
+    inputs:
+      - kubernetes_source
+    source: |
+      # Standardize 'app' index
+      .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
+      # Drop pod_labels
+      del(.pod_labels)
+
+  opnsense_filterlog:
+    type: remap
+    inputs:
+      - opnsense
+    source: |2
+        if .appname == "filterlog" {
+          message_array = parse_csv!(string!(.message))
+          # ipv4 and ipv6
+          if message_array[8] == "4" || message_array[8] == "6" {
+            .filteriface   = message_array[4]
+            .filterflow    = message_array[7]
+            .filteraction  = message_array[6]
+            .filteripver   = message_array[8]
+            # ipv4
+            if message_array[8] == "4" {
+              .filterproto   = message_array[16]
+              .filterflags   = message_array[23]
+              .filtersrcip   = message_array[18]
+              .filtersrcport = message_array[20]
+              .filterdstip   = message_array[19]
+              .filterdstport = message_array[21]
+            # ipv6
+            } else if message_array[8] == "6" {
+              .filterproto   = message_array[12]
+              #.filterflags   = "IPv6 not fully supported"
+              .filtersrcip   = message_array[15]
+              .filtersrcport = message_array[17]
+              .filterdstip   = message_array[16]
+              .filterdstport = message_array[18]
+            }
+          }
+        }
+  opnsense_split:
+    type: route
+    inputs:
+      - opnsense_filterlog
+    route:
+      pass: .filteraction == "pass"
+      therest: .filteraction != "pass"
+
+# Sinks
+sinks:
+  loki_kubernetes:
+    type: loki
+    inputs:
+      - kubernetes_remap
+    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
+    encoding:
+      codec: json
+    out_of_order_action: accept
+    remove_label_fields: true
+    remove_timestamp: true
+    labels:
+      app: "{{ custom_app_name }}"
+      namespace: "{{ kubernetes.pod_namespace }}"
+      node: "{{ kubernetes.pod_node_name }}"
+
+  loki_journal:
+    type: loki
+    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
+    encoding:
+      codec: json
+    inputs:
+      - journald_source
+    out_of_order_action: accept
+    remove_label_fields: true
+    remove_timestamp: true
+    labels:
+      hostname: "{{ host }}"
+
+  loki_opnsense:
+    type: loki
+    inputs:
+      - opnsense_split.therest
+    encoding:
+      codec: json
+    endpoint: http://loki-headless.monitoring.svc.cluster.local:3100
+    labels:
+      logtype: net
+      server: opnsense
