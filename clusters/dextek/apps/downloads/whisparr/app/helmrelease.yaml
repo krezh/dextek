@@ -128,8 +128,11 @@ spec:
         enabled: true
         existingClaim: whisparr-config
       media:
-        enabled: true
-        existingClaim: media
+        type: nfs
+        server: 10.10.0.2
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
       downloads:
         enabled: true
         type: persistentVolumeClaim

@@ -192,9 +192,9 @@ spec:
 
     persistence:
       library:
-        enabled: true
-        existingClaim: immich-nfs
-        type: persistentVolumeClaim
+        type: nfs
+        server: 10.10.0.2
+        path: /mnt/tank/media/immich
         globalMounts:
           - path: /usr/src/app/upload
       cache:
