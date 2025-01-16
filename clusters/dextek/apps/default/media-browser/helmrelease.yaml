@@ -88,8 +88,11 @@ spec:
               - *HOST
     persistence:
       media:
-        enabled: true
-        existingClaim: media
+        type: nfs
+        server: 10.10.0.2
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
     volumeClaimTemplates:
       - accessMode: ReadWriteOnce
         mountPath: /config

@@ -96,8 +96,9 @@ spec:
         globalMounts:
           - path: /etc/yt-dlp
       downloads:
-        enabled: true
-        existingClaim: media
+        type: nfs
+        server: 10.10.0.2
+        path: /mnt/tank/media
         advancedMounts:
           pinchflat:
             app:
