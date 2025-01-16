@@ -41,7 +41,7 @@ data "talos_machine_configuration" "machine" {
       matchboxUrl        = var.matchbox_url
     }),
     file("talosPatches/registries.yaml"),
-    (each.value.type == "controlplane") ? file("talosPatches/cp.yaml") : null,
+    (each.value.type == "controlplane") ? file("talosPatches/controlplane.yaml") : null,
     (each.value.type == "worker") ? file("talosPatches/worker.yaml") : null,
     # This patch is for the NUT UPS monitoring
     templatefile("talosPatches/nut.yaml", {

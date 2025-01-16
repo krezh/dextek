@@ -159,7 +159,8 @@ cluster:
       rules:
         - level: Metadata
     extraArgs:
-      feature-gates: AuthorizeNodeWithSelectors=false
+      runtime-config: admissionregistration.k8s.io/v1alpha1=true
+      feature-gates: AuthorizeNodeWithSelectors=false,MutatingAdmissionPolicy=true
       oidc-client-id: kubernetes
       oidc-groups-claim: groups
       oidc-issuer-url: https://auth.plexuz.xyz
