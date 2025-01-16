@@ -10,26 +10,27 @@ spec:
   chart:
     spec:
       chart: volsync
-      version: 0.11.0
+      version: 0.12.0-rc.1
       sourceRef:
         kind: HelmRepository
         name: backube
         namespace: flux-system
-  maxHistory: 3
   install:
     remediation:
       retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   # https://github.com/backube/volsync/blob/main/helm/volsync/values.yaml
   values:
-    replicaCount: 1
     manageCRDs: true
-    #image: &image
-    #  repository: ghcr.io/onedr0p/volsync
-    #  tag: 0.9.1
-    #restic:
-    #  <<: *image
+    replicaCount: 1
     metrics:
       disableAuth: true
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile: { type: RuntimeDefault }
