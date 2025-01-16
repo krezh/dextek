@@ -6,7 +6,6 @@ namespace: immich
 resources:
   - ./externalsecret.yaml
   - ./configmap.yaml
-  - ./nfs-pvc.yaml
   - ./helmrelease.yaml
 labels:
   - pairs:
