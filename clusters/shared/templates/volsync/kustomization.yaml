@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./pvc.yaml
   - ./nfs.yaml
+  - ./s3.yaml
