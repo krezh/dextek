@@ -74,4 +74,5 @@ releases:
     values:
       - ../apps/flux-system/flux-operator/instance/values.yaml
     needs:
+      - monitoring/kube-prometheus-stack-crds
       - flux-system/flux-operator
