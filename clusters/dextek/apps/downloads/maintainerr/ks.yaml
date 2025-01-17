@@ -6,7 +6,7 @@ metadata:
   name: &app maintainerr
   namespace: flux-system
 spec:
-  targetNamespace: default
+  targetNamespace: downloads
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -19,7 +19,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  path: ./clusters/dextek/apps/default/maintainerr/app
+  path: ./clusters/dextek/apps/downloads/maintainerr/app
   prune: true
   wait: true
   sourceRef:
