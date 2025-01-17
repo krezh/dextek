@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./downloads-pvc.yaml
+  - ../../../shared/templates/flux
   - ./sabnzbd
   - ./qbittorrent
   - ./recyclarr
@@ -14,7 +15,12 @@ resources:
   - ./whisparr
   - ./flaresolverr
   - ./dashbrr
-  - ../../../shared/templates/flux
+  - ./bazarr
+  - ./maintainerr
+  - ./jellyseerr
+  - ./doplarr
+  - ./pinchflat
+  - ./jdownloader
 transformers:
   - |-
     apiVersion: builtin
