@@ -38,7 +38,8 @@ variable "meta_launch_url" {
   default = null
 }
 variable "app_group" {
-  type = string
+  type    = string
+  default = null
 }
 variable "policy_engine_mode" {
   type    = string
