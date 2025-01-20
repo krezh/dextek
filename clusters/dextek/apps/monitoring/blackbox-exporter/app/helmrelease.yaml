@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: blackbox-exporter
+  namespace: monitoring
 spec:
   interval: 30m
   chart:
@@ -33,10 +34,15 @@ spec:
             - path: /
               pathType: Prefix
     securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
       readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
+      allowPrivilegeEscalation: true
       capabilities:
-        add: ["NET_RAW"]
+        add:
+          - NET_ADMIN
+          - NET_RAW
     podSecurityContext:
       sysctls:
         - name: net.ipv4.ping_group_range
