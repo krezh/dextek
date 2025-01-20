@@ -142,12 +142,11 @@ module "immich" {
   slug   = "immich"
 
   name      = "Immich"
-  domain    = "immich.${var.domain}"
+  domain    = "photos.${var.domain}"
   app_group = "Tools"
 
   access_groups = [
-    data.authentik_group.superuser.id,
-    resource.authentik_group.users.id
+    data.authentik_group.superuser.id
   ]
 
   client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.IMMICH)["IMMICH_OAUTH_CLIENT_ID"]
@@ -158,10 +157,16 @@ module "immich" {
   invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
-  redirect_uris = ["https://immich.${var.domain}/api/auth/callback/custom"]
+  redirect_uris = [
+    "https://photos.${var.domain}/auth/login",
+    "https://photos.${var.domain}/user-settings",
+    "https://photos.talos.${var.domain}/auth/login",
+    "https://photos.talos.${var.domain}/user-settings",
+    "app.immich:///oauth-callback"
+  ]
 
   access_token_validity = "hours=4"
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png"
-  meta_launch_url = "https://immich.${var.domain}"
+  meta_launch_url = "https://photos.${var.domain}"
 }
