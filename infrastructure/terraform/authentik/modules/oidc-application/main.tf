@@ -86,6 +86,12 @@ variable "client_type" {
 variable "redirect_uris" {
   type = list(string)
 }
+locals {
+  redirect_uris = [for uri in var.redirect_uris : {
+    matching_mode = "strict",
+    url           = uri,
+  }]
+}
 
 variable "property_mappings" {
   type    = list(string)
@@ -107,6 +113,7 @@ resource "authentik_provider_oauth2" "main" {
   access_token_validity  = var.access_token_validity
   refresh_token_validity = var.refresh_token_validity
   property_mappings      = var.property_mappings
+  allowed_redirect_uris  = local.redirect_uris
   signing_key            = coalesce(var.signing_key_id, data.authentik_certificate_key_pair.generated.id)
   lifecycle {
     ignore_changes = [
