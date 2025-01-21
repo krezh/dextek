@@ -77,7 +77,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external-nginx
+        className: nginx-external
         hosts:
           - host: &host zipline.plexuz.xyz
             paths:
