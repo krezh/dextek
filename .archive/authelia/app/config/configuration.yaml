@@ -104,22 +104,6 @@ identity_providers:
         - "pushed-authorization-request"
       allowed_origins_from_client_redirect_uris: true
     clients:
-      - client_id: immich
-        client_name: Immich
-        client_secret: "$${IMMICH_OAUTH_CLIENT_SECRET}"
-        public: false
-        consent_mode: implicit # explicit, implicit, auto/default, preconfigured
-        authorization_policy: one_factor
-        pre_configured_consent_duration: 1y
-        scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris:
-          - "https://photos.plexuz.xyz/auth/login"
-          - "https://photos.plexuz.xyz/user-settings"
-          - "https://photos.talos.plexuz.xyz/auth/login"
-          - "https://photos.talos.plexuz.xyz/user-settings"
-          - "app.immich:///oauth-callback"
-        userinfo_signed_response_alg: none
-
       - client_id: kubernetes
         client_name: Kubernetes OIDC
         client_secret: "$${KUBERNETES_OAUTH_CLIENT_SECRET}"
