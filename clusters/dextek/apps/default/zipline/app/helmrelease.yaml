@@ -79,7 +79,7 @@ spec:
         enabled: true
         className: external-nginx
         hosts:
-          - host: &host z.plexuz.xyz
+          - host: &host zipline.plexuz.xyz
             paths:
               - path: /
                 pathType: Prefix

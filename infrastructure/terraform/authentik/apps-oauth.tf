@@ -176,7 +176,7 @@ module "zipline" {
   slug   = "zipline"
 
   name      = "Zipline"
-  domain    = "z.${var.domain}"
+  domain    = "zipline.${var.domain}"
   app_group = "Tools"
 
   access_groups = [
@@ -191,10 +191,12 @@ module "zipline" {
   invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
-  redirect_uris = []
+  redirect_uris = [
+    "https://zipline.${var.domain}/api/auth/oauth/authentik"
+  ]
 
   access_token_validity = "hours=4"
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/zipline.png"
-  meta_launch_url = "https://z.${var.domain}"
+  meta_launch_url = "https://zipline.${var.domain}"
 }
