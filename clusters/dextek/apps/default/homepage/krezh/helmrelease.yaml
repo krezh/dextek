@@ -40,6 +40,8 @@ spec:
             image:
               repository: ghcr.io/gethomepage/homepage
               tag: v0.10.9
+            env:
+              LOG_LEVEL: debug
             envFrom:
               - secretRef:
                   name: homepage-krezh-secret
