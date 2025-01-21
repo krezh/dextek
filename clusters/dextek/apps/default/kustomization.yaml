@@ -22,6 +22,7 @@ resources:
   - ./wallos
   - ./hoarder
   - ./changedetection
+  - ./zipline
 transformers:
   - |-
     apiVersion: builtin

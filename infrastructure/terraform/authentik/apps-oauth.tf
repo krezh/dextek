@@ -170,3 +170,31 @@ module "immich" {
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png"
   meta_launch_url = "https://photos.${var.domain}"
 }
+
+module "zipline" {
+  source = "./modules/oidc-application"
+  slug   = "zipline"
+
+  name      = "Zipline"
+  domain    = "z.${var.domain}"
+  app_group = "Tools"
+
+  access_groups = [
+    data.authentik_group.superuser.id
+  ]
+
+  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.ZIPLINE)["ZIPLINE_OAUTH_CLIENT_ID"]
+  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.ZIPLINE)["ZIPLINE_OAUTH_CLIENT_SECRET"]
+
+  authentication_flow_id = authentik_flow.authentication.uuid
+  authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
+  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+
+  redirect_uris = []
+
+  access_token_validity = "hours=4"
+
+  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/zipline.png"
+  meta_launch_url = "https://z.${var.domain}"
+}
