@@ -41,7 +41,7 @@ spec:
               FEATURES_INVITES: false
               FEATURES_INVITES_LENGTH: 16
               FEATURES_OAUTH_REGISTRATION: true
-              FEATURES_USER_REGISTRATION: false
+              FEATURES_USER_REGISTRATION: true
               FEATURES_HEADLESS: false
               RATELIMIT_USER: 5
               RATELIMIT_ADMIN: 1
