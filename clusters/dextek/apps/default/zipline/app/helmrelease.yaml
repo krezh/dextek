@@ -78,6 +78,12 @@ spec:
       app:
         enabled: true
         className: nginx-external
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Zipline"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "zipline.png"
         hosts:
           - host: &host zipline.plexuz.xyz
             paths:
