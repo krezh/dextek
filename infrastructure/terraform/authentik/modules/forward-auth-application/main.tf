@@ -19,7 +19,11 @@ variable "domain" {
 }
 variable "access_token_validity" {
   type    = string
-  default = "weeks=8"
+  default = "days=10"
+}
+variable "refresh_token_validity" {
+  type    = string
+  default = "days=30"
 }
 variable "authentication_flow_uuid" {
   type    = string
@@ -85,6 +89,11 @@ variable "skip_path_regex" {
   default = null
 }
 
+variable "jwt_federation_providers" {
+  type    = list(number)
+  default = []
+}
+
 data "authentik_flow" "default-provider-invalidation-flow" {
   slug = "default-provider-invalidation-flow"
 }
@@ -93,6 +102,7 @@ resource "authentik_provider_proxy" "main" {
   name                          = var.name
   external_host                 = "https://${var.domain}"
   internal_host                 = var.internal_host
+  cookie_domain                 = var.domain
   basic_auth_enabled            = var.basic_auth_enabled
   basic_auth_password_attribute = var.basic_auth_password_attribute
   basic_auth_username_attribute = var.basic_auth_username_attribute
@@ -101,10 +111,11 @@ resource "authentik_provider_proxy" "main" {
   authorization_flow            = var.authorization_flow_uuid
   invalidation_flow             = data.authentik_flow.default-provider-invalidation-flow.id
   access_token_validity         = var.access_token_validity
+  refresh_token_validity        = var.refresh_token_validity
   property_mappings             = var.property_mappings
   skip_path_regex               = var.skip_path_regex
+  jwt_federation_providers      = var.jwt_federation_providers
 }
-
 
 resource "authentik_application" "main" {
   name               = title(var.name)
