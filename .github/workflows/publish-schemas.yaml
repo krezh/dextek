@@ -54,7 +54,7 @@ jobs:
         uses: teleport-actions/setup@v1
         with:
           # renovate: datasource=github-releases depName=gravitational/teleport
-          version: 17.1.6
+          version: 17.2.1
 
       - name: Authorize against Teleport
         uses: teleport-actions/auth-k8s@v2
