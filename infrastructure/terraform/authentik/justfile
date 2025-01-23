@@ -12,3 +12,6 @@ init:
 apply: init
   @tofu apply --auto-approve
 
+plan: init
+  @tofu plan
+
