@@ -34,14 +34,11 @@ spec:
             - path: /
               pathType: Prefix
     securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
+      runAsNonRoot: true
       readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: true
+      allowPrivilegeEscalation: false
       capabilities:
         add:
-          - NET_ADMIN
           - NET_RAW
     podSecurityContext:
       sysctls:
