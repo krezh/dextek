@@ -3,9 +3,9 @@
   "storage": {
     "rootDirectory": "/var/lib/registry",
     "dedupe": true,
-    "gc": false,
-    "gcDelay": "1h",
-    "gcInterval": "24h"
+    "gc": true,
+    "gcDelay": "1d",
+    "gcInterval": "7d"
   },
   "http": {
     "address": "0.0.0.0",
@@ -25,7 +25,7 @@
       }
     },
     "scrub": {
-      "enable": false,
+      "enable": true,
       "interval": "24h"
     },
     "sync": {
