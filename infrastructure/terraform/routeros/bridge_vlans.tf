@@ -22,6 +22,14 @@ resource "routeros_interface_bridge_vlan" "vlan20" {
   comment  = "K8S: ${var.comment}"
 }
 
+resource "routeros_interface_bridge_vlan" "vlan25" {
+  bridge   = routeros_interface_bridge.bridge.name
+  vlan_ids = [25]
+  tagged   = ["bridge"]
+  untagged = []
+  comment  = "K8S BGP: ${var.comment}"
+}
+
 resource "routeros_interface_bridge_vlan" "vlan50" {
   bridge   = routeros_interface_bridge.bridge.name
   vlan_ids = [50]
