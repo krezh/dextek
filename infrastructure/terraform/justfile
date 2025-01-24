@@ -5,13 +5,15 @@
 _default:
   @just --list
 
-
+[no-cd]
 init:
 	@tofu init --upgrade
 
+[no-cd]
 apply: init
   @tofu apply --auto-approve
 
+[no-cd]
 plan: init
   @tofu plan
 
