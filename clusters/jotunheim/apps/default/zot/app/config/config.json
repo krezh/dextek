@@ -4,8 +4,8 @@
     "rootDirectory": "/var/lib/registry",
     "dedupe": true,
     "gc": true,
-    "gcDelay": "1d",
-    "gcInterval": "7d"
+    "gcDelay": "1h",
+    "gcInterval": "168h"
   },
   "http": {
     "address": "0.0.0.0",
