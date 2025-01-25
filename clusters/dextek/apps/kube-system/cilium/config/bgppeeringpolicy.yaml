@@ -24,8 +24,4 @@ spec:
             - selectorType: CiliumLoadBalancerIPPool
               selector:
                 matchLabels:
-                  bgp-pool: old
-            - selectorType: CiliumLoadBalancerIPPool
-              selector:
-                matchLabels:
                   bgp-pool: main
