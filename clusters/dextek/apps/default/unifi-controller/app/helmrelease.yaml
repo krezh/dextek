@@ -40,7 +40,6 @@ spec:
         controller: app
         type: LoadBalancer
         externalTrafficPolicy: Local
-        loadBalancerIP: 192.168.20.40
         annotations:
           coredns.io/hostname: unifi-lb
         ports:
