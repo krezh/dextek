@@ -45,7 +45,7 @@ spec:
     service:
       annotations: {}
       externalTrafficPolicy: Local
-      loadBalancerIP: 192.168.20.50
+      loadBalancerIP: 192.168.25.50
       port: 53
       type: LoadBalancer
     # Optional plugins that will be enabled in the zone, e.g. "forward . /etc/resolve.conf"
