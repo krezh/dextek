@@ -81,8 +81,9 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "nginx"
+        className: nginx
         annotations:
+          coredns.io/hostname: minio
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
@@ -103,8 +104,9 @@ spec:
               - *host
       s3:
         enabled: true
-        className: "nginx"
+        className: nginx
         annotations:
+          coredns.io/hostname: s3
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
