@@ -52,8 +52,9 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "nginx"
+        className: nginx
         annotations:
+          coredns.io/hostname: zot
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
