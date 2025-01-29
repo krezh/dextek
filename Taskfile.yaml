@@ -4,17 +4,23 @@ version: "3"
 
 silent: true
 
+set: [pipefail]
+shopt: [globstar]
+
 vars:
   TASKS_DIR: ".taskfiles"
   CLUSTER_DIR: "cluster"
   TERRAFORM_DIR: "infrastructure/terraform"
 
+env:
+  MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"
+
 includes:
   k8s: "{{.TASKS_DIR}}/Kubernetes"
   flux: "{{.TASKS_DIR}}/Flux"
-  externalsecrets: "{{.TASKS_DIR}}/ExternalSecrets"
+  es: "{{.TASKS_DIR}}/ExternalSecrets"
   rook: "{{.TASKS_DIR}}/Rook"
-  volsync: "{{.TASKS_DIR}}/VolSync"
+  volsync: "{{.TASKS_DIR}}/volsync"
   bootstrap: "{{.TASKS_DIR}}/Bootstrap"
   talos: "{{.TASKS_DIR}}/Talos"
   postgres: "{{.TASKS_DIR}}/Postgres"
@@ -22,3 +28,9 @@ includes:
 tasks:
   default:
     cmds: ["task -l"]
+
+  # Ref: https://github.com/go-task/task/issues/608
+  noop:
+    internal: true
+    silent: true
+    cmd: noop() { :; }
