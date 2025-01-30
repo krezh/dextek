@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: changedetection
+  namespace: default
 spec:
   interval: 30m
   chart:
@@ -35,8 +36,7 @@ spec:
               tag: 0.49.0@sha256:56eb0be42972c016c9b0902b3b25d94e24a7606ab70368764e540fc7128b0c6d
             env:
               PORT: &port 5000
-              USE_X_SETTINGS: 1
-              PLAYWRIGHT_DRIVER_URL: ws://localhost:3000/?stealth=1&--disable-web-security=true&--user-data-dir=~/browserless-cache-123
+              PLAYWRIGHT_DRIVER_URL: ws://localhost:3000
           browser:
             image:
               repository: docker.io/browserless/chrome
@@ -94,7 +94,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: changedetection-config
         advancedMounts:
           main:
             main:
