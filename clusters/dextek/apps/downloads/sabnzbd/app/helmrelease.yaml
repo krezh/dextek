@@ -65,26 +65,6 @@ spec:
               requests:
                 cpu: 250m
                 memory: 1Gi
-          exporter:
-            image:
-              repository: ghcr.io/onedr0p/exportarr
-              tag: v2.0.1@sha256:727e7bc8f2f0934a2117978c59f4476b954018b849a010ea6cfb380bd6539644
-            args:
-              - *app
-            ports:
-              - name: metrics
-                containerPort: &metrics 3000
-            resources:
-              requests:
-                cpu: 100m
-                memory: 64M
-              limits:
-                memory: 256M
-            env:
-              PORT: *metrics
-              URL: http://localhost:8080
-              ENABLE_ADDITIONAL_METRICS: false
-            envFrom: *envFrom
     service:
       app:
         controller: app
@@ -92,18 +72,6 @@ spec:
           http:
             port: 80
             targetPort: *port
-          metrics:
-            port: *metrics
-
-    serviceMonitor:
-      app:
-        serviceName: sabnzbd
-        enabled: true
-        endpoints:
-          - port: metrics
-            scheme: http
-            interval: 1m
-            scrapeTimeout: 10s
     ingress:
       app:
         enabled: true
@@ -129,12 +97,8 @@ spec:
             app.kubernetes.io/instance in (
               {{ .Release.Name }}
             )
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.plexuz.xyz/css/base/sabnzbd/organizr.css"></head>';
-            sub_filter_once on;
         hosts:
-          - host: &host "sab.plexuz.xyz"
+          - host: &host sab.plexuz.xyz
             paths:
               - path: /
                 pathType: Prefix
@@ -149,7 +113,7 @@ spec:
         className: nginx-external
         annotations:
         hosts:
-          - host: &host "sab.plexuz.xyz"
+          - host: &host sab.plexuz.xyz
             paths:
               - path: /api
                 pathType: Prefix
