@@ -14,6 +14,22 @@ module "echo_server" {
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
 }
 
+module "echo_server_internal" {
+  source = "./modules/forward-auth-application"
+  slug   = "echo_server_internal"
+
+  name      = "Echo Server Internal"
+  domain    = "echo-server.talos.${var.domain}"
+  app_group = "Infrastructure"
+
+  access_groups = [data.authentik_group.superuser.id]
+
+  policy_engine_mode      = "any"
+  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
+
+  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
+}
+
 module "pgweb" {
   source = "./modules/forward-auth-application"
   slug   = "pgweb"
