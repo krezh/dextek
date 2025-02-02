@@ -1,6 +1,6 @@
 locals {
   internal_proxy_provider_ids = [
-    module.echo_server.proxy_provider_id,
+    module.echo_server_internal.proxy_provider_id,
     module.pgweb.proxy_provider_id
   ]
 
