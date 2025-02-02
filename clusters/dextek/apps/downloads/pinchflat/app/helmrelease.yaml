@@ -103,4 +103,4 @@ spec:
           pinchflat:
             app:
               - path: /downloads
-                subPath: YouTube
+                subPath: youtube
