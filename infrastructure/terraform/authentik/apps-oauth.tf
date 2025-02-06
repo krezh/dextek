@@ -201,20 +201,20 @@ module "zipline" {
   meta_launch_url = "https://zipline.${var.domain}"
 }
 
-module "headlamp" {
+module "kubernetes" {
   source = "./modules/oidc-application"
-  slug   = "headlamp"
+  slug   = "kubernetes"
 
-  name      = "Headlamp"
-  domain    = "headlamp.talos.${var.domain}"
-  app_group = "Tools"
+  name      = "Kubernetes"
+  domain    = var.domain
+  app_group = "Infrastructure"
 
   access_groups = [
     data.authentik_group.superuser.id
   ]
 
-  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.HEADLAMP)["HEADLAMP_OAUTH_CLIENT_ID"]
-  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.HEADLAMP)["HEADLAMP_OAUTH_CLIENT_SECRET"]
+  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.KUBERNETES)["KUBERNETES_OAUTH_CLIENT_ID"]
+  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.KUBERNETES)["KUBERNETES_OAUTH_CLIENT_SECRET"]
 
   authentication_flow_id = authentik_flow.authentication.uuid
   authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
@@ -228,5 +228,5 @@ module "headlamp" {
   access_token_validity = "hours=4"
 
   meta_icon       = ""
-  meta_launch_url = "https://headlamp.talos.${var.domain}"
+  meta_launch_url = ""
 }
