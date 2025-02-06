@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mealie-recipes/mealie
-              tag: v2.5.0
+              tag: v2.6.0
             env:
               ALLOW_SIGNUP: false
               PUID: 568
