@@ -147,5 +147,16 @@
       separateMinorPatch: true,
       sourceUrl: "https://github.com/gravitational/teleport",
     },
+    {
+      description: ["Dragonfly Operator Group"],
+      groupName: "Dragonfly Operator",
+      matchPackagePatterns: ["dragonflydb/operator"],
+      matchDatasources: ["docker", "helm", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/dragonflydb/dragonfly-operator",
+    },
   ],
 }
