@@ -58,7 +58,8 @@ variable "open_in_new_tab" {
   default = false
 }
 variable "app_group" {
-  type = string
+  type    = string
+  default = null
 }
 variable "policy_engine_mode" {
   type    = string
@@ -135,7 +136,7 @@ resource "authentik_application" "main" {
 }
 
 resource "authentik_policy_binding" "app-access" {
-  for_each = var.access_groups
+  for_each = var.access_groups != null ? { for group in var.access_groups : group => group } : {}
   target   = authentik_application.main.uuid
   group    = each.value
   order    = 0
