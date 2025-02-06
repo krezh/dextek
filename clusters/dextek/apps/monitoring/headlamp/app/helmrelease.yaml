@@ -61,7 +61,7 @@ spec:
       storageClassName: ceph-block
     ingress:
       enabled: true
-      ingressClassName: internal
+      ingressClassName: nginx-internal
       hosts:
         - host: headlamp.talos.plexuz.xyz
           paths:
