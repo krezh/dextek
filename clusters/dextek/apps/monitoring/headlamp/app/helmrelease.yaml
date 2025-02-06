@@ -62,6 +62,12 @@ spec:
     ingress:
       enabled: true
       ingressClassName: nginx-internal
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Headlamp"
+        gethomepage.dev/instance: "krezh"
+        gethomepage.dev/group: "Monitoring"
+        gethomepage.dev/icon: "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/public/android-chrome-192x192.png"
       hosts:
         - host: headlamp.talos.plexuz.xyz
           paths:
