@@ -200,3 +200,33 @@ module "zipline" {
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/zipline.png"
   meta_launch_url = "https://zipline.${var.domain}"
 }
+
+module "headlamp" {
+  source = "./modules/oidc-application"
+  slug   = "headlamp"
+
+  name      = "Headlamp"
+  domain    = "headlamp.talos.${var.domain}"
+  app_group = "Tools"
+
+  access_groups = [
+    data.authentik_group.superuser.id
+  ]
+
+  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.HEADLAMP)["HEADLAMP_OAUTH_CLIENT_ID"]
+  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.HEADLAMP)["HEADLAMP_OAUTH_CLIENT_SECRET"]
+
+  authentication_flow_id = authentik_flow.authentication.uuid
+  authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
+  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+
+  redirect_uris = [
+    "https://headlamp.${var.domain}/oidc-callback"
+  ]
+
+  access_token_validity = "hours=4"
+
+  meta_icon       = ""
+  meta_launch_url = "https://headlamp.talos.${var.domain}"
+}
