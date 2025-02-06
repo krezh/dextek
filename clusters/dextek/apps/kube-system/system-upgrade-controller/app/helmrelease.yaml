@@ -73,3 +73,7 @@ spec:
                   - ALL
               seccompProfile:
                 type: RuntimeDefault
+
+    serviceAccount:
+      create: true
+      name: system-upgrade
