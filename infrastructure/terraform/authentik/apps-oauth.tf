@@ -228,5 +228,5 @@ module "kubernetes" {
   access_token_validity = "hours=4"
 
   meta_icon       = ""
-  meta_launch_url = ""
+  meta_launch_url = "blank://blank"
 }
