@@ -16,7 +16,6 @@ resources:
   - ./node-problem-detector
   - ./kromgo
   - ./mikrotik-exporter
-  - ./prometheus-operator-crds
   - ../../../shared/templates/flux
 transformers:
   - |-
