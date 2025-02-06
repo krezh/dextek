@@ -11,14 +11,15 @@ repositories:
     url: https://helm.cilium.io
   - name: postfinance
     url: https://postfinance.github.io/kubelet-csr-approver
-  - name: coredns
-    url: https://coredns.github.io/helm
 
 releases:
-  - name: kube-prometheus-stack-crds
+  - name: prometheus-operator-crds
     namespace: monitoring
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
     version: 17.0.2
+    values:
+      - annotations:
+          helm.sh/resource-policy: keep
 
   - name: cilium
     namespace: kube-system
@@ -27,11 +28,11 @@ releases:
     values:
       - ../apps/kube-system/cilium/app/values.yaml
     needs:
-      - monitoring/kube-prometheus-stack-crds
+      - monitoring/prometheus-operator-crds
 
   - name: coredns
     namespace: kube-system
-    chart: coredns/coredns
+    chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.39.0
     values:
       - ../apps/kube-system/coredns/app/values.yaml
@@ -54,7 +55,7 @@ releases:
     values:
       - ../apps/kube-system/spegel/app/values.yaml
     needs:
-      - monitoring/kube-prometheus-stack-crds
+      - monitoring/prometheus-operator-crds
       - kube-system/cilium
       - kube-system/coredns
 
@@ -64,7 +65,8 @@ releases:
     version: 0.13.0
     values:
       - ../apps/flux-system/flux-operator/app/values.yaml
-    needs: []
+    needs:
+      - kube-system/cilium
 
   - name: flux-instance
     namespace: flux-system
@@ -74,5 +76,5 @@ releases:
     values:
       - ../apps/flux-system/flux-operator/instance/values.yaml
     needs:
-      - monitoring/kube-prometheus-stack-crds
+      - monitoring/prometheus-operator-crds
       - flux-system/flux-operator
