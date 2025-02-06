@@ -150,7 +150,10 @@
     {
       description: ["Dragonfly Operator Group"],
       groupName: "Dragonfly Operator",
-      matchPackagePatterns: ["dragonflydb/operator"],
+      matchPackagePatterns: [
+        "dragonflydb/operator",
+        "dragonflydb/dragonfly-operator",
+      ],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
