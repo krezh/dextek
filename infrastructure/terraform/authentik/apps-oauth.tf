@@ -222,7 +222,7 @@ module "headlamp" {
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
   redirect_uris = [
-    "https://headlamp.${var.domain}/oidc-callback"
+    "https://headlamp.talos.${var.domain}/oidc-callback"
   ]
 
   access_token_validity = "hours=4"
