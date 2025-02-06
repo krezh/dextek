@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: rook-release
         namespace: flux-system
-      version: v1.16.2
+      version: v1.16.3
   driftDetection:
     mode: enabled
   install:
