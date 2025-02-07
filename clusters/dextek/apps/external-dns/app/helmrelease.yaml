@@ -34,13 +34,15 @@ spec:
             name: &secret cloudflare-external-dns
             key: CLOUDFLARE_API_TOKEN
     extraArgs:
-      - --cloudflare-proxied
       - --cloudflare-dns-records-per-page=1000
-      - --ingress-class=nginx-external
+      - --cloudflare-proxied
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
       - --ignore-ingress-tls-spec
+      - --ingress-class=nginx-external
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["ingress"]
+    sources: ["crd", "ingress"]
     txtPrefix: k8s.
     txtOwnerId: talos-plexuz
     domainFilters: ["plexuz.xyz"]
