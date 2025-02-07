@@ -59,7 +59,7 @@ spec:
       deletionPolicy: Delete
     cephClusterSpec:
       cephVersion:
-        image: quay.io/ceph/ceph:v19.2.0
+        image: quay.io/ceph/ceph:v19.2.1
       cleanupPolicy:
         confirmation: ""
         sanitizeDisks:
