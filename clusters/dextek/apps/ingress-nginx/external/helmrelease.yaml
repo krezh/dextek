@@ -68,6 +68,11 @@ spec:
         use-geoip2: true
         use-forwarded-headers: "true"
         server-snippet: add_header X-Robots-Tag "noindex";
+        http-snippet: |
+          proxy_cache_path /tmp/nginx-cache levels=1:2 keys_zone=static-cache:2m max_size=100m inactive=7d use_temp_path=off;
+          proxy_cache_key $scheme$proxy_host$request_uri;
+          proxy_cache_lock on;
+          proxy_cache_use_stale updating;
       extraArgs:
         default-ssl-certificate: ingress-nginx/plexuz-default-tls
         publish-status-address: *hostname
