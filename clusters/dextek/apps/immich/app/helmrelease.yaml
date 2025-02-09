@@ -35,7 +35,7 @@ spec:
         supplementalGroups: [44]
       automountServiceAccountToken: false
     controllers:
-      app:
+      server:
         type: deployment
         strategy: RollingUpdate
         replicas: 2
@@ -157,7 +157,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: app
+                  identifier: server
                   port: http
         tls:
           - hosts:
@@ -184,7 +184,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: app
+                  identifier: server
                   port: http
         tls:
           - hosts:
