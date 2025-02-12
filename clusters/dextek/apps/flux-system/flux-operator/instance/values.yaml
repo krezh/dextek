@@ -11,6 +11,7 @@ instance:
     - helm-controller
     - notification-controller
   sync:
+    interval: 30m
     kind: GitRepository
     url: ssh://git@github.com/krezh/dextek
     ref: refs/heads/main
