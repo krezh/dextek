@@ -20,7 +20,6 @@ resources:
   - ./obsidian-couchdb
   - ./it-tools
   - ./wallos
-  - ./hoarder
   - ./changedetection
   - ./zipline
 transformers:
