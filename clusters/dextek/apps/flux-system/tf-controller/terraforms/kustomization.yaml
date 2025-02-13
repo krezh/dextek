@@ -5,6 +5,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ./talos
-  - ./cloudflare
-  - ./opnsense
   - ./routeros
