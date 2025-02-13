@@ -108,35 +108,6 @@ module "mealie" {
   meta_launch_url = "https://mealie.${var.domain}"
 }
 
-module "hoarder" {
-  source = "./modules/oidc-application"
-  slug   = "hoarder"
-
-  name      = "Hoarder"
-  domain    = "hoarder.${var.domain}"
-  app_group = "Tools"
-
-  access_groups = [
-    data.authentik_group.superuser.id,
-    resource.authentik_group.users.id
-  ]
-
-  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.HOARDER)["HOARDER_OAUTH_CLIENT_ID"]
-  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.HOARDER)["HOARDER_OAUTH_CLIENT_SECRET"]
-
-  authentication_flow_id = authentik_flow.authentication.uuid
-  authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
-  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
-
-  redirect_uris = ["https://hoarder.${var.domain}/api/auth/callback/custom"]
-
-  access_token_validity = "hours=4"
-
-  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/hoarder.png"
-  meta_launch_url = "https://hoarder.${var.domain}"
-}
-
 module "immich" {
   source = "./modules/oidc-application"
   slug   = "immich"
