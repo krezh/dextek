@@ -81,14 +81,6 @@ spec:
         enabled: true
         className: nginx-external
         annotations:
-          nginx.ingress.kubernetes.io/proxy-buffering: "on"
-          nginx.ingress.kubernetes.io/service-upstream: "true"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_cache static-cache;
-            proxy_cache_valid any 10s;
-            proxy_cache_use_stale error timeout updating http_404 http_500 http_502 http_503 http_504;
-            proxy_cache_bypass $http_x_purge;
-            add_header X-Cache-Status $upstream_cache_status;
           nginx.ingress.kubernetes.io/auth-url: |-
             http://ak-outpost-external.auth.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           nginx.ingress.kubernetes.io/auth-signin: |-
