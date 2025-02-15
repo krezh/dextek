@@ -17,9 +17,6 @@ data:
         - Logout:
             - abbr: LO
               href: https://homepage.plexuz.xyz/outpost.goauthentik.io/sign_out
-        - LLDAP:
-            - abbr: LD
-              href: https://lldap.talos.plexuz.xyz
   kubernetes.yaml: |
     ---
     mode: cluster
