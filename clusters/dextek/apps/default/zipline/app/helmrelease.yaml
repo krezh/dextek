@@ -29,34 +29,9 @@ spec:
               tag: 4.0.0
             env:
               DATASOURCE_S3_FORCE_PATH_STYLE: true
-              DATASOURCE_TYPE: s3
-              CORE_RETURN_HTTPS: true
-              CORE_HTTPS: true
-              CORE_HOSTNAME: 0.0.0.0
-              CORE_PORT: 3000
-              CORE_COMPRESSION_ENABLED: false
-              EXIF_ENABLED: false
-              EXIF_REMOVE_GPS: true
-              FEATURES_INVITES: false
-              FEATURES_INVITES_LENGTH: 16
-              FEATURES_OAUTH_REGISTRATION: true
-              FEATURES_USER_REGISTRATION: false
-              FEATURES_HEADLESS: false
-              RATELIMIT_USER: 5
-              RATELIMIT_ADMIN: 1
-              UPLOADER_DEFAULT_FORMAT: DATE
-              UPLOADER_ROUTE: /i
-              UPLOADER_ADMIN_LIMIT: 100gb
-              UPLOADER_USER_LIMIT: 500mb
-              UPLOADER_DISABLED_EXTENSIONS: ps1,bat,exe,sh,fish
-              UPLOADER_FORMAT_DATE: YYYY-MM-DD_HH-mm-ss
-              UPLOADER_DEFAULT_EXPIRATION: ""
-              URLS_ROUTE: /go
-              URLS_LENGTH: 6
-              WEBSITE_TITLE: Zipline
-              WEBSITE_SHOW_FILES_PER_USER: false
-              WEBSITE_SHOW_VERSION: true
-              WEBSITE_DISABLE_MEDIA_PREVIEW: false
+              DATASOURCE_TYPE: "s3"
+              CORE_HOSTNAME: "0.0.0.0"
+              CORE_PORT: "3000"
             envFrom:
               - secretRef:
                   name: zipline-secret
