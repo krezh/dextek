@@ -228,7 +228,7 @@ module "home" {
   domain    = var.domain
   app_group = ""
 
-  access_groups = [resource.authentik_group.users.id]
+  access_groups = [resource.authentik_group.users.id, data.authentik_group.superuser.id]
 
   policy_engine_mode      = "any"
   authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
