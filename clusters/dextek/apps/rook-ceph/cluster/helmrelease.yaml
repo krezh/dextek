@@ -95,7 +95,7 @@ spec:
       removeOSDsIfOutAndSafeToRemove: true
       storage:
         config:
-          osdsPerDevice: "1" #TODO test with 2
+          osdsPerDevice: "2"
         useAllDevices: true
         useAllNodes: true
       resources:
