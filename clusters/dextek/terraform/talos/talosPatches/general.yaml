@@ -77,7 +77,7 @@ machine:
       - deviceSelector:
           driver: ${driver_10g}
           physical: true
-        mtu: 9000 # TODO: disable jumpo frames
+        mtu: 1500
         dhcp: true
   files:
     - path: /etc/cri/conf.d/20-customization.part
