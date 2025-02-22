@@ -44,6 +44,8 @@ bpf:
   preallocateMaps: true
   tproxy: true
 
+enableIPv4BIGTCP: true
+
 l7Proxy: true
 
 enableRuntimeDeviceDetection: true
