@@ -37,10 +37,13 @@ spec:
             size: 3
             targetSizeRatio: 1
         storageClass:
-          allowVolumeExpansion: true
           enabled: true
-          isDefault: true
           name: ceph-block
+          isDefault: true
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+          volumeBindingMode: Immediate
+          mountOptions: ["discard"]
           parameters:
             csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
@@ -51,7 +54,6 @@ spec:
             csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
             imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
             imageFormat: "2"
-          reclaimPolicy: Delete
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-ceph-blockpool
@@ -67,7 +69,10 @@ spec:
           iteration: 1
           method: quick
       crashCollector:
-        disable: true
+        disable: false
+      csi:
+        readAffinity:
+          enabled: true
       dashboard:
         enabled: true
         urlPrefix: /
@@ -75,8 +80,12 @@ spec:
       mgr:
         count: 3
         modules:
-          - enabled: true
-            name: pg_autoscaler
+          - name: insights
+            enabled: true
+          - name: pg_autoscaler
+            enabled: true
+          - name: rook
+            enabled: true
       mon:
         count: 3
       network:
@@ -86,7 +95,7 @@ spec:
       removeOSDsIfOutAndSafeToRemove: true
       storage:
         config:
-          osdsPerDevice: "1"
+          osdsPerDevice: "1" #TODO test with 2
         useAllDevices: true
         useAllNodes: true
       resources:
@@ -174,8 +183,10 @@ spec:
       cluster addr = ""
       bdev_enable_discard = true
       bdev_async_discard = true
+      osd_class_update_on_start = false
     ingress:
       dashboard:
+        prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
         ingressClassName: nginx-internal
         annotations:
           gethomepage.dev/enabled: "true"
