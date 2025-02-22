@@ -37,6 +37,7 @@ spec:
             env:
               PORT: &port 5000
               PLAYWRIGHT_DRIVER_URL: ws://localhost:3000
+              BASE_URL: https://{{ .Release.Name }}.plexuz.xyz
           browser:
             image:
               repository: docker.io/browserless/chrome
