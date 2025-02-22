@@ -77,7 +77,8 @@ resource "routeros_interface_ethernet" "sfpplus" {
 
   factory_name             = each.value.name
   name                     = each.value.name
-  mtu                      = 9000
+  disable_running_check    = false
+  mtu                      = 1500
   sfp_shutdown_temperature = 95
   comment                  = each.value.comment
 }
@@ -87,7 +88,8 @@ resource "routeros_interface_ethernet" "qsfpplus1" {
 
   factory_name             = each.value.name
   name                     = each.value.name
-  mtu                      = 9000
+  disable_running_check    = false
+  mtu                      = 1500
   sfp_shutdown_temperature = 95
   comment                  = each.value.comment
 }
@@ -97,7 +99,8 @@ resource "routeros_interface_ethernet" "qsfpplus2" {
 
   factory_name             = each.value.name
   name                     = each.value.name
-  mtu                      = 9000
+  disable_running_check    = false
+  mtu                      = 1500
   sfp_shutdown_temperature = 95
   comment                  = each.value.comment
 }
