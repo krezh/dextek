@@ -24,12 +24,9 @@ spec:
   values:
     csi:
       cephFSKernelMountOptions: ms_mode=prefer-crc
-      kubeletDirPath: /var/lib/kubelet
-      enableCSIHostNetwork: true
       enableLiveness: true
       serviceMonitor:
         enabled: true
-      enableVolumeGroupSnapshot: false # TODO: enable this when v1beta1 CRDs are available
     crds:
       enabled: true
     disableDeviceHotplug: false
