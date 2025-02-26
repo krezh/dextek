@@ -31,12 +31,12 @@ spec:
           it-tools:
             image:
               repository: ghcr.io/bjw-s-labs/it-tools
-              tag: 2024.10
+              tag: 2024.10.22
             probes:
               liveness:
-                enabled: true
+                enabled: false
               readiness:
-                enabled: true
+                enabled: false
             resources:
               requests:
                 cpu: 100m
