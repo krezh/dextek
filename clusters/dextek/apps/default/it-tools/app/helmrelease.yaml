@@ -34,9 +34,9 @@ spec:
               tag: 2024.10
             probes:
               liveness:
-                enabled: false
+                enabled: true
               readiness:
-                enabled: false
+                enabled: true
             resources:
               requests:
                 cpu: 100m
