@@ -37,7 +37,13 @@ spec:
               EXECUTIONS_DATA_MAX_AGE: 7
               EXECUTIONS_DATA_PRUNE_MAX_COUNT: 50000
               GENERIC_TIMEZONE: "Europe/Stockholm"
+              EXTERNAL_FRONTEND_HOOKS_URLS: ""
               N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: false
+              N8N_DIAGNOSTICS_ENABLED: false
+              N8N_VERSION_NOTIFICATIONS_ENABLED: false
+              N8N_DIAGNOSTICS_CONFIG_FRONTEND: ""
+              N8N_DIAGNOSTICS_CONFIG_BACKEND: ""
+              N8N_TEMPLATES_ENABLED: false
               N8N_PROTOCOL: "https"
               N8N_PORT: &port 8080
               N8N_HOST: &hostName n8n.talos.plexuz.xyz
