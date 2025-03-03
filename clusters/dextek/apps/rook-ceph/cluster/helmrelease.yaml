@@ -64,10 +64,10 @@ spec:
         image: quay.io/ceph/ceph:v19.2.1
       cephConfig:
         global:
-          public network: "10.10.0.0/27"
-          cluster network: "10.10.0.0/27"
-          public addr: ""
-          cluster addr: ""
+          public_network: "10.10.0.0/27"
+          cluster_network: "10.10.0.0/27"
+          public_addr: ""
+          cluster_addr: ""
           bdev_enable_discard: "true"
           bdev_async_discard: "true"
           osd_class_update_on_start: "false"
