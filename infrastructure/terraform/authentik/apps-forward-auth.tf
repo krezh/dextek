@@ -251,3 +251,19 @@ module "homeassistant" {
 
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/home-assistant.png"
 }
+
+module "n8n" {
+  source = "./modules/forward-auth-application"
+  slug   = "n8n"
+
+  name      = "n8n"
+  domain    = "n8n.talos.${var.domain}"
+  app_group = "Tools"
+
+  access_groups = [data.authentik_group.superuser.id]
+
+  policy_engine_mode      = "any"
+  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
+
+  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/n8n.png"
+}
