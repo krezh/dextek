@@ -23,6 +23,7 @@ resources:
   - ./changedetection
   - ./zipline
   - ./n8n
+  - ./podinfo
 transformers:
   - |-
     apiVersion: builtin
