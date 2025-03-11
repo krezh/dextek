@@ -46,7 +46,7 @@ spec:
                 memory: 8Gi
                 gpu.intel.com/i915: "1"
               limits:
-                memory: 8Gi
+                memory: 16Gi
                 gpu.intel.com/i915: "1"
         pod:
           affinity:
