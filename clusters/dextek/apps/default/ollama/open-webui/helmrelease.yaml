@@ -38,7 +38,7 @@ spec:
               WEBUI_NAME: Open WebUI
               WEBUI_URL: https://openweb.talos.plexuz.xyz
               DATA_DIR: /data
-              OLLAMA_BASE_URL: http://ollama:11434
+              OLLAMA_BASE_URL: http://ollama.default.svc.cluster.local:11434
               # WEBUI_AUTH_TRUSTED_EMAIL_HEADER: X-authentik-email
               # AUDIO_OPENAI_API_BASE_URL: https://piper.talos.plexuz.xyz/v1
               # AUDIO_OPENAI_API_KEY: sk-111111111111 # fake key needed to make ui happy
