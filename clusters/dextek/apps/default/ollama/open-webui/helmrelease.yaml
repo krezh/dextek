@@ -1,0 +1,85 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app open-webui
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      *app :
+        type: deployment
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          *app :
+            image:
+              repository: ghcr.io/open-webui/open-webui
+              tag: 0.5.20-ollama
+            env:
+              WEBUI_NAME: Open WebUI
+              WEBUI_URL: https://openweb.talos.plexuz.xyz
+              DATA_DIR: /data
+              OLLAMA_BASE_URL: http://ollama:11434
+              # WEBUI_AUTH_TRUSTED_EMAIL_HEADER: X-authentik-email
+              # AUDIO_OPENAI_API_BASE_URL: https://piper.talos.plexuz.xyz/v1
+              # AUDIO_OPENAI_API_KEY: sk-111111111111 # fake key needed to make ui happy
+              RAG_EMBEDDING_ENGINE: ollama
+            resources:
+              requests:
+                cpu: 200m
+                memory: 2Gi
+              limits:
+                memory: 2Gi
+    service:
+      *app :
+        controller: *app
+        ports:
+          http:
+            port: &port 8080
+    ingress:
+      external:
+        enabled: true
+        className: nginx-internal
+        annotations:
+          nginx.org/websocket-services: *app
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Ollama"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "ollama.png"
+        hosts:
+          - host: &host openweb.talos.plexuz.xyz
+            paths:
+              - path: /
+                service:
+                  identifier: *app
+                  port: *port
+    persistence:
+      data:
+        enabled: true
+        existingClaim: ${VOLSYNC_CLAIM}
+      tmp:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        globalMounts:
+          - path: /tmp
