@@ -41,6 +41,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
+    - name: ollama
   path: ./clusters/dextek/apps/default/ollama/open-webui
   prune: true
   sourceRef:
