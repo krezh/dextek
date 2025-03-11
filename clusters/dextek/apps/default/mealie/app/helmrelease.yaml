@@ -42,10 +42,10 @@ spec:
               OIDC_CONFIGURATION_URL: "https://sso.plexuz.xyz/application/o/mealie/.well-known/openid-configuration"
               OIDC_AUTO_REDIRECT: true
               OIDC_REMEMBER_ME: true
-              OPENAI_BASE_URL: http://ollama.default.svc.cluster.local:11434/v1
-              OPENAI_API_KEY: aaaaaaaaaaaaaaaaa # fake apikey
-              OPENAI_MODEL: mistral-nemo:latest
-              OPENAI_ENABLE_IMAGE_SERVICES: false
+              # OPENAI_BASE_URL: http://ollama.default.svc.cluster.local:11434/v1
+              # OPENAI_API_KEY: aaaaaaaaaaaaaaaaa # fake apikey
+              # OPENAI_MODEL: mistral-nemo:latest
+              # OPENAI_ENABLE_IMAGE_SERVICES: false
             envFrom:
               - secretRef:
                   name: mealie-secret
