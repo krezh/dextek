@@ -24,6 +24,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CLAIM: *app
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
 ---
@@ -52,5 +53,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CLAIM: *app
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
