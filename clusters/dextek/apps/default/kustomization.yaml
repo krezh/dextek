@@ -24,6 +24,7 @@ resources:
   - ./zipline
   - ./n8n
   - ./podinfo
+  - ./ollama
 transformers:
   - |-
     apiVersion: builtin
