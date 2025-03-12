@@ -41,6 +41,12 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: dashbrr-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 298Mi
+              limits:
+                memory: 298Mi
             probes:
               liveness: &probes
                 enabled: true
