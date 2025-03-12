@@ -44,24 +44,24 @@ spec:
               tag: 1.41.5.9522-a96edc606
             env:
               PLEX_ADVERTISE_URL: https://plex-lb.talos.plexuz.xyz:32400
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /identity
-                    port: &port 32400
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 10
+            # probes:
+            #   liveness: &probes
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /identity
+            #         port: &port 32400
+            #       initialDelaySeconds: 0
+            #       periodSeconds: 10
+            #       timeoutSeconds: 1
+            #       failureThreshold: 3
+            #   readiness: *probes
+            #   startup:
+            #     enabled: true
+            #     spec:
+            #       failureThreshold: 30
+            #       periodSeconds: 10
             resources:
               requests:
                 cpu: 100m
@@ -88,7 +88,7 @@ spec:
         externalTrafficPolicy: Local
         ports:
           http:
-            port: *port
+            port: 32400
     ingress:
       app:
         enabled: true
