@@ -70,7 +70,6 @@ spec:
               limits:
                 memory: 1Gi
                 gpu.intel.com/i915: 1
-
       ml:
         type: deployment
         strategy: RollingUpdate
@@ -85,11 +84,10 @@ spec:
             envFrom: *envFrom
             resources:
               requests:
-                memory: 2150M
+                memory: 1Gi
               limits:
                 memory: 2Gi
                 gpu.intel.com/i915: 1
-
       micro:
         type: deployment
         strategy: RollingUpdate
@@ -106,11 +104,10 @@ spec:
               IMMICH_WORKERS_EXCLUDE: api
             resources:
               requests:
-                memory: 512M
+                memory: 512Mi
               limits:
                 memory: 2Gi
                 gpu.intel.com/i915: 1
-
     service:
       server:
         controller: server
