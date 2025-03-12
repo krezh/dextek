@@ -65,7 +65,7 @@ spec:
                 enabled: false
             resources:
               limits:
-                memory: 8Gi
+                memory: 2143Mi
     service:
       app:
         controller: app
