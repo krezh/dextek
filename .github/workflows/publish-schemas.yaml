@@ -35,7 +35,7 @@ jobs:
         uses: azure/setup-kubectl@v4
         with:
           # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-          version: v1.32.2
+          version: v1.32.3
 
       - name: Setup Python
         uses: actions/setup-python@v5
