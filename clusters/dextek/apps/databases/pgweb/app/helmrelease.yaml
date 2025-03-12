@@ -40,10 +40,10 @@ spec:
               tag: 0.16.2@sha256:8f1ed22e10c9da0912169b98b62ddc54930dc39a5ae07b0f1354d2a93d44c6ed
             resources:
               requests:
-                cpu: 163m
-                memory: 979M
+                cpu: 20m
+                memory: 100Mi
               limits:
-                memory: 1500M
+                memory: 100Mi
             env:
               PGWEB_DATABASE_URL:
                 valueFrom:

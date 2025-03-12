@@ -64,10 +64,10 @@ spec:
                 enabled: false
             resources:
               requests:
-                cpu: 48m
-                memory: 671M
+                cpu: 10m
+                memory: 671Mi
               limits:
-                memory: 4000M
+                memory: 3027Mi
     service:
       app:
         controller: app
