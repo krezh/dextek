@@ -20,14 +20,12 @@ spec:
       app:
         annotations:
           reloader.stakater.com/auto: "true"
-
         pod:
           securityContext:
             runAsUser: 568
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
-
         initContainers:
           init-config:
             image:
@@ -38,7 +36,6 @@ spec:
               - "/bin/sh"
               - "-c"
               - "cp /tmp/config/*.ini /opt/couchdb/etc/default.d/; ls -lrt /opt/couchdb/etc/default.d;"
-
         containers:
           app:
             image:
@@ -47,18 +44,15 @@ spec:
             envFrom:
               - secretRef:
                   name: obsidian-couchdb-secret
-
             resources:
               limits:
-                memory: 1Gi
-
+                memory: 121Mi
     service:
       app:
         controller: app
         ports:
           http:
             port: 5984
-
     ingress:
       app:
         enabled: true
@@ -74,7 +68,6 @@ spec:
         tls:
           - hosts:
               - *host
-
     persistence:
       config:
         enabled: true
