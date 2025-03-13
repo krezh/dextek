@@ -3,7 +3,7 @@
 sonarr:
   mixed-sonarr: # A custom name used to identify this particular instance.
     base_url: http://sonarr
-    api_key: "!env_var SONARR__API_KEY"
+    api_key: !env_var SONARR__API_KEY
 
     # Custom Format Configuration
     delete_old_custom_formats: true
@@ -245,7 +245,7 @@ sonarr:
 radarr:
   radarr: # A custom name used to identify this particular instance.
     base_url: http://radarr
-    api_key: "!env_var RADARR__API_KEY"
+    api_key: !env_var RADARR__API_KEY
 
     # Custom Format Configuration
     delete_old_custom_formats: true
