@@ -222,14 +222,22 @@ sonarr:
           - 026d5aadd1a6b4e550b134cb6c72b3ca # Uncensored
         assign_scores_to:
           - name: Anime
-            score: 0 # Adjust scoring as desired
+            score: 100 # Adjust scoring as desired
 
       - trash_ids:
           - b2550eb333d27b75833e25b8c2557b38 # 10bit
         assign_scores_to:
           - name: Anime
-            score: -10000 # Adjust scoring as desired
-          - name: Standard
+            score: 0 # Adjust scoring as desired
+
+      - trash_ids:
+          - 2b239ed870daba8126a53bd5dc8dc1c8 # DV HDR10Plus
+          - 7878c33f1963fefb3d6c8657d46c2f0a # DV HDR10
+          - 6d0d8de7b57e35518ac0308b0ddf404e # DV
+          - 1f733af03141f068a540eec352589a89 # DV HLG
+          - 27954b0a80aab882522a88a4d9eae1cd # DV SDR
+        assign_scores_to:
+          - name: Anime
             score: -10000 # Adjust scoring as desired
 
       - trash_ids:
