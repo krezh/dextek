@@ -20,6 +20,7 @@ data:
   kubernetes.yaml: |
     ---
     mode: cluster
+    ingress: true
   services.yaml: |
     ---
     - Servers:
