@@ -20,30 +20,30 @@ jobs:
       id-token: write
     steps:
       - name: Generate Token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@21cfef2b496dd8ef5b904c159339626a10ad380e # v1
         id: app-token
         with:
           app-id: "${{ secrets.BOT_APP_ID }}"
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           token: "${{ steps.app-token.outputs.token }}"
 
       - name: Fetch kubectl
-        uses: azure/setup-kubectl@v4
+        uses: azure/setup-kubectl@3e0aec4d80787158d308d7b364cb1b702e7feb7f # v4
         with:
           # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
           version: v1.32.3
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5
         with:
           python-version: 3.x
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
         with:
           node-version: 22.x
 
@@ -51,13 +51,13 @@ jobs:
         run: pip install pyyaml
 
       - name: Install Teleport
-        uses: teleport-actions/setup@v1
+        uses: teleport-actions/setup@176c25dfcd19cd31a252f275d579822b243e7b9c # v1
         with:
           # renovate: datasource=github-releases depName=gravitational/teleport
           version: 17.3.3
 
       - name: Authorize against Teleport
-        uses: teleport-actions/auth-k8s@v2
+        uses: teleport-actions/auth-k8s@677da98eaa78a5e649d4c5b4012750af4c28af73 # v2
         with:
           proxy: teleport.talos.plexuz.xyz:443
           token: github-action-bot
@@ -77,7 +77,7 @@ jobs:
           bash $GITHUB_WORKSPACE/crd-extractor.sh
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3
         with:
           apiToken: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
           accountId: "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
