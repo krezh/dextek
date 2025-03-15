@@ -42,6 +42,7 @@ spec:
               tag: v1.0.2
             env:
               LOG_LEVEL: debug
+              HOMEPAGE_ALLOWED_HOSTS: &host homepage.plexuz.xyz
             envFrom:
               - secretRef:
                   name: homepage-krezh-secret
@@ -90,7 +91,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-snippet: |
             proxy_set_header X-Forwarded-Host $http_host;
         hosts:
-          - host: &host homepage.plexuz.xyz
+          - host: *host
             paths:
               - path: /
                 pathType: Prefix
