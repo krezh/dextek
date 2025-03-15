@@ -43,6 +43,8 @@ spec:
             envFrom:
               - secretRef:
                   name: homepage-users-secret
+            env:
+              HOMEPAGE_ALLOWED_HOSTS: &host plexuz.xyz
             resources:
               requests:
                 cpu: 15m
@@ -88,7 +90,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-snippet: |
             proxy_set_header X-Forwarded-Host $http_host;
         hosts:
-          - host: &host plexuz.xyz
+          - host: *host
             paths:
               - path: /
                 pathType: Prefix
