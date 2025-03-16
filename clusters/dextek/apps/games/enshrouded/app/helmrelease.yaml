@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema: https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: enshrouded
+  namespace: games
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      app:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/sknnr/enshrouded-dedicated-server
+              tag: proton-v2.1.7
+            env:
+            SERVER_NAME: Valhalla
+            SERVER_PASSWORD: PleaseChangeMe
+            PORT: 15637
+            SERVER_SLOTS: 16
+            SERVER_IP: 0.0.0.0
+            probes:
+              startup:
+                enabled: false
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+    service:
+      app:
+        controller: app
+        type: LoadBalancer
+        annotations:
+          coredns.io/hostname: enshrouded-lb
+        externalTrafficPolicy: Local
+        ports:
+          app:
+            port: 15637
+            protocol: UDP
+    persistence:
+      saves:
+        existingClaim: enshrouded-config
+        globalMounts:
+          - path: /home/steam/enshrouded/savegame
