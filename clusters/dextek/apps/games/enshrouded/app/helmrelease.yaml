@@ -67,3 +67,10 @@ spec:
         existingClaim: enshrouded-config
         globalMounts:
           - path: /home/steam/enshrouded/savegame
+      gamedata:
+        accessMode: ReadWriteOnce
+        type: persistentVolumeClaim
+        size: 100Gi
+        retain: true
+        globalMounts:
+          - path: /home/steam/enshrouded
