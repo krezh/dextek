@@ -39,11 +39,11 @@ spec:
               repository: docker.io/sknnr/enshrouded-dedicated-server
               tag: proton-v2.1.7
             env:
-            SERVER_NAME: Valhalla
-            SERVER_PASSWORD: PleaseChangeMe
-            PORT: 15637
-            SERVER_SLOTS: 16
-            SERVER_IP: 0.0.0.0
+              SERVER_NAME: Valhalla
+              SERVER_PASSWORD: PleaseChangeMe
+              PORT: 15637
+              SERVER_SLOTS: 16
+              SERVER_IP: 0.0.0.0
             probes:
               startup:
                 enabled: false
