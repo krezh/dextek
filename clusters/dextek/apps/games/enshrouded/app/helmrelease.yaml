@@ -85,9 +85,9 @@ spec:
       #   retain: true
       #   globalMounts:
       #     - path: /home/steam/enshrouded
-      # config:
-      #   type: secret
-      #   name: enshrouded-config
-      #   globalMounts:
-      #     - path: /home/steam/enshrouded/enshrouded_server.json
-      #       subPath: enshrouded_server.json
+      config:
+        type: secret
+        name: enshrouded-config
+        globalMounts:
+          - path: /home/steam/enshrouded/enshrouded_server.json
+            subPath: enshrouded_server.json
