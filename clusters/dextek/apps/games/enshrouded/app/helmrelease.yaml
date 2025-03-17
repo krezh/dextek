@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema: https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -24,9 +24,9 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: 10000
+        runAsGroup: 10000
+        fsGroup: 10000
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       app:
@@ -40,17 +40,18 @@ spec:
               tag: proton-v2.1.7
             env:
               SERVER_NAME: Valhalla
-              SERVER_PASSWORD: PleaseChangeMe
-              PORT: 15637
+              PORT: &port 15637
               SERVER_SLOTS: 16
               SERVER_IP: 0.0.0.0
-            probes:
-              startup:
-                enabled: false
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
+            envFrom:
+              - secretRef:
+                  name: enshrouded-secret
+            resources:
+              requests:
+                cpu: 100m
+                memory: 2Gi
+              limits:
+                memory: 4Gi
     service:
       app:
         controller: app
@@ -60,7 +61,7 @@ spec:
         externalTrafficPolicy: Local
         ports:
           app:
-            port: 15637
+            port: *port
             protocol: UDP
     persistence:
       saves:
