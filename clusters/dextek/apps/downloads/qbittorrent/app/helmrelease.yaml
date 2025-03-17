@@ -46,7 +46,7 @@ spec:
                 cpu: 100m
                 memory: 109Mi
               limits:
-                memory: 109Mi
+                memory: 1Gi
             securityContext:
               runAsUser: 568
               runAsGroup: 568
