@@ -39,7 +39,7 @@ spec:
               repository: docker.io/sknnr/enshrouded-dedicated-server
               tag: proton-v2.1.7
             env:
-              EXTERNAL_CONFIG: true
+              EXTERNAL_CONFIG: 1
             resources:
               requests:
                 cpu: 100m
