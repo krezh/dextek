@@ -30,6 +30,16 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       app:
+        initContainers:
+          init-config:
+            image:
+              repository: public.ecr.aws/docker/library/busybox
+              tag: latest@sha256:498a000f370d8c37927118ed80afe8adc38d1edcbfc071627d17b25c88efcab0
+              pullPolicy: IfNotPresent
+            command:
+              - "/bin/sh"
+              - "-c"
+              - "cp /tmp/enshrouded_server.json /home/steam/enshrouded/enshrouded_server.json; cat /home/steam/enshrouded/enshrouded_server.json;"
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
@@ -78,17 +88,17 @@ spec:
         existingClaim: enshrouded-config
         globalMounts:
           - path: /home/steam/enshrouded/savegame
-      # gamedata:
-      #   accessMode: ReadWriteOnce
-      #   type: persistentVolumeClaim
-      #   size: 100Gi
-      #   retain: true
-      #   globalMounts:
-      #     - path: /home/steam/enshrouded
+      gamedata:
+        accessMode: ReadWriteOnce
+        type: persistentVolumeClaim
+        size: 100Gi
+        retain: true
+        globalMounts:
+          - path: /home/steam/enshrouded
       config:
         type: secret
         name: enshrouded-config
         globalMounts:
-          - path: /home/steam/enshrouded/enshrouded_server.json
+          - path: /tmp/enshrouded_server.json
             subPath: enshrouded_server.json
             readOnly: true
