@@ -53,7 +53,7 @@ spec:
               GAME_PORT: &game_port 15636
               QUERY_PORT: &query_port 15637
               SERVER_SLOTS: 16
-              EXTERNAL_CONFIG: 1
+              #EXTERNAL_CONFIG: 1
             resources:
               requests:
                 cpu: 100m
