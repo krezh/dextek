@@ -62,7 +62,7 @@ spec:
         externalTrafficPolicy: Local
         ports:
           app:
-            port: *port
+            port: 15637
             protocol: UDP
     persistence:
       saves:
