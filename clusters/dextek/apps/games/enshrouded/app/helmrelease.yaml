@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: docker.io/sknnr/enshrouded-dedicated-server
-              tag: proton-v2.1.7
+              tag: proton-latest@sha256:822ff016e095a4d50882e4f42ecc4d40baeeee9eaa4f09b8173db7ea78c803fe
             env:
               SERVER_NAME: Valhalla
               GAME_PORT: &game_port 15636
