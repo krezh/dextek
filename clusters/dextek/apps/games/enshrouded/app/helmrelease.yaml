@@ -39,13 +39,7 @@ spec:
               repository: docker.io/sknnr/enshrouded-dedicated-server
               tag: proton-v2.1.7
             env:
-              SERVER_NAME: Valhalla
-              PORT: &port 15637
-              SERVER_SLOTS: 16
-              SERVER_IP: 0.0.0.0
-            envFrom:
-              - secretRef:
-                  name: enshrouded-secret
+              EXTERNAL_CONFIG: true
             resources:
               requests:
                 cpu: 100m
@@ -82,3 +76,9 @@ spec:
         retain: true
         globalMounts:
           - path: /home/steam/enshrouded
+      config:
+        type: secret
+        name: enshrouded-config
+        globalMounts:
+          - path: /home/steam/enshrouded/enshrouded_server.json
+            subPath: enshrouded_server.json
