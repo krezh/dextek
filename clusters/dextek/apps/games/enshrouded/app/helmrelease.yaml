@@ -39,7 +39,10 @@ spec:
               repository: docker.io/sknnr/enshrouded-dedicated-server
               tag: proton-v2.1.7
             env:
-              EXTERNAL_CONFIG: 1
+              SERVER_NAME: "Valhalla"
+              GAME_PORT: &game_port 15636
+              QUERY_PORT: &query_port 15637
+              SERVER_SLOTS: 16
             resources:
               requests:
                 cpu: 100m
@@ -61,8 +64,13 @@ spec:
           coredns.io/hostname: enshrouded-lb
         externalTrafficPolicy: Local
         ports:
-          app:
-            port: 15637
+          gameport:
+            enabled: true
+            port: *game_port
+            protocol: UDP
+          queryport:
+            enabled: true
+            port: *query_port
             protocol: UDP
     persistence:
       saves:
