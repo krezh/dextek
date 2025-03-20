@@ -18,7 +18,12 @@ spec:
       containers:
         - name: dota-items
           image: ghcr.io/masalaz/dota-items:v1.1.0
-          resources: {}
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              memory: 100Mi
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
