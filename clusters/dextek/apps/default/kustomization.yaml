@@ -23,7 +23,6 @@ resources:
   - ./changedetection
   - ./zipline
   - ./n8n
-  - ./podinfo
   - ./ollama
 transformers:
   - |-
