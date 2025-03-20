@@ -35,8 +35,8 @@ spec:
       tag: v0.16.0-rc.5
     runner:
       image:
-        repository: ghcr.io/flux-iac/tf-runner
-        tag: v0.16.0-rc.5
+        repository: ghcr.io/joryirving/opentofu-runner
+        tag: 1.9.0@sha256:ecfbf65cf604e964e90f17dbf93c70694254c5972a152122c847ed0782d671b4
     installCRDs: true
     metrics:
       enabled: true
