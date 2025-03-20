@@ -9,7 +9,7 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: tofu-controller
+      chart: tf-controller
       version: 0.15.1
       sourceRef:
         kind: HelmRepository
