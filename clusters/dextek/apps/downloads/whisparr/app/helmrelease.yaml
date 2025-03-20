@@ -36,7 +36,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/krezh/whisparr-nightly
+              repository: ghcr.io/krezh/whisparr
               tag: 2.0.0.872
             env:
               WHISPARR__INSTANCE_NAME: whisparr
