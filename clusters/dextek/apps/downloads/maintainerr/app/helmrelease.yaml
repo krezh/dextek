@@ -43,7 +43,7 @@ spec:
                 cpu: 10m
                 memory: 245Mi
               limits:
-                memory: 245Mi
+                memory: 400Mi
     service:
       app:
         controller: app

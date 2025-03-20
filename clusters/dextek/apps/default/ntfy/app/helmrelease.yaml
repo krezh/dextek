@@ -37,6 +37,7 @@ spec:
             image:
               repository: docker.io/binwiederhier/ntfy
               tag: v2.11.0
+            args: [serve]
             env:
               NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
               NTFY_BEHIND_PROXY: true
@@ -55,7 +56,12 @@ spec:
             envFrom:
               - secretRef:
                   name: ntfy-secret
-            args: [serve]
+            resources:
+              requests:
+                cpu: 15m
+                memory: 100M
+              limits:
+                memory: 400M
     service:
       app:
         controller: app
