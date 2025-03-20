@@ -30,7 +30,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/krezh/sabnzbd
+              repository: ghcr.io/home-operations/sabnzbd
               tag: 4.4.1
             env:
               SABNZBD__PORT: &port 8080
