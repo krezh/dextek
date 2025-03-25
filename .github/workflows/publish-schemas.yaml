@@ -57,7 +57,7 @@ jobs:
           version: 17.3.4
 
       - name: Authorize against Teleport
-        uses: teleport-actions/auth-k8s@677da98eaa78a5e649d4c5b4012750af4c28af73 # v2
+        uses: teleport-actions/auth-k8s@171cc0ad4b6b7cebcb33c672defe3f6dc58967ba # v2
         with:
           proxy: teleport.talos.plexuz.xyz:443
           token: github-action-bot
