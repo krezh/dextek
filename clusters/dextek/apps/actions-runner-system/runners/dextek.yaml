@@ -17,7 +17,6 @@ spec:
         namespace: flux-system
   driftDetection:
     mode: enabled
-
   values:
     runnerScaleSetName: dextek-runner
     githubConfigUrl: https://github.com/krezh/dextek
@@ -35,19 +34,11 @@ spec:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.323.0@sha256:073bde7e378db3c9c36c9969a2a652c73df272bbbaa6547f3c4e0c5727110a3f
             command: ["/home/runner/run.sh"]
-            env:
-              - name: NODE_IP
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.hostIP
             volumeMounts:
               - name: work
                 mountPath: /home/runner/_work
               - name: tool
                 mountPath: /home/runner/_work/_tool
-              - name: talos
-                mountPath: /var/run/secrets/talos.dev
-                readOnly: true
           - name: dind
             volumeMounts:
               - name: work
@@ -67,14 +58,9 @@ spec:
           - name: tool
             persistentVolumeClaim:
               claimName: containers-tool
-          - name: talos
-            secret:
-              secretName: actions-runner
-
     controllerServiceAccount:
       name: actions-runner-controller-gha-rs-controller
       namespace: actions-runner-system
-
   valuesFrom:
     - kind: Secret
       name: actions-runner-controller
