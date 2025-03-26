@@ -30,6 +30,20 @@ sonarr:
             qualities:
               - WEBDL-1080p
               - WEBRip-1080p
+              - HDTV-1080p
+          - name: Bluray-720p
+          - name: WEB 720p
+            qualities:
+              - WEBDL-720p
+              - WEBRip-720p
+              - HDTV-720p
+          - name: Bluray-480p
+          - name: WEB 480p
+            qualities:
+              - WEBDL-480p
+              - WEBRip-480p
+          - name: DVD
+          - name: SDTV
 
       - name: Anime
         reset_unmatched_scores:
