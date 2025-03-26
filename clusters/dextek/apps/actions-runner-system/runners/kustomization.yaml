@@ -5,6 +5,4 @@ kind: Kustomization
 resources:
   - ./tool-pvc.yaml
   - ./dextek.yaml
-  - ./talup.yaml
-  - ./containers.yaml
   - ./rbac.yaml
