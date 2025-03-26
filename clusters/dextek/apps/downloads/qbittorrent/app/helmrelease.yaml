@@ -61,6 +61,12 @@ spec:
             image:
               repository: docker.io/powerdns/dnsdist-19
               tag: 1.9.8
+            resources:
+              requests:
+                cpu: 10m
+                memory: 10Mi
+              limits:
+                memory: 100Mi
 
           gluetun:
             image:
@@ -81,6 +87,12 @@ spec:
                   name: qbittorrent-secret
             securityContext:
               privileged: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 10Mi
+              limits:
+                memory: 100Mi
 
           port-forward:
             image:
@@ -103,6 +115,12 @@ spec:
               capabilities:
                 drop:
                   - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 10Mi
+              limits:
+                memory: 100Mi
     service:
       qbittorrent:
         controller: qbittorrent
@@ -125,7 +143,7 @@ spec:
           gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USER}}` }}"
           gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASS}}` }}"
         hosts:
-          - host: &host "qbit.plexuz.xyz"
+          - host: &host qbit.plexuz.xyz
             paths:
               - path: /
                 service:
