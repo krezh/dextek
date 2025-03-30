@@ -48,7 +48,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/home-assistant
+              repository: ghcr.io/krezh/home-assistant
               tag: 2025.3.4
             resources:
               requests:
