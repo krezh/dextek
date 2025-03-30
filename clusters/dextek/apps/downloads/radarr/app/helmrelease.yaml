@@ -36,7 +36,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/radarr
+              repository: ghcr.io/krezh/radarr
               tag: 5.21.1.9799
             env:
               RADARR__APP__INSTANCENAME: Radarr

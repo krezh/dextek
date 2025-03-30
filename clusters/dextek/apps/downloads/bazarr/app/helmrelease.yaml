@@ -34,7 +34,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/bazarr
+              repository: ghcr.io/krezh/bazarr
               tag: 1.5.1
             resources:
               requests:
