@@ -1,8 +1,9 @@
 spegel:
-  appendMirrors: false
+  prependExisting: false
   containerdSock: /run/containerd/containerd.sock
   containerdRegistryConfigPath: /etc/cri/conf.d/hosts
-  additionalMirrorRegistries:
+  debugWebEnabled: true
+  additionalMirrorTargets:
     - https://zot.int.plexuz.xyz/v2/docker.io
     - https://zot.int.plexuz.xyz/v2/ghcr.io
     - https://zot.int.plexuz.xyz/v2/quay.io
