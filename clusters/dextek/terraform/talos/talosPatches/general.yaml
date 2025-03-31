@@ -111,7 +111,7 @@ cluster:
     endpoint: https://talos.k8s.plexuz.xyz:6443
   etcd:
     advertisedSubnets:
-      - "192.168.20.0/24"
+      - "10.10.0.0/24"
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
   controllerManager:
