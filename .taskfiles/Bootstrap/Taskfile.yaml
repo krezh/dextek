@@ -3,7 +3,8 @@
 version: "3"
 
 vars:
-  CLUSTER_DIR: "./clusters/dextek"
+  CLUSTER: dextek
+  CLUSTER_DIR: "./clusters/{{.CLUSTER}}"
   BOOTSTRAP_DIR: "{{.CLUSTER_DIR}}/bootstrap"
   KUBECONFIG: "$(pwd)/kubeconfig"
 

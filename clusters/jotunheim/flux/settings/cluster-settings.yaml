@@ -6,6 +6,4 @@ metadata:
   namespace: flux-system
 data:
   TIMEZONE: Europe/Stockholm
-  CLUSTER_NAME: talos-plexuz
-  CONTROLPLANE_ENDPOINT: talos.k8s.plexuz.xyz
-  NAS_FAST: 10.10.0.2
+  CLUSTER_NAME: jotunheim
