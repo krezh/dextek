@@ -1,0 +1,65 @@
+#!/usr/bin/env just --justfile
+# ^ A shebang isn't required, but allows a justfile to be executed
+#   like a script, with `./justfile test`, for example.
+
+set quiet
+set ignore-comments
+
+CLUSTER_DIR := "."
+BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
+KUBECONFIG := "$(pwd)/kubeconfig"
+TALOS_CONTROLLER := "$(talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
+
+_default:
+  just --list
+
+# Bootstrap all resources
+all: && _cleanup
+  just tofu
+  just talos
+  just wipe
+  just kubeconfig
+  just helmfile
+  just k9s
+
+tofu:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  cd "{{CLUSTER_DIR}}/terraform/talos"
+  echo "Running Tofu..."
+  tofu init --upgrade
+  tofu apply --auto-approve
+
+talos:
+  echo "Bootstrapping Node {{TALOS_CONTROLLER}}..."
+  until talosctl --nodes {{TALOS_CONTROLLER}} bootstrap; do sleep 5; done
+
+wipe:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  NODES=$(talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1')
+  for node in $NODES; do
+    echo "Wiping disks on: $node"
+    DISKS=$(talosctl get disks --output json -n $node | jq '. | select(.spec.dev_path | contains("nvme")) | .spec.dev_path' | tr '\n' ' ' | awk '{$1=$1};1')
+    for disk in $DISKS; do
+      talosctl wipe disk $disk -n $node | true;
+      echo $node $disk; sleep 1;
+    done;
+  done
+
+kubeconfig:
+  echo "Getting kubeconfig..."
+  until talosctl kubeconfig -n {{TALOS_CONTROLLER}} --force {{KUBECONFIG}}; do sleep 3; done
+
+helmfile:
+  echo "Waiting for Nodes to be ready..."
+  until kubectl --kubeconfig {{KUBECONFIG}} wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
+  until helmfile --quiet --kubeconfig {{KUBECONFIG}} --file {{BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
+  sops --decrypt {{BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
+  sops --decrypt {{BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
+
+k9s:
+  k9s --kubeconfig {{KUBECONFIG}} --all-namespaces --command pods
+
+_cleanup:
+  rm -f {{KUBECONFIG}}
