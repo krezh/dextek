@@ -13,5 +13,5 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: dextek
+    name: flux-system
   wait: false # no flux ks dependents
