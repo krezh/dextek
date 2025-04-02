@@ -1,0 +1,34 @@
+#!/usr/bin/env just --justfile
+# ^ A shebang isn't required, but allows a justfile to be executed
+#   like a script, with `./justfile test`, for example.
+
+set quiet
+set ignore-comments
+
+CLUSTER_DIR := "."
+BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
+KUBECONFIG := "$(pwd)/kubeconfig"
+
+_default:
+  just --list
+
+# Bootstrap all resources
+all: && _cleanup
+	just kubeconfig
+	just helmfile
+	just k9s
+
+kubeconfig:
+	scp root@jotunheim.srv.plexuz.xyz:/root/k3s.yaml {{KUBECONFIG}}
+	chmod 600 {{KUBECONFIG}}
+
+helmfile:
+	#until helmfile --quiet --kubeconfig {{KUBECONFIG}} --file {{BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
+	sops --decrypt {{BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
+	sops --decrypt {{BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
+
+k9s:
+	k9s --kubeconfig {{KUBECONFIG}} --all-namespaces --command pods
+
+_cleanup:
+	rm -f {{KUBECONFIG}}
