@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+helmDefaults:
+  force: true
+  timeout: 600
+  wait: true
+  waitForJobs: true
+
+repositories:
+  - name: postfinance
+    url: https://postfinance.github.io/kubelet-csr-approver
+
+releases:
+  - name: kubelet-csr-approver
+    namespace: kube-system
+    chart: postfinance/kubelet-csr-approver
+    version: 1.2.6
+    values:
+      - ./kubelet-csr-approver/values.yaml
+    needs:
+      - kube-system/cilium
+
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.18.0
+    values:
+      - ../apps/flux-system/flux-operator/app/values.yaml
+    needs:
+      - kube-system/cilium
+
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.18.0
+    wait: false
+    values:
+      - ../apps/flux-system/flux-operator/instance/values.yaml
+    needs:
+      - monitoring/prometheus-operator-crds
+      - flux-system/flux-operator
