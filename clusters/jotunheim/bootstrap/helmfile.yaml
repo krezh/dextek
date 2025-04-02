@@ -7,6 +7,14 @@ helmDefaults:
   waitForJobs: true
 
 releases:
+  - name: prometheus-operator-crds
+    namespace: monitoring
+    chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
+    version: 19.0.0
+    values:
+      - annotations:
+          helm.sh/resource-policy: keep
+
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
@@ -14,7 +22,7 @@ releases:
     values:
       - ../apps/flux-system/flux-operator/app/values.yaml
     needs:
-      - kube-system/cilium
+      - monitoring/prometheus-operator-crds
 
   - name: flux-instance
     namespace: flux-system
