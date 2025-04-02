@@ -42,8 +42,8 @@ wipe:
     echo "Wiping disks on: $node"
     DISKS=$(talosctl get disks --output json -n $node | jq '. | select(.spec.dev_path | contains("nvme")) | .spec.dev_path' | tr '\n' ' ' | awk '{$1=$1};1')
     for disk in $DISKS; do
+      echo "Wiping: $disk"; sleep 1;
       talosctl wipe disk $disk -n $node | true;
-      echo $node $disk; sleep 1;
     done;
   done
 
