@@ -18,7 +18,7 @@ spec:
             privileged: true
           command: ["/bin/sh", "-c"]
           args:
-            - DISKS='nvme0n1 nvme1n1';
+            - DISKS='nvme1n1 nvme2n1';
 
               rm -rf /node/rook-data/*;
 

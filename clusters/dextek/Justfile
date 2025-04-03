@@ -31,8 +31,10 @@ tofu:
   tofu apply --auto-approve
 
 talos:
-  echo "Bootstrapping Node {{TALOS_CONTROLLER}}..."
-  until talosctl --nodes {{TALOS_CONTROLLER}} bootstrap; do sleep 5; done
+  #!/usr/bin/env bash
+  TALOS_CONTROLLER="{{TALOS_CONTROLLER}}"
+  echo "Bootstrapping Node: $TALOS_CONTROLLER..."
+  until talosctl --nodes $TALOS_CONTROLLER bootstrap; do sleep 5; done
 
 wipe:
   #!/usr/bin/env bash
@@ -41,14 +43,15 @@ wipe:
     echo "Wiping disks on: $node"
     DISKS=$(talosctl get disks --output json -n $node | jq -r '. | select(.spec.dev_path | contains("nvme")) | .spec.dev_path' | sed 's|/dev/||g' | tr '\n' ' ' | awk '{$1=$1};1')
     for disk in $DISKS; do
-      echo "Wiping: $disk"; sleep 1;
-      talosctl wipe disk $disk -n $node | true;
+      printf "Wiping: $disk"; sleep 1;
+      talosctl wipe disk $disk -n $node && echo " SUCCESS";
     done;
   done
 
 kubeconfig:
-  echo "Getting kubeconfig..."
+  printf "Getting kubeconfig..."
   until talosctl kubeconfig -n {{TALOS_CONTROLLER}} --force {{KUBECONFIG}}; do sleep 3; done
+  echo "Done"
 
 helmfile:
   echo "Waiting for Nodes to be ready..."

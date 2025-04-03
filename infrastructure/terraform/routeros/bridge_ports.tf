@@ -110,6 +110,20 @@ resource "routeros_interface_bridge_port" "ether24" {
   comment   = "UAP-PRO-N: ${var.comment}"
 }
 
+resource "routeros_interface_bridge_port" "ether31" {
+  bridge    = routeros_interface_bridge.bridge.name
+  interface = "ether31"
+  pvid      = 1
+  comment   = "TESMART KVM: ${var.comment}"
+}
+
+resource "routeros_interface_bridge_port" "ether32" {
+  bridge    = routeros_interface_bridge.bridge.name
+  interface = "ether32"
+  pvid      = 1
+  comment   = "PIKVM: ${var.comment}"
+}
+
 resource "routeros_interface_bridge_port" "ether40" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether40"
