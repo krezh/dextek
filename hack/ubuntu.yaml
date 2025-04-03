@@ -1,31 +1,30 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: ubuntu-pv-claim
-  namespace: default
-spec:
-  # storageClassName: longhorn
-  #storageClassName: freenas-nfs-csi
-  #storageClassName: truenas-iscsi-csi
-  #storageClassName: ceph-filesystem
-  storageClassName: ceph-block
-  # storageClassName: gp2
-  # storageClassName: local-storage
-  # storageClassName: ibmc-block-bronze
-  # storageClassName: ibmc-block-silver
-  # storageClassName: ibmc-block-gold
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1000Gi
-
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: ubuntu-pv-claim
+#   namespace: kube-system
+# spec:
+#   # storageClassName: longhorn
+#   #storageClassName: freenas-nfs-csi
+#   #storageClassName: truenas-iscsi-csi
+#   #storageClassName: ceph-filesystem
+#   storageClassName: ceph-block
+#   # storageClassName: gp2
+#   # storageClassName: local-storage
+#   # storageClassName: ibmc-block-bronze
+#   # storageClassName: ibmc-block-silver
+#   # storageClassName: ibmc-block-gold
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1000Gi
 ---
 apiVersion: v1
 kind: Pod
 metadata:
   name: ubuntu-ms01-01
-  namespace: default
+  namespace: kube-system
   annotations:
     linkerd.io/inject: disabled
   labels:
@@ -48,7 +47,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: ubuntu-ms01-02
-  namespace: default
+  namespace: kube-system
   annotations:
     linkerd.io/inject: disabled
   labels:
@@ -71,7 +70,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: ubuntu-ms01-03
-  namespace: default
+  namespace: kube-system
   annotations:
     linkerd.io/inject: disabled
   labels:
@@ -90,10 +89,10 @@ spec:
         - sleep
         - infinity
       imagePullPolicy: IfNotPresent
-      volumeMounts:
-        - name: data
-          mountPath: /data
-  volumes:
-    - name: data
-      persistentVolumeClaim:
-        claimName: ubuntu-pv-claim
+  #     volumeMounts:
+  #       - name: data
+  #         mountPath: /data
+  # volumes:
+  #   - name: data
+  #     persistentVolumeClaim:
+  #       claimName: ubuntu-pv-claim
