@@ -20,11 +20,11 @@ tasks:
     ignore_error: true
     cmds:
       - kubectl --namespace rook-ceph patch cephcluster rook-ceph --type merge -p '{"spec":{"cleanupPolicy":{"confirmation":"yes-really-destroy-data"}}}'
-      - kubectl delete -Rf clusters/dextek/system/rook-ceph/app/helmrelease.yaml
-      - kubectl delete -Rf clusters/dextek/system/rook-ceph/ks.yaml
+      - kubectl delete -Rf clusters/dextek/apps/rook-ceph/app/helmrelease.yaml
+      - kubectl delete -Rf clusters/dextek/apps/rook-ceph/ks.yaml
       - |
         for i in {10..00}; do echo "Waiting: $i"; sleep 1; done; echo
-      - kubectl delete -Rf clusters/dextek/system/rook-ceph/app/helmrelease.yaml
+      - kubectl delete -Rf clusters/dextek/apps/rook-ceph/app/helmrelease.yaml
       - kubectl delete crds cephblockpools.ceph.rook.io cephbucketnotifications.ceph.rook.io cephbuckettopics.ceph.rook.io \
         cephclients.ceph.rook.io cephclusters.ceph.rook.io cephfilesystemmirrors.ceph.rook.io \
         cephfilesystems.ceph.rook.io cephfilesystemsubvolumegroups.ceph.rook.io \
