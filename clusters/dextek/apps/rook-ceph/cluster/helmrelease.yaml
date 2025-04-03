@@ -66,10 +66,10 @@ spec:
         global:
           public_network: "10.10.0.0/27"
           cluster_network: "10.10.0.0/27"
-          public_addr: ""
-          cluster_addr: ""
+          # public_addr: ""
+          # cluster_addr: ""
           bdev_enable_discard: "true"
-          bdev_async_discard: "true"
+          bdev_async_discard_threads: "1"
           osd_class_update_on_start: "false"
 
       cleanupPolicy:
