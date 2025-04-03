@@ -118,7 +118,3 @@ cgroup:
   autoMount:
     enabled: false
   hostRoot: /sys/fs/cgroup
-
-tls:
-  secretsNamespace:
-    create: false
