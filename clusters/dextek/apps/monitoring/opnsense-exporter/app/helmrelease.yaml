@@ -41,11 +41,10 @@ spec:
             args:
               - "--log.level=info"
               - "--log.format=json"
-            command:
-              - --opnsense.protocol=https
-              - --opnsense.address=heimdall.k8s.plexuz.xyz
-              - --exporter.instance-label=heimdall
-              - --web.listen-address=:8080
+              - "--opnsense.protocol=https"
+              - "--opnsense.address=heimdall.k8s.plexuz.xyz"
+              - "--exporter.instance-label=heimdall"
+              - "--web.listen-address=:8080"
             envFrom:
               - secretRef:
                   name: opnsense-exporter-secret
