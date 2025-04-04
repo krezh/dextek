@@ -39,9 +39,6 @@ spec:
               repository: ghcr.io/aetaric/checkrr
               tag: 3.5.0-amd64
             env: []
-            envFrom:
-              - secretRef:
-                  name: checkrr-secret
             probes:
               liveness: &probes
                 enabled: true
