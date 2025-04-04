@@ -6,13 +6,3 @@ namespace: monitoring
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-configMapGenerator:
-  - name: opnsense-exporter
-    files:
-      - opnsense-exporter-dashboard.json=dashboard.json
-generatorOptions:
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-  disableNameSuffixHash: true
-  labels:
-    grafana_dashboard: "true"
