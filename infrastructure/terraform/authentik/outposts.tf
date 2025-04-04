@@ -19,7 +19,8 @@ locals {
     module.wallos.proxy_provider_id,
     module.homepage.proxy_provider_id,
     module.home.proxy_provider_id,
-    module.homeassistant.proxy_provider_id
+    module.homeassistant.proxy_provider_id,
+    module.checkrr.proxy_provider_id
   ]
 }
 
