@@ -113,7 +113,7 @@ spec:
         type: secret
         name: checkrr-config
         globalMounts:
-          - path: /etc/checkrr.yaml
+          - path: /checkrr.yaml
             subPath: checkrr.yaml
             readOnly: true
       media:
