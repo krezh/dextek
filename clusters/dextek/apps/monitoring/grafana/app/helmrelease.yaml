@@ -178,6 +178,10 @@ spec:
           gnetId: 14837
           revision: 2
           datasource: Prometheus
+        opnsense-exporter:
+          url: https://raw.githubusercontent.com/AthennaMind/opnsense-exporter/main/deploy/grafana/dashboard-v1.json
+          datasource:
+            - { name: DS_PROMETHEUS-K0, value: Prometheus }
       ceph:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
