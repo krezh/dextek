@@ -79,6 +79,12 @@ spec:
               - --root=/config/Library/Application Support/Plex Media Server/Plug-ins/PhoenixAdult.git
               - --link=/config/Library/Application Support/Plex Media Server/Plug-ins/PhoenixAdult.bundle
               - --period=12h
+            resources:
+              requests:
+                cpu: 5m
+                memory: 50Mi
+              limits:
+                memory: 200Mi
     service:
       app:
         controller: app
