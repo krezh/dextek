@@ -54,12 +54,12 @@ spec:
               PUBLIC: 1
               WORLD: "Valhalla"
               TYPE: "BepInEx"
-              MODS: |
-                Advize-PlantEasily-2.0.3
-                Advize-PlantEverything-1.19.0
-                ValheimModding-Jotunn-2.24.3
-                ValheimModding-HookGenPatcher-0.0.4
-                Numenos-InfinityTools-1.0.0
+              # MODS: |
+              #   Advize-PlantEasily-2.0.3
+              #   Advize-PlantEverything-1.19.0
+              #   ValheimModding-Jotunn-2.24.3
+              #   ValheimModding-HookGenPatcher-0.0.4
+              #   Numenos-InfinityTools-1.0.0
             resources:
               requests:
                 cpu: 441m
