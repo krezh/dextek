@@ -32,6 +32,8 @@ spec:
             runAsUser: 111
             runAsGroup: 1000
             fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [44]
         containers:
           app:
             image:
