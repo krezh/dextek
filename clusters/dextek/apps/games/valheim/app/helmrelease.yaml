@@ -50,10 +50,13 @@ spec:
             env:
               PUID: 111
               PGID: 1000
-              NAME: "Valhalla"
+              NAME: Valhalla
               PUBLIC: 1
-              WORLD: "Valhalla"
-              TYPE: "BepInEx"
+              WORLD: Valhalla
+              PRESET: normal
+              ADDRESS: 127.0.0.1:2457
+              HTTP_PORT: 8080
+              TYPE: BepInEx
               # MODS: |
               #   Advize-PlantEasily-2.0.3
               #   Advize-PlantEverything-1.19.0
@@ -76,11 +79,11 @@ spec:
           coredns.io/hostname: valheim-lb
         ports:
           http:
-            port: 80
+            port: 8080
           game:
             port: 2456
             protocol: UDP
-          auth:
+          query:
             port: 2457
             protocol: UDP
           voip:
