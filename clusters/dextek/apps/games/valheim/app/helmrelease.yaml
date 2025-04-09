@@ -58,6 +58,7 @@ spec:
               ADDRESS: 127.0.0.1:2457
               HTTP_PORT: 8080
               TYPE: BepInEx
+              # https://thunderstore.io/c/valheim/
               # MODS: |
               #   Advize-PlantEasily-2.0.3
               #   Advize-PlantEverything-1.19.0
