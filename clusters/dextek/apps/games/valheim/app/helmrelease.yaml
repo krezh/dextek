@@ -1,0 +1,92 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: valheim
+  namespace: games
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      app:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mbround18/valheim
+              tag: 3.1.0@sha256:70bd4da591cd50290454a9cc1511e640700c2e2f82ea4d5a8b2ee44629988936
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            envFrom:
+              - secretRef:
+                  name: valheim-secret
+            env:
+              PUID: 1000
+              PGID: 1000
+              NAME: "Valhalla"
+              PUBLIC: 1
+              WORLD: "Valhalla"
+              TYPE: "BepInEx"
+              MODS: |
+                Advize-PlantEasily-2.0.3
+                Advize-PlantEverything-1.19.0
+                ValheimModding-Jotunn-2.24.3
+                ValheimModding-HookGenPatcher-0.0.4
+                Numenos-InfinityTools-1.0.0
+            resources:
+              requests:
+                cpu: 441m
+                memory: 2539M
+              limits:
+                memory: 5120M
+    service:
+      app:
+        controller: app
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        annotations:
+          coredns.io/hostname: valheim-lb
+        ports:
+          http:
+            port: 80
+          game:
+            port: 2456
+            protocol: UDP
+          auth:
+            port: 2457
+            protocol: UDP
+          voip:
+            port: 2458
+            protocol: UDP
+    persistence:
+      data:
+        existingClaim: ${VOLSYNC_CLAIM}
+        globalMounts:
+          - path: /home/steam/.config/unity3d/IronGate/Valheim/
+          - path: /home/steam/valheim/
