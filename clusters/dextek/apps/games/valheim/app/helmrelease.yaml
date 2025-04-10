@@ -50,6 +50,9 @@ spec:
               PRESET: normal
               ADDRESS: 127.0.0.1:2457
               HTTP_PORT: &httpPort 8080
+              AUTO_UPDATE: 1
+              AUTO_UPDATE_SCHEDULE: "0 1 * * *"
+              AUTO_UPDATE_PAUSE_WITH_PLAYERS: 1
               TYPE: BepInEx
               # https://thunderstore.io/c/valheim/
               MODS: |
