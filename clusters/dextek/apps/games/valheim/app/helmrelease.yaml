@@ -72,7 +72,7 @@ spec:
                     path: /status
                     port: *httpPort
                   initialDelaySeconds: 10
-                  periodSeconds: 10
+                  periodSeconds: 15
                   timeoutSeconds: 2
                   failureThreshold: 3
               readiness: *probes
