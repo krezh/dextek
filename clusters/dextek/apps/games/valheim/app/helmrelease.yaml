@@ -63,6 +63,7 @@ spec:
                 ValheimModding-HookGenPatcher-0.0.4
                 Numenos-InfinityTools-1.0.0
                 TastyChickenLegs-AutomaticFuel-1.4.5
+                RandyKnapp-EquipmentAndQuickSlots-2.1.14
             probes:
               liveness: &probes
                 enabled: true
