@@ -55,17 +55,17 @@ spec:
               AUTO_UPDATE_PAUSE_WITH_PLAYERS: 1
               TYPE: Vanilla
               # https://thunderstore.io/c/valheim/
-              MODS: |
-                denikson-BepInExPack_Valheim-5.4.2202
-                Azumatt-Official_BepInEx_ConfigurationManager-18.4.0
-                OdinPlus-TeleportEverything-2.9.0
-                Advize-PlantEasily-2.0.3
-                Advize-PlantEverything-1.19.0
-                ValheimModding-Jotunn-2.24.3
-                ValheimModding-HookGenPatcher-0.0.4
-                Numenos-InfinityTools-1.0.0
-                TastyChickenLegs-AutomaticFuel-1.4.5
-                RandyKnapp-EquipmentAndQuickSlots-2.1.14
+              # MODS: |
+              #   denikson-BepInExPack_Valheim-5.4.2202
+              #   Azumatt-Official_BepInEx_ConfigurationManager-18.4.0
+              #   OdinPlus-TeleportEverything-2.9.0
+              #   Advize-PlantEasily-2.0.3
+              #   Advize-PlantEverything-1.19.0
+              #   ValheimModding-Jotunn-2.24.3
+              #   ValheimModding-HookGenPatcher-0.0.4
+              #   Numenos-InfinityTools-1.0.0
+              #   TastyChickenLegs-AutomaticFuel-1.4.5
+              #   RandyKnapp-EquipmentAndQuickSlots-2.1.14
             probes:
               liveness: &probes
                 enabled: true
