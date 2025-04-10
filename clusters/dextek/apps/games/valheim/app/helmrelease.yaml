@@ -38,13 +38,6 @@ spec:
             image:
               repository: ghcr.io/mbround18/valheim
               tag: 3.1.0@sha256:70bd4da591cd50290454a9cc1511e640700c2e2f82ea4d5a8b2ee44629988936
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
             envFrom:
               - secretRef:
                   name: valheim-secret
@@ -56,7 +49,7 @@ spec:
               WORLD: Valhalla
               PRESET: normal
               ADDRESS: 127.0.0.1:2457
-              HTTP_PORT: 8080
+              HTTP_PORT: &httpPort 8080
               TYPE: BepInEx
               # https://thunderstore.io/c/valheim/
               # MODS: |
@@ -65,6 +58,24 @@ spec:
               #   ValheimModding-Jotunn-2.24.3
               #   ValheimModding-HookGenPatcher-0.0.4
               #   Numenos-InfinityTools-1.0.0
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /status
+                    port: *httpPort
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
             resources:
               requests:
                 cpu: 441m
@@ -80,7 +91,7 @@ spec:
           coredns.io/hostname: valheim-lb
         ports:
           http:
-            port: 8080
+            port: *httpPort
           game:
             port: 2456
             protocol: UDP
