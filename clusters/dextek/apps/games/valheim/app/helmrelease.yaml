@@ -57,6 +57,8 @@ spec:
               # https://thunderstore.io/c/valheim/
               MODS: |
                 denikson-BepInExPack_Valheim-5.4.2202
+                Azumatt-Official_BepInEx_ConfigurationManager-18.4.0
+                OdinPlus-TeleportEverything-2.9.0
                 Advize-PlantEasily-2.0.3
                 Advize-PlantEverything-1.19.0
                 ValheimModding-Jotunn-2.24.3
