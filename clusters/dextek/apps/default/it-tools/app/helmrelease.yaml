@@ -30,7 +30,7 @@ spec:
         containers:
           it-tools:
             image:
-              repository: ghcr.io/bjw-s-labs/it-tools
+              repository: ghcr.io/home-operations/it-tools
               tag: 2024.10.22
             probes:
               liveness:
