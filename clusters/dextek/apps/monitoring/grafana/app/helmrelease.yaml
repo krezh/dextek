@@ -182,6 +182,11 @@ spec:
           url: https://raw.githubusercontent.com/AthennaMind/opnsense-exporter/main/deploy/grafana/dashboard-v1.json
           datasource:
             - { name: DS_PROMETHEUS-K0, value: Prometheus }
+        kubernetes-pvc-stats:
+          # renovate: depName="Kubernetes PVC Stats"
+          gnetId: 23233
+          revision: 1
+          datasource: Prometheus
       ceph:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
