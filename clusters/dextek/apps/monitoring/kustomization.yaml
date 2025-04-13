@@ -7,7 +7,6 @@ resources:
   - ./namespace.yaml
   - ./grafana
   - ./kube-prometheus-stack
-  - ./vector
   - ./loki
   - ./nut-exporter
   - ./smartctl-exporter
