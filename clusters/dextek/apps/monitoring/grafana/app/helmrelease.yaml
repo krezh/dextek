@@ -185,7 +185,7 @@ spec:
         kubernetes-pvc-stats:
           # renovate: depName="Kubernetes PVC Stats"
           gnetId: 23233
-          revision: 1
+          revision: 2
           datasource: Prometheus
       ceph:
         ceph-cluster:
