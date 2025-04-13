@@ -9,6 +9,7 @@ spec:
   dependsOn:
     - name: kube-prometheus-stack
   path: ./clusters/dextek/apps/monitoring/alloy/app
+  targetNamespace: monitoring
   prune: true
   sourceRef:
     kind: GitRepository
