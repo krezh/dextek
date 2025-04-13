@@ -19,6 +19,7 @@ resources:
   - ./mikrotik-exporter
   - ./headlamp
   - ./opnsense-exporter
+  - ./alloy
 transformers:
   - |-
     apiVersion: builtin
