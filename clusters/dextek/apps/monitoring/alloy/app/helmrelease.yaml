@@ -42,7 +42,7 @@ spec:
         gethomepage.dev/instance: "krezh"
         gethomepage.dev/group: "Monitoring"
         gethomepage.dev/icon: "alloy.png"
-      path: /graph
+      path: /
       pathType: Prefix
       faroPort: 12345
       hosts:
