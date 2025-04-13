@@ -21,7 +21,6 @@ resources:
   - ./system-upgrade
   - ./intel-device-plugin
   - ./spegel
-  - ./fstrim
   - ./irqbalance
 transformers:
   - |-
