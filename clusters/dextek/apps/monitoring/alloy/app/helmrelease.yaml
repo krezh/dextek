@@ -31,19 +31,19 @@ spec:
         create: false
         name: alloy-configmap
         key: config.alloy
-      ingress:
-        enabled: true
-        ingressClassName: nginx-internal
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Alloy"
-          gethomepage.dev/instance: "krezh"
-          gethomepage.dev/group: "Monitoring"
-          gethomepage.dev/icon: "alloy.png"
-        path: /
-        pathType: Prefix
-        hosts:
-          - &host alloy.talos.plexuz.xyz
-        tls:
-          - hosts:
-              - *host
+    ingress:
+      enabled: true
+      ingressClassName: nginx-internal
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Alloy"
+        gethomepage.dev/instance: "krezh"
+        gethomepage.dev/group: "Monitoring"
+        gethomepage.dev/icon: "alloy.png"
+      path: /
+      pathType: Prefix
+      hosts:
+        - &host alloy.talos.plexuz.xyz
+      tls:
+        - hosts:
+            - *host
