@@ -42,8 +42,9 @@ spec:
         gethomepage.dev/instance: "krezh"
         gethomepage.dev/group: "Monitoring"
         gethomepage.dev/icon: "alloy.png"
-      path: /
+      path: /graph
       pathType: Prefix
+      faroPort: 12345
       hosts:
         - &host alloy.talos.plexuz.xyz
       tls:
