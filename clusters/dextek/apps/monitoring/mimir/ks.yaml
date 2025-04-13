@@ -6,6 +6,8 @@ metadata:
   name: &app mimir
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: rook-ceph-cluster
   targetNamespace: monitoring
   commonMetadata:
     labels:
