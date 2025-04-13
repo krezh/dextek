@@ -38,7 +38,6 @@ spec:
           backend: s3
           s3:
             insecure: true
-
         limits:
           max_label_names_per_series: 120
           max_global_series_per_user: 12000000
