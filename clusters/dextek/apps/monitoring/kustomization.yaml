@@ -16,7 +16,6 @@ resources:
   - ./node-problem-detector
   - ./kromgo
   - ./mikrotik-exporter
-  - ./mimir
   - ./headlamp
   - ./opnsense-exporter
   - ./alloy
