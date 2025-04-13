@@ -16,9 +16,7 @@ resources:
   - ./node-problem-detector
   - ./kromgo
   - ./mikrotik-exporter
-  - ./prometheus-operator-crds
   - ./mimir
-  - ../../../shared/templates/flux
   - ./headlamp
   - ./opnsense-exporter
   - ./alloy
