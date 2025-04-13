@@ -31,6 +31,12 @@ spec:
         create: false
         name: alloy-configmap
         key: config.alloy
+      extraPorts:
+        - name: "faro"
+          port: 12347
+          targetPort: 12347
+          protocol: "TCP"
+          appProtocol: "h2c"
     ingress:
       enabled: true
       ingressClassName: nginx-internal
