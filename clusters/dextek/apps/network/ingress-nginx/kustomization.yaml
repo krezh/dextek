@@ -12,5 +12,5 @@ transformers:
     kind: NamespaceTransformer
     metadata:
       name: not-used
-      namespace: ingress-nginx
+      namespace: network
     unsetOnly: true
