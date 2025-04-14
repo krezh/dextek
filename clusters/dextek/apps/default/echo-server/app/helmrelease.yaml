@@ -119,7 +119,7 @@ spec:
           - hosts:
               - *host
     route:
-      internal:
+      external:
         hostnames: ["echo.plexuz.xyz"]
         parentRefs:
           - name: gateway-external
@@ -129,7 +129,7 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-      external:
+      internal:
         hostnames: ["echo.talos.plexuz.xyz"]
         parentRefs:
           - name: gateway-internal

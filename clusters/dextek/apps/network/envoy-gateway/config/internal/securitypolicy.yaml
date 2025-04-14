@@ -4,6 +4,7 @@ apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
   name: internal-secure
+  namespace: network
 spec:
   extAuth:
     failOpen: false
@@ -14,6 +15,7 @@ spec:
       - accept
       - cookie
       - x-authentik-*
+      - set-cookie
     http:
       backendRefs:
         - group: ""
@@ -21,7 +23,7 @@ spec:
           name: ak-outpost-internal
           namespace: auth
           port: 9000
-      path: /outpost.goauthentik.io/auth/envoy/
+      path: /outpost.goauthentik.io/auth/envoy
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
