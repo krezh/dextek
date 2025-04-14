@@ -8,6 +8,7 @@ resources:
   - ./ingress-nginx
   - ./external-dns
   - ./envoy-gateway
+  - ./k8s-gateway
 transformers:
   - |-
     apiVersion: builtin
