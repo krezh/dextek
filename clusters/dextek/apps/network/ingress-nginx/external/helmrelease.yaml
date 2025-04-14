@@ -68,7 +68,7 @@ spec:
         use-forwarded-headers: true
         server-snippet: add_header X-Robots-Tag "noindex";
       extraArgs:
-        default-ssl-certificate: ingress-nginx/plexuz-default-tls
+        default-ssl-certificate: network/plexuz-default-tls
         publish-status-address: *hostname
       extraEnvs:
         - name: TZ
