@@ -127,35 +127,6 @@ spec:
         tls:
           - hosts:
               - *HOST
-    route:
-      app:
-        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: 80
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /
-      api:
-        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: 80
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /api
     persistence:
       config:
         enabled: true
