@@ -3,8 +3,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ingress-nginx-external
-  namespace: ingress-nginx
+  name: ingress-nginx-internal
+  namespace: network
 spec:
   interval: 30m
   timeout: 15m
@@ -21,41 +21,34 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
-    fullnameOverride: nginx-external
+    fullnameOverride: nginx-internal
     controller:
       service:
         annotations:
-          coredns.io/hostname: ingress-public
-          external-dns.alpha.kubernetes.io/hostname: &hostname ingress.plexuz.xyz
+          coredns.io/hostname: ingress-internal
         externalTrafficPolicy: Local
       ingressClassResource:
-        name: nginx-external
+        name: nginx-internal
         default: true
-        controllerValue: k8s.io/nginx-external
-      publishService:
-        enabled: false
+        controllerValue: k8s.io/nginx-internal
       admissionWebhooks:
         objectSelector:
           matchExpressions:
             - key: ingress-class
               operator: In
-              values: ["nginx-external"]
+              values: ["nginx-internal"]
       config:
         allow-snippet-annotations: true
         annotations-risk-level: Critical
-        block-user-agents: "AdsBot-Google,Amazonbot,anthropic-ai,Applebot-Extended,Bytespider,CCBot,ChatGPT-User,ClaudeBot,Claude-Web,cohere-ai,Diffbot,FacebookBot,FriendlyCrawler,Google-Extended,GoogleOther,GPTBot,img2dataset,omgili,omgilibot,peer39_crawler,peer39_crawler/1.0,PerplexityBot,YouBot," # taken from https://github.com/ai-robots-txt/ai.robots.txt
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
-        enable-brotli: true
-        enable-ocsp: true
-        enable-real-ip: true
-        force-ssl-redirect: true
-        hide-headers: Server,X-Powered-By
-        hsts-max-age: 31449600
+        enable-brotli: "true"
+        enable-real-ip: "true"
+        force-ssl-redirect: "true"
         keep-alive-requests: 10000
         keep-alive: 120
-        log-format-escape-json: true
+        log-format-escape-json: "true"
         log-format-upstream: >
           {"time": "$time_iso8601", "remote_addr": "$proxy_protocol_addr", "x_forwarded_for": "$proxy_add_x_forwarded_for",
           "request_id": "$req_id", "remote_user": "$remote_user", "bytes_sent": $bytes_sent, "request_time": $request_time,
@@ -65,11 +58,10 @@ spec:
         proxy-body-size: 0
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
-        use-forwarded-headers: true
+        use-geoip2: true
         server-snippet: add_header X-Robots-Tag "noindex";
       extraArgs:
         default-ssl-certificate: ingress-nginx/plexuz-default-tls
-        publish-status-address: *hostname
       extraEnvs:
         - name: TZ
           value: Europe/Stockholm
@@ -78,6 +70,6 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: ingress-nginx
+          namespace: network
           namespaceSelector:
             any: true
