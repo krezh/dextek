@@ -4,8 +4,6 @@ metadata:
   name: ak-outpost-internal
   namespace: auth
 spec:
-  hostnames:
-    - echo.talos.plexuz.xyz
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
