@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.networking.k8s.io/referencegrant_v1beta1.json
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-networking-security-policy-auth
+spec:
+  from:
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: network
+  to:
+    - group: ""
+      kind: Service
+      name: ak-outpost-internal
+    - group: ""
+      kind: Service
+      name: ak-outpost-external

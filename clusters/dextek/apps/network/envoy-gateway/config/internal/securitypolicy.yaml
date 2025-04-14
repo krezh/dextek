@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
@@ -20,7 +21,7 @@ spec:
           name: ak-outpost-internal
           namespace: auth
           port: 9000
-      path: /outpost.goauthentik.io/auth/envoy
+      path: /outpost.goauthentik.io/auth/envoy/
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
