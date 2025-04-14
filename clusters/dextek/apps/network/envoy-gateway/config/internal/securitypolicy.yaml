@@ -15,7 +15,8 @@ spec:
       - accept
       - cookie
       - x-authentik-*
-      - set-cookie
+      - Set-Cookie
+      - X-Forwarded-Host
     http:
       backendRefs:
         - group: ""
