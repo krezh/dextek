@@ -61,7 +61,7 @@ spec:
         use-geoip2: true
         server-snippet: add_header X-Robots-Tag "noindex";
       extraArgs:
-        default-ssl-certificate: ingress-nginx/plexuz-default-tls
+        default-ssl-certificate: network/plexuz-default-tls
       extraEnvs:
         - name: TZ
           value: Europe/Stockholm
