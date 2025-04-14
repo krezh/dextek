@@ -6,7 +6,7 @@ metadata:
   name: external-dns
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/apps/external-dns/app
+  path: ./clusters/dextek/apps/network/external-dns/app
   prune: true
   sourceRef:
     kind: GitRepository
