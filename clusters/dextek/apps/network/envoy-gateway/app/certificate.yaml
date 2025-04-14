@@ -3,10 +3,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: plexuz-default-cert
+  name: default-cert
   namespace: network
 spec:
-  secretName: plexuz-default-tls
+  secretName: default-tls
   dnsNames:
     - "plexuz.xyz"
     - "*.plexuz.xyz"
