@@ -27,17 +27,14 @@ spec:
       pullPolicy: IfNotPresent
     # Override the default `serviceName.namespace` domain apex
     apex: ""
+    domain: talos.plexuz.xyz
     debug:
       enabled: false
     dnsChallenge:
       domain: dns01.clouddns.com
       enabled: true
-    # Delegated domain
-    domain: talos.plexuz.xyz
-    # Enabled fallthrough for k8s_gateway
     fallthrough:
       enabled: false
-      zones: []
     priorityClassName: system-cluster-critical
     replicaCount: 2
     secure: true
@@ -51,8 +48,4 @@ spec:
       create: true
     # TTL for non-apex responses (in seconds)
     ttl: 1
-    watchedResources:
-      - Ingress
-      - Service
-      - HTTPRoute
-    zoneFile: {}
+    watchedResources: [Ingress, Service, HTTPRoute]
