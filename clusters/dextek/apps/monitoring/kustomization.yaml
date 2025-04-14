@@ -13,7 +13,6 @@ resources:
   - ./blackbox-exporter
   - ./unpoller
   - ./graphite-exporter
-  - ./node-problem-detector
   - ./kromgo
   - ./mikrotik-exporter
   - ./headlamp
