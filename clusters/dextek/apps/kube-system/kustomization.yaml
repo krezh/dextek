@@ -7,7 +7,6 @@ resources:
   - ../../../shared/templates/flux
   - ./cilium
   - ./coredns
-  - ./k8s-gateway
   - ./metrics-server
   - ./reloader
   - ./snapshot-controller
