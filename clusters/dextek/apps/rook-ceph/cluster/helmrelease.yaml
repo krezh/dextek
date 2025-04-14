@@ -32,7 +32,7 @@ spec:
       - name: ceph-blockpool
         spec:
           failureDomain: host
-          enableRBDStats: true
+          enableRBDStats: false
           replicated:
             size: 3
             targetSizeRatio: 1
