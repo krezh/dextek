@@ -30,7 +30,7 @@ spec:
         gateway:
           controllerName: gateway.envoyproxy.io/gatewayclass-controller
         backendTlsConfig:
-          clientCertificateRef: default-cert
+          clientCertificateRef: default-tls
       logging:
         level:
           default: debug
