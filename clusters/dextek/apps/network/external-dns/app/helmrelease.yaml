@@ -40,9 +40,10 @@ spec:
       - --crd-source-kind=DNSEndpoint
       - --ignore-ingress-tls-spec
       - --ingress-class=nginx-external
+      - --gateway-name=gateway-external
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["crd", "ingress"]
+    sources: ["crd", "ingress", gateway-httproute]
     txtPrefix: k8s.
     txtOwnerId: talos-plexuz
     domainFilters: ["plexuz.xyz"]
