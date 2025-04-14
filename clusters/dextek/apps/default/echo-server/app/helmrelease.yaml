@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app echo-server
+  namespace: default
 spec:
   interval: 30m
   chart:
@@ -117,3 +118,24 @@ spec:
         tls:
           - hosts:
               - *host
+    route:
+      internal:
+        hostnames: ["echo.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+      external:
+        hostnames: ["echo.talos.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
