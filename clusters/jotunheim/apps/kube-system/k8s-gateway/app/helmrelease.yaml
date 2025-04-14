@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -7,8 +9,8 @@ spec:
   interval: 30m
   chart:
     spec:
-      version: 2.4.0
       chart: k8s-gateway
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: k8s-gateway
@@ -18,19 +20,21 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
-    apex: ""
+    image:
+      registry: ghcr.io
+      repository: k8s-gateway/k8s_gateway
+      tag: 1.1.0
+      pullPolicy: IfNotPresent
+    domain: int.plexuz.xyz
     debug:
       enabled: false
     dnsChallenge:
       domain: dns01.clouddns.com
       enabled: true
-    domain: int.plexuz.xyz
     fallthrough:
       enabled: false
-      zones: []
     priorityClassName: system-cluster-critical
     replicaCount: 1
-    secondary: ""
     secure: true
     service:
       annotations: {}
@@ -39,11 +43,6 @@ spec:
       port: 53
       type: LoadBalancer
     serviceAccount:
-      annotations: {}
       create: true
-      name: ""
-    ttl: 300
-    watchedResources:
-      - Ingress
-      - Service
-    zoneFile: {}
+    ttl: 1
+    watchedResources: [Ingress, Service]
