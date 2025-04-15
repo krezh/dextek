@@ -150,7 +150,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: *port
+                port: 80
       api:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         parentRefs:
@@ -160,7 +160,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: *port
+                port: 80
           - matches:
               - path:
                   type: PathPrefix
