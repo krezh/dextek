@@ -21,6 +21,7 @@ data:
     ---
     mode: cluster
     ingress: true
+    gateway: true
   services.yaml: |
     ---
     - Servers:
