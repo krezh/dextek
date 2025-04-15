@@ -163,7 +163,7 @@ spec:
                 port: *port
           - matches:
               - path:
-                  type: Prefix
+                  type: PathPrefix
                   value: /api
     persistence:
       config:
