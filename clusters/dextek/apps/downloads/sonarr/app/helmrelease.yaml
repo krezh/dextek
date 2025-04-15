@@ -127,6 +127,44 @@ spec:
         tls:
           - hosts:
               - *HOST
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Sonarr"
+          gethomepage.dev/instance: ""
+          gethomepage.dev/group: "Media"
+          gethomepage.dev/icon: "{{ .Release.Name }}.png"
+          gethomepage.dev/widget.url: "http://sonarr.downloads.svc.cluster.local"
+          gethomepage.dev/widget.type: "{{ .Release.Name }}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_APIKEY}}` }}"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+      api:
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /api
     persistence:
       config:
         enabled: true
