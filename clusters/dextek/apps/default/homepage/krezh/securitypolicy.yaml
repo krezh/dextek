@@ -3,8 +3,7 @@
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
-  name: external-secure
-  namespace: network
+  name: homepage-krezh
 spec:
   extAuth:
     failOpen: false
@@ -27,5 +26,5 @@ spec:
       path: /outpost.goauthentik.io/auth/envoy
   targetRefs:
     - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: gateway-external
+      kind: HTTPRoute
+      name: homepage-krezh
