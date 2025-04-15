@@ -125,7 +125,48 @@ spec:
         tls:
           - hosts:
               - *host
-
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "{{ .Release.Name | title }}"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Downloads"
+          gethomepage.dev/icon: "{{ .Release.Name }}.png"
+          gethomepage.dev/widget.url: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local"
+          gethomepage.dev/widget.type: "{{ .Release.Name }}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_{{ .Release.Name | upper }}_APIKEY}}` }}"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 80
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+      api:
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 80
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /api
     persistence:
       config:
         enabled: true
