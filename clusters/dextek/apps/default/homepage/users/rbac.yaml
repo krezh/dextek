@@ -25,6 +25,13 @@ rules:
       - get
       - list
   - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - httproutes
+    verbs:
+      - get
+      - list
+  - apiGroups:
       - traefik.containo.us
       - traefik.io
     resources:
