@@ -5,3 +5,4 @@ resources:
   - ../../../../../shared/templates/volsync
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./securitypolicy.yaml
