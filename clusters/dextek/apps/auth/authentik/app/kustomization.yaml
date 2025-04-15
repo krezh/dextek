@@ -6,4 +6,5 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./referencegrant.yaml
+  - ./httproute-outpost.yaml
   - ./httproute.yaml

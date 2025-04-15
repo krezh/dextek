@@ -1,24 +1,26 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: ak-outpost-internal
+  name: authentik-server
   namespace: auth
 spec:
+  hostnames:
+    - sso.plexuz.xyz
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
-      name: gateway-internal
+      name: gateway-external
       namespace: network
       sectionName: https
   rules:
     - backendRefs:
         - group: ""
           kind: Service
-          name: ak-outpost-internal
-          namespace: auth
-          port: 9000
-          weight: 1
+          name: ak-outpost-external
+          port: 80
       matches:
         - path:
             type: PathPrefix
-            value: /outpost.goauthentik.io
+            value: /
