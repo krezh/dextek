@@ -4,11 +4,18 @@ apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
   name: allow-networking-security-policy-auth
+  namespace: auth
 spec:
   from:
     - group: gateway.envoyproxy.io
       kind: SecurityPolicy
       namespace: network
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: default
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: downloads
   to:
     - group: ""
       kind: Service

@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - ./envoyproxy.yaml
   - ./gateway.yaml
-  - ./securitypolicy.yaml
