@@ -154,7 +154,7 @@ spec:
                   type: PathPrefix
                   value: /
       api:
-        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        hostnames: ["sab.plexuz.xyz"]
         parentRefs:
           - name: gateway-external
             namespace: network
