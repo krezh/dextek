@@ -6,10 +6,14 @@ machine:
       model: ${disk_model}
     wipe: false
     extraKernelArgs:
-      - cpufreq.default_governor=ondemand
-      - talos.platform=metal
-      - intel_iommu=on
-      - iommu=pt
+      - apparmor=0 # Less security, faster puter
+      - init_on_alloc=0 # Less security, faster puter
+      - init_on_free=0 # Less security, faster puter
+      - intel_iommu=on # PCI Passthrough
+      - iommu=pt # PCI Passthrough
+      - mitigations=off # Less security, faster puter
+      - security=none # Less security, faster puter
+      - talos.auditd.disabled=1 # Less security, faster puter
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
@@ -17,6 +21,7 @@ machine:
     net.core.rmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
     net.core.wmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
     net.ipv4.tcp_congestion_control: bbr # 10Gb/s
+    net.ipv4.tcp_fastopen: 3 # Send and accept data in the opening SYN packet
     net.ipv4.tcp_mtu_probing: 1 # 10Gb/s | Jumbo frames
     net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
     net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
@@ -103,7 +108,7 @@ machine:
     kubernetesTalosAPIAccess:
       enabled: true
       allowedRoles: ["os:admin"]
-      allowedKubernetesNamespaces: ["actions-runner-system", "kube-system"]
+      allowedKubernetesNamespaces: ["kube-system"]
 
 cluster:
   clusterName: ${cluster_name}
