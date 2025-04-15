@@ -127,7 +127,7 @@ spec:
               - *host
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        hostnames: ["sab.plexuz.xyz"]
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "{{ .Release.Name | title }}"
