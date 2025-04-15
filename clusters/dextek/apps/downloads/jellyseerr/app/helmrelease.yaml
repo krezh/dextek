@@ -103,9 +103,7 @@ spec:
           gethomepage.dev/instance: ""
           gethomepage.dev/group: "Downloads"
           gethomepage.dev/icon: "{{ .Release.Name }}.png"
-          gethomepage.dev/widget.url:
-            "http://{{ .Release.Name }}.{{ .Release.Namespace
-            }}.svc.cluster.local"
+          gethomepage.dev/widget.url: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local"
           gethomepage.dev/widget.type: "{{ .Release.Name }}"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_{{ .Release.Name | upper }}_APIKEY}}` }}"
           gethomepage.dev/pod-selector: >-
