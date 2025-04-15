@@ -93,19 +93,6 @@ spec:
         tls:
           - hosts:
               - *host
-    route:
-      app:
-        hostnames:
-          - *host
-        parentRefs:
-          - name: gateway-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-
     persistence:
       config:
         enabled: true
