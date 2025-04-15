@@ -121,6 +121,12 @@ spec:
     route:
       external:
         hostnames: ["echo.plexuz.xyz"]
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Echo"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Tools"
+          gethomepage.dev/icon: "echo-server.png"
         parentRefs:
           - name: gateway-external
             namespace: network
