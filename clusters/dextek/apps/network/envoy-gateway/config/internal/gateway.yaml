@@ -32,3 +32,12 @@ spec:
         certificateRefs:
           - kind: Secret
             name: default-tls
+    - name: tls
+      protocol: TLS
+      port: 443
+      hostname: "*.talos.plexuz.xyz"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Passthrough
