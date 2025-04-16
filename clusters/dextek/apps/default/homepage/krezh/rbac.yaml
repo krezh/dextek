@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/instance: *app
     app.kubernetes.io/name: *app
 rules:
+  # Ingress
   - apiGroups:
       - ""
     resources:
@@ -24,13 +25,16 @@ rules:
     verbs:
       - get
       - list
+  # Gateway API
   - apiGroups:
       - gateway.networking.k8s.io
     resources:
       - httproutes
+      - gateways
     verbs:
       - get
       - list
+  # Traefik
   - apiGroups:
       - traefik.containo.us
       - traefik.io
@@ -39,6 +43,7 @@ rules:
     verbs:
       - get
       - list
+  # Metrics
   - apiGroups:
       - metrics.k8s.io
     resources:
@@ -47,6 +52,7 @@ rules:
     verbs:
       - get
       - list
+  # Custom Resource Definitions
   - apiGroups:
       - apiextensions.k8s.io
     resources:
