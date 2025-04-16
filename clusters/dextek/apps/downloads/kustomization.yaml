@@ -14,7 +14,6 @@ resources:
   - ./prowlarr
   - ./whisparr
   - ./flaresolverr
-  - ./dashbrr
   - ./bazarr
   - ./maintainerr
   - ./jellyseerr
