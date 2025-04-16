@@ -43,6 +43,7 @@ spec:
             env:
               LOG_LEVEL: debug
               HOMEPAGE_ALLOWED_HOSTS: &host homepage.plexuz.xyz
+              LOG_TARGETS: stdout
             envFrom:
               - secretRef:
                   name: homepage-krezh-secret
