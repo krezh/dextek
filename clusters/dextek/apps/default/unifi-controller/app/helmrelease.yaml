@@ -79,27 +79,49 @@ spec:
             enabled: true
             port: 10001
             protocol: UDP
-    route:
+    ingress:
       app:
-        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        enabled: true
+        className: nginx-internal
         annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "{{ .Release.Name | title }}"
+          gethomepage.dev/name: "Unifi-controller"
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
           gethomepage.dev/icon: "ubiquiti.png"
-          gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/instance in (
-              {{ .Release.Name }}
-            )
-        parentRefs:
-          - name: gateway-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+        hosts:
+          - host: &host "unifi.talos.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    # route:
+    #   app:
+    #     hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+    #     annotations:
+    #       gethomepage.dev/enabled: "true"
+    #       gethomepage.dev/name: "{{ .Release.Name | title }}"
+    #       gethomepage.dev/instance: "krezh"
+    #       gethomepage.dev/group: "Tools"
+    #       gethomepage.dev/icon: "ubiquiti.png"
+    #       gethomepage.dev/pod-selector: >-
+    #         app.kubernetes.io/instance in (
+    #           {{ .Release.Name }}
+    #         )
+    #     parentRefs:
+    #       - name: gateway-external
+    #         namespace: network
+    #         sectionName: https
+    #     rules:
+    #       - backendRefs:
+    #           - name: *app
+    #             port: *port
     persistence:
       config:
         enabled: true
