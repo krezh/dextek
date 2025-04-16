@@ -45,6 +45,7 @@ spec:
                   name: homepage-users-secret
             env:
               HOMEPAGE_ALLOWED_HOSTS: &host plexuz.xyz
+              LOG_TARGETS: stdout
             resources:
               requests:
                 cpu: 15m
