@@ -82,6 +82,10 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
           gethomepage.dev/icon: "echo-server.png"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
         parentRefs:
           - name: gateway-external
             namespace: network
