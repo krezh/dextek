@@ -25,12 +25,12 @@ spec:
     keepHistory: false
   values:
     controllers:
-      *app :
+      app:
         type: deployment
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          *app :
+          app:
             image:
               repository: ghcr.io/open-webui/open-webui
               tag: v0.6.5-ollama
@@ -50,29 +50,32 @@ spec:
               limits:
                 memory: 459Mi
     service:
-      *app :
+      app:
         controller: *app
         ports:
           http:
             port: &port 8080
-    ingress:
-      external:
-        enabled: true
-        className: nginx-internal
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
         annotations:
-          nginx.org/websocket-services: *app
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Ollama"
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
           gethomepage.dev/icon: "ollama.png"
-        hosts:
-          - host: &host openweb.talos.plexuz.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: *app
-                  port: *port
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       data:
         enabled: true

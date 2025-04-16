@@ -67,7 +67,7 @@ spec:
         controller: app
         ports:
           http:
-            port: 80
+            port: &port 80
           metrics:
             port: 8080
     serviceMonitor:
@@ -79,28 +79,27 @@ spec:
             scheme: http
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
+    route:
       app:
-        enabled: true
-        className: nginx-external
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         annotations:
-          nginx.ingress.kubernetes.io/proxy-body-size: "0"
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "NTFY"
+          gethomepage.dev/name: "{{ .Release.Name | upper }}"
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
-          gethomepage.dev/icon: "ntfy.png"
-        hosts:
-          - host: &host "ntfy.plexuz.xyz"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+          gethomepage.dev/icon: "{{ .Release.Name }}.png"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         enabled: true

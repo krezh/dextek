@@ -47,25 +47,25 @@ spec:
         controller: zipline
         ports:
           http:
-            port: 3000
-    ingress:
+            port: &port 3000
+    route:
       app:
-        enabled: true
-        className: nginx-external
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Zipline"
+          gethomepage.dev/name: "{{ .Release.Name | title }}"
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
-          gethomepage.dev/icon: "zipline.png"
-        hosts:
-          - host: &host zipline.plexuz.xyz
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+          gethomepage.dev/icon: "{{ .Release.Name }}.png"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
