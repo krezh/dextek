@@ -45,6 +45,7 @@ data:
   settings.yaml: |
     ---
     instanceName: users
+    disableUpdateCheck: true
     cardBlur: sm
     color: zinc
     fiveColumns: true
