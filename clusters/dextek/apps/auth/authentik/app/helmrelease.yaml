@@ -46,7 +46,7 @@ spec:
         serviceMonitor:
           enabled: true
       ingress:
-        enabled: true
+        enabled: false
         ingressClassName: nginx-external
         annotations:
           gethomepage.dev/enabled: "true"

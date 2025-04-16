@@ -128,30 +128,6 @@ spec:
           http:
             port: 80
             targetPort: *port
-    ingress:
-      qbittorrent:
-        enabled: true
-        className: nginx-external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Qbittorrent"
-          gethomepage.dev/instance: "krezh"
-          gethomepage.dev/group: "Downloads"
-          gethomepage.dev/icon: "qbittorrent.png"
-          gethomepage.dev/widget.url: "http://qbittorrent.downloads.svc.cluster.local"
-          gethomepage.dev/widget.type: "qbittorrent"
-          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USER}}` }}"
-          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASS}}` }}"
-        hosts:
-          - host: &host qbit.plexuz.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: qbittorrent
-                  port: http
-        tls:
-          - hosts:
-              - *host
     route:
       app:
         hostnames: ["qbit.plexuz.xyz"]
