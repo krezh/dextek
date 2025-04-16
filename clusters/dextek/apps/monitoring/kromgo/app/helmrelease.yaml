@@ -85,17 +85,17 @@ spec:
             port: *port
           health:
             port: *hport
-    ingress:
-      kromgo:
-        annotations:
-        className: nginx-external
-        hosts:
-          - host: "{{ .Release.Name }}.plexuz.xyz"
-            paths:
-              - path: /
-                service:
-                  identifier: kromgo
-                  port: http
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config-file:
         type: configMap
