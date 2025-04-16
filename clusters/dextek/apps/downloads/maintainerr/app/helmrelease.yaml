@@ -60,9 +60,6 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Media"
           gethomepage.dev/icon: "{{ .Release.Name }}.png"
-          gethomepage.dev/widget.url: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local"
-          gethomepage.dev/widget.type: "{{ .Release.Name }}"
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_BAZARR_APIKEY}}` }}"
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/instance in (
               {{ .Release.Name }}
