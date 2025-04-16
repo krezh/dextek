@@ -1,0 +1,32 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: headlamp
+  namespace: monitoring
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Headlamp"
+    gethomepage.dev/instance: "krezh"
+    gethomepage.dev/group: "Monitoring"
+    gethomepage.dev/icon: "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/public/android-chrome-192x192.png"
+spec:
+  hostnames:
+    - headlamp.talos.plexuz.xyz
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: gateway-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: headlamp
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
