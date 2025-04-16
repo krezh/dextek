@@ -45,7 +45,7 @@ resource "authentik_outpost" "internal" {
     "kubernetes_service_type"        = "ClusterIP"
     "kubernetes_image_pull_secrets"  = []
     "kubernetes_ingress_class_name"  = "nginx-internal"
-    "kubernetes_disabled_components" = []
+    "kubernetes_disabled_components" = ["ingress", "traefik middleware"]
     "kubernetes_ingress_annotations" = {}
     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
   })
@@ -71,7 +71,7 @@ resource "authentik_outpost" "external" {
     "kubernetes_service_type"        = "ClusterIP"
     "kubernetes_image_pull_secrets"  = []
     "kubernetes_ingress_class_name"  = "nginx-external"
-    "kubernetes_disabled_components" = []
+    "kubernetes_disabled_components" = ["ingress", "traefik middleware"]
     "kubernetes_ingress_annotations" = {}
     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
   })
