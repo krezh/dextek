@@ -48,24 +48,25 @@ spec:
         controller: app
         ports:
           http:
-            port: 8000
-    ingress:
+            port: &port 8000
+    route:
       app:
-        enabled: true
-        className: nginx-external
+        hostnames: ["chef.plexuz.xyz"]
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Cyberchef"
-          #gethomepage.dev/instance: "krezh"
+          gethomepage.dev/name: "{{ .Release.Name | title }}"
+          gethomepage.dev/instance: ""
           gethomepage.dev/group: "Tools"
-          gethomepage.dev/icon: "cyberchef.png"
-        hosts:
-          - host: &host "chef.plexuz.xyz"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-        tls:
-          - hosts:
-              - *host
+          gethomepage.dev/icon: "{{ .Release.Name }}.png"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
