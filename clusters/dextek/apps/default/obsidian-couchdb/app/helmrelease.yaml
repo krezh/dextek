@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: obsidian-couchdb
+  name: &app obsidian-couchdb
 spec:
   interval: 30m
   chart:
@@ -52,22 +52,18 @@ spec:
         controller: app
         ports:
           http:
-            port: 5984
-    ingress:
+            port: &port 5984
+    route:
       app:
-        enabled: true
-        className: nginx-external
-        annotations:
-        hosts:
-          - host: &host obsidian-db.plexuz.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["obsidian-db.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         enabled: true
