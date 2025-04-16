@@ -71,8 +71,8 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "{{ .Release.Name | title }}"
-          gethomepage.dev/instance: ""
-          gethomepage.dev/group: "Media"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Downloads"
           gethomepage.dev/icon: "{{ .Release.Name }}.png"
           gethomepage.dev/widget.url: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local"
           gethomepage.dev/widget.type: "{{ .Release.Name }}"
