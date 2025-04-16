@@ -43,7 +43,7 @@ spec:
               repository: ghcr.io/krezh/plex
               tag: 1.41.6.9685
             env:
-              PLEX_ADVERTISE_URL: https://plex-lb.talos.plexuz.xyz:32400,https://plex.talos.plexuz.xyz:443
+              PLEX_ADVERTISE_URL: https://plex-lb.talos.plexuz.xyz:32400
             resources:
               requests:
                 cpu: 100m
@@ -77,28 +77,22 @@ spec:
         ports:
           http:
             port: &port 32400
-    route:
+    ingress:
       app:
-        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-            filters:
-              - type: RequestHeaderModifier
-                requestHeaderModifier:
-                  remove: ["Range"]
-            matches:
-              - path:
-                  type: PathPrefix
-                  value: /library/streams
-          - backendRefs:
-              - name: *app
-                port: *port
+        enabled: true
+        className: nginx-internal
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        hosts:
+          - host: &hostlocal "{{ .Release.Name }}.talos.plexuz.xyz"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+        tls:
+          - hosts:
+              - *hostlocal
     persistence:
       config:
         enabled: true
