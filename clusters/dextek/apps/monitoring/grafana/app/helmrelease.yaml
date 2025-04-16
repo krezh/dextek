@@ -196,6 +196,12 @@ spec:
           revision: 6
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        etcd:
+          # renovate: depName="etcd"
+          gnetId: 22236
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
       ceph:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
