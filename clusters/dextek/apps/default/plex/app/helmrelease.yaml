@@ -76,6 +76,7 @@ spec:
         externalTrafficPolicy: Local
         ports:
           http:
+            protocol: TCP
             port: &port 32400
     ingress:
       app:
@@ -93,6 +94,31 @@ spec:
         tls:
           - hosts:
               - *hostlocal
+    # route:
+    #   app:
+    #     hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
+    #     parentRefs:
+    #       - name: gateway-internal
+    #         namespace: network
+    #         sectionName: https
+    #     rules:
+    #       - backendRefs:
+    #           - name: *app
+    #             port: *port
+    #         filters:
+    #           - type: RequestHeaderModifier
+    #             requestHeaderModifier:
+    #               remove: ["Range"]
+    #         matches:
+    #           - path:
+    #               type: PathPrefix
+    #               value: /library/streams
+    #       - backendRefs:
+    #           - name: *app
+    #             port: *port
+    #         timeouts:
+    #           request: 0s
+    #           backendRequest: 0s
     persistence:
       config:
         enabled: true
