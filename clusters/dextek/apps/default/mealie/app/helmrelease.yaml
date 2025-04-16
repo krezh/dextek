@@ -59,27 +59,28 @@ spec:
         controller: app
         ports:
           http:
-            port: 9000
-    ingress:
+            port: &port 9000
+    route:
       app:
-        enabled: true
-        className: nginx-external
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Mealie"
-          #gethomepage.dev/instance: "krezh"
+          gethomepage.dev/name: "{{ .Release.Name | title }}"
+          gethomepage.dev/instance: ""
           gethomepage.dev/group: "Tools"
-          gethomepage.dev/icon: "mealie.png"
-        hosts:
-          - host: &host mealie.plexuz.xyz
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+          gethomepage.dev/icon: "{{ .Release.Name }}.png"
+          gethomepage.dev/pod-selector: >-
+            app.kubernetes.io/instance in (
+              {{ .Release.Name }}
+            )
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       data:

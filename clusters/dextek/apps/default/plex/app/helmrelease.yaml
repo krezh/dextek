@@ -94,23 +94,18 @@ spec:
         externalTrafficPolicy: Local
         ports:
           http:
-            port: 32400
-    ingress:
+            port: &port 32400
+    route:
       app:
-        enabled: true
-        className: nginx-internal
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        hosts:
-          - host: &hostlocal "{{ .Release.Name }}.talos.plexuz.xyz"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-        tls:
-          - hosts:
-              - *hostlocal
+        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         enabled: true
