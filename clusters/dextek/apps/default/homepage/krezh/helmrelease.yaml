@@ -105,10 +105,11 @@ spec:
             path: /app/config/settings.yaml
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
-      logs:
+      tmp:
         enabled: true
         type: emptyDir
         globalMounts:
-          - path: /app/config
+          - path: /app/config/logs
+          - path: /app/.next/server/pages
     serviceAccount:
       create: true
