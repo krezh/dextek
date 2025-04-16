@@ -11,6 +11,10 @@ metadata:
     gethomepage.dev/name: Emqx
     gethomepage.dev/group: Tools
     gethomepage.dev/app: emqx
+    gethomepage.dev/pod-selector: >-
+      app.kubernetes.io/instance in (
+        emqx
+      )
 spec:
   hostnames:
     - emqx.talos.plexuz.xyz
