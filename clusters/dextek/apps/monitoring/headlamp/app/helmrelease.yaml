@@ -60,7 +60,7 @@ spec:
       size: 1Gi
       storageClassName: ceph-block
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: nginx-internal
       annotations:
         gethomepage.dev/enabled: "true"
