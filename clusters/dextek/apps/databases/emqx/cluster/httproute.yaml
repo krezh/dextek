@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: emqx
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/instance: "krezh"
+    gethomepage.dev/icon: emqx.png
+    gethomepage.dev/name: Authentik
+    gethomepage.dev/group: Tools
+    gethomepage.dev/app: emqx
+spec:
+  hostnames:
+    - emqx.talos.plexuz.xyz
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: gateway-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: emqx-dashboard
+          port: 18083
