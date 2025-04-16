@@ -46,37 +46,32 @@ spec:
         controller: app
         type: LoadBalancer
         externalTrafficPolicy: Local
+        internalTrafficPolicy: Cluster
         annotations:
           coredns.io/hostname: unifi-lb
         ports:
-          http:
+          https:
             port: &port 8443
+            protocol: HTTPS
           controller:
-            enabled: true
             port: 8080
-            protocol: TCP
+            protocol: HTTP
           portal-http:
-            enabled: false
             port: 8880
             protocol: HTTP
           portal-https:
-            enabled: false
             port: 8843
             protocol: HTTPS
           speedtest:
-            enabled: true
             port: 6789
             protocol: TCP
           stun:
-            enabled: true
             port: 3478
             protocol: UDP
           syslog:
-            enabled: true
             port: 5514
             protocol: UDP
           discovery:
-            enabled: true
             port: 10001
             protocol: UDP
     ingress:
@@ -97,13 +92,13 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
-                  port: http
+                  port: https
         tls:
           - hosts:
               - *host
     # route:
     #   app:
-    #     hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+    #     hostnames: ["unifi.talos.plexuz.xyz"]
     #     annotations:
     #       gethomepage.dev/enabled: "true"
     #       gethomepage.dev/name: "{{ .Release.Name | title }}"
@@ -122,6 +117,9 @@ spec:
     #       - backendRefs:
     #           - name: *app
     #             port: *port
+    #         timeouts:
+    #           request: 0s
+    #           backendRequest: 0s
     persistence:
       config:
         enabled: true
