@@ -8,7 +8,7 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/instance: "krezh"
     gethomepage.dev/icon: emqx.png
-    gethomepage.dev/name: Authentik
+    gethomepage.dev/name: Emqx
     gethomepage.dev/group: Tools
     gethomepage.dev/app: emqx
 spec:
