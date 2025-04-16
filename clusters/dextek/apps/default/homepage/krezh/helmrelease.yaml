@@ -109,6 +109,6 @@ spec:
         enabled: true
         type: emptyDir
         globalMounts:
-          - path: /app/config/logs
+          - path: /app/config
     serviceAccount:
       create: true
