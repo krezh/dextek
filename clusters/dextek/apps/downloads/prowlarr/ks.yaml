@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: volsync
+    - name: crunchy-postgres-operator-cluster
   targetNamespace: downloads
   commonMetadata:
     labels:
