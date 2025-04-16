@@ -51,7 +51,7 @@ spec:
                 memory: 459Mi
     service:
       app:
-        controller: *app
+        controller: app
         ports:
           http:
             port: &port 8080
