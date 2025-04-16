@@ -71,29 +71,6 @@ spec:
           http:
             port: 80
             targetPort: *port
-    ingress:
-      app:
-        enabled: true
-        className: nginx-external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Jellyseerr"
-          gethomepage.dev/instance: ""
-          gethomepage.dev/group: "Downloads"
-          gethomepage.dev/icon: "jellyseerr.png"
-          gethomepage.dev/widget.url: "http://jellyseerr.downloads.svc.cluster.local"
-          gethomepage.dev/widget.type: "jellyseerr"
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_JELLYSEERR_APIKEY}}` }}"
-        hosts:
-          - host: &HOST "requests.plexuz.xyz"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-        tls:
-          - hosts:
-              - *HOST
     route:
       app:
         hostnames: ["requests.plexuz.xyz"]
