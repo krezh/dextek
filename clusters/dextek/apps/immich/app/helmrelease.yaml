@@ -142,7 +142,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: immich-server
                 port: *port
       internal:
         hostnames: ["photos.talos.plexuz.xyz"]
@@ -152,7 +152,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: immich-server
                 port: *port
 
     persistence:
