@@ -110,7 +110,7 @@ spec:
     #           {{ .Release.Name }}
     #         )
     #     parentRefs:
-    #       - name: gateway-external
+    #       - name: gateway-internal
     #         namespace: network
     #         sectionName: https
     #     rules:
