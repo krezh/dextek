@@ -92,7 +92,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
-                  port: https
+                  port: *port
         tls:
           - hosts:
               - *hostlocal
