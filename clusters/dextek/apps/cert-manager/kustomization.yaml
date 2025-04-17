@@ -2,15 +2,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: cert-manager
+components:
+  - ../../../shared/components/common
 resources:
-  - ./namespace.yaml
   - ./ks.yaml
-  - ../../../shared/templates/flux
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: cert-manager
-    unsetOnly: true
