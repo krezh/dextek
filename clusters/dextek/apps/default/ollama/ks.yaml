@@ -7,7 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   components:
-    - ../../../../shared/components/volsync
+    - ../../../../../shared/components/volsync
   targetNamespace: default
   commonMetadata:
     labels:
@@ -38,7 +38,7 @@ metadata:
   namespace: flux-system
 spec:
   components:
-    - ../../../../shared/components/volsync
+    - ../../../../../shared/components/volsync
   targetNamespace: default
   commonMetadata:
     labels:
