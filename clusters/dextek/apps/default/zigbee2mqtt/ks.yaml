@@ -5,6 +5,8 @@ metadata:
   name: &app zigbee2mqtt
   namespace: flux-system
 spec:
+  components:
+    - ../../../../../shared/components/volsync
   targetNamespace: default
   commonMetadata:
     labels:
