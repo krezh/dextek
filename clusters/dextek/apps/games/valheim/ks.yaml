@@ -6,6 +6,8 @@ metadata:
   name: &app valheim
   namespace: flux-system
 spec:
+  components:
+    - ../../../../../shared/components/volsync
   targetNamespace: games
   commonMetadata:
     labels:

@@ -2,9 +2,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: kube-system
+components:
+  - ../../../shared/components/common
 resources:
-  - ./namespace.yaml
-  - ../../../shared/templates/flux
   - ./cilium
   - ./coredns
   - ./metrics-server
@@ -21,11 +22,3 @@ resources:
   - ./intel-device-plugin
   - ./spegel
   - ./irqbalance
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: kube-system
-    unsetOnly: true

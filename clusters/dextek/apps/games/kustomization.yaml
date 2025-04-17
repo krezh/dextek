@@ -2,18 +2,11 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: games
+components:
+  - ../../../shared/components/common
 resources:
-  - ./namespace.yaml
   - ./satisfactory
   - ./enshrouded
   - ./valheim
   - ./vrising
-  - ../../../shared/templates/flux
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: games
-    unsetOnly: true

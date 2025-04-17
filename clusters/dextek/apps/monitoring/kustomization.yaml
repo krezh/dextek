@@ -2,27 +2,20 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: monitoring
+components:
+  - ../../../shared/components/common
 resources:
-  - ../../../shared/templates/flux
-  - ./namespace.yaml
   - ./grafana
   - ./kube-prometheus-stack
   - ./loki
+  - ./unpoller
+  - ./kromgo
+  - ./headlamp
+  - ./alloy
   - ./nut-exporter
   - ./smartctl-exporter
   - ./blackbox-exporter
-  - ./unpoller
   - ./graphite-exporter
-  - ./kromgo
   - ./mikrotik-exporter
-  - ./headlamp
   - ./opnsense-exporter
-  - ./alloy
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: monitoring
-    unsetOnly: true
