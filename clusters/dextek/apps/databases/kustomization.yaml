@@ -6,7 +6,6 @@ namespace: databases
 components:
   - ../../../shared/components/common
 resources:
-  - ./namespace.yaml
   - ./crunchy-postgres
   - ./valkey
   - ./emqx
