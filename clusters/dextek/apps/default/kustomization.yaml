@@ -2,9 +2,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: default
+components:
+  - ../../../shared/components/common
 resources:
-  - ./namespace.yaml
-  - ../../../shared/templates/flux
   - ./cyberchef
   - ./dota-items
   - ./redbot
@@ -24,11 +25,3 @@ resources:
   - ./zipline
   - ./n8n
   - ./ollama
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: default
-    unsetOnly: true

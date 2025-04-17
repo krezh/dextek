@@ -6,6 +6,8 @@ metadata:
   name: &app home-assistant
   namespace: flux-system
 spec:
+  components:
+    - ../../../../shared/components/volsync
   targetNamespace: default
   commonMetadata:
     labels:
