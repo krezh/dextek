@@ -6,8 +6,6 @@ metadata:
   name: &app ollama
   namespace: flux-system
 spec:
-  components:
-    - ../../../../../shared/components/volsync
   targetNamespace: default
   commonMetadata:
     labels:
@@ -37,8 +35,6 @@ metadata:
   name: &app open-webui
   namespace: flux-system
 spec:
-  components:
-    - ../../../../../shared/components/volsync
   targetNamespace: default
   commonMetadata:
     labels:
