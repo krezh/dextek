@@ -18,6 +18,7 @@ metadata:
 spec:
   providerRef:
     name: github
+  eventSeverity: info
   eventSources:
     - kind: Kustomization
       name: "*"
