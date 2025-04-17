@@ -8,13 +8,13 @@ resources:
   - ./grafana
   - ./kube-prometheus-stack
   - ./loki
+  - ./unpoller
+  - ./kromgo
+  - ./headlamp
+  - ./alloy
   - ./nut-exporter
   - ./smartctl-exporter
   - ./blackbox-exporter
-  - ./unpoller
   - ./graphite-exporter
-  - ./kromgo
   - ./mikrotik-exporter
-  - ./headlamp
   - ./opnsense-exporter
-  - ./alloy
