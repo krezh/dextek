@@ -32,7 +32,7 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:
-        enabled: true
+        enabled: false
         ingressClassName: nginx-internal
         hosts: ["alertmanager.talos.plexuz.xyz"]
         pathType: Prefix
@@ -46,6 +46,24 @@ spec:
             app.kubernetes.io/name in (
               alertmanager
             )
+      route:
+        main:
+          enabled: true
+          hostnames: ["alertmanager.talos.plexuz.xyz"]
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: "Alert Manager"
+            gethomepage.dev/instance: "krezh"
+            gethomepage.dev/group: "Monitoring"
+            gethomepage.dev/icon: "alertmanager.png"
+            gethomepage.dev/pod-selector: >-
+              app.kubernetes.io/name in (
+                alertmanager
+              )
+          parentRefs:
+            - name: gateway-internal
+              namespace: network
+              sectionName: https
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
@@ -77,10 +95,18 @@ spec:
       enabled: false
     prometheus:
       ingress:
-        enabled: true
+        enabled: false
         ingressClassName: nginx-internal
         hosts: ["prometheus.talos.plexuz.xyz"]
         pathType: Prefix
+      route:
+        main:
+          enabled: true
+          hostnames: ["prometheus.talos.plexuz.xyz"]
+          parentRefs:
+            - name: gateway-internal
+              namespace: network
+              sectionName: https
       prometheusSpec:
         image:
           registry: quay.io
