@@ -56,17 +56,6 @@ spec:
           http:
             port: 49090
 
-    ingress:
-      app:
-        className: nginx-internal
-        hosts:
-          - host: "{{ .Release.Name }}.talos.plexuz.xyz"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-
     serviceMonitor:
       app:
         serviceName: mikrotik-exporter
