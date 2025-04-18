@@ -420,7 +420,6 @@ spec:
           - name: gateway-internal
             namespace: network
             sectionName: https
-
     persistence:
       enabled: false
     serviceAccount:

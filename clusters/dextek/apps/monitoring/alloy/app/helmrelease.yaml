@@ -21,6 +21,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  # https://github.com/grafana/alloy/blob/main/operations/helm/charts/alloy/values.yaml
   values:
     fullnameOverride: alloy
     serviceMonitor:
@@ -34,7 +35,7 @@ spec:
         name: alloy-configmap
         key: config.alloy
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: nginx-internal
       annotations:
         gethomepage.dev/enabled: "true"
