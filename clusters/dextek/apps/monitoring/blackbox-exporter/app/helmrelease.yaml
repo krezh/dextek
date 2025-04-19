@@ -25,14 +25,6 @@ spec:
       retries: 3
   values:
     fullnameOverride: blackbox-exporter
-    ingress:
-      enabled: true
-      className: nginx-internal
-      hosts:
-        - host: blackbox.talos.plexuz.xyz
-          paths:
-            - path: /
-              pathType: Prefix
     securityContext:
       runAsNonRoot: true
       readOnlyRootFilesystem: true
