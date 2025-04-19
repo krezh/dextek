@@ -22,5 +22,5 @@ spec:
   rules:
     - backendRefs:
         - kind: Service
-          name: rook-ceph-dashboard
+          name: rook-ceph-mgr-dashboard
           port: 7000
