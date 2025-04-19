@@ -93,3 +93,11 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+    persistence:
+      config:
+        enabled: true
+        existingClaim: changedetection-config
+        advancedMounts:
+          main:
+            main:
+              - path: /datastore
