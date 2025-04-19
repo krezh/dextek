@@ -128,7 +128,7 @@ spec:
             cpu: 1000m
             memory: 4Gi
           limits:
-            memory: 4Gi
+            memory: 6Gi
     cephFileSystems:
       - name: ceph-filesystem
         spec:
@@ -187,22 +187,6 @@ spec:
           parameters:
             region: eu-north-1
           reclaimPolicy: Delete
-    ingress:
-      dashboard:
-        prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
-        ingressClassName: nginx-internal
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Rook"
-          gethomepage.dev/instance: "krezh"
-          gethomepage.dev/group: "Monitoring"
-          gethomepage.dev/icon: "rook.png"
-          gethomepage.dev/pod-selector: ""
-        host:
-          name: &host ceph.talos.plexuz.xyz
-        tls:
-          - hosts:
-              - *host
     monitoring:
       createPrometheusRules: true
       enabled: true

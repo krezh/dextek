@@ -3,7 +3,7 @@
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
-  name: homepage-users
+  name: pgweb
 spec:
   extAuth:
     failOpen: false
@@ -20,7 +20,7 @@ spec:
       backendRefs:
         - group: ""
           kind: Service
-          name: ak-outpost-external
+          name: ak-outpost-internal
           namespace: auth
           port: 9000
       headersToBackend: *headers
@@ -28,4 +28,4 @@ spec:
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: homepage-users
+      name: pgweb

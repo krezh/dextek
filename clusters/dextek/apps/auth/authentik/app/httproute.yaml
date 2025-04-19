@@ -16,9 +16,7 @@ spec:
   hostnames:
     - sso.plexuz.xyz
   parentRefs:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: gateway-external
+    - name: gateway-external
       namespace: network
       sectionName: https
   rules:

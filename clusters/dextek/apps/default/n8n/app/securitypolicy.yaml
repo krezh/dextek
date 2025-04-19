@@ -20,7 +20,7 @@ spec:
       backendRefs:
         - group: ""
           kind: Service
-          name: ak-outpost-external
+          name: ak-outpost-internal
           namespace: auth
           port: 9000
       headersToBackend: *headers

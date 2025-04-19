@@ -30,22 +30,6 @@ module "echo_server_internal" {
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
 }
 
-module "echo_internal" {
-  source = "./modules/forward-auth-application"
-  slug   = "echo_internal"
-
-  name      = "Echo Internal"
-  domain    = "echo.talos.${var.domain}"
-  app_group = "Infrastructure"
-
-  access_groups = [data.authentik_group.superuser.id]
-
-  policy_engine_mode      = "any"
-  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-
-  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
-}
-
 module "pgweb" {
   source = "./modules/forward-auth-application"
   slug   = "pgweb"
@@ -298,4 +282,20 @@ module "checkrr" {
   authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
 
   #meta_icon = ""
+}
+
+module "pinchflat" {
+  source = "./modules/forward-auth-application"
+  slug   = "pinchflat"
+
+  name      = "pinchflat"
+  domain    = "pinchflat.talos.${var.domain}"
+  app_group = "Downloads"
+
+  access_groups = [data.authentik_group.superuser.id]
+
+  policy_engine_mode      = "any"
+  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
+
+  meta_icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/pinchflat.png"
 }

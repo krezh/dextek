@@ -17,9 +17,9 @@ _default:
 all: && _cleanup
   just tofu
   just talos
-  just wipe
   just kubeconfig
   just helmfile
+  just wipe
   just k9s
 
 tofu:
@@ -33,34 +33,42 @@ tofu:
 talos:
   #!/usr/bin/env bash
   TALOS_CONTROLLER="{{TALOS_CONTROLLER}}"
-  echo "Bootstrapping Node: $TALOS_CONTROLLER..."
+  printf "Bootstrapping Node: $TALOS_CONTROLLER..."
   until talosctl --nodes $TALOS_CONTROLLER bootstrap; do sleep 5; done
-
-wipe:
-  #!/usr/bin/env bash
-  NODES=$(talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1')
-  for node in $NODES; do
-    echo "Wiping disks on: $node"
-    until talosctl health -n $node >/dev/null 2>&1; do sleep 3; done
-    DISKS=$(talosctl get disks --output json -n $node | jq -r '. | select(.spec.dev_path | contains("nvme")) | .spec.dev_path' | sed 's|/dev/||g' | tr '\n' ' ' | awk '{$1=$1};1')
-    for disk in $DISKS; do
-      printf "Wiping: $disk"; sleep 1;
-      talosctl wipe disk $disk -n $node && echo " SUCCESS";
-    done;
-  done
+  echo " Done"
 
 kubeconfig:
   printf "Getting kubeconfig..."
   until talosctl kubeconfig -n {{TALOS_CONTROLLER}} --force {{KUBECONFIG}}; do sleep 3; done
-  echo "Done"
+  echo " Done"
 
 helmfile:
   echo "Waiting for Nodes to be ready..."
   until kubectl --kubeconfig {{KUBECONFIG}} wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
-  echo "Deploying helmfile..."
+  printf "Deploying helmfile..."
   until helmfile --quiet --kubeconfig {{KUBECONFIG}} --file {{BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
+  echo " Done"
   sops --decrypt {{BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
   sops --decrypt {{BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
+
+wipe:
+  #!/usr/bin/env bash
+  NODES=$(talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1')
+  echo "Wiping disks on Nodes: $NODES"
+  for node in $NODES; do
+    echo "Waiting for Node to be ready: $node"
+    until talosctl health -n $node >/dev/null 2>&1; do sleep 3; done
+    echo "Wiping disks on: $node"
+    DISKS=$(talosctl get disks --output json -n $node | jq -r '. | select(.spec.dev_path | contains("nvme")) | .spec.dev_path' | sed 's|/dev/||g' | tr '\n' ' ' | awk '{$1=$1};1')
+    for disk in $DISKS; do
+      printf "Wiping: $disk"; sleep 1;
+      if talosctl wipe disk $disk -n $node >/dev/null 2>&1; then
+        echo " SUCCESS";
+      else
+        echo " FAILED (Probably OS Drive)";
+      fi
+    done;
+  done
 
 k9s:
   k9s --kubeconfig {{KUBECONFIG}} --all-namespaces --command pods

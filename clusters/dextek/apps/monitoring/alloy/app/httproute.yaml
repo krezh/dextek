@@ -3,17 +3,17 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: headlamp
+  name: alloy
   namespace: monitoring
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Headlamp"
-    gethomepage.dev/instance: "krezh"
-    gethomepage.dev/group: "Monitoring"
-    gethomepage.dev/icon: "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/public/android-chrome-192x192.png"
+    gethomepage.dev/icon: alloy.png
+    gethomepage.dev/name: Alloy
+    gethomepage.dev/group: Monitoring
+    gethomepage.dev/app: alloy
 spec:
   hostnames:
-    - headlamp.talos.plexuz.xyz
+    - alloy.talos.plexuz.xyz
   parentRefs:
     - name: gateway-internal
       namespace: network
@@ -22,9 +22,5 @@ spec:
     - backendRefs:
         - group: ""
           kind: Service
-          name: headlamp
-          port: 80
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
+          name: alloy
+          port: 12345
