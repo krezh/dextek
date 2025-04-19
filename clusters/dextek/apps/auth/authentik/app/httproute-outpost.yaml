@@ -7,9 +7,7 @@ metadata:
   namespace: auth
 spec:
   parentRefs:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: gateway-internal
+    - name: gateway-internal
       namespace: network
       sectionName: https
   rules:
@@ -31,9 +29,7 @@ metadata:
   namespace: auth
 spec:
   parentRefs:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: gateway-external
+    - name: gateway-external
       namespace: network
       sectionName: https
   rules:
