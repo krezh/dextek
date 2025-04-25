@@ -25,7 +25,7 @@ variable "talos_version" {
 variable "kubernetes_version" {
   description = "The Kubernetes version"
   type        = string
-  default     = "v1.33.0" # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+  default     = "v1.32.4" # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 }
 
 variable "talos_factory_schematic_endpoint" {
