@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/vrising
-              tag: 1.0.0@sha256:d6a3d1b6ab533fe9cda5fba1d9fb09e36d0510000a45efc07f008ed0f0040535
+              tag: 1.0.0@sha256:5def8d6a9329d3f54e04775d63f264185adffbf0867b364b5bf7d495237e1905
             envFrom:
               - secretRef:
                   name: vrising-secret
