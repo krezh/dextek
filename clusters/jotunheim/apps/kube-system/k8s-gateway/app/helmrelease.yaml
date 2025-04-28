@@ -23,7 +23,7 @@ spec:
     image:
       registry: ghcr.io
       repository: k8s-gateway/k8s_gateway
-      tag: 1.1.1
+      tag: 1.2.0
       pullPolicy: IfNotPresent
     domain: int.plexuz.xyz
     debug:
