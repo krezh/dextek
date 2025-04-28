@@ -33,7 +33,7 @@ spec:
             command:
               - "/bin/sh"
               - "-c"
-              - "cp /tmp/ServerHostSettings.json /savedata/Settings/v4/ServerHostSettings.json; cat /savedata/Settings/v4/ServerHostSettings.json;"
+              - "cp /tmp/ServerGameSettings.json /savedata/Settings/ServerGameSettings.json; cat /savedata/Settings/ServerGameSettings.json;"
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
@@ -47,7 +47,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/vrising
-              tag: 1.0.1@sha256:08075c9364f85b32117987aea81a15b783ce5dfd1daa19f82e41ca2650f0611f
+              tag: 1.0.1@sha256:c3e7c9c684088a5092114111bdd2955c32cb592023d12503b726fc55f44dc640
             envFrom:
               - secretRef:
                   name: vrising-secret
@@ -57,6 +57,8 @@ spec:
               QUERY_PORT: &queryPort 27016
               EOS_LIST: true
               STEAM_LIST: false
+              GAME_PRESET: StandardPvE
+              DIFFICULTY: Difficulty_Normal
             resources:
               requests:
                 cpu: 441m
@@ -87,6 +89,6 @@ spec:
         type: secret
         name: vrising-secret
         globalMounts:
-          - path: /tmp/ServerHostSettings.json
-            subPath: ServerHostSettings.json
+          - path: /tmp/ServerGameSettings.json
+            subPath: ServerGameSettings.json
             readOnly: true
