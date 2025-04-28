@@ -57,7 +57,7 @@ spec:
               QUERY_PORT: &queryPort 27016
               EOS_LIST: true
               STEAM_LIST: false
-              GAME_PRESET: StandardPvE
+              GAME_PRESET: Custom
               DIFFICULTY: Difficulty_Normal
               CLAN_SIZE: 8
             resources:
