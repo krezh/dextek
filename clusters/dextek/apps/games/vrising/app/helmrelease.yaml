@@ -57,8 +57,6 @@ spec:
               QUERY_PORT: &queryPort 27016
               EOS_LIST: true
               STEAM_LIST: false
-              GAME_PRESET: Custom
-              DIFFICULTY: Difficulty_Normal
             resources:
               requests:
                 cpu: 441m
