@@ -59,6 +59,7 @@ spec:
               STEAM_LIST: false
               GAME_PRESET: StandardPvE
               DIFFICULTY: Difficulty_Normal
+              CLAN_SIZE: 8
             resources:
               requests:
                 cpu: 441m
