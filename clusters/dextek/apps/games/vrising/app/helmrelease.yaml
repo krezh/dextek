@@ -24,6 +24,16 @@ spec:
   values:
     controllers:
       app:
+        initContainers:
+          init-config:
+            image:
+              repository: public.ecr.aws/docker/library/busybox
+              tag: latest@sha256:37f7b378a29ceb4c551b1b5582e27747b855bbfaa73fa11914fe0df028dc581f
+              pullPolicy: IfNotPresent
+            command:
+              - "/bin/sh"
+              - "-c"
+              - "cp /tmp/ServerGameSettings.json /savedata/Settings/ServerGameSettings.json; cat /savedata/Settings/ServerGameSettings.json;"
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
@@ -43,11 +53,11 @@ spec:
                   name: vrising-secret
             env:
               SERVER_NAME: Valhalla
-              GAME_PORT: 27015
-              QUERY_PORT: 27016
+              GAME_PORT: &gamePort 27015
+              QUERY_PORT: &queryPort 27016
               EOS_LIST: true
               STEAM_LIST: false
-              GAME_PRESET: StandardPvE
+              GAME_PRESET: Custom
               DIFFICULTY: Difficulty_Normal
             resources:
               requests:
@@ -64,10 +74,10 @@ spec:
           coredns.io/hostname: vrising-lb
         ports:
           game:
-            port: 27015
+            port: *gamePort
             protocol: UDP
           query:
-            port: 27016
+            port: *queryPort
             protocol: UDP
     persistence:
       data:
@@ -75,3 +85,10 @@ spec:
         globalMounts:
           - path: /savedata
           - path: /serverdata
+      config:
+        type: secret
+        name: vrising-secret
+        globalMounts:
+          - path: /tmp/ServerGameSettings.json
+            subPath: ServerGameSettings.json
+            readOnly: true
