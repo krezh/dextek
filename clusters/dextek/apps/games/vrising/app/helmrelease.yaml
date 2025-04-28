@@ -33,7 +33,7 @@ spec:
             command:
               - "/bin/sh"
               - "-c"
-              - "cp /tmp/ServerGameSettings.json /savedata/Settings/ServerGameSettings.json; cat /savedata/Settings/ServerGameSettings.json;"
+              - "cp /tmp/ServerSettings.json /savedata/Settings/ServerSettings.json; cat /savedata/Settings/ServerSettings.json;"
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
@@ -89,6 +89,6 @@ spec:
         type: secret
         name: vrising-secret
         globalMounts:
-          - path: /tmp/ServerGameSettings.json
-            subPath: ServerGameSettings.json
+          - path: /tmp/ServerSettings.json
+            subPath: ServerSettings.json
             readOnly: true
