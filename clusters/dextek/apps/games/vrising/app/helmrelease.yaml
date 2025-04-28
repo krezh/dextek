@@ -33,7 +33,7 @@ spec:
             command:
               - "/bin/sh"
               - "-c"
-              - "cp /tmp/ServerHostSettings.json /savedata/Settings/ServerHostSettings.json; cat /savedata/Settings/ServerHostSettings.json;"
+              - "cp /tmp/ServerHostSettings.json /savedata/Settings/v4/ServerHostSettings.json; cat /savedata/Settings/v4/ServerHostSettings.json;"
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
