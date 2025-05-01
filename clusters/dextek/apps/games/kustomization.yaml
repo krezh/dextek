@@ -6,7 +6,6 @@ resources:
   - ./namespace.yaml
   - ./satisfactory
   - ./enshrouded
-  - ./valheim
   - ./vrising
   - ../../../shared/templates/flux
 transformers:
