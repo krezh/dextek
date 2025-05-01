@@ -14,6 +14,7 @@ machine:
       - mitigations=off # Less security, faster puter
       - security=none # Less security, faster puter
       - talos.auditd.disabled=1 # Less security, faster puter
+      - -selinux # Less security, faster puter
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
