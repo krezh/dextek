@@ -144,12 +144,12 @@ cluster:
                     topologyKey: kubernetes.io/hostname
                     whenUnsatisfiable: ScheduleAnyway
   allowSchedulingOnControlPlanes: true
-  discovery:
-    registries:
-      kubernetes:
-        disabled: false
-      service:
-        disabled: true
+  # discovery:
+  #   registries:
+  #     kubernetes:
+  #       disabled: false
+  #     service:
+  #       disabled: true
   network:
     cni:
       name: none
