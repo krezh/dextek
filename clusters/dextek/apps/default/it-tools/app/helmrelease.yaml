@@ -27,27 +27,35 @@ spec:
       it-tools:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
         containers:
           it-tools:
             image:
-              repository: ghcr.io/home-operations/it-tools
-              tag: 2024.10.22
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
+              repository: ghcr.io/bjw-s-labs/it-tools
+              tag: 2024.10.22@sha256:75cbecf0092c306ba86d7342d8488fd8c86564bda27644921618debb6215c4e1
             resources:
               requests:
                 cpu: 100m
+                memory: 32Mi
               limits:
-                memory: 100Mi
+                memory: 256Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
     service:
       it-tools:
         controller: *app
         ports:
           http:
-            port: &port 80
+            port: &port 8080
     route:
       app:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
