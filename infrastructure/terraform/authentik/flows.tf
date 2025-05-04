@@ -41,6 +41,28 @@ resource "authentik_flow_stage_binding" "authentication-flow-binding-100" {
   order  = 100
 }
 
+resource "authentik_flow" "passwordless_authentication" {
+  name               = "passwordless_authentication"
+  title              = "Passkey"
+  slug               = "passwordless-flow"
+  designation        = "authentication"
+  policy_engine_mode = "all"
+}
+
+resource "authentik_flow_stage_binding" "passwordless_authentication-binding-00" {
+  target = authentik_flow.passwordless_authentication.uuid
+  stage  = authentik_stage_authenticator_validate.authentication-passkey-validation.id
+  order  = 0
+}
+
+resource "authentik_flow_stage_binding" "passwordless_authentication-binding-10" {
+  target               = authentik_flow.passwordless_authentication.uuid
+  stage                = authentik_stage_user_login.authentication-login.id
+  evaluate_on_plan     = false
+  re_evaluate_policies = true
+  order                = 10
+}
+
 ## Invalidation flow
 resource "authentik_flow" "invalidation" {
   name               = "invalidation-flow"
@@ -158,4 +180,19 @@ resource "authentik_flow" "provider-authorization-implicit-consent" {
   denied_action      = "message_continue"
   designation        = "authorization"
   # background         = "https://placeholder.jpeg"
+}
+
+## WebAuthn setup flow
+resource "authentik_flow" "authenticator-webauthn-setup" {
+  name           = "authenticator-webauthn-setup"
+  title          = "Setup WebAuthn"
+  slug           = "authenticator-webauthn-setup"
+  designation    = "stage_configuration"
+  authentication = "require_authenticated"
+}
+
+resource "authentik_flow_stage_binding" "authenticator-webauthn-setup-binding-00" {
+  target = authentik_flow.authenticator-webauthn-setup.uuid
+  stage  = authentik_stage_authenticator_webauthn.authenticator-webauthn-setup.id
+  order  = 0
 }
