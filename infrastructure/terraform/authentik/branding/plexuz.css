@@ -1,0 +1,4 @@
+.pf-c-button {
+  color: var(--pf-c-button--m-primary--Color) !important;
+  background-color: var(--pf-c-button--m-primary--BackgroundColor) !important;
+}
