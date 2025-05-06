@@ -29,8 +29,8 @@ spec:
   values:
     image:
       registry: ghcr.io
-      repository: krezh/valkey
-      tag: 8.1.1@sha256:7ee47668273957caa04a370d867338e4edd75ae3b090bf0b50962443afc7a7de
+      repository: valkey-io/valkey
+      tag: 8.1.1-bookworm@sha256:4a9f847af90037d59b34cd4d4ad14c6e055f46540cf4ff757aaafb266060fa28
     metrics:
       enabled: true
     service:
