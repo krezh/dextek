@@ -81,6 +81,7 @@
         commitMessageTopic: "{{{groupName}}} group",
       },
       separateMinorPatch: true,
+      sourceUrl: "https://github.com/siderolabs/talos",
     },
     {
       description: "Kubernetes Group",
@@ -91,6 +92,7 @@
         commitMessageTopic: "{{{groupName}}} group",
       },
       separateMinorPatch: true,
+      sourceUrl: "https://github.com/kubernetes/kubernetes",
     },
     {
       description: "Maintainerr Images",
