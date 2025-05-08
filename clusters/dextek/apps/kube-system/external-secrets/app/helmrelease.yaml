@@ -31,6 +31,8 @@ spec:
     serviceMonitor:
       enabled: true
       interval: 1m
+    grafanaDashboard:
+      enabled: true
     webhook:
       replicaCount: 1
       serviceMonitor:
