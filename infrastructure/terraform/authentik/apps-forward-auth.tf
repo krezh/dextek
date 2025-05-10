@@ -194,7 +194,7 @@ module "wallos" {
 
   name      = "Wallos"
   domain    = "wallos.${var.domain}"
-  app_group = "Downloads"
+  app_group = "Tools"
 
   access_groups = [data.authentik_group.superuser.id]
 
