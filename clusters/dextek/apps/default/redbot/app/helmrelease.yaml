@@ -24,7 +24,7 @@ spec:
   values:
     controllers:
       app:
-        type: deployment
+        type: statefulset
         replicas: 1
         strategy: RollingUpdate
         containers:
