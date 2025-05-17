@@ -8,7 +8,7 @@ tasks:
   default:
     desc: tofu init
     cmds:
-      - tofu init
+      - tofu init --upgrade
 
   ta:
     desc: tofu apply

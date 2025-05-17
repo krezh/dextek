@@ -31,8 +31,6 @@ machine:
     net.ipv6.conf.all.disable_ipv6: 1 # Disable IPv6
     net.ipv6.conf.default.disable_ipv6: 1 # Disable IPv6
     user.max_user_namespaces: 11255 # UserNamespacesSupport
-  sysfs:
-    devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
   udev:
     rules:
       # Intel GPU
@@ -144,12 +142,6 @@ cluster:
                     topologyKey: kubernetes.io/hostname
                     whenUnsatisfiable: ScheduleAnyway
   allowSchedulingOnControlPlanes: true
-  # discovery:
-  #   registries:
-  #     kubernetes:
-  #       disabled: false
-  #     service:
-  #       disabled: true
   network:
     cni:
       name: none
