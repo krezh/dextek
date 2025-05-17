@@ -150,6 +150,17 @@
       sourceUrl: "https://github.com/gravitational/teleport",
     },
     {
+      description: ["Authentik Group"],
+      groupName: "Authentik",
+      matchPackagePatterns: ["authentik"],
+      matchDatasources: ["docker", "helm", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/goauthentik/authentik",
+    },
+    {
       description: ["Dragonfly Operator Group"],
       groupName: "Dragonfly Operator",
       matchPackagePatterns: [
