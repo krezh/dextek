@@ -19,7 +19,7 @@ variable "cluster_endpoint" {
 variable "talos_version" {
   description = "The Talos version"
   type        = string
-  default     = "v1.10.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+  default     = "v1.10.2" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 }
 
 variable "kubernetes_version" {
