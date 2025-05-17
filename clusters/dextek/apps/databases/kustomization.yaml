@@ -6,7 +6,6 @@ resources:
   - ./namespace.yaml
   - ./crunchy-postgres
   - ./valkey
-  - ./emqx
   - ./pgweb
   - ./dragonfly
   - ../../../shared/templates/flux
