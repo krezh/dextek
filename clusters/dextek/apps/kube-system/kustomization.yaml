@@ -15,7 +15,6 @@ resources:
   - ./descheduler
   - ./k8tz
   - ./multus
-  - ./k8s-ycl
   - ./kubelet-csr-approver
   - ./system-upgrade
   - ./intel-device-plugin
