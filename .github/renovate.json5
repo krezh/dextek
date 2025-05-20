@@ -1,22 +1,32 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
-    "github>krezh/dextek//.github/renovate/autoMerge.json5",
-    "github>krezh/dextek//.github/renovate/allowedVersions.json5",
-    "github>krezh/dextek//.github/renovate/groups.json5",
-    "github>krezh/dextek//.github/renovate/customManagers.json5",
-    "github>krezh/dextek//.github/renovate/packageRules.json5",
-    "github>krezh/dextek//.github/renovate/clusters.json5",
-    "github>krezh/dextek//.github/renovate/grafanaDashboards.json5",
+    'github>krezh/dextek//.github/renovate/autoMerge.json5',
+    'github>krezh/dextek//.github/renovate/allowedVersions.json5',
+    'github>krezh/dextek//.github/renovate/groups.json5',
+    'github>krezh/dextek//.github/renovate/customManagers.json5',
+    'github>krezh/dextek//.github/renovate/packageRules.json5',
+    'github>krezh/dextek//.github/renovate/clusters.json5',
+    'github>krezh/dextek//.github/renovate/grafanaDashboards.json5',
   ],
-  ignorePaths: ["**/archive/**", "**/.archive/**", "**/*.sops.*"],
+  ignorePaths: [
+    '**/archive/**',
+    '**/.archive/**',
+    '**/*.sops.*',
+  ],
   flux: {
-    fileMatch: ["clusters/.+\\.ya?ml$"],
+    managerFilePatterns: [
+      '/clusters/.+\\.ya?ml$/',
+    ],
   },
-  "helm-values": {
-    fileMatch: ["clusters/.+\\.ya?ml$"],
+  'helm-values': {
+    managerFilePatterns: [
+      '/clusters/.+\\.ya?ml$/',
+    ],
   },
   kubernetes: {
-    fileMatch: ["clusters/.+\\.ya?ml$"],
+    managerFilePatterns: [
+      '/clusters/.+\\.ya?ml$/',
+    ],
   },
 }
