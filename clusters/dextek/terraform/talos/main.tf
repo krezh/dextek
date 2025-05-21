@@ -14,7 +14,7 @@ data "talos_machine_configuration" "machine" {
   depends_on = [
     talos_machine_secrets.talos
   ]
-  machine_type     = each.value.type
+  machine_type     = each.value.role
   cluster_name     = var.cluster_name
   cluster_endpoint = var.cluster_endpoint
 
@@ -41,8 +41,8 @@ data "talos_machine_configuration" "machine" {
       matchboxUrl        = var.matchbox_url
     }),
     file("talosPatches/registries.yaml"),
-    (each.value.type == "controlplane") ? file("talosPatches/controlplane.yaml") : null,
-    (each.value.type == "worker") ? file("talosPatches/worker.yaml") : null,
+    each.value.role == "controlplane" ? file("talosPatches/controlplane.yaml") : null,
+    each.value.role == "worker" ? file("talosPatches/worker.yaml") : null,
     # This patch is for the NUT UPS monitoring
     templatefile("talosPatches/nut.yaml", {
       upsmonHost   = data.sops_file.secrets.data["nut.host"],
@@ -53,16 +53,16 @@ data "talos_machine_configuration" "machine" {
 
 resource "matchbox_profile" "machine" {
   for_each = var.nodes
-  name     = "${each.value.type}-${each.value.hostname}"
+  name     = "${each.value.role}-${each.value.hostname}"
   kernel   = local.kernel_cached_factory
   initrd   = [local.initrd_cached_factory]
   args = [
     "initrd=initramfs-amd64.xz",
-    "init_on_alloc=1",
-    "slab_nomerge",
-    "pti=on",
-    "printk.devkmsg=on",
-    "talos.platform=metal",
+    # "init_on_alloc=1",
+    # "slab_nomerge",
+    # "pti=on",
+    # "printk.devkmsg=on",
+    # "talos.platform=metal",
     "talos.config=${var.matchbox_url}/ignition?mac=$${mac:hexhyp}"
   ]
   raw_ignition = data.talos_machine_configuration.machine[each.key].machine_configuration
@@ -83,13 +83,13 @@ data "talos_client_configuration" "talosconfig" {
   ]
   client_configuration = talos_machine_secrets.talos.client_configuration
   cluster_name         = var.cluster_name
-  endpoints            = [for k, v in var.nodes : k if v.type == "controlplane"]
+  endpoints            = [for k, v in var.nodes : k if v.role == "controlplane"]
   nodes                = [for k, v in var.nodes : k]
 }
 
 resource "talos_machine_bootstrap" "bootstrap" {
   count                = var.bootstrap ? 1 : 0
   client_configuration = talos_machine_secrets.talos.client_configuration
-  node                 = element([for k, v in var.nodes : k if v.type == "controlplane"], 0)
-  endpoint             = element([for k, v in var.nodes : k if v.type == "controlplane"], 0)
+  node                 = element([for k, v in var.nodes : k if v.role == "controlplane"], 0)
+  endpoint             = element([for k, v in var.nodes : k if v.role == "controlplane"], 0)
 }

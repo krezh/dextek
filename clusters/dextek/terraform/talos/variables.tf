@@ -13,19 +13,16 @@ variable "cluster_name" {
 variable "cluster_endpoint" {
   description = "The endpoint for the Talos cluster"
   type        = string
-  default     = "https://192.168.20.5:6443"
 }
 
 variable "talos_version" {
   description = "The Talos version"
   type        = string
-  default     = "v1.10.2" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 }
 
 variable "kubernetes_version" {
   description = "The Kubernetes version"
   type        = string
-  default     = "v1.33.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 }
 
 variable "talos_factory_schematic_endpoint" {
@@ -37,13 +34,11 @@ variable "talos_factory_schematic_endpoint" {
 variable "matchbox_url" {
   description = "The Url to Matchbox"
   type        = string
-  default     = "http://matchbox.int.plexuz.xyz:8080"
 }
 
 variable "zot_factory_url" {
   description = "The Url to Zot Registry for Factory Images"
   type        = string
-  default     = "zot.int.plexuz.xyz/factory.talos.dev"
 }
 
 variable "bootstrap" {
@@ -68,14 +63,47 @@ variable "nodes" {
   description = "A map of node data"
   type = map(object({
     hostname   = string
-    type       = string
+    role       = string # controlplane, worker
     mac_addr   = string
     disk_model = string
     driver     = string
     driver_10g = string
   }))
+  validation {
+    condition     = length(var.nodes) > 0
+    error_message = "The nodes variable must contain at least one node."
+  }
+  validation {
+    condition     = alltrue([for node in var.nodes : contains(["controlplane", "worker"], node.role)])
+    error_message = "The role must be either controlplane or worker."
+  }
+  validation {
+    condition     = alltrue([for node in var.nodes : length(node.hostname) > 0])
+    error_message = "The hostname must not be empty."
+  }
+  validation {
+    condition     = alltrue([for node in var.nodes : length(node.mac_addr) > 0])
+    error_message = "The mac_addr must not be empty."
+  }
+  validation {
+    condition     = alltrue([for node in var.nodes : length(node.disk_model) > 0])
+    error_message = "The disk_model must not be empty."
+  }
+  validation {
+    condition     = alltrue([for node in var.nodes : length(node.driver) > 0])
+    error_message = "The driver must not be empty."
+  }
+  validation {
+    condition     = alltrue([for node in var.nodes : length(node.driver_10g) > 0])
+    error_message = "The driver_10g must not be empty."
+  }
 }
 
 variable "vip" {
   description = "VIP address for the controlplane"
+  type        = string
+  validation {
+    condition     = can(cidrnetmask("${var.vip}/24"))
+    error_message = "The VIP address must be a valid IPv4 address."
+  }
 }
