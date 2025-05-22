@@ -144,6 +144,9 @@ spec:
           - backendRefs:
               - name: immich-server
                 port: *port
+            timeouts:
+              request: 0s
+              backendRequest: 0s
       internal:
         hostnames: ["photos.talos.plexuz.xyz"]
         parentRefs:
@@ -154,6 +157,9 @@ spec:
           - backendRefs:
               - name: immich-server
                 port: *port
+            timeouts:
+              request: 0s
+              backendRequest: 0s
 
     persistence:
       library:
