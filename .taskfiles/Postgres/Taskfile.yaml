@@ -76,6 +76,16 @@ tasks:
     cmds:
       - kubectl annotate --namespace {{.NS}} postgrescluster {{.DB_CLUSTER}} postgres-operator.crunchydata.com/pgbackrest-backup="$(date)" --overwrite
 
+  crunchy-password:
+    desc: Retrieve the CrunchyData Postgres password. [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
+    preconditions:
+      - which kubectl
+    vars:
+      DB_CLUSTER: "{{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER }}"
+      NS: "{{.NS | default .CRUNCHY_DEFAULT_NS }}"
+    cmds:
+      - kubectl get secret --namespace {{.NS}} {{.DB_CLUSTER}}-pguser-postgres -o jsonpath="{['data']['password']}" | base64 --decode && echo
+
   cnpg-dump:
     desc: Run pg_dump on the master instance of a CrunchyData Postgres cluster. [DB_NAME=required] [OUTPUT_DIR=.] [NS={{.CNPG_DEFAULT_NS}}] [DB_CLUSTER={{.CNPG_DEFAULT_DB_CLUSTER}}]
     preconditions:
