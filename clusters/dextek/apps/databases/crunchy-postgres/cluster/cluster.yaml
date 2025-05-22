@@ -11,7 +11,7 @@ spec:
       crunchy-userinit.ramblurr.github.com/enabled: "true"
       crunchy-userinit.ramblurr.github.com/superuser: &superuser "postgres"
   postgresVersion: 16
-  image: ghcr.io/budimanjojo/cdpgvecto.rs:16@sha256:e2fffc3c8777453b065bab713b0d25e712daca5c1156a268cdf0632429727fa9
+  image: ghcr.io/krezh/cdpg-vchord:16@sha256:5825c6e3283c9e9252f8bdf82126156722c08063e53dbd5fac0a11e9a3922af9
   customReplicationTLSSecret:
     name: postgres-repl-tls
   customTLSSecret:
@@ -36,8 +36,8 @@ spec:
         synchronous_commit: "on"
         parameters:
           max_connections: 500
-          shared_preload_libraries: "vectors.so"
-          search_path: '"$user", public, vectors'
+          shared_preload_libraries: "vchord.so"
+          search_path: '"$user", public, vchord'
         pg_hba:
           - hostnossl all all 10.244.0.0/16 md5 # Needed because dbman does not support SSL yet
           - hostssl all all all md5
