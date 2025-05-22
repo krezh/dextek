@@ -5,4 +5,4 @@ metadata:
 data:
   init.sql: |-
     \c immich\\
-    CREATE EXTENSION vectors;
+    CREATE EXTENSION IF NOT EXISTS vectors;
