@@ -48,7 +48,7 @@ spec:
               whenUnsatisfiable: DoNotSchedule
               labelSelector:
                 matchLabels:
-                  app.kubernetes.io/component: app
+                  app.kubernetes.io/component: server
         containers:
           app:
             image:
@@ -76,6 +76,14 @@ spec:
         replicas: 2
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: ml
         containers:
           app:
             image:
@@ -94,6 +102,14 @@ spec:
         replicas: 2
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: micro
         containers:
           app:
             image:
