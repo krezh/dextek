@@ -6,7 +6,6 @@ resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
   - ./cyberchef
-  - ./dota-items
   - ./redbot
   - ./home-assistant
   - ./homepage
