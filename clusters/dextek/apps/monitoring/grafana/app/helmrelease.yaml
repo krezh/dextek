@@ -389,18 +389,6 @@ spec:
         root_url: *rhost
     ingress:
       enabled: false
-      ingressClassName: nginx-internal
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/name: "Grafana"
-        gethomepage.dev/instance: "krezh"
-        gethomepage.dev/group: "Monitoring"
-        gethomepage.dev/icon: "grafana.png"
-      hosts:
-        - &host "{{ .Release.Name }}.talos.plexuz.xyz"
-      tls:
-        - hosts:
-            - *host
     route:
       main:
         enabled: true
@@ -441,6 +429,10 @@ spec:
     serviceMonitor:
       enabled: true
     sidecar:
+      image:
+        registry: ghcr.io
+        repository: home-operations/k8s-sidecar
+        tag: 1.30.3@sha256:39cca7abcad8f1621b9462d95f7d0e60301b92fcb0ff4de0ad4561859011cddf
       dashboards:
         enabled: true
         searchNamespace: ALL
