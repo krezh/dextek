@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: phasecorex/red-discordbot
-              tag: extra-audio-py311@sha256:f96595aa8d9e3c6c2583f98ddbce936b8b5d6cfc18aec9b3f2b1efc50deab4e7
+              tag: extra-audio-py311@sha256:2141a8d1fe749d879c7174d383fc0b5e83075e8125382cdbcb4a423ee019292e
             env:
               PUID: 568
               PGID: 568
