@@ -54,7 +54,7 @@ jobs:
             test
             --all-namespaces
             --enable-helm
-            --path /github/workspace/${{ matrix.paths }}/flux/config
+            --path /github/workspace/${{ matrix.paths }}
             --verbose
 
   diff:
@@ -89,8 +89,8 @@ jobs:
           args: >-
             diff ${{ matrix.resource }}
             --unified 6
-            --path /github/workspace/pull/${{ matrix.paths }}/flux/config
-            --path-orig /github/workspace/default/${{ matrix.paths }}/flux/config
+            --path /github/workspace/pull/${{ matrix.paths }}
+            --path-orig /github/workspace/default/${{ matrix.paths }}
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces
