@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 4.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -48,7 +48,7 @@ spec:
               whenUnsatisfiable: DoNotSchedule
               labelSelector:
                 matchLabels:
-                  app.kubernetes.io/component: server
+                  app.kubernetes.io/controller: server
         containers:
           app:
             image:
@@ -83,7 +83,7 @@ spec:
               whenUnsatisfiable: DoNotSchedule
               labelSelector:
                 matchLabels:
-                  app.kubernetes.io/component: ml
+                  app.kubernetes.io/controller: ml
         containers:
           app:
             image:
@@ -109,7 +109,7 @@ spec:
               whenUnsatisfiable: DoNotSchedule
               labelSelector:
                 matchLabels:
-                  app.kubernetes.io/component: micro
+                  app.kubernetes.io/controller: micro
         containers:
           app:
             image:
