@@ -30,7 +30,8 @@ jobs:
         id: changed-files
         uses: bjw-s-labs/action-changed-files@930cef8463348e168cab7235c47fe95a7a235f65 # v0.3.3
         with:
-          patterns: clusters/**
+          patterns: clusters/**/**
+          max_depth: 2
 
   test:
     if: ${{ needs.filter.outputs.changed-files != '[]' }}
@@ -62,7 +63,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        paths: ${{ fromJSON(needs.filter.outputs.changed-files) }}
+        paths: ${{ fromJSON(needs.filter.outputs.) }}
         resource: ["helmrelease", "kustomization"]
       fail-fast: false
     steps:
