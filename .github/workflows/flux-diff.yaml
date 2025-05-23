@@ -68,7 +68,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        paths: ${{ fromJSON(needs.filter.outputs.changed-files) }}
+        paths: ${{ fromJSON(needs.filter.outputs.changed-files.matrix) }}
         resource: ["helmrelease", "kustomization"]
       fail-fast: false
     steps:
