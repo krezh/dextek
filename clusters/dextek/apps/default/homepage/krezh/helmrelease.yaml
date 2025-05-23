@@ -172,5 +172,13 @@ spec:
               verbs:
                 - get
 
+      bindings:
+        app:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: app
+          subjects:
+            - identifier: app
+
     serviceAccount:
       app: {}
