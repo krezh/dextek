@@ -111,4 +111,5 @@ spec:
         globalMounts:
           - path: /app/config
     serviceAccount:
-      create: true
+      homepage-users:
+        staticToken: true
