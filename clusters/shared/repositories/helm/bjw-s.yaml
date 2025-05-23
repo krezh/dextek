@@ -8,5 +8,5 @@ metadata:
 spec:
   type: oci
   interval: 30m
-  url: oci://ghcr.io/bjw-s-labs/helm/app-template
+  url: oci://ghcr.io/bjw-s-labs/helm
   timeout: 3m
