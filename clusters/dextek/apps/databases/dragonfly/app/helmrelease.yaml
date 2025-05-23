@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 4.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -67,6 +67,8 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
+        serviceAccount:
+          identifier: app
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -97,6 +99,37 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
+
+    rbac:
+      roles:
+        app:
+          type: ClusterRole
+          rules:
+            - apiGroups: ["coordination.k8s.io"]
+              resources: ["leases"]
+              verbs:
+                ["get", "list", "watch", "create", "update", "patch", "delete"]
+            - apiGroups: [""]
+              resources: ["events"]
+              verbs: ["create", "patch"]
+            - apiGroups: [""]
+              resources: ["pods", "services"]
+              verbs:
+                ["create", "delete", "get", "list", "patch", "update", "watch"]
+            - apiGroups: ["apps"]
+              resources: ["statefulsets"]
+              verbs:
+                ["create", "delete", "get", "list", "patch", "update", "watch"]
+            - apiGroups: ["dragonflydb.io"]
+              resources: ["dragonflies"]
+              verbs:
+                ["create", "delete", "get", "list", "patch", "update", "watch"]
+            - apiGroups: ["dragonflydb.io"]
+              resources: ["dragonflies/finalizers"]
+              verbs: ["update"]
+            - apiGroups: ["dragonflydb.io"]
+              resources: ["dragonflies/status"]
+              verbs: ["get", "patch", "update"]
+
     serviceAccount:
-      create: true
-      name: *app
+      app: {}

@@ -6,5 +6,4 @@ resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
   - ./config.yaml
-  - ./rbac.yaml
   - ./securitypolicy.yaml
