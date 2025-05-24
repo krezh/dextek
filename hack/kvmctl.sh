@@ -20,7 +20,7 @@ PORTS=8
 
 # Prints the command usage and exits
 function usage {
-  progname=$(basename $0)
+  progname=$(basename "$0")
   echo "$progname -- Controls a TESmart KVM using TCP/IP or RS-232"
   echo "Usage:"
   printf "  %-24.23s: %-20s\n" "${progname} get" "Retrieves the active port number."
@@ -38,11 +38,11 @@ function sendCommand {
   request="aabb03${1}ee"
 
   # Send to serial or via network depending on device
-  if [ ! -z "$DEVICE" ]; then
+  if [ -n "$DEVICE" ]; then
     # Without raw buffering makes reads wait for newline characters which never come.
     response=$(
-      stty -F $DEVICE speed $SPEED raw >/dev/null \
-      && echo -n $request | xxd -r -p | socat - $DEVICE | xxd -p 2>/dev/null \
+      stty -F "$DEVICE" speed $SPEED raw >/dev/null \
+      && echo -n "$request" | xxd -r -p | socat - "$DEVICE" | xxd -p 2>/dev/null \
       || echo ff
     )
   else  
@@ -52,19 +52,19 @@ function sendCommand {
     # The -l6 is required to read response without waiting for a newline.
     # Beware gnu-netcat hangs waiting for something, openbsd-netcat works fine.
     response=$(
-      echo $request | xxd -r -p | nc ${ADDRESS} ${PORT} | xxd -p -l6 2>/dev/null \
+      echo "$request" | xxd -r -p | nc ${ADDRESS} ${PORT} | xxd -p -l6 2>/dev/null \
       || echo ff
     )
   fi
 
   if [[ $response == ff ]]; then
     echo "Unable to send request $request or read response." >&2
-    echo $response
+    echo "$response"
   elif [[ ! $response == aabb03* ]]; then
     echo "Unrecognized response $response for request $request." >&2
     echo ff
   else
-    echo $response | cut -c 9-10
+    echo "$response" | cut -c 9-10
   fi
 }
 
@@ -142,7 +142,7 @@ function setPort {
 
   # Collect the output but don't rely on it. The command may still be
   # successful but won't print the new port number anyway.
-  hexval=$(printf '%.2X\n' ${1})
+  hexval=$(printf '%.2X\n' "${1}")
   out=$(sendCommand "01${hexval}")
 
   # If a valid value was returned when the port was changed, it would have
@@ -157,7 +157,7 @@ function setAuto {
     echo "Invalid port specified. Range is 1 to $PORTS."
     exit 1
   fi
-  hexval=$(printf '%.2X\n' ${1})
+  hexval=$(printf '%.2X\n' "${1}")
   out=$(sendCommand "81${hexval}")
 }
 
@@ -165,13 +165,13 @@ function setAuto {
 case $1 in
   get) echo "The current port is: $(getPort)";
     ;;
-  set) setPort $2;
+  set) setPort "$2";
     ;;
-  buzzer) setBuzzer $2;
+  buzzer) setBuzzer "$2";
     ;;
-  lcd) setTimeout $2;
+  lcd) setTimeout "$2";
     ;;
-  auto) setAuto $2;
+  auto) setAuto "$2";
     ;;
   *) usage
 esac

@@ -6,11 +6,11 @@ OSD_PODS=$(kubectl get pods --all-namespaces -l \
   app=rook-ceph-osd,rook_cluster=rook-ceph -o jsonpath='{.items[*].metadata.name}')
 
 # Find node and drive associations from OSD pods
-for pod in $(echo ${OSD_PODS})
+for pod in ${OSD_PODS}
 do
  echo "Pod:  ${pod}"
- echo "Node: $(kubectl -n rook-ceph get pod ${pod} -o jsonpath='{.spec.nodeName}')"
- kubectl -n rook-ceph exec ${pod} -- sh -c '\
+ echo "Node: $(kubectl -n rook-ceph get pod "${pod}" -o jsonpath='{.spec.nodeName}')"
+ kubectl -n rook-ceph exec "${pod}" -- sh -c '\
   for i in /var/lib/ceph/osd/ceph-*; do
     [ -f ${i}/ready ] || continue
     echo -ne "-$(basename ${i}) "
