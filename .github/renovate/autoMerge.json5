@@ -9,7 +9,13 @@
       automergeType: "branch",
       requiredStatusChecks: null,
       matchUpdateTypes: ["digest"],
-      matchPackagePatterns: ["ghcr.io/onedr0p", "ghcr.io/krezh"],
+      matchPackageNames: ["ghcr.io/onedr0p", "ghcr.io/krezh"],
     },
+    {
+      description: "Disable auto merge for krezh/cdpg-vchord",
+      matchDatasources: ["docker"],
+      automerge: false,
+      matchUpdateTypes: ["digest"],
+      matchPackageNames: ["ghcr.io/krezh/cdpg-vchord"],
   ],
 }
