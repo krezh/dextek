@@ -17,5 +17,6 @@
       automerge: false,
       matchUpdateTypes: ["digest"],
       matchPackageNames: ["ghcr.io/krezh/cdpg-vchord"],
+    },
   ],
 }
