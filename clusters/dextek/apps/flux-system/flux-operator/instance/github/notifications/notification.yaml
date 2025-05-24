@@ -19,6 +19,8 @@ spec:
   providerRef:
     name: github
   eventSeverity: info
+  eventMetadata:
+    cluster: talos-plexuz
   eventSources:
     - kind: Kustomization
       name: "*"

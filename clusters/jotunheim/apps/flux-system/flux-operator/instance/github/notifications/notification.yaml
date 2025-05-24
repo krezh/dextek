@@ -19,6 +19,8 @@ spec:
   providerRef:
     name: github
   eventSeverity: info
+  eventMetadata:
+    cluster: jotunheim
   eventSources:
     - kind: Kustomization
       name: "*"
