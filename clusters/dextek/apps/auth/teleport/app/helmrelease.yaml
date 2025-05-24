@@ -44,18 +44,10 @@ spec:
 
     ingress:
       enabled: false
-      suppressAutomaticWildcards: true
-      spec:
-        ingressClassName: nginx-internal
 
     annotations:
       service:
         coredns.io/hostname: teleport
-
-      ingress:
-        nginx.ingress.kubernetes.io/backend-protocol: "https"
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 
     highAvailability:
       replicaCount: 1
