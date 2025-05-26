@@ -9,11 +9,6 @@ vars:
   CRUNCHY_PRIMARY_POD:
     sh: |-
       kubectl get pods -n {{.NS | default .CRUNCHY_DEFAULT_NS}} -l {{.CRUNCHY_PRIMARY_POD_LABELS}} -o jsonpath='{.items[0].metadata.name}'
-#CNPG_DEFAULT_NS: databases
-#CNPG_DEFAULT_DB_CLUSTER: postgres
-#CNPG_PRIMARY_POD:
-#  sh: |-
-#    kubectl get pods -n {{.NS | default .CNPG_DEFAULT_NS}} -l cnpg.io/instanceRole=primary,cnpg.io/cluster={{.DB_CLUSTER | default .CNPG_DEFAULT_DB_CLUSTER}} -o jsonpath='{.items[0].metadata.name}'
 
 tasks:
   crunchy-dump:
@@ -86,52 +81,15 @@ tasks:
     cmds:
       - kubectl get secret --namespace {{.NS}} {{.DB_CLUSTER}}-pguser-postgres -o jsonpath="{['data']['password']}" | base64 --decode && echo
 
-  cnpg-dump:
-    desc: Run pg_dump on the master instance of a CrunchyData Postgres cluster. [DB_NAME=required] [OUTPUT_DIR=.] [NS={{.CNPG_DEFAULT_NS}}] [DB_CLUSTER={{.CNPG_DEFAULT_DB_CLUSTER}}]
+  crunchy-create-stanza:
+    desc: Create a new CrunchyData Postgres Stanza. [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
     preconditions:
       - which kubectl
-      - kubectl get pods --namespace {{.NS}} {{.CNPG_PRIMARY_POD}}
-    requires:
-      vars:
-        - DB_NAME
     vars:
-      DB_CLUSTER: "{{.DB_CLUSTER | default .CNPG_DEFAULT_DB_CLUSTER }}" # postgres cluster name
-      NS: "{{.NS | default .CNPG_DEFAULT_NS }}" # database namespace
-      OUTPUT_DIR: '{{ .OUTPUT_DIR | default "." }}'
-      CLI_ARGS: '{{ .CLI_ARGS | default "--verbose --format=c --no-comments --clean --if-exists --no-owner" }}'
+      DB_CLUSTER: "{{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER }}"
+      NS: "{{.NS | default .CRUNCHY_DEFAULT_NS }}"
+      POD:
+        sh: kubectl get pods -n {{.NS}} --selector='postgres-operator.crunchydata.com/cluster={{.DB_CLUSTER}},postgres-operator.crunchydata.com/role=master' -o name
     cmds:
-      - kubectl exec -it --container postgres --namespace {{.NS}} {{.CNPG_PRIMARY_POD}} -- /bin/bash -c 'pg_dump --dbname {{.DB_NAME}} {{.CLI_ARGS}} --file /var/lib/postgresql/data/pgdata/{{.DB_NAME}}.psql'
-      - kubectl cp --container postgres "{{.NS}}/{{.CNPG_PRIMARY_POD}}:/var/lib/postgresql/data/pgdata/{{.DB_NAME}}.psql" "{{.OUTPUT_DIR}}/{{.DB_NAME}}.psql"
-      - kubectl exec -it --container postgres --namespace {{.NS}} {{.CNPG_PRIMARY_POD}} -- /bin/bash -c 'rm -rf /var/lib/postgresql/data/pgdata/{{.DB_NAME}}.psql'
-
-  cnpg-exec:
-    desc: Exec in to the master instance of a Cloudnative Postgres cluster. [NS={{.CNPG_DEFAULT_NS}}] [DB_CLUSTER={{.CNPG_DEFAULT_DB_CLUSTER}}]
-    preconditions:
-      - which kubectl
-      - kubectl get pods --namespace {{.NS}} -l postgres-operator.crunchydata.com/role=master,postgres-operator.crunchydata.com/cluster={{.DB_CLUSTER}}
-    vars:
-      DB_CLUSTER: "{{.DB_CLUSTER | default .CNPG_DEFAULT_DB_CLUSTER }}"
-      NS: "{{.NS | default .CNPG_DEFAULT_NS }}"
-    cmds:
-      - kubectl exec -it --container postgres --namespace {{.NS}} {{.CNPG_PRIMARY_POD}} -- /bin/bash
-
-  cnpg-restore:
-    desc: Restore a pg_dump to a CrunchyData Postgres cluster, writing to the master instance. [DB_NAME=required] [DB_USER=required] [FILE=required] [NS={{.CNPG_DEFAULT_NS}}] [DB_CLUSTER={{.CNPG_DEFAULT_DB_CLUSTER}}]
-    preconditions:
-      - which kubectl
-      - kubectl get pods --namespace {{.NS}} {{.CNPG_PRIMARY_POD}}
-      - test -f "{{.FILE}}"
-    requires:
-      vars:
-        - DB_NAME
-        - DB_USER
-        - FILE
-    vars:
-      DB_CLUSTER: "{{.DB_CLUSTER | default .CNPG_DEFAULT_DB_CLUSTER }}"
-      NS: "{{.NS | default .CNPG_DEFAULT_NS }}"
-      CLI_ARGS: '{{ .CLI_ARGS | default (printf "--verbose --format=c --clean --if-exists --no-owner --role %s" .DB_USER) }}'
-    cmds:
-      - kubectl cp --container postgres "{{.FILE}}" "{{.NS}}/{{.CNPG_PRIMARY_POD}}:/var/lib/postgresql/data/pgdata/restore-{{.DB_NAME}}.psql"
-      - kubectl exec -it --container postgres --namespace {{.NS}} {{.CNPG_PRIMARY_POD}} -- /bin/bash -c 'echo "ALTER DATABASE \"{{.DB_NAME}}\" OWNER TO \"{{.DB_USER}}\";" | psql'
-      - kubectl exec -it --container postgres --namespace {{.NS}} {{.CNPG_PRIMARY_POD}} -- /bin/bash -c 'pg_restore --dbname {{.DB_NAME}} {{.CLI_ARGS}} /var/lib/postgresql/data/pgdata/restore-{{.DB_NAME}}.psql'
-      - defer: kubectl exec -it --container postgres --namespace {{.NS}} {{.CNPG_PRIMARY_POD}} -- /bin/bash -c 'rm -rf /var/lib/postgresql/data/pgdata/restore-{{.DB_NAME}}.psql'
+      - echo {{.POD}}
+      - kubectl exec {{.POD}} -it -n {{.NS}} -c database  -- pgbackrest stanza-create --stanza=db
