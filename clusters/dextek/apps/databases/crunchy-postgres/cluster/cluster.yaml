@@ -111,6 +111,7 @@ spec:
         #compress-level: "9"
         archive-async: "y"
         archive-timeout: "60m"
+        start-fast: "y"
         # Minio
         repo1-block: "y"
         repo1-bundle: "y"
