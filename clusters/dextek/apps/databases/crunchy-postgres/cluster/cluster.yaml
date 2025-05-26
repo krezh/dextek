@@ -110,7 +110,7 @@ spec:
         compress-type: "bz2"
         compress-level: "9"
         archive-async: "y"
-        archive-timeout: "5m"
+        archive-timeout: "60m"
         # Minio
         repo1-block: "y"
         repo1-bundle: "y"
