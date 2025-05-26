@@ -59,7 +59,7 @@ tasks:
       DB_CLUSTER: "{{.DB_CLUSTER | default .CRUNCHY_DEFAULT_DB_CLUSTER }}"
       NS: "{{.NS | default .CRUNCHY_DEFAULT_NS }}"
     cmds:
-      - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- /bin/bash
+      - kubectl exec -it --container database --namespace {{.NS}} {{.CRUNCHY_PRIMARY_POD}} -- {{.CLI_ARGS | default "/bin/bash"}}
 
   crunchy-backup:
     desc: Backup a CrunchyData Postgres cluster. [NS={{.CRUNCHY_DEFAULT_NS}}] [DB_CLUSTER={{.CRUNCHY_DEFAULT_DB_CLUSTER}}]
