@@ -107,8 +107,8 @@ spec:
         - secret:
             name: crunchy-pgo-secret
       global: &backupFlag # Global
-        compress-type: "bz2"
-        compress-level: "9"
+        compress-type: "zst"
+        #compress-level: "9"
         archive-async: "y"
         archive-timeout: "60m"
         # Minio
