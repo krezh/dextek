@@ -29,10 +29,9 @@ spec:
               tag: 4.1.0
             env:
               DATASOURCE_S3_FORCE_PATH_STYLE: true
-              DATASOURCE_TYPE: local
-              DATASOURCE_LOCAL_DIRECTORY: &uploads /uploads
-              CORE_HOSTNAME: 0.0.0.0
-              CORE_PORT: 3000
+              DATASOURCE_TYPE: "s3"
+              CORE_HOSTNAME: "0.0.0.0"
+              CORE_PORT: "3000"
             envFrom:
               - secretRef:
                   name: zipline-secret
@@ -70,10 +69,3 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-    persistence:
-      uploads:
-        type: nfs
-        server: 10.10.0.2
-        path: /mnt/tank/k8s/zipline
-        globalMounts:
-          - path: *uploads
