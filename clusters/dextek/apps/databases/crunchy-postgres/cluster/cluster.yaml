@@ -109,8 +109,8 @@ spec:
       global: &backupFlag # Global
         compress-type: "bz2"
         compress-level: "9"
-        #archive-async: "y"
-        #archive-timeout: "60m"
+        archive-async: "y"
+        archive-timeout: "60m"
         # Minio
         repo1-block: "y"
         repo1-bundle: "y"
