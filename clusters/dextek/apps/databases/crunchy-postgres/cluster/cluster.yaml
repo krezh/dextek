@@ -131,15 +131,15 @@ spec:
         labels:
           app.kubernetes.io/name: crunchy-postgres-backup
       repos:
-        # - name: repo1
-        #   s3: &minio
-        #     bucket: crunchy-pgo
-        #     endpoint: jotunheim.srv.plexuz.xyz:9000
-        #     region: eu-north-1
-        #   schedules:
-        #     full: "0 1 * * 0" # Sunday at 01:00
-        #     differential: "0 1 * * 1-6" # Mon-Sat at 01:00
-        #     incremental: "0 2-23 * * *" # Every hour except 01:00
+        - name: repo1
+          s3: &minio
+            bucket: crunchy-pgo
+            endpoint: jotunheim.srv.plexuz.xyz:9000
+            region: eu-north-1
+          schedules:
+            full: "0 1 * * 0" # Sunday at 01:00
+            differential: "0 1 * * 1-6" # Mon-Sat at 01:00
+            incremental: "0 2-23 * * *" # Every hour except 01:00
         - name: repo2
           s3: &r2
             bucket: crunchy-pgo
@@ -156,7 +156,7 @@ spec:
       global: *backupFlag
       repo:
         name: repo1
-        s3: *r2
+        s3: *minio
   proxy:
     pgBouncer:
       service:
