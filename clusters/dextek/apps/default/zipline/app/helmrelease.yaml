@@ -28,7 +28,7 @@ spec:
               repository: ghcr.io/diced/zipline
               tag: 4.1.0
             env:
-              #DATASOURCE_S3_FORCE_PATH_STYLE: true
+              DATASOURCE_S3_FORCE_PATH_STYLE: true
               DATASOURCE_TYPE: local
               DATASOURCE_LOCAL_DIRECTORY: &uploads /uploads
               CORE_HOSTNAME: 0.0.0.0
