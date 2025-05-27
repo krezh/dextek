@@ -112,7 +112,7 @@ spec:
         archive-async: "y"
         archive-timeout: "60m"
         start-fast: "y"
-        process-max: "4"
+        process-max: "8"
         # Minio
         repo1-block: "y"
         repo1-bundle: "y"
@@ -158,8 +158,8 @@ spec:
       configuration: *backupConfig
       global: *backupFlag
       repo:
-        name: repo1
-        s3: *minio
+        name: repo2
+        s3: *r2
   proxy:
     pgBouncer:
       service:
