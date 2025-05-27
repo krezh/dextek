@@ -112,6 +112,7 @@ spec:
         archive-async: "y"
         archive-timeout: "60m"
         start-fast: "y"
+        process-max: "4"
         # Minio
         repo1-block: "y"
         repo1-bundle: "y"
