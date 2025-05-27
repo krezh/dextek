@@ -130,7 +130,7 @@ spec:
         # R2-test
         repo3-block: "y"
         repo3-bundle: "y"
-        repo3-path: /crunchy-pgo
+        repo3-path: /cpgo-test
         repo3-retention-full: "7" # days
         repo3-retention-full-type: time
         repo3-s3-uri-style: path
