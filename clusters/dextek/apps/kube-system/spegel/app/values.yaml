@@ -1,15 +1,15 @@
 spegel:
-  prependExisting: false
+  #prependExisting: false
   containerdSock: /run/containerd/containerd.sock
   containerdRegistryConfigPath: /etc/cri/conf.d/hosts
   debugWebEnabled: true
-  additionalMirrorTargets:
-    - https://zot.int.plexuz.xyz/v2/docker.io
-    - https://zot.int.plexuz.xyz/v2/ghcr.io
-    - https://zot.int.plexuz.xyz/v2/quay.io
-    - https://zot.int.plexuz.xyz/v2/gcr.io
-    - https://zot.int.plexuz.xyz/v2/registry.k8s.io
-    - https://zot.int.plexuz.xyz/v2/public.ecr.aws
+  # additionalMirrorTargets:
+  #   - https://zot.int.plexuz.xyz/v2/docker.io
+  #   - https://zot.int.plexuz.xyz/v2/ghcr.io
+  #   - https://zot.int.plexuz.xyz/v2/quay.io
+  #   - https://zot.int.plexuz.xyz/v2/gcr.io
+  #   - https://zot.int.plexuz.xyz/v2/registry.k8s.io
+  #   - https://zot.int.plexuz.xyz/v2/public.ecr.aws
   service:
     registry:
       hostPort: 29999
