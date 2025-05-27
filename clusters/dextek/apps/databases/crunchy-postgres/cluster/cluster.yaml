@@ -110,10 +110,9 @@ spec:
         compress-type: "zst"
         #compress-level: "9"
         archive-async: "y"
-        archive-timeout: "60m"
+        #archive-timeout: "60m"
         start-fast: "y"
         process-max: "8"
-        log-level-console: detail
         # Minio
         repo1-block: "y"
         repo1-bundle: "y"
