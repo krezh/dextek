@@ -135,7 +135,7 @@ spec:
         repo3-retention-full-type: time
         repo3-s3-uri-style: path
       manual:
-        repoName: repo2
+        repoName: repo3
         options:
           - --type=full
       metadata:
