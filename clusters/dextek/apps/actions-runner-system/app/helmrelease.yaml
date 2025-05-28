@@ -29,5 +29,5 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    dockerRegistryMirror: "https://zot.int.plexuz.xyz/docker.io"
+  # values:
+  #   dockerRegistryMirror: "https://zot.int.plexuz.xyz/docker.io"

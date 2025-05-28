@@ -31,4 +31,4 @@ cluster_endpoint   = "https://192.168.20.5:6443"
 talos_version      = "v1.10.2" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 kubernetes_version = "v1.33.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 matchbox_url       = "http://matchbox.int.plexuz.xyz:8080"
-zot_factory_url    = "zot.int.plexuz.xyz/factory.talos.dev"
+factory_repo_url   = "factory.talos.dev"

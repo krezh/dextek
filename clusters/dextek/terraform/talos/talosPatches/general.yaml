@@ -1,6 +1,6 @@
 machine:
   install:
-    image: ${zot_factory_url}/installer/${talos_factory_hash}:${talos_version}
+    image: ${factory_repo_url}/installer/${talos_factory_hash}:${talos_version}
     disk: /dev/sda
     diskSelector:
       model: ${disk_model}

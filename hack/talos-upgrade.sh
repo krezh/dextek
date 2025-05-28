@@ -11,7 +11,7 @@ NORMAL=$(tput sgr0)
 
 # Default Variables
 NEW_VERSION="v1.10.2" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-IMAGE="zot.int.plexuz.xyz/factory.talos.dev/installer"
+IMAGE="factory.talos.dev/installer"
 NODE=""
 CHECK_SLEEP=3
 UPGRADE_INTERVAL=300 # 5m

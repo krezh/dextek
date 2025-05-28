@@ -36,8 +36,8 @@ variable "matchbox_url" {
   type        = string
 }
 
-variable "zot_factory_url" {
-  description = "The Url to Zot Registry for Factory Images"
+variable "factory_repo_url" {
+  description = "The Url to Registry for Factory Images"
   type        = string
 }
 
