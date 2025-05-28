@@ -78,12 +78,12 @@ spec:
         - name: mikrotik-icmp
           module: icmp
           url: "192.168.1.35"
-        - name: zot-http
-          module: http_2xx
-          url: "https://zot.int.plexuz.xyz/v2/"
-        - name: minio-http
-          module: http_2xx
-          url: "https://minio.int.plexuz.xyz/minio/health/live"
+        # - name: zot-http
+        #   module: http_2xx
+        #   url: "https://zot.int.plexuz.xyz/v2/"
+        # - name: minio-http
+        #   module: http_2xx
+        #   url: "https://minio.int.plexuz.xyz/minio/health/live"
         - name: pikvm-http
           module: http_2xx
           url: "https://pikvm.int.plexuz.xyz"

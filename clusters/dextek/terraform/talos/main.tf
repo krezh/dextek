@@ -29,7 +29,7 @@ data "talos_machine_configuration" "machine" {
       cluster_name       = var.cluster_name,
       talos_version      = var.talos_version,
       talos_factory_hash = talos_image_factory_schematic.machine.id,
-      zot_factory_url    = var.zot_factory_url,
+      factory_repo_url   = var.factory_repo_url,
       upsmonHost         = data.sops_file.secrets.data["nut.host"],
       upsmonPasswd       = data.sops_file.secrets.data["nut.password"],
       hostname           = each.key,
