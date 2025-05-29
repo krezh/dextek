@@ -132,7 +132,7 @@ check_node_exist() {
 
 get_node_schema_id() {
   node=$(echo "$node" | cut -d. -f1)
-  kubectl get nodes "$node" -o json | jq -r '.metadata.annotations[\"extensions.talos.dev/schematic\"]'
+  kubectl get nodes "$node" -o json | jq -r '.metadata.annotations["extensions.talos.dev/schematic"]'
 }
 
 upgrade_talos() {
