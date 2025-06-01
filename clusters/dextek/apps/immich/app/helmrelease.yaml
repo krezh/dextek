@@ -184,12 +184,16 @@ spec:
         path: /mnt/tank/media/immich
         globalMounts:
           - path: /usr/src/app/upload
-      cache:
-        enabled: true
+      machine-learning-cache:
         type: persistentVolumeClaim
         storageClass: ceph-filesystem
         accessMode: ReadWriteMany
         size: 10Gi
+        globalMounts:
+          - path: /cache
+            subPath: cache
+          - path: /.cache
+            subPath: dotCache
       geocoding-dump:
         enabled: true
         type: emptyDir
