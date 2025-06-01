@@ -94,7 +94,7 @@ spec:
               requests:
                 memory: 1Gi
               limits:
-                memory: 2Gi
+                memory: 4Gi
                 gpu.intel.com/i915: 1
       micro:
         type: deployment
