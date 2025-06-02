@@ -51,3 +51,11 @@ resource "routeros_interface_bridge_vlan" "vlan200" {
   untagged = []
   comment  = "FAST: ${var.comment}"
 }
+
+resource "routeros_interface_bridge_vlan" "vlan210" {
+  bridge   = routeros_interface_bridge.bridge.name
+  vlan_ids = [210]
+  tagged   = ["bridge"]
+  untagged = []
+  comment  = "FAST K8S: ${var.comment}"
+}
