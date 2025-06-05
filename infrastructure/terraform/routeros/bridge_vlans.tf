@@ -3,9 +3,6 @@ resource "routeros_interface_bridge_vlan" "vlan10" {
   vlan_ids = [10]
   tagged = [
     "bridge", "ether1",
-    routeros_interface_bridge_port.asgard_eth0.interface,
-    routeros_interface_bridge_port.vanaheim_eth0.interface,
-    routeros_interface_bridge_port.alfheim_eth0.interface,
     routeros_interface_bridge_port.ms01-01_eth0.interface,
     routeros_interface_bridge_port.ms01-02_eth0.interface,
     routeros_interface_bridge_port.ms01-03_eth0.interface,
