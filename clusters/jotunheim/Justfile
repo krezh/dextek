@@ -19,11 +19,11 @@ all: && _cleanup
 	just k9s
 
 kubeconfig:
-	scp root@jotunheim.srv.plexuz.xyz:/root/k3s.yaml {{KUBECONFIG}}
+	scp root@test.srv.plexuz.xyz:~/.kube/config {{KUBECONFIG}}
 	chmod 600 {{KUBECONFIG}}
 
 helmfile:
-	#until helmfile --quiet --kubeconfig {{KUBECONFIG}} --file {{BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
+	until helmfile --quiet --kubeconfig {{KUBECONFIG}} --file {{BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
 	sops --decrypt {{BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
 	sops --decrypt {{BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
 
