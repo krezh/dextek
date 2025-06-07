@@ -47,9 +47,10 @@ machine:
         UserNamespacesPodSecurityStandards: true
     nodeIP:
       validSubnets:
-        - "10.10.0.0/27"
+        - ${cluster_subnet}
   certSANs: &sans
-    - talos.k8s.plexuz.xyz
+    - ${cluster_endpoint}
+    - ${cluster_vip}
     - 127.0.0.1
     - localhost
   network:
@@ -65,7 +66,7 @@ machine:
         mtu: 1500
         dhcp: true
         vip:
-          ip: ${vip}
+          ip: ${cluster_vip}
         vlans:
           - vlanId: 100 # IoT VLAN
             mtu: 1500
@@ -111,10 +112,10 @@ machine:
 cluster:
   clusterName: ${cluster_name}
   controlPlane:
-    endpoint: https://talos.k8s.plexuz.xyz:6443
+    endpoint: https://${cluster_endpoint}:6443
   etcd:
     advertisedSubnets:
-      - "10.10.0.0/27"
+      - ${cluster_subnet}
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
   controllerManager:

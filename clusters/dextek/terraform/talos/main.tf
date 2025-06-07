@@ -1,90 +1,47 @@
-resource "talos_machine_secrets" "talos" {
-  talos_version = var.talos_version
-  lifecycle {
-    prevent_destroy = true
+module "talos" {
+  source                 = "./modules/talos"
+  cluster_name           = "talos-plexuz"
+  cluster_vip            = "192.168.20.5"
+  cluster_endpoint       = "talos.k8s.plexuz.xyz"
+  cluster_subnet         = "10.10.0.0/27"
+  talos_version          = "v1.10.3" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+  kubernetes_version     = "v1.33.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+  matchbox_url           = "http://matchbox.int.plexuz.xyz:8080"
+  matchbox_api           = "matchbox.int.plexuz.xyz:8081"
+  matchbox_private_key   = data.sops_file.secrets.data["matchbox.sshkey"]
+  matchbox_client_cert   = data.sops_file.secrets.data["matchbox.client_crt"]
+  matchbox_client_key    = data.sops_file.secrets.data["matchbox.client_key"]
+  matchbox_ca            = data.sops_file.secrets.data["matchbox.ca_crt"]
+  factory_schematic_file = "schematic.yaml"
+  upsmonHost             = data.sops_file.secrets.data["nut.host"]
+  upsmonPasswd           = data.sops_file.secrets.data["nut.password"]
+  nodes = {
+    "ms01-01.k8s.plexuz.xyz" = {
+      hostname   = "ms01-01"
+      role       = "controlplane"
+      mac_addr   = "58:47:ca:74:f2:40"
+      disk_model = "Samsung SSD*"
+      driver     = "igc"
+      driver_10g = "i40e"
+    }
+    "ms01-02.k8s.plexuz.xyz" = {
+      hostname   = "ms01-02"
+      role       = "controlplane"
+      mac_addr   = "58:47:ca:76:83:aa"
+      disk_model = "Samsung SSD*"
+      driver     = "igc"
+      driver_10g = "i40e"
+    }
+    "ms01-03.k8s.plexuz.xyz" = {
+      hostname   = "ms01-03"
+      role       = "controlplane"
+      mac_addr   = "58:47:ca:76:7f:52"
+      disk_model = "Samsung SSD*"
+      driver     = "igc"
+      driver_10g = "i40e"
+    }
   }
-}
-
-resource "talos_image_factory_schematic" "machine" {
-  schematic = file("schematic.yaml")
-}
-
-data "talos_machine_configuration" "machine" {
-  for_each = var.nodes
-  depends_on = [
-    talos_machine_secrets.talos
-  ]
-  machine_type     = each.value.role
-  cluster_name     = var.cluster_name
-  cluster_endpoint = var.cluster_endpoint
-
-  talos_version      = var.talos_version
-  kubernetes_version = var.kubernetes_version
-  docs               = false
-  examples           = false
-
-  machine_secrets = talos_machine_secrets.talos.machine_secrets
-  config_patches = [
-    templatefile("talosPatches/general.yaml", {
-      cluster_name       = var.cluster_name,
-      talos_version      = var.talos_version,
-      talos_factory_hash = talos_image_factory_schematic.machine.id,
-      factory_repo_url   = var.factory_repo_url,
-      upsmonHost         = data.sops_file.secrets.data["nut.host"],
-      upsmonPasswd       = data.sops_file.secrets.data["nut.password"],
-      hostname           = each.key,
-      disk_model         = each.value.disk_model,
-      mac_addr           = each.value.mac_addr,
-      vip                = var.vip,
-      driver             = each.value.driver,
-      driver_10g         = each.value.driver_10g,
-      matchboxUrl        = var.matchbox_url
-    }),
-    file("talosPatches/registries.yaml"),
-    each.value.role == "controlplane" ? file("talosPatches/controlplane.yaml") : null,
-    each.value.role == "worker" ? file("talosPatches/worker.yaml") : null,
-    # This patch is for the NUT UPS monitoring
-    templatefile("talosPatches/nut.yaml", {
-      upsmonHost   = data.sops_file.secrets.data["nut.host"],
-      upsmonPasswd = data.sops_file.secrets.data["nut.password"]
-    })
-  ]
-}
-
-resource "matchbox_profile" "machine" {
-  for_each = var.nodes
-  name     = "${each.value.role}-${each.value.hostname}"
-  kernel   = local.kernel_cached_factory
-  initrd   = [local.initrd_cached_factory]
-  args = [
-    "initrd=initramfs-amd64.xz",
-    "talos.config=${var.matchbox_url}/ignition?mac=$${mac:hexhyp}"
-  ]
-  raw_ignition = data.talos_machine_configuration.machine[each.key].machine_configuration
-}
-
-resource "matchbox_group" "machine" {
-  for_each = var.nodes
-  name     = each.value.hostname
-  profile  = matchbox_profile.machine[each.key].name
-  selector = {
-    mac = lower(each.value.mac_addr)
-  }
-}
-
-data "talos_client_configuration" "talosconfig" {
-  depends_on = [
-    talos_machine_secrets.talos
-  ]
-  client_configuration = talos_machine_secrets.talos.client_configuration
-  cluster_name         = var.cluster_name
-  endpoints            = [for k, v in var.nodes : k if v.role == "controlplane"]
-  nodes                = [for k, v in var.nodes : k]
-}
-
-resource "talos_machine_bootstrap" "bootstrap" {
-  count                = var.bootstrap ? 1 : 0
-  client_configuration = talos_machine_secrets.talos.client_configuration
-  node                 = element([for k, v in var.nodes : k if v.role == "controlplane"], 0)
-  endpoint             = element([for k, v in var.nodes : k if v.role == "controlplane"], 0)
+  bootstrap    = var.bootstrap
+  talosconfig  = var.talosconfig
+  machine_yaml = var.machine_yaml
 }
