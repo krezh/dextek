@@ -19,7 +19,7 @@ all: && _cleanup
 	just k9s
 
 kubeconfig:
-	scp root@test.srv.plexuz.xyz:~/.kube/config {{KUBECONFIG}}
+	scp root@192.168.10.53:/var/lib/kubesolo/pki/admin/admin.kubeconfig {{KUBECONFIG}}
 	chmod 600 {{KUBECONFIG}}
 
 helmfile:

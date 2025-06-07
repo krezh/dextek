@@ -17,6 +17,13 @@ tasks:
       - task: default
       - tofu apply --auto-approve {{.CLI_ARGS}}
 
+  tp:
+    desc: tofu plan
+    interactive: true
+    cmds:
+      - task: default
+      - tofu plan {{.CLI_ARGS}}
+
   bootstrap:
     desc: tofu apply --var bootstrap=true
     cmds:
@@ -37,8 +44,9 @@ tasks:
   machine_apply:
     desc: apply machine configs
     interactive: true
-    vars:
-      namespace: "{{.node}}"
+    requires:
+      vars:
+        - node
     deps:
       - machine
     cmds:
