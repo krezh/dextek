@@ -32,23 +32,23 @@ data "talos_machine_configuration" "machine" {
       factory_repo_url   = var.factory_repo_url,
       cluster_subnet     = var.cluster_subnet,
       cluster_endpoint   = var.cluster_endpoint,
-      upsmonHost         = var.upsmonHost,
-      upsmonPasswd       = var.upsmonPasswd,
+      upsmonHost         = var.upsmon.host,
+      upsmonPasswd       = var.upsmon.password,
       hostname           = each.key,
       disk_model         = each.value.disk_model,
       mac_addr           = each.value.mac_addr,
       cluster_vip        = var.cluster_vip,
       driver             = each.value.driver,
       driver_10g         = each.value.driver_10g,
-      matchboxUrl        = var.matchbox_url,
+      matchboxUrl        = var.matchbox.url,
     }),
     file("talosPatches/registries.yaml"),
     each.value.role == "controlplane" ? file("talosPatches/controlplane.yaml") : null,
     each.value.role == "worker" ? file("talosPatches/worker.yaml") : null,
     # This patch is for the NUT UPS monitoring
     templatefile("talosPatches/nut.yaml", {
-      upsmonHost   = var.upsmonHost,
-      upsmonPasswd = var.upsmonPasswd
+      upsmonHost   = var.upsmon.host,
+      upsmonPasswd = var.upsmon.password
     })
   ]
 }
@@ -60,7 +60,7 @@ resource "matchbox_profile" "machine" {
   initrd   = [local.factory_initrd_url]
   args = [
     "initrd=initramfs-amd64.xz",
-    "talos.config=${var.matchbox_url}/ignition?mac=$${mac:hexhyp}"
+    "talos.config=${var.matchbox.url}/ignition?mac=$${mac:hexhyp}"
   ]
   raw_ignition = data.talos_machine_configuration.machine[each.key].machine_configuration
 }

@@ -17,8 +17,8 @@ terraform {
 }
 
 provider "matchbox" {
-  endpoint    = var.matchbox_api
-  client_cert = var.matchbox_client_cert
-  client_key  = var.matchbox_client_key
-  ca          = var.matchbox_ca
+  endpoint    = var.matchbox.api
+  client_cert = var.matchbox.client_cert
+  client_key  = var.matchbox.client_key
+  ca          = var.matchbox.ca
 }

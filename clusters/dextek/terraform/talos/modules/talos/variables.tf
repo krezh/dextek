@@ -22,6 +22,24 @@ variable "cluster_endpoint" {
   }
 }
 
+variable "cluster_vip" {
+  description = "VIP address for the controlplane"
+  type        = string
+  validation {
+    condition     = can(cidrnetmask("${var.cluster_vip}/24"))
+    error_message = "The VIP address must be a valid IPv4 address."
+  }
+}
+
+variable "cluster_subnet" {
+  description = "The subnet for the cluster"
+  type        = string
+  validation {
+    condition     = can(cidrnetmask(var.cluster_subnet))
+    error_message = "The cluster_subnet must be a valid CIDR notation."
+  }
+}
+
 variable "talos_version" {
   description = "The Talos version"
   type        = string
@@ -40,64 +58,13 @@ variable "kubernetes_version" {
   }
 }
 
-variable "talos_factory_schematic_endpoint" {
+variable "factory_schematic_endpoint" {
   description = "The api endpoint for factory schematics"
   type        = string
   default     = "https://factory.talos.dev/schematics"
   validation {
-    condition     = can(regex("^https?://", var.talos_factory_schematic_endpoint))
-    error_message = "The talos_factory_schematic_endpoint must be a valid URL."
-  }
-}
-
-variable "matchbox_url" {
-  description = "The Url to Matchbox"
-  type        = string
-  validation {
-    condition     = can(regex("^https?://", var.matchbox_url))
-    error_message = "The matchbox_url must be a valid URL."
-  }
-}
-
-variable "matchbox_api" {
-  description = "The API endpoint for Matchbox"
-  type        = string
-  validation {
-    condition     = !can(regex("^https?://", var.matchbox_api))
-    error_message = "The matchbox_api must not start with https:// or http://"
-  }
-}
-
-variable "matchbox_private_key" {
-  description = "The private key for Matchbox host"
-  type        = string
-  validation {
-    condition     = length(var.matchbox_private_key) > 0
-    error_message = "The matchbox_private_key must not be empty."
-  }
-}
-variable "matchbox_client_cert" {
-  description = "The client certificate for Matchbox"
-  type        = string
-  validation {
-    condition     = length(var.matchbox_client_cert) > 0
-    error_message = "The matchbox_client_cert must not be empty."
-  }
-}
-variable "matchbox_client_key" {
-  description = "The client key for Matchbox"
-  type        = string
-  validation {
-    condition     = length(var.matchbox_client_key) > 0
-    error_message = "The matchbox_client_key must not be empty."
-  }
-}
-variable "matchbox_ca" {
-  description = "The CA certificate for Matchbox"
-  type        = string
-  validation {
-    condition     = length(var.matchbox_ca) > 0
-    error_message = "The matchbox_ca must not be empty."
+    condition     = can(regex("^https?://", var.factory_schematic_endpoint))
+    error_message = "The factory_schematic_endpoint must be a valid URL."
   }
 }
 
@@ -111,9 +78,41 @@ variable "factory_schematic_file" {
   description = "The file path to the Talos factory schematic"
   type        = string
   default     = "schematic.yaml"
+}
+
+variable "matchbox" {
+  description = "Matchbox configuration"
+  type = object({
+    url         = string
+    api         = string
+    private_key = string
+    client_cert = string
+    client_key  = string
+    ca          = string
+  })
   validation {
-    condition     = length(var.factory_schematic_file) > 0
-    error_message = "The factory_schematic_file must not be empty."
+    condition     = can(regex("^https?://", var.matchbox.url))
+    error_message = "The matchbox.url must be a valid URL."
+  }
+  validation {
+    condition     = !can(regex("^https?://", var.matchbox.api))
+    error_message = "The matchbox.api must not start with https:// or http://"
+  }
+  validation {
+    condition     = length(var.matchbox.private_key) > 0
+    error_message = "The matchbox.private_key must not be empty."
+  }
+  validation {
+    condition     = length(var.matchbox.client_cert) > 0
+    error_message = "The matchbox.client_cert must not be empty."
+  }
+  validation {
+    condition     = length(var.matchbox.client_key) > 0
+    error_message = "The matchbox.client_key must not be empty."
+  }
+  validation {
+    condition     = length(var.matchbox.ca) > 0
+    error_message = "The matchbox.ca must not be empty."
   }
 }
 
@@ -135,15 +134,6 @@ variable "machine_yaml" {
   default     = false
 }
 
-variable "cluster_subnet" {
-  description = "The subnet for the cluster"
-  type        = string
-  validation {
-    condition     = can(cidrnetmask(var.cluster_subnet))
-    error_message = "The cluster_subnet must be a valid CIDR notation."
-  }
-}
-
 variable "nodes" {
   description = "A map of node data"
   type = map(object({
@@ -152,7 +142,7 @@ variable "nodes" {
     mac_addr   = string
     disk_model = string
     driver     = string
-    driver_10g = string
+    driver_10g = optional(string)
   }))
   validation {
     condition     = length(var.nodes) > 0
@@ -184,28 +174,18 @@ variable "nodes" {
   }
 }
 
-variable "upsmonHost" {
-  description = "The host for the NUT UPS monitoring"
-  type        = string
+variable "upsmon" {
+  description = "Configuration for the NUT UPS monitoring"
+  type = object({
+    host     = string
+    password = string
+  })
   validation {
-    condition     = length(var.upsmonHost) > 0
-    error_message = "The upsmonHost must not be empty."
+    condition     = length(var.upsmon.host) > 0
+    error_message = "The upsmon.host must not be empty."
   }
-}
-variable "upsmonPasswd" {
-  description = "The password for the NUT UPS monitoring"
-  type        = string
   validation {
-    condition     = length(var.upsmonPasswd) > 0
-    error_message = "The upsmonPasswd must not be empty."
-  }
-}
-
-variable "cluster_vip" {
-  description = "VIP address for the controlplane"
-  type        = string
-  validation {
-    condition     = can(cidrnetmask("${var.cluster_vip}/24"))
-    error_message = "The VIP address must be a valid IPv4 address."
+    condition     = length(var.upsmon.password) > 0
+    error_message = "The upsmon.password must not be empty."
   }
 }
