@@ -32,6 +32,9 @@
   color: "027fa0"
 - name: renovate/terraform
   color: "027fa0"
+- name: renovate/stop-updating
+  color: "ee0701"
+
 # Semantic Types
 - name: type/digest
   color: "ffeC19"
