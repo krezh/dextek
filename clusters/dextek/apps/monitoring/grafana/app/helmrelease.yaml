@@ -200,6 +200,7 @@ spec:
           revision: 1
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+            - { name: DS_VICTORIAMETRICS, value: Prometheus }
       ceph:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
