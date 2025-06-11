@@ -89,3 +89,9 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+    persistence:
+      config:
+        existingClaim: semaphore-config
+        globalMounts:
+          - path: /var/lib/semaphore
+          - path: /etc/semaphore
