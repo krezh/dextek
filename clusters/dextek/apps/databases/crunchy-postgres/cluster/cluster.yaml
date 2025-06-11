@@ -117,12 +117,12 @@ spec:
         start-fast: "y"
         process-max: "8"
         # garage
-        # repo1-block: "y"
-        # repo1-bundle: "y"
-        # repo1-path: /crunchy-pgo
-        # repo1-retention-full: "14" # days
-        # repo1-retention-full-type: "time"
-        # repo1-s3-uri-style: path
+        repo1-block: "y"
+        repo1-bundle: "y"
+        repo1-path: /crunchy-pgo
+        repo1-retention-full: "14" # days
+        repo1-retention-full-type: "time"
+        repo1-s3-uri-style: path
         # R2
         repo2-block: "y"
         repo2-bundle: "y"
@@ -138,14 +138,14 @@ spec:
         labels:
           app.kubernetes.io/name: crunchy-postgres-backup
       repos:
-        # - name: repo1
-        #   s3: &garage
-        #     bucket: crunchy-pgo
-        #     endpoint: jotunheim.srv.plexuz.xyz:30188
-        #     region: garage
-        #   schedules:
-        #     full: "0 2 * * 0" # Sunday at 02:00
-        #     incremental: "0 2 * * 1-6/2" # Mon-Sat at 02:00, every 2nd day
+        - name: repo1
+          s3: &garage
+            bucket: crunchy-pgo
+            endpoint: jotunheim.srv.plexuz.xyz:30188
+            region: garage
+          schedules:
+            full: "0 2 * * 0" # Sunday at 02:00
+            incremental: "0 2 * * 1-6/2" # Mon-Sat at 02:00, every 2nd day
         - name: repo2
           s3: &r2
             bucket: crunchy-pgo
