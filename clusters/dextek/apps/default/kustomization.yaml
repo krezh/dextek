@@ -24,6 +24,7 @@ resources:
   - ./n8n
   - ./ollama
   - ./semaphore
+  - ./jellyfin
 transformers:
   - |-
     apiVersion: builtin
