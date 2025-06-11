@@ -10,7 +10,7 @@ BRIGHT=$(tput bold)
 NORMAL=$(tput sgr0)
 
 # Default Variables
-NEW_VERSION="v1.10.3" # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+NEW_VERSION="v1.10.3" # renovate: datasource=github-release depName=siderolabs/talos
 IMAGE="factory.talos.dev/installer"
 NODE=""
 CHECK_SLEEP=3
@@ -51,14 +51,13 @@ while getopts ":fn:v:AS" opt; do
   \?)
     echo "Invalid option: -$OPTARG" >&2
     usage
-    exit 1
     ;;
   esac
 done
 
 shift $((OPTIND - 1))
 
-if [ -z "${NODE}" ] || [ -z "${NEW_VERSION}" ]; then
+if [ "${#NODE[@]}" -eq 0 ] || [ -z "${NEW_VERSION}" ]; then
   usage
 fi
 
