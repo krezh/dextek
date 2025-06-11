@@ -101,6 +101,10 @@ spec:
       databases: ["zipline"]
       password:
         type: AlphaNumeric
+    - name: "semaphore"
+      databases: ["semaphore"]
+      password:
+        type: AlphaNumeric
   backups:
     pgbackrest:
       configuration: &backupConfig

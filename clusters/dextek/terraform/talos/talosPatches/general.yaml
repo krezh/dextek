@@ -27,6 +27,8 @@ machine:
     net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
     net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
     net.ipv4.tcp_window_scaling: 1 # 10Gb/s
+    sunrpc.tcp_slot_table_entries: 128 # 10Gb/s | NFS
+    sunrpc.tcp_max_slot_table_entries: 128 # 10Gb/s | NFS
     vm.nr_hugepages: 1024 # PostgreSQL
     net.ipv6.conf.all.disable_ipv6: 1 # Disable IPv6
     net.ipv6.conf.default.disable_ipv6: 1 # Disable IPv6
@@ -110,6 +112,7 @@ machine:
       allowedKubernetesNamespaces: ["kube-system"]
 
 cluster:
+  allowSchedulingOnControlPlanes: true
   clusterName: ${cluster_name}
   controlPlane:
     endpoint: https://${cluster_endpoint}:6443
@@ -121,27 +124,6 @@ cluster:
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
-  scheduler:
-    extraArgs:
-      bind-address: 0.0.0.0
-    config:
-      apiVersion: kubescheduler.config.k8s.io/v1
-      kind: KubeSchedulerConfiguration
-      profiles:
-        - schedulerName: default-scheduler
-          plugins:
-            score:
-              disabled:
-                - name: ImageLocality
-          pluginConfig:
-            - name: PodTopologySpread
-              args:
-                defaultingType: List
-                defaultConstraints:
-                  - maxSkew: 1
-                    topologyKey: kubernetes.io/hostname
-                    whenUnsatisfiable: ScheduleAnyway
-  allowSchedulingOnControlPlanes: true
   network:
     cni:
       name: none
@@ -164,3 +146,23 @@ cluster:
       oidc-groups-claim: groups
       oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
       oidc-username-claim: email
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0
+    config:
+      apiVersion: kubescheduler.config.k8s.io/v1
+      kind: KubeSchedulerConfiguration
+      profiles:
+        - schedulerName: default-scheduler
+          plugins:
+            score:
+              disabled:
+                - name: ImageLocality
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway
