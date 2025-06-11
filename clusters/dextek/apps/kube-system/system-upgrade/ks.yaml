@@ -50,7 +50,7 @@ spec:
     name: flux-system
   postBuild:
     substitute:
-      # renovate: datasource=github-release depName=siderolabs/talos
+      # renovate: datasource=github-releases depName=siderolabs/talos
       TALOS_VERSION: v1.10.3
       # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
       KUBERNETES_VERSION: v1.33.1
