@@ -23,6 +23,7 @@ resources:
   - ./zipline
   - ./n8n
   - ./ollama
+  - ./semaphore
 transformers:
   - |-
     apiVersion: builtin
