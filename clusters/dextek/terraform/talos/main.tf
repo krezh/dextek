@@ -4,7 +4,7 @@ module "talos" {
   cluster_vip            = "192.168.20.5"
   cluster_endpoint       = "talos.k8s.plexuz.xyz"
   cluster_subnet         = "10.10.0.0/27"
-  talos_version          = "v1.10.3" # renovate: datasource=github-releases depName=siderolabs/talos
+  talos_version          = "v1.10.4" # renovate: datasource=github-releases depName=siderolabs/talos
   kubernetes_version     = "v1.33.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
   factory_schematic_file = "schematic.yaml"
   matchbox = {
