@@ -59,24 +59,6 @@ machine:
         dhcp: true
         vip:
           ip: ${cluster_vip}
-        vlans:
-          - vlanId: 100 # IoT VLAN
-            mtu: 1500
-            dhcp: true
-            dhcpOptions:
-              routeMetric: 4096
-          # - vlanId: 10 # srv VLAN
-          #   mtu: 1500
-          #   dhcp: true
-          #   dhcpOptions:
-          #     routeMetric: 4096
-      %{ if driver_10g != "none" }
-      - deviceSelector:
-          driver: ${driver_10g}
-          physical: true
-        mtu: 1500
-        dhcp: true
-      %{ endif }
   files:
     - path: /etc/cri/conf.d/20-customization.part
       op: create
