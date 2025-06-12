@@ -59,19 +59,9 @@ spec:
               capabilities: { drop: ["ALL"] }
             probes:
               liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /
-                    port: &port 3000
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
                 enabled: false
+              readiness: *probes
+              startup: *probes
         serviceAccount:
           identifier: app
     service:
