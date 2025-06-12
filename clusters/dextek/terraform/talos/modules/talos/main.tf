@@ -59,7 +59,12 @@ resource "matchbox_profile" "machine" {
   kernel   = local.factory_kernel_url
   initrd   = [local.factory_initrd_url]
   args = [
-    #"initrd=initramfs-amd64.xz",
+    "initrd=initramfs-amd64.xz",
+    "init_on_alloc=1",
+    "slab_nomerge",
+    "pti=on",
+    "printk.devkmsg=on",
+    "talos.platform=${each.value.platform}",
     "talos.config=${var.matchbox.url}/ignition?mac=$${mac:hexhyp}"
   ]
   raw_ignition = data.talos_machine_configuration.machine[each.key].machine_configuration

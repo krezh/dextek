@@ -8,6 +8,7 @@ set ignore-comments
 CLUSTER_DIR := "."
 BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
 KUBECONFIG := "$(pwd)/kubeconfig"
+TALOSCONFIG := "$(pwd)/talosconfig"
 TALOS_CONTROLLER := "$(talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
 
 _default:
@@ -28,7 +29,8 @@ tofu:
   cd "{{CLUSTER_DIR}}/terraform/talos"
   echo "Running Tofu..."
   tofu init --upgrade
-  tofu apply --auto-approve
+  tofu apply --var talosconfig=true
+  cp talosconfig ~/.talos/config
 
 talos:
   #!/usr/bin/env bash
