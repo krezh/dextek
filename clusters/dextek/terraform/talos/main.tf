@@ -49,3 +49,7 @@ module "talos" {
   talosconfig  = var.talosconfig
   machine_yaml = var.machine_yaml
 }
+
+output "schematic_id" {
+  value = module.talos.schematic_id
+}

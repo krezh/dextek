@@ -1,20 +1,10 @@
 machine:
   install:
-    image: ${factory_repo_url}/installer/${talos_factory_hash}:${talos_version}
+    image: ${factory_repo_url}/metal-installer/${talos_factory_hash}:${talos_version}
     disk: /dev/sda
     diskSelector:
       model: ${disk_model}
     wipe: false
-    extraKernelArgs:
-      - apparmor=0 # Less security, faster puter
-      - init_on_alloc=0 # Less security, faster puter
-      - init_on_free=0 # Less security, faster puter
-      - intel_iommu=on # PCI Passthrough
-      - iommu=pt # PCI Passthrough
-      - mitigations=off # Less security, faster puter
-      - security=none # Less security, faster puter
-      - talos.auditd.disabled=1 # Less security, faster puter
-      - -selinux # Less security, faster puter
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
