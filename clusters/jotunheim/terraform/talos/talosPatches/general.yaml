@@ -1,0 +1,160 @@
+machine:
+  install:
+    image: ${factory_repo_url}/metal-installer/${talos_factory_hash}:${talos_version}
+    disk: /dev/sda
+    diskSelector:
+      model: ${disk_model}
+    wipe: false
+  sysctls:
+    fs.inotify.max_user_watches: 1048576 # Watchdog
+    fs.inotify.max_user_instances: 8192 # Watchdog
+    net.core.default_qdisc: fq # 10Gb/s
+    net.core.rmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
+    net.core.wmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
+    net.ipv4.tcp_congestion_control: bbr # 10Gb/s
+    net.ipv4.tcp_fastopen: 3 # Send and accept data in the opening SYN packet
+    net.ipv4.tcp_mtu_probing: 1 # 10Gb/s | Jumbo frames
+    net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
+    net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
+    net.ipv4.tcp_window_scaling: 1 # 10Gb/s
+    sunrpc.tcp_slot_table_entries: 128 # 10Gb/s | NFS
+    sunrpc.tcp_max_slot_table_entries: 128 # 10Gb/s | NFS
+    vm.nr_hugepages: 1024 # PostgreSQL
+    net.ipv6.conf.all.disable_ipv6: 1 # Disable IPv6
+    net.ipv6.conf.default.disable_ipv6: 1 # Disable IPv6
+    user.max_user_namespaces: 11255 # UserNamespacesSupport
+  udev:
+    rules:
+      # Intel GPU
+      - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
+  kubelet:
+    extraArgs:
+      rotate-server-certificates: true
+      feature-gates: UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true
+    extraConfig:
+      maxPods: 150
+      serializeImagePulls: false
+      featureGates:
+        UserNamespacesSupport: true
+        UserNamespacesPodSecurityStandards: true
+    nodeIP:
+      validSubnets:
+        - ${cluster_subnet}
+  certSANs: &sans
+    - ${cluster_endpoint}
+    - ${cluster_vip}
+    - 127.0.0.1
+    - localhost
+  network:
+    hostname: ${hostname}
+    nameservers:
+      - 192.168.20.1
+    disableSearchDomain: true
+    interfaces:
+      - deviceSelector:
+          hardwareAddr: ${mac_addr}
+          driver: ${driver}
+          physical: true
+        mtu: 1500
+        dhcp: true
+        vip:
+          ip: ${cluster_vip}
+        vlans:
+          - vlanId: 100 # IoT VLAN
+            mtu: 1500
+            dhcp: true
+            dhcpOptions:
+              routeMetric: 4096
+          # - vlanId: 10 # srv VLAN
+          #   mtu: 1500
+          #   dhcp: true
+          #   dhcpOptions:
+          #     routeMetric: 4096
+      %{ if driver_10g != "none" }
+      - deviceSelector:
+          driver: ${driver_10g}
+          physical: true
+        mtu: 1500
+        dhcp: true
+      %{ endif }
+  files:
+    - path: /etc/cri/conf.d/20-customization.part
+      op: create
+      content: |-
+        [metrics]
+          address = "0.0.0.0:11234"
+        [plugins."io.containerd.cri.v1.images"]
+          discard_unpacked_layers = false
+
+  time:
+    disabled: false
+    servers:
+      - 192.168.20.1
+  features:
+    kubePrism:
+      enabled: true
+      port: 7445
+    hostDNS:
+      enabled: true
+      resolveMemberNames: true
+      forwardKubeDNSToHost: false # Incompatible with Cilium bpf masquerade
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles: ["os:admin"]
+      allowedKubernetesNamespaces: ["kube-system"]
+
+cluster:
+  allowSchedulingOnControlPlanes: true
+  clusterName: ${cluster_name}
+  controlPlane:
+    endpoint: https://${cluster_endpoint}:6443
+  etcd:
+    advertisedSubnets:
+      - ${cluster_subnet}
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+  network:
+    cni:
+      name: none
+  coreDNS:
+    disabled: true
+  proxy:
+    disabled: true
+  apiServer:
+    certSANs: *sans
+    disablePodSecurityPolicy: true
+    auditPolicy:
+      apiVersion: audit.k8s.io/v1
+      kind: Policy
+      rules:
+        - level: Metadata
+    extraArgs:
+      runtime-config: admissionregistration.k8s.io/v1alpha1=true
+      feature-gates: AuthorizeNodeWithSelectors=false,MutatingAdmissionPolicy=true
+      oidc-client-id: kubernetes
+      oidc-groups-claim: groups
+      oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
+      oidc-username-claim: email
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0
+    config:
+      apiVersion: kubescheduler.config.k8s.io/v1
+      kind: KubeSchedulerConfiguration
+      profiles:
+        - schedulerName: default-scheduler
+          plugins:
+            score:
+              disabled:
+                - name: ImageLocality
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway

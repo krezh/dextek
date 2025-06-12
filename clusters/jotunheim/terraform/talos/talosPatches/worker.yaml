@@ -1,0 +1,6 @@
+- op: remove
+  path: /machine/features/kubernetesTalosAPIAccess
+- op: remove
+  path: /machine/network/interfaces/0/vip
+- op: remove
+  path: /cluster/etcd

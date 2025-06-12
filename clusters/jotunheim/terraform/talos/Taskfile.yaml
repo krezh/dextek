@@ -1,0 +1,53 @@
+---
+version: "3"
+
+vars: {}
+silent: true
+
+tasks:
+  default:
+    desc: tofu init
+    cmds:
+      - tofu init --upgrade
+
+  ta:
+    desc: tofu apply
+    interactive: true
+    cmds:
+      - task: default
+      - tofu apply --auto-approve {{.CLI_ARGS}}
+
+  tp:
+    desc: tofu plan
+    interactive: true
+    cmds:
+      - task: default
+      - tofu plan {{.CLI_ARGS}}
+
+  bootstrap:
+    desc: tofu apply --var bootstrap=true
+    cmds:
+      - tofu apply --var bootstrap=true {{.CLI_ARGS}}
+
+  talosconfig:
+    desc: create talosconfig
+    interactive: true
+    cmds:
+      - tofu apply --var talosconfig=true {{.CLI_ARGS}}
+
+  machine:
+    desc: create $type_$node.yaml
+    interactive: true
+    cmds:
+      - tofu apply --var machine_yaml=true {{.CLI_ARGS}}
+
+  machine_apply:
+    desc: apply machine configs
+    interactive: true
+    requires:
+      vars:
+        - node
+    deps:
+      - machine
+    cmds:
+      - talosctl apply -f controlplane_{{ .node }}.yaml -n {{ .node }}.k8s.plexuz.xyz --talosconfig ~/.talos/jotunheim --insecure

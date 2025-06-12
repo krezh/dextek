@@ -8,27 +8,74 @@ set ignore-comments
 CLUSTER_DIR := "."
 BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
 KUBECONFIG := "$(pwd)/kubeconfig"
+TALOSCONFIG := "~/.talos/jotunheim"
+TALOS_CONTROLLER := "$(talosctl --talosconfig " + TALOSCONFIG + " config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
 
 _default:
   just --list
 
 # Bootstrap all resources
 all: && _cleanup
-	just kubeconfig
-	just helmfile
-	just k9s
+  just tofu
+  just talos
+  just kubeconfig
+  just helmfile
+  #just wipe
+  just k9s
+
+tofu:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  cd "{{CLUSTER_DIR}}/terraform/talos"
+  echo "Running Tofu..."
+  tofu init --upgrade
+  tofu apply --var talosconfig=true
+  cp talosconfig {{TALOSCONFIG}}
+
+talos:
+  #!/usr/bin/env bash
+  TALOS_CONTROLLER="{{TALOS_CONTROLLER}}"
+  printf "Bootstrapping Node: $TALOS_CONTROLLER..."
+  until talosctl --talosconfig {{TALOSCONFIG}} --nodes $TALOS_CONTROLLER bootstrap; do sleep 5; done
+  echo " Done"
 
 kubeconfig:
-	scp root@192.168.10.53:/var/lib/kubesolo/pki/admin/admin.kubeconfig {{KUBECONFIG}}
-	chmod 600 {{KUBECONFIG}}
+  echo "Using Talos Controller: {{TALOS_CONTROLLER}} {{TALOSCONFIG}}"
+  printf "Getting kubeconfig..."
+  until talosctl --talosconfig {{TALOSCONFIG}} kubeconfig -n {{TALOS_CONTROLLER}} --force {{KUBECONFIG}}; do sleep 3; done
+  echo " Done"
 
 helmfile:
-	until helmfile --quiet --kubeconfig {{KUBECONFIG}} --file {{BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
-	sops --decrypt {{BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
-	sops --decrypt {{BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
+  echo "Waiting for Nodes to be ready..."
+  until kubectl --kubeconfig {{KUBECONFIG}} wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
+  printf "Deploying helmfile..."
+  until helmfile --quiet --kubeconfig {{KUBECONFIG}} --file {{BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
+  echo " Done"
+  sops --decrypt {{BOOTSTRAP_DIR}}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
+  sops --decrypt {{BOOTSTRAP_DIR}}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{KUBECONFIG}} -f -
+
+wipe:
+  #!/usr/bin/env bash
+  NODES=$(talosctl --talosconfig {{TALOSCONFIG}} config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1')
+  echo "Wiping disks on Nodes: $NODES"
+  for node in $NODES; do
+    echo "Waiting for Node to be ready: $node"
+    until talosctl --talosconfig {{TALOSCONFIG}} health -n $node >/dev/null 2>&1; do sleep 3; done
+    echo "Wiping disks on: $node"
+    DISKS=$(talosctl --talosconfig {{TALOSCONFIG}} get disks --output json -n $node | jq -r '. | select(.spec.dev_path | contains("nvme")) | .spec.dev_path' | sed 's|/dev/||g' | tr '\n' ' ' | awk '{$1=$1};1')
+    for disk in $DISKS; do
+      printf "Wiping: $disk"; sleep 1;
+      if talosctl --talosconfig {{TALOSCONFIG}} wipe disk $disk -n $node >/dev/null 2>&1; then
+        echo " SUCCESS";
+      else
+        echo " FAILED (Probably OS Drive)";
+      fi
+    done;
+  done
 
 k9s:
-	k9s --kubeconfig {{KUBECONFIG}} --all-namespaces --command pods
+  k9s --kubeconfig {{KUBECONFIG}} --all-namespaces --command pods
 
 _cleanup:
-	rm -f {{KUBECONFIG}}
+  rm -f {{KUBECONFIG}}
+  rm -f {{TALOSCONFIG}}
