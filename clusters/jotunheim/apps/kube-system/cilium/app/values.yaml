@@ -60,6 +60,7 @@ ingressController:
   loadbalancerMode: shared
 
 operator:
+  replicas: 1
   rollOutPods: true
   prometheus:
     enabled: true
