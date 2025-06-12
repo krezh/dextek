@@ -154,7 +154,7 @@ variable "nodes" {
     mac_addr   = string
     disk_model = string
     driver     = string
-    driver_10g = optional(string)
+    driver_10g = optional(string, "none")
   }))
   validation {
     condition     = length(var.nodes) > 0
@@ -177,16 +177,16 @@ variable "nodes" {
     error_message = "The mac_addr must not be empty."
   }
   validation {
+    condition     = alltrue([for node in var.nodes : can(regex("^[a-fA-F0-9:]+$", node.mac_addr))])
+    error_message = "The mac_addr must be a valid MAC address."
+  }
+  validation {
     condition     = alltrue([for node in var.nodes : length(node.disk_model) > 0])
     error_message = "The disk_model must not be empty."
   }
   validation {
     condition     = alltrue([for node in var.nodes : length(node.driver) > 0])
     error_message = "The driver must not be empty."
-  }
-  validation {
-    condition     = alltrue([for node in var.nodes : length(node.driver_10g) > 0])
-    error_message = "The driver_10g must not be empty."
   }
 }
 

@@ -8,3 +8,7 @@ resources:
   - ./reloader/ks.yaml
   - ./external-secrets/ks.yaml
   - ./k8tz/ks.yaml
+  - ./cilium
+  - ./coredns
+  - ./system-upgrade
+  - ./kubelet-csr-approver
