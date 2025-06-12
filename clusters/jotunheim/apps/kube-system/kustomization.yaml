@@ -10,5 +10,6 @@ resources:
   - ./k8tz/ks.yaml
   - ./cilium
   - ./coredns
+  - ./node-feature-discovery
   - ./system-upgrade
   - ./kubelet-csr-approver
