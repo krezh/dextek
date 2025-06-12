@@ -16,4 +16,3 @@ customization:
       - siderolabs/iscsi-tools
       - siderolabs/nut-client
       - siderolabs/util-linux-tools
-      - siderolabs/qemu-guest-agent

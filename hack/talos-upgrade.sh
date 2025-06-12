@@ -12,6 +12,7 @@ NORMAL=$(tput sgr0)
 # Default Variables
 NEW_VERSION="v1.10.3" # renovate: datasource=github-releases depName=siderolabs/talos
 IMAGE="factory.talos.dev/metal-installer"
+SCHEMA_ID=""
 NODE=""
 CHECK_SLEEP=3
 UPGRADE_INTERVAL=300 # 5m
@@ -29,7 +30,7 @@ usage() {
   exit 1
 }
 
-while getopts ":fn:v:AS" opt; do
+while getopts ":fn:vs:AS" opt; do
   case $opt in
   f)
     FORCE=true
@@ -39,6 +40,9 @@ while getopts ":fn:v:AS" opt; do
     ;;
   v)
     NEW_VERSION="${OPTARG}"
+    ;;
+  s)
+    SCHEMA_ID="${OPTARG}"
     ;;
   A)
     unset NODE
@@ -66,26 +70,10 @@ get_current_version() {
     awk '/Server:/,/Enabled:/ {if (/Tag:/) print $2}')"
 }
 
-check_ceph_health() {
-  local ceph_health
-  local count
-  # Loop until the cluster reports as healthy
-  while [[ "$ceph_health" != "HEALTH_OK" || "$count" -lt 3 ]]; do
-    # Get the cluster health using the ceph command
-    ceph_health="$(kubectl -n rook-ceph exec deploy/rook-ceph-tools -c rook-ceph-tools -- ceph health)"
-
-    # Print the cluster health
-    if [[ "$ceph_health" == "HEALTH_OK" ]]; then
-      let count++
-      echo -e "Ceph Status:$GREEN Healthy$NORMAL $count/3"
-    else
-      echo -e "Ceph Status:$RED Unhealthy$NORMAL"
-    fi
-
-    # Sleep before checking again
-    sleep $CHECK_SLEEP
-  done
+check_talos_health() {
+  talosctl --nodes "$node" health --wait-timeout=10m --server=false | awk '/HEALTH/ {print $2}'
 }
+
 
 check_etcd_health() {
   local etcd_health
@@ -97,7 +85,7 @@ check_etcd_health() {
 
     # Print the etcd health
     if [[ "$etcd_health" == "OK" ]]; then
-      let count++
+      ((count++))
       echo -e "ETCD Status:$GREEN Healthy$NORMAL $count/3"
     else
       echo -e "ETCD Status:$RED $etcd_health$NORMAL"
@@ -122,16 +110,20 @@ check_if_same() {
 }
 
 check_node_exist() {
-  talosctl get nodenames -n "$node" >/dev/null 2>&1
-  if [ $? -ne 0 ]; then
+  if ! talosctl get nodenames -n "$node" >/dev/null 2>&1; then
     echo -e "Node: \"$node\" does not exist"
     exit 1
   fi
 }
 
 get_node_schema_id() {
-  node=$(echo "$node" | cut -d. -f1)
-  kubectl get nodes "$node" -o json | jq -r '.metadata.annotations["extensions.talos.dev/schematic"]'
+  if [[ -z "$SCHEMA_ID" ]]; then
+    node=$(echo "$node" | cut -d. -f1)
+    talosctl -n "$node" get nodestatus -o json | jq -r '.spec.annotations["extensions.talos.dev/schematic"]'
+  else
+    echo -e "$SCHEMA_ID"
+    return
+  fi
 }
 
 upgrade_talos() {
@@ -143,7 +135,8 @@ upgrade_talos() {
   printf "Using Image: %s\n" "$IMAGE/$SCHEMA_ID:$NEW_VERSION"
   talosctl upgrade -n "$node" --image "$IMAGE/$SCHEMA_ID:$NEW_VERSION"
 
-  check_ceph_health &
+  #check_ceph_health &
+  check_talos_health &
   check_etcd_health &
   # Wait for jobs
   wait $(jobs -pr)
@@ -171,7 +164,8 @@ elif [[ ${SERVICE} == false ]]; then
 
   for node in "${NODE[@]}"; do
     get_current_version
-    check_ceph_health
+    #check_talos_health
+    #check_ceph_health
     upgrade_talos
   done
 fi
