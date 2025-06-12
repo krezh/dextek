@@ -149,7 +149,8 @@ variable "nodes" {
   description = "A map of node data"
   type = map(object({
     hostname   = string
-    role       = string # controlplane, worker
+    platform   = optional(string, "metal") # metal, etc. 
+    role       = string                    # controlplane, worker
     mac_addr   = string
     disk_model = string
     driver     = string
@@ -158,6 +159,10 @@ variable "nodes" {
   validation {
     condition     = length(var.nodes) > 0
     error_message = "The nodes variable must contain at least one node."
+  }
+  validation {
+    condition     = alltrue([for node in var.nodes : contains(["metal"], node.platform)])
+    error_message = "The platform must only contain alphanumeric characters and hyphens."
   }
   validation {
     condition     = alltrue([for node in var.nodes : contains(["controlplane", "worker"], node.role)])
