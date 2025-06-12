@@ -38,27 +38,12 @@ spec:
       rules:
         enabled: true
     server:
-      autoscaling:
-        enabled: true
-        minReplicas: 2
+      replicas: 2
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
       ingress:
         enabled: false
-        ingressClassName: nginx-external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: authentik.png
-          gethomepage.dev/name: Authentik
-          gethomepage.dev/group: Infrastructure
-          gethomepage.dev/app: authentik
-          gethomepage.dev/description: OIDC User Management
-        hosts:
-          - sso.plexuz.xyz
-        https: false
     worker:
-      autoscaling:
-        enabled: true
-        minReplicas: 2
+      replicas: 2
