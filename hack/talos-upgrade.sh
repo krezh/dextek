@@ -11,7 +11,7 @@ NORMAL=$(tput sgr0)
 
 # Default Variables
 NEW_VERSION="v1.10.3" # renovate: datasource=github-releases depName=siderolabs/talos
-IMAGE="factory.talos.dev/installer"
+IMAGE="factory.talos.dev/metal-installer"
 NODE=""
 CHECK_SLEEP=3
 UPGRADE_INTERVAL=300 # 5m
