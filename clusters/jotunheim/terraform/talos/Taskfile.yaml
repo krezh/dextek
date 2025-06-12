@@ -50,4 +50,4 @@ tasks:
     deps:
       - machine
     cmds:
-      - talosctl apply -f controlplane_{{ .node }}.yaml -n {{ .node }}.k8s.plexuz.xyz --talosconfig ~/.talos/jotunheim --insecure
+      - talosctl apply -f controlplane_{{ .node }}.yaml -n {{ .node }}.k8s.plexuz.xyz
