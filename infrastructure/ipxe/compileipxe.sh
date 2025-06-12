@@ -13,7 +13,7 @@ cp "general.h" "${SRC}/config/general.h"
 
 cd "$SRC" || exit
 
-#curl -SsL -o cacert.pem https://curl.se/ca/cacert.pem
+curl -SsL -o cacert.pem --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem
 
 #cat <<EOF > embed.ipxe
 #!ipxe
@@ -23,11 +23,11 @@ cd "$SRC" || exit
 
 
 # Make bin-x86_64-linux/ipxe.pxe
-make bin-x86_64-efi/snponly.efi bin-x86_64-efi/ipxe.efi # TRUST=cacert.pem EMBED=embed.ipxe #bin-x86_64-pcbios/undionly.kpxe 
+make bin-x86_64-efi/snponly.efi bin-x86_64-efi/ipxe.efi CERT=cacert.pem TRUST=cacert.pem #bin-x86_64-pcbios/undionly.kpxe #EMBED=embed.ipxe 
 
 cd - || exit
 
 # Copy ipxe.efi to local dir
 cp "$SRC"/bin-x86_64-efi/snponly.efi .
 cp "$SRC"/bin-x86_64-efi/ipxe.efi .
-#cp $SRC/bin-x86_64-pcbios/undionly.kpxe .
+#cp "$SRC"/bin-x86_64-pcbios/undionly.kpxe .

@@ -1,7 +1,8 @@
 locals {
   talos_factory_id   = talos_image_factory_schematic.machine.id
-  factory_kernel_url = "https://factory.talos.dev/image/${local.talos_factory_id}/${var.talos_version}/kernel-amd64"
-  factory_initrd_url = "https://factory.talos.dev/image/${local.talos_factory_id}/${var.talos_version}/initramfs-amd64.xz"
+  hash_short         = substr("${local.talos_factory_id}", 0, 10)
+  factory_kernel_url = "${var.matchbox.url}/assets/talos/factory/${local.hash_short}/${var.talos_version}/kernel-amd64"
+  factory_initrd_url = "${var.matchbox.url}/assets/talos/factory/${local.hash_short}/${var.talos_version}/initramfs-amd64.xz"
 }
 
 variable "cluster_name" {
@@ -85,6 +86,8 @@ variable "matchbox" {
   type = object({
     url         = string
     api         = string
+    host        = string
+    user        = string
     private_key = string
     client_cert = string
     client_key  = string
@@ -97,6 +100,14 @@ variable "matchbox" {
   validation {
     condition     = !can(regex("^https?://", var.matchbox.api))
     error_message = "The matchbox.api must not start with https:// or http://"
+  }
+  validation {
+    condition     = length(var.matchbox.host) > 0
+    error_message = "The matchbox.host must not be empty."
+  }
+  validation {
+    condition     = length(var.matchbox.user) > 0
+    error_message = "The matchbox.user must not be empty."
   }
   validation {
     condition     = length(var.matchbox.private_key) > 0

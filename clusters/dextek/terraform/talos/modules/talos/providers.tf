@@ -12,6 +12,10 @@ terraform {
       source  = "poseidon/matchbox"
       version = "0.5.4"
     }
+    ssh = {
+      source  = "loafoe/ssh"
+      version = "2.7.0"
+    }
   }
   required_version = ">= 1.3.0"
 }

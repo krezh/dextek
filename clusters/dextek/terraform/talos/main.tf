@@ -10,6 +10,8 @@ module "talos" {
   matchbox = {
     url         = "http://matchbox.int.plexuz.xyz:8080"
     api         = "matchbox.int.plexuz.xyz:8081"
+    host        = "matchbox.int.plexuz.xyz"
+    user        = "matchbox"
     private_key = data.sops_file.secrets.data["matchbox.sshkey"]
     client_cert = data.sops_file.secrets.data["matchbox.client_crt"]
     client_key  = data.sops_file.secrets.data["matchbox.client_key"]
@@ -52,4 +54,9 @@ module "talos" {
 
 output "schematic_id" {
   value = module.talos.schematic_id
+}
+
+output "get_talos_result" {
+  value = module.talos.get_talos_result
+
 }
