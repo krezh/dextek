@@ -17,12 +17,23 @@ spec:
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
-  name: node-smart-device-warning
+  name: SmartDeviceCriticalWarning
 spec:
   matchers:
     - name: alertname
       value: SmartDeviceCriticalWarning
       isRegex: false
+    - name: device
+      value: nvme1n1
+      isRegex: false
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/monitoring.giantswarm.io/silence_v1alpha1.json
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: SmartDeviceTestFailed
+spec:
+  matchers:
     - name: alertname
       value: SmartDeviceTestFailed
       isRegex: false
