@@ -1,5 +1,5 @@
 module "talos" {
-  source                 = "../../../../infrastructure/terraform/modules/talos"
+  source                 = "github.com/krezh/dextek//infrastructure/terraform/modules/talos?ref=main"
   cluster_name           = "talos-plexuz"
   cluster_vip            = "192.168.20.5"
   cluster_endpoint       = "talos.k8s.plexuz.xyz"
