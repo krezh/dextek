@@ -95,4 +95,3 @@ spec:
         globalMounts:
           - path: /var/lib/semaphore
           - path: /etc/semaphore
-          - path: /temp/semaphore
