@@ -1,5 +1,5 @@
 module "talos" {
-  source                 = "./modules/talos"
+  source                 = "../../../../infrastructure/terraform/modules/talos"
   cluster_name           = "talos-plexuz"
   cluster_vip            = "192.168.20.5"
   cluster_endpoint       = "talos.k8s.plexuz.xyz"

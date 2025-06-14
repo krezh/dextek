@@ -1,5 +1,5 @@
 module "talos" {
-  source                 = "../../../dextek/terraform/talos/modules/talos/"
+  source                 = "../../../../infrastructure/terraform/modules/talos"
   cluster_name           = "talos-jotunheim"
   cluster_vip            = "192.168.20.6"
   cluster_endpoint       = "talos2.k8s.plexuz.xyz"
