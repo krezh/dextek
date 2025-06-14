@@ -17,7 +17,7 @@ spec:
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
-  name: SmartDeviceCriticalWarning
+  name: smartdevicecriticalwarning
 spec:
   matchers:
     - name: alertname
@@ -31,7 +31,7 @@ spec:
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
-  name: SmartDeviceTestFailed
+  name: smartdevicetestfailed
 spec:
   matchers:
     - name: alertname
