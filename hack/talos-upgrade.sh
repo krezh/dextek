@@ -10,7 +10,7 @@ BRIGHT=$(tput bold)
 NORMAL=$(tput sgr0)
 
 # Default Variables
-NEW_VERSION="v1.10.3" # renovate: datasource=github-releases depName=siderolabs/talos
+NEW_VERSION=""
 IMAGE="factory.talos.dev/metal-installer"
 SCHEMA_ID=""
 NODE=""
