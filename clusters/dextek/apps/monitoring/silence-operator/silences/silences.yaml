@@ -17,7 +17,7 @@ spec:
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
-  name: ceph-node-local-diskspace-warning
+  name: node-smart-device-warning
 spec:
   matchers:
     - name: alertname
