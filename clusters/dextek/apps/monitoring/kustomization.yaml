@@ -18,6 +18,7 @@ resources:
   - ./headlamp
   - ./opnsense-exporter
   - ./alloy
+  - ./silence-operator
 transformers:
   - |-
     apiVersion: builtin
