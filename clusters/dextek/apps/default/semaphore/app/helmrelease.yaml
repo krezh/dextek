@@ -95,3 +95,5 @@ spec:
         globalMounts:
           - path: /var/lib/semaphore
           - path: /etc/semaphore
+      tmp:
+        type: emptyDir
