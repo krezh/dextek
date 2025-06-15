@@ -25,6 +25,7 @@ resources:
   - ./ollama
   - ./semaphore
   - ./jellyfin
+  - ./publish-k8s-schemas
 transformers:
   - |-
     apiVersion: builtin
