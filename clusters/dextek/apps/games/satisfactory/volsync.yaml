@@ -14,7 +14,6 @@ spec:
     name: satisfactory-restic-secret
     creationPolicy: Owner
     template:
-      engineVersion: v2
       data:
         RESTIC_REPOSITORY: "{{ .REPOSITORY_TEMPLATE }}/satisfactory"
         RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
