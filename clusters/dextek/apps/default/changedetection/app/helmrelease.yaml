@@ -81,6 +81,9 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
           gethomepage.dev/icon: "{{ .Release.Name }}.png"
+          gethomepage.dev/widget.url: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:5000"
+          gethomepage.dev/widget.type: "changedetectionio"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_CHANGEDETECTION_APIKEY}}` }}"
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/instance in (
               {{ .Release.Name }}
