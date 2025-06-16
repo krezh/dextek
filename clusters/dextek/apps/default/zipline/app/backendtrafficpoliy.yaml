@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: zipline-limit-body
+  namespace: default
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: zipline-internal
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: zipline-external
+  requestBuffer:
+    limit: 1Gi
