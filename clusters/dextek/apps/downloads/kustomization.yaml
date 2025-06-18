@@ -21,6 +21,7 @@ resources:
   - ./pinchflat
   - ./jdownloader
   - ./checkrr
+  - ./scraparr
 transformers:
   - |-
     apiVersion: builtin
