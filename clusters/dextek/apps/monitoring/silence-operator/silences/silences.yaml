@@ -10,7 +10,7 @@ spec:
       value: CephNodeDiskspaceWarning
       isRegex: false
     - name: device
-      value: /dev/sd.*
+      value: /dev/nvme.*
       isRegex: true
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/monitoring.giantswarm.io/silence_v1alpha1.json
@@ -23,9 +23,6 @@ spec:
     - name: alertname
       value: SmartDeviceCriticalWarning
       isRegex: false
-    - name: device
-      value: nvme1n1
-      isRegex: false
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/monitoring.giantswarm.io/silence_v1alpha1.json
 apiVersion: monitoring.giantswarm.io/v1alpha1
@@ -36,7 +33,4 @@ spec:
   matchers:
     - name: alertname
       value: SmartDeviceTestFailed
-      isRegex: false
-    - name: device
-      value: nvme1n1
       isRegex: false
