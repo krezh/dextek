@@ -176,7 +176,6 @@ spec:
             timeouts:
               request: 0s
               backendRequest: 0s
-
     persistence:
       library:
         type: nfs
@@ -184,6 +183,12 @@ spec:
         path: /mnt/tank/media/immich
         globalMounts:
           - path: /usr/src/app/upload
+      media:
+        type: nfs
+        server: 10.10.0.2
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
       machine-learning-cache:
         type: persistentVolumeClaim
         storageClass: ceph-filesystem
