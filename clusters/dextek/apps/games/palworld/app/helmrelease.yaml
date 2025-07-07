@@ -97,3 +97,4 @@ spec:
         existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
           - path: /palworld
+          - path: /savedata
