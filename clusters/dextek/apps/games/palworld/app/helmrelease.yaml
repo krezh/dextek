@@ -24,16 +24,6 @@ spec:
   values:
     controllers:
       app:
-        initContainers:
-          init-config:
-            image:
-              repository: public.ecr.aws/docker/library/busybox
-              tag: latest@sha256:f85340bf132ae937d2c2a763b8335c9bab35d6e8293f70f606b9c6178d84f42b
-              pullPolicy: IfNotPresent
-            command:
-              - "/bin/sh"
-              - "-c"
-              - "cp /tmp/ServerGameSettings.json /savedata/Settings/ServerGameSettings.json; cat /savedata/Settings/ServerGameSettings.json;"
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
@@ -97,4 +87,3 @@ spec:
         existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
           - path: /palworld
-          - path: /savedata
