@@ -57,9 +57,9 @@ spec:
               PLAYERS: 16
               MULTITHREADING: true
               RCON_ENABLED: true
-              RCON_PORT: 25575
+              RCON_PORT: &rconPort 25575
               TZ: "UTC"
-              COMMUNITY: false  # Enable this if you want your server to show up in the community servers tab, USE WITH SERVER_PASSWORD!
+              COMMUNITY: false # Enable this if you want your server to show up in the community servers tab, USE WITH SERVER_PASSWORD!
               SERVER_NAME: "Valhalla"
               SERVER_DESCRIPTION: "Valhalla Server"
               CROSSPLAY_PLATFORMS: "(Steam,Xbox,PS5,Mac)"
