@@ -2,12 +2,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - ./namespace.yaml
-  - ./satisfactory
-  - ./enshrouded
-  - ./vrising
-  - ../../../shared/templates/flux
 transformers:
   - |-
     apiVersion: builtin
@@ -16,3 +10,10 @@ transformers:
       name: not-used
       namespace: games
     unsetOnly: true
+resources:
+  - ../../../shared/templates/flux
+  - ./namespace.yaml
+  - ./satisfactory
+  - ./enshrouded
+  - ./vrising
+  - ./palworld
