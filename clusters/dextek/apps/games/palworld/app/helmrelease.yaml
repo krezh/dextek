@@ -43,7 +43,7 @@ spec:
                   name: palworld-secret
             env:
               PORT: &gamePort 8211
-              QUERY_PORT: &queryPort 27017
+              QUERY_PORT: &queryPort 27015
               PLAYERS: 16
               MULTITHREADING: true
               RCON_ENABLED: true
