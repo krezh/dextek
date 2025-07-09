@@ -44,7 +44,7 @@ spec:
             env:
               PORT: &gamePort 8211
               QUERY_PORT: &queryPort 27015
-              PLAYERS: 16
+              PLAYERS: &players 16
               MULTITHREADING: true
               RCON_ENABLED: true
               RCON_PORT: &rconPort 25575
@@ -52,13 +52,17 @@ spec:
               COMMUNITY: true
               SERVER_NAME: "Valhalla"
               SERVER_DESCRIPTION: "Valhalla Server"
-              CROSSPLAY_PLATFORMS: "(Steam,Xbox,PS5,Mac)"
+              CROSSPLAY_PLATFORMS: "(Steam)"
               BACKUP_ENABLED: false
               USE_BACKUP_SAVE_DATA: false
               AUTO_UPDATE_ENABLED: true
               AUTO_UPDATE_CRON_EXPRESSION: "0 * * * *"
               AUTO_REBOOT_ENABLED: true
               AUTO_REBOOT_CRON_EXPRESSION: "0 0 * * *"
+              ENABLE_INVADER_ENEMY: false
+              COOP_PLAYER_MAX_NUM: *players
+              ENABLE_NON_LOGIN_PENALTY: false
+              DEATH_PENALTY: None
             resources:
               requests:
                 cpu: 441m
