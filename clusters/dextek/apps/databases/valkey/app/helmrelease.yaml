@@ -30,7 +30,7 @@ spec:
     image:
       registry: ghcr.io
       repository: valkey-io/valkey
-      tag: 8.1.2-bookworm@sha256:fec42f399876eb6faf9e008570597741c87ff7662a54185593e74b09ce83d177
+      tag: 8.1.3-bookworm@sha256:facc1d2c3462975c34e10fccb167bfa92b0e0dbd992fc282c29a61c3243afb11
     metrics:
       enabled: true
     service:
