@@ -26,7 +26,7 @@ data:
               type: uptimekuma
               url: https://status.plexuz.xyz
     - Calendars:
-        - Sonarr:
+        - Calendar:
             widget:
               type: calendar
               firstDayInWeek: monday
