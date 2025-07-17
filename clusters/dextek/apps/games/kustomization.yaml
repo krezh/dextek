@@ -13,7 +13,5 @@ transformers:
 resources:
   - ../../../shared/templates/flux
   - ./namespace.yaml
-  - ./satisfactory
   - ./enshrouded
-  - ./vrising
   - ./palworld
