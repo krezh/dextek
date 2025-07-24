@@ -14,21 +14,25 @@ tasks:
       - ./hack/talos-upgrade.sh -Af
 
   reset:
-    desc: Reset Talos and Clear all user disks
+    desc: Reset Talos
     prompt: This is a dangerous command... Do you want to continue?
     ignore_error: true
+    vars:
+      ARGS: "--reboot --graceful=false --wait=false --timeout=10s --wipe-mode=all"
+      NODES:
+        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1'
     cmds:
       - |
         echo "ms01-01.k8s.plexuz.xyz: resetting" && \
-        until talosctl reset -n ms01-01.k8s.plexuz.xyz -e ms01-01.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=10s --wipe-mode=all; do sleep 3; done && \
+        until talosctl reset -n ms01-01.k8s.plexuz.xyz -e ms01-01.k8s.plexuz.xyz {{ .ARGS }}; do sleep 3; done && \
         echo "ms01-01.k8s.plexuz.xyz: done"
       - |
-        echo "ms01-02.k8s.plexuz.xyz: resetting"
-        until talosctl reset -n ms01-02.k8s.plexuz.xyz -e ms01-02.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=10s --wipe-mode=all; do sleep 3; done
+        echo "ms01-02.k8s.plexuz.xyz: resetting" && \
+        until talosctl reset -n ms01-02.k8s.plexuz.xyz -e ms01-02.k8s.plexuz.xyz {{ .ARGS }}; do sleep 3; done && \
         echo "ms01-02.k8s.plexuz.xyz: done"
       - |
-        echo "ms01-03.k8s.plexuz.xyz: resetting"
-        until talosctl reset -n ms01-03.k8s.plexuz.xyz -e ms01-03.k8s.plexuz.xyz --reboot --graceful=false --wait=false --timeout=10s --wipe-mode=all; do sleep 3; done
+        echo "ms01-03.k8s.plexuz.xyz: resetting" && \
+        until talosctl reset -n ms01-03.k8s.plexuz.xyz -e ms01-03.k8s.plexuz.xyz {{ .ARGS }}; do sleep 3; done && \
         echo "ms01-03.k8s.plexuz.xyz: done"
 
   wipe:
@@ -36,6 +40,7 @@ tasks:
     ignore_error: true
     vars:
       disks: "nvme0n1 nvme1n1 nvme2n1"
-      nodes: "ms01-01.k8s.plexuz.xyz ms01-02.k8s.plexuz.xyz ms01-03.k8s.plexuz.xyz"
+      NODES:
+        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1'
     cmds:
-      - for node in {{ .nodes }}; do for disk in {{ .disks }}; do talosctl wipe disk $disk -n $node | true; echo $node $disk; sleep 1; done; done
+      - for node in {{ .NODES }}; do for disk in {{ .disks }}; do talosctl wipe disk $disk -n $node | true; echo $node $disk; sleep 1; done; done
