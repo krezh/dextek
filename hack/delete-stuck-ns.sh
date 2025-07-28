@@ -12,5 +12,5 @@ TERMINATING_NS=$(kubectl get ns | awk '$2=="Terminating" {print $1}')
 
 for ns in $TERMINATING_NS
 do
-    delete_namespace $ns
+    delete_namespace "$ns"
 done

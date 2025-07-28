@@ -21,7 +21,6 @@ includes:
   es: "{{.TASKS_DIR}}/ExternalSecrets"
   rook: "{{.TASKS_DIR}}/Rook"
   volsync: "{{.TASKS_DIR}}/volsync"
-  bootstrap: "{{.TASKS_DIR}}/Bootstrap"
   talos: "{{.TASKS_DIR}}/Talos"
   postgres: "{{.TASKS_DIR}}/Postgres"
 
