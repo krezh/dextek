@@ -11,7 +11,7 @@ tasks:
   upgrade-all-force:
     desc: Forced Upgrade Talos on cluster
     cmds:
-      - ./hack/talos-upgrade.sh -Af
+      - ./hack/talos-upgrade.sh -AF
 
   reset:
     desc: Reset Talos
