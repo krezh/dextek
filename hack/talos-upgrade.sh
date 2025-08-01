@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # Colors & Text
-RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
 YELLOW=$(tput setaf 3)
 BLUE=$(tput setaf 4)
@@ -13,11 +12,8 @@ NORMAL=$(tput sgr0)
 NEW_VERSION=""
 IMAGE="factory.talos.dev/metal-installer"
 SCHEMA_ID=""
-NODE=""
-CHECK_SLEEP=3
-UPGRADE_INTERVAL=300 # 5m
+NODE=()
 FORCE=false
-SERVICE=false
 
 shutdown() {
   tput cnorm # reset cursor
@@ -26,14 +22,20 @@ shutdown() {
 trap shutdown EXIT
 
 usage() {
-  echo -e "Idiot!"
+  echo -e "Usage: $0 -n <node1,node2> -v <version> [-f] [-s <schema>] [-A]"
+  echo -e "  -n: Comma-separated list of nodes (required unless -A is used)"
+  echo -e "  -v: New version to upgrade to (required)"
+  echo -e "  -f: Force upgrade even if versions match"
+  echo -e "  -s: Schema ID"
+  echo -e "  -A: All nodes"
+  echo -e "\nExample: $0 -A -v <version>"
   exit 1
 }
 
-while getopts ":fn:vs:AS" opt; do
+while getopts "hn:v:s:FA" opt; do
   case $opt in
-  f)
-    FORCE=true
+  h)
+    usage
     ;;
   n)
     IFS=',' read -r -a NODE <<<"$OPTARG"
@@ -44,13 +46,12 @@ while getopts ":fn:vs:AS" opt; do
   s)
     SCHEMA_ID="${OPTARG}"
     ;;
-  A)
-    unset NODE
-    NODE=$(talosctl get nodenames -o json | jq -r .node | paste -sd, -)
-    IFS=',' read -r -a NODE <<<"$NODE"
+  F)
+    FORCE=true
     ;;
-  S)
-    SERVICE=true
+  A)
+    temp=$(talosctl get nodenames -o json | jq -r .node | paste -sd, -)
+    IFS=',' read -r -a NODE <<<"$temp"
     ;;
   \?)
     echo "Invalid option: -$OPTARG" >&2
@@ -61,39 +62,21 @@ done
 
 shift $((OPTIND - 1))
 
-if [ "${#NODE[@]}" -eq 0 ] || [ -z "${NEW_VERSION}" ]; then
+if [ -z "${NEW_VERSION}" ]; then
+  echo "Error: -v <version> is required."
+  usage
+fi
+if [ "${#NODE[@]}" -eq 0 ]; then
+  echo "Error: No nodes specified. Use -n or -A."
   usage
 fi
 
 get_current_version() {
-  CURRENT_VERSION="$(talosctl version -n "$node" |
-    awk '/Server:/,/Enabled:/ {if (/Tag:/) print $2}')"
+  CURRENT_VERSION="$(talosctl get version -o json -n "$node" | jq -r '.spec["version"]')"
 }
 
 check_talos_health() {
-  talosctl --nodes "$node" health --wait-timeout=10m --server=false | awk '/HEALTH/ {print $2}'
-}
-
-
-check_etcd_health() {
-  local etcd_health
-  local count
-  # Loop until the etcd reports as healthy
-  while [[ "$etcd_health" != "OK" || "$count" -lt 3 ]]; do
-    # Get the etcd health
-    etcd_health=$(talosctl service etcd -n "$node" | awk '/HEALTH/ {print $2}')
-
-    # Print the etcd health
-    if [[ "$etcd_health" == "OK" ]]; then
-      ((count++))
-      echo -e "ETCD Status:$GREEN Healthy$NORMAL $count/3"
-    else
-      echo -e "ETCD Status:$RED $etcd_health$NORMAL"
-    fi
-
-    # Sleep before checking again
-    sleep $CHECK_SLEEP
-  done
+  talosctl --nodes "$node" health --wait-timeout=10m --server=false
 }
 
 # Check if versions are the same
@@ -135,37 +118,16 @@ upgrade_talos() {
   printf "Using Image: %s\n" "$IMAGE/$SCHEMA_ID:$NEW_VERSION"
   talosctl upgrade -n "$node" --image "$IMAGE/$SCHEMA_ID:$NEW_VERSION"
 
-  #check_ceph_health &
   check_talos_health &
-  check_etcd_health &
+  
   # Wait for jobs
-  wait $(jobs -pr)
+  wait "$(jobs -pr)"
   get_current_version
   printf "Upgraded Node: %s to version: %s\n\n" "$YELLOW$BRIGHT$node$NORMAL" "$BRIGHT$GREEN$CURRENT_VERSION$NORMAL"
 }
 
-if [[ ${SERVICE} == true ]]; then
-  while [[ ${SERVICE} == true ]]; do
-    for node in "${NODE[@]}"; do
-      check_node_exist
-    done
-
-    for node in "${NODE[@]}"; do
-      get_current_version
-      upgrade_talos
-    done
-    echo "Will run again in $(${UPGRADE_INTERVAL} / 60)m"
-    sleep $UPGRADE_INTERVAL
-  done
-elif [[ ${SERVICE} == false ]]; then
-  for node in "${NODE[@]}"; do
-    check_node_exist
-  done
-
-  for node in "${NODE[@]}"; do
-    get_current_version
-    #check_talos_health
-    #check_ceph_health
-    upgrade_talos
-  done
-fi
+for node in "${NODE[@]}"; do
+  check_node_exist
+  get_current_version
+  upgrade_talos
+done
