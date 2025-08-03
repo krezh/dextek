@@ -148,7 +148,7 @@ spec:
             port: 7700
     persistence:
       data:
-        existingClaim: karakeep-data
+        existingClaim: karakeep-config
         advancedMounts:
           karakeep:
             app:
