@@ -26,6 +26,7 @@ resources:
   - ./semaphore
   - ./jellyfin
   - ./publish-k8s-schemas
+  - ./karakeep
 transformers:
   - |-
     apiVersion: builtin
