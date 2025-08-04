@@ -187,5 +187,18 @@
       separateMinorPatch: true,
       sourceUrl: "https://github.com/diced/zipline",
     },
+    {
+      description: ["Atuin Group"],
+      groupName: "Atuin",
+      matchPackagePatterns: [
+        "atuin",
+      ],
+      matchDatasources: ["docker", "helm", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/atuinsh/atuin",
+    },
   ],
 }
