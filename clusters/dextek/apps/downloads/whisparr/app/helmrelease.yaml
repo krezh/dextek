@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/whisparr
-              tag: 2.0.0@sha256:2a4e8f0c9a0fcce5414ab9fbad6524f53c9fee76cc33a764a6f00d89fce43487
+              tag: 2.0.0@sha256:137999526a09b2f3026a1326fdad9c45a4c43dbc62c1790e1355690e1978d500
             env:
               WHISPARR__INSTANCE_NAME: whisparr
               WHISPARR__PORT: &port 8989
