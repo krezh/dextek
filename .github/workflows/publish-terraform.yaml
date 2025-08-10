@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: ["infrastructure/terraform/**", "clusters/*/terraform/**"]
+    paths: ["infrastructure/terraform/**", "clusters/**/terraform/**"]
 
 jobs:
   publish-infrastructure:
