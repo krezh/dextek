@@ -43,12 +43,11 @@ data "talos_machine_configuration" "machine" {
     fileexists("talosPatches/registries.yaml") ? file("talosPatches/registries.yaml") : null,
     each.value.role == "controlplane" ? file("talosPatches/controlplane.yaml") : null,
     each.value.role == "worker" ? file("talosPatches/worker.yaml") : null,
-    # This patch is for the NUT UPS monitoring
+    fileexists("talosPatches/userVolumeConfigs.yaml") ? file("talosPatches/userVolumeConfig.yaml") : null,
     fileexists("talosPatches/nut.yaml") ? templatefile("talosPatches/nut.yaml", {
       upsmonHost   = var.upsmon.host,
       upsmonPasswd = var.upsmon.password
     }) : null,
-    fileexists("talosPatches/userVolumeConfig.yaml") ? file("talosPatches/userVolumeConfig.yaml") : null
   ]
 }
 
