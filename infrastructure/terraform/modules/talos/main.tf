@@ -32,8 +32,6 @@ data "talos_machine_configuration" "machine" {
       factory_repo_url   = var.factory_repo_url,
       cluster_subnet     = var.cluster_subnet,
       cluster_endpoint   = var.cluster_endpoint,
-      upsmonHost         = var.upsmon.host,
-      upsmonPasswd       = var.upsmon.password,
       hostname           = each.key,
       disk_model         = each.value.disk_model,
       mac_addr           = each.value.mac_addr,
@@ -42,14 +40,15 @@ data "talos_machine_configuration" "machine" {
       driver_10g         = each.value.driver_10g,
       matchboxUrl        = var.matchbox.url,
     }),
-    file("talosPatches/registries.yaml"),
+    fileexists("talosPatches/registries.yaml") ? file("talosPatches/registries.yaml") : null,
     each.value.role == "controlplane" ? file("talosPatches/controlplane.yaml") : null,
     each.value.role == "worker" ? file("talosPatches/worker.yaml") : null,
     # This patch is for the NUT UPS monitoring
-    templatefile("talosPatches/nut.yaml", {
+    fileexists("talosPatches/nut.yaml") ? templatefile("talosPatches/nut.yaml", {
       upsmonHost   = var.upsmon.host,
       upsmonPasswd = var.upsmon.password
-    })
+    }) : null,
+    fileexists("talosPatches/userVolumeConfig.yaml") ? file("talosPatches/userVolumeConfig.yaml") : null
   ]
 }
 
