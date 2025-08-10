@@ -3,13 +3,13 @@
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
-  name: talos
+  name: talos-dextek
   namespace: flux-system
 spec:
   suspend: false
   approvePlan: auto
   interval: 12h
-  path: ./talos
+  path: ./dextek/talos
   sourceRef:
     kind: OCIRepository
     name: infrastructure

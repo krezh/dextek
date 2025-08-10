@@ -49,7 +49,15 @@ jobs:
       - name: Publish manifests
         shell: bash
         run: |
-          mkdir /tmp/terraform && cp -r infrastructure/terraform/* clusters/*/terraform/* /tmp/terraform
+          mkdir /tmp/terraform
+          cp -r infrastructure/terraform/* /tmp/terraform
+          for tf_dir in clusters/*/terraform/*; do
+            cluster_name=$(basename "$(dirname "$(dirname "$tf_dir")")")
+            terraform_folder_name=$(basename "$tf_dir")
+            dest_dir="/tmp/terraform/${cluster_name}/${terraform_folder_name}"
+            mkdir -p "$dest_dir"
+            cp -r "$tf_dir"/* "$dest_dir"/
+          done
           ls /tmp/terraform
           flux push artifact oci://${{ steps.generate-tag.outputs.tag }} \
               --path="/tmp/terraform" \
