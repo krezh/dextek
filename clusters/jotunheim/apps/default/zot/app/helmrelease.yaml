@@ -76,9 +76,10 @@ spec:
             subPath: auth.json
             readOnly: true
       registry:
-        type: hostPath
-        hostPath: /var/mnt/local-hostpath
-        hostPathType: Directory
+        enabled: true
+        storageClass: openebs-hostpath
+        retain: true
+        size: 100Gi
+        accessMode: ReadWriteOnce
         globalMounts:
           - path: /var/lib/registry
-            subPath: zot
