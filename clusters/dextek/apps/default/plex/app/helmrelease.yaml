@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/plex
-              tag: 1.42.1
+              tag: 1.42.1@sha256:c4085d5f0c7f26374bc705f1a37aa8b79d39ee9e3134cdea168423832dc6b8a7
             env:
               PLEX_ADVERTISE_URL: https://plex-lb.talos.plexuz.xyz:32400
             resources:
