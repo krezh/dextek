@@ -21,8 +21,12 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+  components:
+    - ../../../../shared/components/ext-auth
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
+      EXT_AUTH_OUTPOST: external
+      EXT_AUTH_TARGET: sonarr-app
