@@ -20,7 +20,11 @@ spec:
   wait: false
   interval: 30m
   timeout: 5m
+  components:
+    - ../../../../../shared/components/ext-auth
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
+      EXT_AUTH_OUTPOST: internal
+      EXT_AUTH_TARGET: *app

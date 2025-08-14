@@ -5,4 +5,3 @@ kind: Kustomization
 resources:
   - ../../../../../shared/templates/volsync
   - ./helmrelease.yaml
-  - ./securitypolicy.yaml
