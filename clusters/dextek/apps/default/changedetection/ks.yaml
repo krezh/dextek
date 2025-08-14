@@ -21,9 +21,13 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  components:
+    - ../../../../../shared/components/ext-auth
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
       VOLSYNC_CLAIM: changedetection-config
+      EXT_AUTH_OUTPOST: external
+      EXT_AUTH_TARGET: *app
