@@ -32,7 +32,7 @@ spec:
       retries: 3
   values:
     githubConfigUrl: https://github.com/krezh/nix-config
-    #githubConfigSecret: nix-config-runner-secret
+    githubConfigSecret: nix-config-runner-secret
     minRunners: 1
     maxRunners: 3
     containerMode:
@@ -62,16 +62,3 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
-  valuesFrom:
-    - kind: Secret
-      name: actions-runner-controller
-      valuesKey: github_app_id
-      targetPath: githubConfigSecret.github_app_id
-    - kind: Secret
-      name: actions-runner-controller
-      valuesKey: github_app_installation_id
-      targetPath: githubConfigSecret.github_app_installation_id
-    - kind: Secret
-      name: actions-runner-controller
-      valuesKey: github_app_private_key
-      targetPath: githubConfigSecret.github_app_private_key
