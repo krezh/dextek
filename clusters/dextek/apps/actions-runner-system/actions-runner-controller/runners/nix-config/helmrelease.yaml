@@ -49,7 +49,9 @@ spec:
       namespace: actions-runner-system
     template:
       spec:
-        serviceAccountName: *name
+        securityContext:
+          fsGroup: 123
+        #serviceAccountName: *name
         containers:
           - name: runner
             image: ghcr.io/home-operations/actions-runner:2.328.0@sha256:c43873ef6800697dfa181582f6bb02366a9a0afb52026bde7bad7c71b21b1052
