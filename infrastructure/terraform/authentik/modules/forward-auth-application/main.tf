@@ -102,7 +102,7 @@ resource "authentik_provider_proxy" "main" {
   name                          = var.name
   external_host                 = "https://${var.domain}"
   internal_host                 = var.internal_host
-  cookie_domain                 = var.domain
+  #cookie_domain                 = var.domain
   basic_auth_enabled            = var.basic_auth_enabled
   basic_auth_password_attribute = var.basic_auth_password_attribute
   basic_auth_username_attribute = var.basic_auth_username_attribute
