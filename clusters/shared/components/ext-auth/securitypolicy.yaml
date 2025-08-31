@@ -8,10 +8,7 @@ spec:
   extAuth:
     failOpen: false
     headersToExtAuth:
-      - set-cookie
-      - x-authentik-*
-      - authorization
-      - x-forwarded-proto
+      - cookie
     http:
       backendRefs:
         - kind: Service
