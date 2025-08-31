@@ -12,8 +12,7 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
+        - kind: Service
           name: ak-outpost-internal
           port: 9000
       matches:
@@ -34,8 +33,7 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
+        - kind: Service
           name: ak-outpost-external
           port: 9000
       matches:
