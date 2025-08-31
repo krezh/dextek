@@ -48,6 +48,13 @@ resource "authentik_outpost" "internal" {
     "kubernetes_disabled_components" = ["ingress", "traefik middleware"]
     "kubernetes_ingress_annotations" = {}
     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
+    "kubernetes_httproute_parent_refs" = [
+      {
+        name      = "gateway-internal"
+        namespace = "network"
+        sectionName = "https"
+      }
+    ]
   })
 }
 
@@ -74,5 +81,12 @@ resource "authentik_outpost" "external" {
     "kubernetes_disabled_components" = ["ingress", "traefik middleware"]
     "kubernetes_ingress_annotations" = {}
     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
+    "kubernetes_httproute_parent_refs" = [
+      {
+        name      = "gateway-external"
+        namespace = "network"
+        sectionName = "https"
+      }
+    ]
   })
 }
