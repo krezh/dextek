@@ -9,6 +9,7 @@ spec:
     failOpen: false
     headersToExtAuth:
       - cookie
+      - X-Forwarded-Proto
     http:
       backendRefs:
         - kind: Service
