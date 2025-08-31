@@ -7,19 +7,22 @@ metadata:
 spec:
   extAuth:
     failOpen: false
-    headersToExtAuth: &headers
-      - Cookie
-      - Set-Cookie
-      - X-authentik-*
-      - Authorization
+    headersToExtAuth:
+      - set-cookie
+      - x-authentik-*
+      - authorization
+      - x-forwarded-proto
     http:
       backendRefs:
-        - group: ""
-          kind: Service
+        - kind: Service
           name: ak-outpost-${EXT_AUTH_OUTPOST:-internal}
           namespace: auth
           port: 9000
-      headersToBackend: *headers
+      headersToBackend:
+        - set-cookie
+        - x-authentik-*
+        - authorization
+        - x-forwarded-proto
       path: /outpost.goauthentik.io/auth/envoy
   targetRefs:
     - group: ${EXT_AUTH_GROUP:-gateway.networking.k8s.io}
