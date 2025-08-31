@@ -7,7 +7,7 @@ resource "authentik_brand" "plexuz" {
   branding_title      = "Plexuz"
   branding_logo       = "/static/dist/assets/icons/icon_left_brand.svg"
   branding_favicon    = "/static/dist/assets/icons/icon.png"
-  branding_custom_css = file("branding/plexuz.css")
+  # branding_custom_css = file("branding/plexuz.css")
 
   flow_authentication = authentik_flow.authentication.uuid
   flow_invalidation   = authentik_flow.invalidation.uuid
