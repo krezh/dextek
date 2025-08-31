@@ -30,16 +30,17 @@ resource "authentik_outpost" "internal" {
   protocol_providers = local.internal_proxy_provider_ids
   config = jsonencode({
     "log_level"                      = "info"
-    "docker_labels"                  = null
     "authentik_host"                 = "https://sso.${var.domain}/"
+    "authentik_host_insecure"        = false
+    "authentik_host_browser"         = ""
+    "refresh_interval"               = "minutes=5"
+    "docker_labels"                  = null
     "docker_network"                 = null
-    "container_image"                = null
     "docker_map_ports"               = true
+    "container_image"                = null
     "kubernetes_replicas"            = 1
     "kubernetes_namespace"           = "auth"
-    "authentik_host_browser"         = ""
     "object_naming_template"         = "ak-outpost-%(name)s"
-    "authentik_host_insecure"        = false
     "kubernetes_json_patches"        = null
     "kubernetes_service_type"        = "ClusterIP"
     "kubernetes_image_pull_secrets"  = []
@@ -63,16 +64,17 @@ resource "authentik_outpost" "external" {
   protocol_providers = local.external_proxy_provider_ids
   config = jsonencode({
     "log_level"                      = "info"
-    "docker_labels"                  = null
     "authentik_host"                 = "https://sso.${var.domain}/"
+    "authentik_host_insecure"        = false
+    "authentik_host_browser"         = ""
+    "refresh_interval"               = "minutes=5"
+    "docker_labels"                  = null
     "docker_network"                 = null
-    "container_image"                = null
     "docker_map_ports"               = true
+    "container_image"                = null
     "kubernetes_replicas"            = 1
     "kubernetes_namespace"           = "auth"
-    "authentik_host_browser"         = ""
     "object_naming_template"         = "ak-outpost-%(name)s"
-    "authentik_host_insecure"        = false
     "kubernetes_json_patches"        = null
     "kubernetes_service_type"        = "ClusterIP"
     "kubernetes_image_pull_secrets"  = []
