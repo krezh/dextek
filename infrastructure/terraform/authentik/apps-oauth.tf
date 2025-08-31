@@ -2,9 +2,9 @@ module "grafana" {
   source = "./modules/oidc-application"
   slug   = "grafana"
 
-  name      = "Grafana"
-  domain    = "grafana.talos.${var.domain}"
-  app_group = "Monitoring"
+  name       = "Grafana"
+  app_domain = "grafana.talos.${var.domain}"
+  app_group  = "Monitoring"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -28,9 +28,9 @@ module "minio" {
   source = "./modules/oidc-application"
   slug   = "minio"
 
-  name      = "Minio"
-  domain    = "minio.${var.domain}"
-  app_group = "Infrastructure"
+  name       = "Minio"
+  app_domain = "minio.${var.domain}"
+  app_group  = "Infrastructure"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -55,9 +55,9 @@ module "mealie" {
   source = "./modules/oidc-application"
   slug   = "mealie"
 
-  name      = "Mealie"
-  domain    = "mealie.${var.domain}"
-  app_group = "Tools"
+  name       = "Mealie"
+  app_domain = "mealie.${var.domain}"
+  app_group  = "Tools"
 
   access_groups = [
     data.authentik_group.superuser.id,
@@ -85,9 +85,9 @@ module "immich" {
   source = "./modules/oidc-application"
   slug   = "immich"
 
-  name      = "Immich"
-  domain    = "photos.${var.domain}"
-  app_group = "Tools"
+  name       = "Immich"
+  app_domain = "photos.${var.domain}"
+  app_group  = "Tools"
 
   access_groups = [
     data.authentik_group.superuser.id
@@ -119,9 +119,9 @@ module "zipline" {
   source = "./modules/oidc-application"
   slug   = "zipline"
 
-  name      = "Zipline"
-  domain    = "zipline.${var.domain}"
-  app_group = "Tools"
+  name       = "Zipline"
+  app_domain = "zipline.${var.domain}"
+  app_group  = "Tools"
 
   access_groups = [
     data.authentik_group.superuser.id
@@ -149,9 +149,9 @@ module "kubernetes" {
   source = "./modules/oidc-application"
   slug   = "kubernetes"
 
-  name      = "Kubernetes"
-  domain    = var.domain
-  app_group = "Infrastructure"
+  name       = "Kubernetes"
+  app_domain = var.domain
+  app_group  = "Infrastructure"
 
   access_groups = [
     data.authentik_group.superuser.id
@@ -179,9 +179,9 @@ module "karakeep" {
   source = "./modules/oidc-application"
   slug   = "karakeep"
 
-  name      = "Karakeep"
-  domain    = "karakeep.${var.domain}"
-  app_group = "Tools"
+  name       = "Karakeep"
+  app_domain = "karakeep.${var.domain}"
+  app_group  = "Tools"
 
   access_groups = [
     data.authentik_group.superuser.id,
