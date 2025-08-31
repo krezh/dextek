@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+locals {
+  domain = join(".", slice(split(".", var.app_domain), length(split(".", var.app_domain)) - 2, length(split(".", var.app_domain))))
+}
+
 variable "name" {
   type = string
 }
@@ -14,7 +18,7 @@ variable "slug" {
   type    = string
   default = null
 }
-variable "domain" {
+variable "app_domain" {
   type = string
 }
 variable "access_token_validity" {
@@ -100,9 +104,9 @@ data "authentik_flow" "default-provider-invalidation-flow" {
 
 resource "authentik_provider_proxy" "main" {
   name                          = var.name
-  external_host                 = "https://${var.domain}"
+  external_host                 = "https://${var.app_domain}"
   internal_host                 = var.internal_host
-  #cookie_domain                 = var.domain
+  cookie_domain                 = local.domain
   basic_auth_enabled            = var.basic_auth_enabled
   basic_auth_password_attribute = var.basic_auth_password_attribute
   basic_auth_username_attribute = var.basic_auth_username_attribute
