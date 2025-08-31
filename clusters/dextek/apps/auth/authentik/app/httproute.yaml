@@ -21,11 +21,6 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
+        - kind: Service
           name: authentik-server
           port: 80
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
