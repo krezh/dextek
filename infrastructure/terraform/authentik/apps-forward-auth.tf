@@ -2,9 +2,9 @@ module "echo_server" {
   source = "./modules/forward-auth-application"
   slug   = "echo_server"
 
-  name      = "Echo Server"
-  domain    = "echo-server.${var.domain}"
-  app_group = "Infrastructure"
+  name       = "Echo Server"
+  app_domain = "echo-server.${var.domain}"
+  app_group  = "Infrastructure"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -18,9 +18,9 @@ module "pgweb" {
   source = "./modules/forward-auth-application"
   slug   = "pgweb"
 
-  name      = "PGWeb"
-  domain    = "pgweb.talos.${var.domain}"
-  app_group = "Infrastructure"
+  name       = "PGWeb"
+  app_domain = "pgweb.talos.${var.domain}"
+  app_group  = "Infrastructure"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -32,9 +32,9 @@ module "sonarr" {
   source = "./modules/forward-auth-application"
   slug   = "sonarr"
 
-  name      = "Sonarr"
-  domain    = "sonarr.${var.domain}"
-  app_group = "Downloads"
+  name       = "Sonarr"
+  app_domain = "sonarr.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -48,9 +48,9 @@ module "radarr" {
   source = "./modules/forward-auth-application"
   slug   = "radarr"
 
-  name      = "Radarr"
-  domain    = "radarr.${var.domain}"
-  app_group = "Downloads"
+  name       = "Radarr"
+  app_domain = "radarr.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -64,9 +64,9 @@ module "prowlarr" {
   source = "./modules/forward-auth-application"
   slug   = "prowlarr"
 
-  name      = "Prowlarr"
-  domain    = "prowlarr.${var.domain}"
-  app_group = "Downloads"
+  name       = "Prowlarr"
+  app_domain = "prowlarr.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -80,9 +80,9 @@ module "jdownloader2" {
   source = "./modules/forward-auth-application"
   slug   = "jdownloader2"
 
-  name      = "JDownloader2"
-  domain    = "jd.${var.domain}"
-  app_group = "Downloads"
+  name       = "JDownloader2"
+  app_domain = "jd.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -96,9 +96,9 @@ module "bazarr" {
   source = "./modules/forward-auth-application"
   slug   = "bazarr"
 
-  name      = "Bazarr"
-  domain    = "bazarr.${var.domain}"
-  app_group = "Downloads"
+  name       = "Bazarr"
+  app_domain = "bazarr.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -112,9 +112,9 @@ module "maintainerr" {
   source = "./modules/forward-auth-application"
   slug   = "maintainerr"
 
-  name      = "Maintainerr"
-  domain    = "maintainerr.${var.domain}"
-  app_group = "Downloads"
+  name       = "Maintainerr"
+  app_domain = "maintainerr.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -128,9 +128,9 @@ module "sabnzbd" {
   source = "./modules/forward-auth-application"
   slug   = "sabnzbd"
 
-  name      = "Sabnzbd"
-  domain    = "sab.${var.domain}"
-  app_group = "Downloads"
+  name       = "Sabnzbd"
+  app_domain = "sab.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -144,9 +144,9 @@ module "whisparr" {
   source = "./modules/forward-auth-application"
   slug   = "whisparr"
 
-  name      = "Whisparr"
-  domain    = "whisparr.${var.domain}"
-  app_group = "Downloads"
+  name       = "Whisparr"
+  app_domain = "whisparr.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -160,9 +160,9 @@ module "changedetection" {
   source = "./modules/forward-auth-application"
   slug   = "changedetection"
 
-  name      = "Changedetection"
-  domain    = "changedetection.${var.domain}"
-  app_group = "Tools"
+  name       = "Changedetection"
+  app_domain = "changedetection.${var.domain}"
+  app_group  = "Tools"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -176,9 +176,9 @@ module "wallos" {
   source = "./modules/forward-auth-application"
   slug   = "wallos"
 
-  name      = "Wallos"
-  domain    = "wallos.${var.domain}"
-  app_group = "Tools"
+  name       = "Wallos"
+  app_domain = "wallos.${var.domain}"
+  app_group  = "Tools"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -192,9 +192,9 @@ module "homepage" {
   source = "./modules/forward-auth-application"
   slug   = "homepage"
 
-  name      = "Homepage"
-  domain    = "homepage.${var.domain}"
-  app_group = ""
+  name       = "Homepage"
+  app_domain = "homepage.${var.domain}"
+  app_group  = ""
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -208,9 +208,9 @@ module "home" {
   source = "./modules/forward-auth-application"
   slug   = "home"
 
-  name      = "Home"
-  domain    = var.domain
-  app_group = ""
+  name       = "Home"
+  app_domain = var.domain
+  app_group  = ""
 
   access_groups = [resource.authentik_group.users.id, data.authentik_group.superuser.id]
 
@@ -224,9 +224,9 @@ module "homeassistant" {
   source = "./modules/forward-auth-application"
   slug   = "homeassistant"
 
-  name      = "Home Assistant"
-  domain    = "hass.${var.domain}"
-  app_group = "Home"
+  name       = "Home Assistant"
+  app_domain = "hass.${var.domain}"
+  app_group  = "Home"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -240,9 +240,9 @@ module "n8n" {
   source = "./modules/forward-auth-application"
   slug   = "n8n"
 
-  name      = "n8n"
-  domain    = "n8n.talos.${var.domain}"
-  app_group = "Tools"
+  name       = "n8n"
+  app_domain = "n8n.talos.${var.domain}"
+  app_group  = "Tools"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -256,9 +256,9 @@ module "checkrr" {
   source = "./modules/forward-auth-application"
   slug   = "checkrr"
 
-  name      = "checkrr"
-  domain    = "checkrr.${var.domain}"
-  app_group = "Downloads"
+  name       = "checkrr"
+  app_domain = "checkrr.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
@@ -272,9 +272,9 @@ module "pinchflat" {
   source = "./modules/forward-auth-application"
   slug   = "pinchflat"
 
-  name      = "pinchflat"
-  domain    = "pinchflat.talos.${var.domain}"
-  app_group = "Downloads"
+  name       = "pinchflat"
+  app_domain = "pinchflat.talos.${var.domain}"
+  app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
 
