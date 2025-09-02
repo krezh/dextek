@@ -1,6 +1,9 @@
 customization:
   extraKernelArgs:
     - net.ifnames=0
+    - -init_on_alloc # Less security, faster puter
+    - -init_on_free # Less security, faster puter
+    - -selinux # Less security, faster puter
     - apparmor=0 # Less security, faster puter
     - init_on_alloc=0 # Less security, faster puter
     - init_on_free=0 # Less security, faster puter
@@ -9,13 +12,13 @@ customization:
     - mitigations=off # Less security, faster puter
     - security=none # Less security, faster puter
     - talos.auditd.disabled=1 # Less security, faster puter
-    - -selinux # Less security, faster puter
   systemExtensions:
     officialExtensions:
-      - siderolabs/binfmt-misc
-      - siderolabs/intel-ucode
-      - siderolabs/iscsi-tools
-      - siderolabs/nut-client
-      - siderolabs/util-linux-tools
-      - siderolabs/i915-ucode
-      - siderolabs/mei
+      - siderolabs/intel-ucode # Intel iGPU
+      - siderolabs/i915 # Intel iGPU
+      - siderolabs/mei # Intel iGPU
+      - siderolabs/nfsrahead # NFS Performance
+      - siderolabs/binfmt-misc # Miscellaneous Binary Formats
+      - siderolabs/iscsi-tools # iSCSI Tools
+      - siderolabs/nut-client # UPS Monitoring
+      - siderolabs/util-linux-tools # Linux Utilities
