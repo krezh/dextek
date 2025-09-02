@@ -43,6 +43,7 @@ machine:
     nodeIP:
       validSubnets:
         - ${cluster_subnet}
+    disableManifestsDirectory: true
   certSANs: &sans
     - ${cluster_endpoint}
     - ${cluster_vip}
@@ -133,8 +134,8 @@ cluster:
       rules:
         - level: Metadata
     extraArgs:
-      runtime-config: admissionregistration.k8s.io/v1alpha1=true
-      feature-gates: AuthorizeNodeWithSelectors=false,MutatingAdmissionPolicy=true
+      runtime-config: admissionregistration.k8s.io/v1beta1=true
+      feature-gates: MutatingAdmissionPolicy=true
       oidc-client-id: kubernetes
       oidc-groups-claim: groups
       oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
