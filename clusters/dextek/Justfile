@@ -15,6 +15,7 @@ _default:
 # Bootstrap all resources
 all: && _cleanup
   just tofu
+  just talosconfig
   just talos
   just kubeconfig
   just helmfile
@@ -29,7 +30,13 @@ tofu:
   tofu init --upgrade
   tofu apply --auto-approve --var talosconfig=true
   mkdir -p ~/.talos/configs
-  cp talosconfig ~/.talos/configs/dextek
+  cp talosconfig ~/.talos/configs/plexuz
+
+talosconfig:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  #TODO Change cluster name
+  talswitcher ctx talos-plexuz
 
 talos:
   #!/usr/bin/env bash
