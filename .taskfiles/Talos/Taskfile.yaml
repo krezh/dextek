@@ -23,17 +23,11 @@ tasks:
         sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1'
     cmds:
       - |
-        echo "ms01-01.k8s.plexuz.xyz: resetting" && \
-        until talosctl reset -n ms01-01.k8s.plexuz.xyz -e ms01-01.k8s.plexuz.xyz {{ .ARGS }}; do sleep 3; done && \
-        echo "ms01-01.k8s.plexuz.xyz: done"
-      - |
-        echo "ms01-02.k8s.plexuz.xyz: resetting" && \
-        until talosctl reset -n ms01-02.k8s.plexuz.xyz -e ms01-02.k8s.plexuz.xyz {{ .ARGS }}; do sleep 3; done && \
-        echo "ms01-02.k8s.plexuz.xyz: done"
-      - |
-        echo "ms01-03.k8s.plexuz.xyz: resetting" && \
-        until talosctl reset -n ms01-03.k8s.plexuz.xyz -e ms01-03.k8s.plexuz.xyz {{ .ARGS }}; do sleep 3; done && \
-        echo "ms01-03.k8s.plexuz.xyz: done"
+        for node in {{ .NODES }}; do
+          echo "$node: resetting"
+          until talosctl reset -n $node -e $node {{ .ARGS }}; do sleep 3; done
+          echo "$node: done"
+        done
 
   wipe:
     desc: Wipe all user disks
