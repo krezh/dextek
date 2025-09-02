@@ -27,8 +27,9 @@ tofu:
   cd "{{CLUSTER_DIR}}/terraform/talos"
   echo "Running Tofu..."
   tofu init --upgrade
-  tofu apply --var talosconfig=true
-  cp talosconfig ~/.talos/config
+  tofu apply --auto-approve --var talosconfig=true
+  mkdir -p ~/.talos/configs
+  cp talosconfig ~/.talos/configs/dextek
 
 talos:
   #!/usr/bin/env bash

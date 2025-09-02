@@ -61,5 +61,4 @@ output "schematic_id" {
 
 output "get_talos_result" {
   value = module.talos.get_talos_result
-
 }
