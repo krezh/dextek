@@ -41,7 +41,7 @@ while getopts "hn:v:s:FA" opt; do
     IFS=',' read -r -a NODE <<<"$OPTARG"
     ;;
   v)
-    NEW_VERSION="v${OPTARG}"
+    NEW_VERSION="${OPTARG}"
     ;;
   s)
     SCHEMA_ID="${OPTARG}"
@@ -119,7 +119,7 @@ upgrade_talos() {
   talosctl upgrade -n "$node" --image "$IMAGE/$SCHEMA_ID:$NEW_VERSION"
 
   check_talos_health &
-
+  
   # Wait for jobs
   wait "$(jobs -pr)"
   get_current_version
