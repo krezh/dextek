@@ -24,10 +24,13 @@ tasks:
     cmds:
       - |
         for node in {{ .NODES }}; do
-          echo "$node: resetting"
-          until talosctl reset -n $node -e $node {{ .ARGS }}; do sleep 3; done
-          echo "$node: done"
+          (
+            echo "$node: resetting"
+            until talosctl reset -n $node -e $node {{ .ARGS }}; do sleep 3; done
+            echo "$node: done"
+          ) &
         done
+        wait
 
   wipe:
     desc: Wipe all user disks
