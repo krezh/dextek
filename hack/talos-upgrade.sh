@@ -41,7 +41,7 @@ while getopts "hn:v:s:FA" opt; do
     IFS=',' read -r -a NODE <<<"$OPTARG"
     ;;
   v)
-    NEW_VERSION="${OPTARG}"
+    NEW_VERSION="v${OPTARG}"
     ;;
   s)
     SCHEMA_ID="${OPTARG}"
