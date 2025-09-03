@@ -16,13 +16,7 @@ env:
   MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"
 
 includes:
-  k8s: "{{.TASKS_DIR}}/Kubernetes"
-  flux: "{{.TASKS_DIR}}/Flux"
-  es: "{{.TASKS_DIR}}/ExternalSecrets"
-  rook: "{{.TASKS_DIR}}/Rook"
   volsync: "{{.TASKS_DIR}}/volsync"
-  talos: "{{.TASKS_DIR}}/Talos"
-  postgres: "{{.TASKS_DIR}}/Postgres"
 
 tasks:
   default:
