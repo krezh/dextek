@@ -23,7 +23,6 @@ resources:
   - ./zipline
   - ./n8n
   - ./ollama
-  - ./semaphore
   - ./jellyfin
   - ./publish-k8s-schemas
   - ./karakeep
