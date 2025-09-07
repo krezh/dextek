@@ -37,7 +37,6 @@ tofu:
 talosconfig:
   #!/usr/bin/env bash
   set -euo pipefail
-  #TODO Change cluster name
   talswitcher ctx talos-{{CLUSTER_NAME}}
 
 talos:
