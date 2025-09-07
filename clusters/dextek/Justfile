@@ -9,6 +9,8 @@ KUBECONFIG := "$(pwd)/kubeconfig"
 TALOSCONFIG := "$(pwd)/talosconfig"
 TALOS_CONTROLLER := "$(talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
 
+CLUSTER_NAME := "plexuz"
+
 _default:
   just --list
 
@@ -30,13 +32,13 @@ tofu:
   tofu init --upgrade
   tofu apply --auto-approve --var talosconfig=true
   mkdir -p ~/.talos/configs
-  cp talosconfig ~/.talos/configs/plexuz
+  cp talosconfig ~/.talos/configs/{{CLUSTER_NAME}}
 
 talosconfig:
   #!/usr/bin/env bash
   set -euo pipefail
   #TODO Change cluster name
-  talswitcher ctx talos-plexuz
+  talswitcher ctx talos-{{CLUSTER_NAME}}
 
 talos:
   #!/usr/bin/env bash

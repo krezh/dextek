@@ -9,12 +9,15 @@ KUBECONFIG := "$(pwd)/kubeconfig"
 TALOSCONFIG := "~/.talos/jotunheim"
 TALOS_CONTROLLER := "$(talosctl --talosconfig " + TALOSCONFIG + " config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
 
+CLUSTER_NAME := "jotunheim"
+
 _default:
   just --list
 
 # Bootstrap all resources
 all: && _cleanup
   just tofu
+  just talosconfig
   just talos
   just kubeconfig
   just helmfile
@@ -28,7 +31,14 @@ tofu:
   echo "Running Tofu..."
   tofu init --upgrade
   tofu apply --var talosconfig=true
-  cp talosconfig {{TALOSCONFIG}}
+  mkdir -p ~/.talos/configs
+  cp talosconfig ~/.talos/configs/{{CLUSTER_NAME}}
+
+talosconfig:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  #TODO Change cluster name
+  talswitcher ctx talos-{{CLUSTER_NAME}}
 
 talos:
   #!/usr/bin/env bash
