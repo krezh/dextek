@@ -73,6 +73,10 @@ spec:
       password:
         type: AlphaNumeric
     # Applications
+    - name: "attic"
+      databases: ["attic"]
+      password:
+        type: AlphaNumeric
     - name: "atuin"
       databases: ["atuin"]
       password:
