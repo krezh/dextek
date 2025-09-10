@@ -5,12 +5,23 @@ kind: EnvoyProxy
 metadata:
   name: internal-proxy-config
 spec:
+  logging:
+    level:
+      default: info
   provider:
     type: Kubernetes
     kubernetes:
       envoyDeployment:
         replicas: 3
+        container:
+          image: mirror.gcr.io/envoyproxy/envoy:v1.35.3
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              memory: 1Gi
       envoyService:
+        externalTrafficPolicy: Cluster
         name: envoy-gateway-internal
         patch:
           type: StrategicMerge
@@ -22,3 +33,10 @@ spec:
                   port: 19001
                   targetPort: 19001
                   protocol: TCP
+  shutdown:
+    drainTimeout: 180s
+  telemetry:
+    metrics:
+      prometheus:
+        compression:
+          type: Gzip
