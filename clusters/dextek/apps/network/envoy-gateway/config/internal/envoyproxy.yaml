@@ -21,7 +21,7 @@ spec:
             limits:
               memory: 1Gi
       envoyService:
-        externalTrafficPolicy: Cluster
+        #externalTrafficPolicy: Cluster
         name: envoy-gateway-internal
         patch:
           type: StrategicMerge
