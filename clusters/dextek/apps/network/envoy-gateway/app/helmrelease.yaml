@@ -36,11 +36,11 @@ spec:
       logging:
         level:
           default: debug
-      envoyGateway:
-        provider:
-          type: Kubernetes
-          kubernetes:
-            deploy:
-              type: GatewayNamespace
+      # envoyGateway:
+      #   provider:
+      #     type: Kubernetes
+      #     kubernetes:
+      #       deploy:
+      #         type: GatewayNamespace
     global:
       imageRegistry: mirror.gcr.io
