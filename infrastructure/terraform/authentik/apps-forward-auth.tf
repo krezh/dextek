@@ -3,7 +3,7 @@ module "echo_server" {
   slug   = "echo_server"
 
   name       = "Echo Server"
-  app_domain = "echo-server.${var.domain}"
+  app_domain = "echo-server.${var.domain["external"]}"
   app_group  = "Infrastructure"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -19,7 +19,7 @@ module "pgweb" {
   slug   = "pgweb"
 
   name       = "PGWeb"
-  app_domain = "pgweb.talos.${var.domain}"
+  app_domain = "pgweb.${var.domain["internal"]}"
   app_group  = "Infrastructure"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -33,7 +33,7 @@ module "sonarr" {
   slug   = "sonarr"
 
   name       = "Sonarr"
-  app_domain = "sonarr.${var.domain}"
+  app_domain = "sonarr.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -49,7 +49,7 @@ module "radarr" {
   slug   = "radarr"
 
   name       = "Radarr"
-  app_domain = "radarr.${var.domain}"
+  app_domain = "radarr.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -65,7 +65,7 @@ module "prowlarr" {
   slug   = "prowlarr"
 
   name       = "Prowlarr"
-  app_domain = "prowlarr.${var.domain}"
+  app_domain = "prowlarr.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -81,7 +81,7 @@ module "jdownloader2" {
   slug   = "jdownloader2"
 
   name       = "JDownloader2"
-  app_domain = "jd.${var.domain}"
+  app_domain = "jd.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -97,7 +97,7 @@ module "bazarr" {
   slug   = "bazarr"
 
   name       = "Bazarr"
-  app_domain = "bazarr.${var.domain}"
+  app_domain = "bazarr.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -113,7 +113,7 @@ module "maintainerr" {
   slug   = "maintainerr"
 
   name       = "Maintainerr"
-  app_domain = "maintainerr.${var.domain}"
+  app_domain = "maintainerr.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -129,7 +129,7 @@ module "sabnzbd" {
   slug   = "sabnzbd"
 
   name       = "Sabnzbd"
-  app_domain = "sab.${var.domain}"
+  app_domain = "sab.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -145,7 +145,7 @@ module "whisparr" {
   slug   = "whisparr"
 
   name       = "Whisparr"
-  app_domain = "whisparr.${var.domain}"
+  app_domain = "whisparr.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -161,7 +161,7 @@ module "changedetection" {
   slug   = "changedetection"
 
   name       = "Changedetection"
-  app_domain = "changedetection.${var.domain}"
+  app_domain = "changedetection.${var.domain["external"]}"
   app_group  = "Tools"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -177,7 +177,7 @@ module "wallos" {
   slug   = "wallos"
 
   name       = "Wallos"
-  app_domain = "wallos.${var.domain}"
+  app_domain = "wallos.${var.domain["external"]}"
   app_group  = "Tools"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -193,7 +193,7 @@ module "homepage" {
   slug   = "homepage"
 
   name       = "Homepage"
-  app_domain = "homepage.${var.domain}"
+  app_domain = "homepage.${var.domain["external"]}"
   app_group  = ""
 
   access_groups = [data.authentik_group.superuser.id]
@@ -209,7 +209,7 @@ module "home" {
   slug   = "home"
 
   name       = "Home"
-  app_domain = var.domain
+  app_domain = var.domain["external"]
   app_group  = ""
 
   access_groups = [resource.authentik_group.users.id, data.authentik_group.superuser.id]
@@ -225,7 +225,7 @@ module "homeassistant" {
   slug   = "homeassistant"
 
   name       = "Home Assistant"
-  app_domain = "hass.${var.domain}"
+  app_domain = "hass.${var.domain["external"]}"
   app_group  = "Home"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -241,7 +241,7 @@ module "n8n" {
   slug   = "n8n"
 
   name       = "n8n"
-  app_domain = "n8n.talos.${var.domain}"
+  app_domain = "n8n.${var.domain["internal"]}"
   app_group  = "Tools"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -257,7 +257,7 @@ module "checkrr" {
   slug   = "checkrr"
 
   name       = "checkrr"
-  app_domain = "checkrr.${var.domain}"
+  app_domain = "checkrr.${var.domain["external"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -273,7 +273,7 @@ module "pinchflat" {
   slug   = "pinchflat"
 
   name       = "pinchflat"
-  app_domain = "pinchflat.talos.${var.domain}"
+  app_domain = "pinchflat.${var.domain["internal"]}"
   app_group  = "Downloads"
 
   access_groups = [data.authentik_group.superuser.id]

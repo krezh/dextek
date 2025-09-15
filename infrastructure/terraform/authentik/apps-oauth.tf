@@ -3,10 +3,10 @@ module "grafana" {
   slug   = "grafana"
 
   name       = "Grafana"
-  app_domain = "grafana.talos.${var.domain}"
+  app_domain = "grafana.${var.domain["internal"]}"
   app_group  = "Monitoring"
 
-  access_groups = [data.authentik_group.superuser.id]
+  access_groups = [data.authentik_group.superuser.id, authentik_group.grafana_admins.id]
 
   client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.GRAFANA)["GRAFANA_OAUTH_CLIENT_ID"]
   client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.GRAFANA)["GRAFANA_OAUTH_CLIENT_SECRET"]
@@ -16,12 +16,12 @@ module "grafana" {
   invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
-  redirect_uris = ["https://grafana.talos.${var.domain}/login/generic_oauth"]
+  redirect_uris = ["https://grafana.${var.domain["internal"]}/login/generic_oauth"]
 
   access_token_validity = "hours=4"
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/grafana.png"
-  meta_launch_url = "https://grafana.talos.${var.domain}"
+  meta_launch_url = "https://grafana.${var.domain["internal"]}"
 }
 
 module "minio" {
@@ -29,7 +29,7 @@ module "minio" {
   slug   = "minio"
 
   name       = "Minio"
-  app_domain = "minio.${var.domain}"
+  app_domain = "minio.${var.domain["external"]}"
   app_group  = "Infrastructure"
 
   access_groups = [data.authentik_group.superuser.id]
@@ -43,12 +43,12 @@ module "minio" {
   invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
-  redirect_uris = ["https://minio.int.${var.domain}/oauth_callback"]
+  redirect_uris = ["https://minio.int.${var.domain["external"]}/oauth_callback"]
 
   access_token_validity = "hours=4"
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/minio.png"
-  meta_launch_url = "https://minio.int.${var.domain}"
+  meta_launch_url = "https://minio.int.${var.domain["external"]}"
 }
 
 module "mealie" {
@@ -56,7 +56,7 @@ module "mealie" {
   slug   = "mealie"
 
   name       = "Mealie"
-  app_domain = "mealie.${var.domain}"
+  app_domain = "mealie.${var.domain["external"]}"
   app_group  = "Tools"
 
   access_groups = [
@@ -73,12 +73,12 @@ module "mealie" {
   invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
-  redirect_uris = ["https://mealie.${var.domain}/login"]
+  redirect_uris = ["https://mealie.${var.domain["external"]}/login"]
 
   access_token_validity = "hours=4"
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mealie.png"
-  meta_launch_url = "https://mealie.${var.domain}"
+  meta_launch_url = "https://mealie.${var.domain["external"]}"
 }
 
 module "immich" {
@@ -86,7 +86,7 @@ module "immich" {
   slug   = "immich"
 
   name       = "Immich"
-  app_domain = "photos.${var.domain}"
+  app_domain = "photos.${var.domain["external"]}"
   app_group  = "Tools"
 
   access_groups = [
@@ -102,17 +102,17 @@ module "immich" {
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
   redirect_uris = [
-    "https://photos.${var.domain}/auth/login",
-    "https://photos.${var.domain}/user-settings",
-    "https://photos.talos.${var.domain}/auth/login",
-    "https://photos.talos.${var.domain}/user-settings",
+    "https://photos.${var.domain["external"]}/auth/login",
+    "https://photos.${var.domain["external"]}/user-settings",
+    "https://photos.${var.domain["internal"]}/auth/login",
+    "https://photos.${var.domain["internal"]}/user-settings",
     "app.immich:///oauth-callback"
   ]
 
   access_token_validity = "hours=4"
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png"
-  meta_launch_url = "https://photos.${var.domain}"
+  meta_launch_url = "https://photos.${var.domain["external"]}"
 }
 
 module "zipline" {
@@ -120,7 +120,7 @@ module "zipline" {
   slug   = "zipline"
 
   name       = "Zipline"
-  app_domain = "zipline.${var.domain}"
+  app_domain = "zipline.${var.domain["external"]}"
   app_group  = "Tools"
 
   access_groups = [
@@ -136,13 +136,13 @@ module "zipline" {
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2_offline_access.ids
 
   redirect_uris = [
-    "https://zipline.${var.domain}/api/auth/oauth/oidc"
+    "https://zipline.${var.domain["external"]}/api/auth/oauth/oidc"
   ]
 
   access_token_validity = "hours=4"
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/zipline.png"
-  meta_launch_url = "https://zipline.${var.domain}"
+  meta_launch_url = "https://zipline.${var.domain["external"]}"
 }
 
 module "kubernetes" {
@@ -150,7 +150,7 @@ module "kubernetes" {
   slug   = "kubernetes"
 
   name       = "Kubernetes"
-  app_domain = var.domain
+  app_domain = var.domain["external"]
   app_group  = "Infrastructure"
 
   access_groups = [
@@ -166,7 +166,7 @@ module "kubernetes" {
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
   redirect_uris = [
-    "https://headlamp.talos.${var.domain}/oidc-callback"
+    "https://headlamp.${var.domain["internal"]}/oidc-callback"
   ]
 
   access_token_validity = "hours=4"
@@ -180,7 +180,7 @@ module "karakeep" {
   slug   = "karakeep"
 
   name       = "Karakeep"
-  app_domain = "karakeep.${var.domain}"
+  app_domain = "karakeep.${var.domain["external"]}"
   app_group  = "Tools"
 
   access_groups = [
@@ -197,11 +197,11 @@ module "karakeep" {
   property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
 
   redirect_uris = [
-    "https://karakeep.${var.domain}/api/auth/callback/custom"
+    "https://karakeep.${var.domain["external"]}/api/auth/callback/custom"
   ]
 
   access_token_validity = "hours=4"
 
   meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/karakeep.png"
-  meta_launch_url = "https://karakeep.${var.domain}"
+  meta_launch_url = "https://karakeep.${var.domain["external"]}"
 }

@@ -30,7 +30,7 @@ resource "authentik_outpost" "internal" {
   protocol_providers = local.internal_proxy_provider_ids
   config = jsonencode({
     "log_level"                      = "info"
-    "authentik_host"                 = "https://sso.${var.domain}/"
+    "authentik_host"                 = "https://sso.${var.domain["external"]}/"
     "authentik_host_insecure"        = false
     "authentik_host_browser"         = ""
     "refresh_interval"               = "minutes=5"
@@ -50,8 +50,8 @@ resource "authentik_outpost" "internal" {
     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
     "kubernetes_httproute_parent_refs" = [
       {
-        name      = "gateway-internal"
-        namespace = "network"
+        name        = "gateway-internal"
+        namespace   = "network"
         sectionName = "https"
       }
     ]
@@ -64,7 +64,7 @@ resource "authentik_outpost" "external" {
   protocol_providers = local.external_proxy_provider_ids
   config = jsonencode({
     "log_level"                      = "info"
-    "authentik_host"                 = "https://sso.${var.domain}/"
+    "authentik_host"                 = "https://sso.${var.domain["external"]}/"
     "authentik_host_insecure"        = false
     "authentik_host_browser"         = ""
     "refresh_interval"               = "minutes=5"
@@ -84,8 +84,8 @@ resource "authentik_outpost" "external" {
     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
     "kubernetes_httproute_parent_refs" = [
       {
-        name      = "gateway-external"
-        namespace = "network"
+        name        = "gateway-external"
+        namespace   = "network"
         sectionName = "https"
       }
     ]
