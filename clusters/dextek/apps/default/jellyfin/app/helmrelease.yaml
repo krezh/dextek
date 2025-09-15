@@ -95,6 +95,16 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *port
+      internal:
+        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
     persistence:
       config:
         existingClaim: jellyfin-config
