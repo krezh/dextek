@@ -1,5 +1,8 @@
 variable "domain" {
-  type        = string
+  type        = map(string)
   description = "Domain for Authentik"
-  default     = "plexuz.xyz"
+  default = {
+    external = "plexuz.xyz"
+    internal = "talos.plexuz.xyz"
+  }
 }

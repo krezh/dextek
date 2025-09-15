@@ -24,7 +24,6 @@ terraform {
 
 provider "sops" {}
 
-
 data "sops_file" "secrets" {
   source_file = "secret.sops.yaml"
 }
@@ -36,6 +35,6 @@ provider "doppler" {
 data "doppler_secrets" "tf_authentik" {}
 
 provider "authentik" {
-  url   = "https://sso.${var.domain}"
+  url   = "https://sso.${var.domain["external"]}"
   token = jsondecode(data.doppler_secrets.tf_authentik.map.AUTHENTIK)["AUTHENTIK_TOKEN"]
 }
