@@ -204,7 +204,7 @@ spec:
         etcd:
           # renovate: depName="etcd"
           gnetId: 22236
-          revision: 3
+          revision: 4
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
             - { name: DS_VICTORIAMETRICS, value: Prometheus }
