@@ -50,7 +50,7 @@ spec:
               MARK_FILE: /tmp/mark.log
               PLEX_BASEURL: https://plex.talos.plexuz.xyz
               RUN_ONLY_ONCE: true
-              USER_MAPPING: '{"Krezh": "Krezh"}'
+              USER_MAPPING: '{"Krezh": "Krezh", "beeren": "Beeren"}'
               WHITELIST_LIBRARY: "Anime,Movies,TV Shows"
             resources:
               requests:
