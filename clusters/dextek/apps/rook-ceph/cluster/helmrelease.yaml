@@ -60,8 +60,8 @@ spec:
       isDefault: true
       deletionPolicy: Delete
     cephClusterSpec:
-      cephVersion:
-        image: quay.io/ceph/ceph:v19.2.3
+      # cephVersion:
+      #   image: quay.io/ceph/ceph:v19.2.3
       cephConfig:
         global:
           public_network: "10.10.0.0/27"
