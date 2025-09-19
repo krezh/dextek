@@ -16,7 +16,6 @@ resources:
   - ./atuin
   - ./echo-server
   - ./mealie
-  - ./obsidian-couchdb
   - ./it-tools
   - ./wallos
   - ./changedetection
