@@ -34,18 +34,11 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/tautulli/tautulli
-              tag: v2.16.0@sha256:7e6ede32f7923e01899db906aa6a96d978a4a8df8e2ef0dcf44c92b2d0206221
-            command: ["/usr/local/bin/python", "Tautulli.py"]
-            args:
-              [
-                "--config",
-                "/config/config.ini",
-                "--datadir",
-                "/config",
-                "--port",
-                "8181",
-              ]
+              repository: ghcr.io/home-operations/tautulli
+              tag: 2.16.0@sha256:2a092f86a51f5718111097b0fced33eaa876b5904a543b7504f92357a4f75635
+            env:
+              TAUTULLI_HTTP_BASE_URL: https://tautulli.plexuz.xyz
+              TAUTULLI_HTTP_PORT: &port 8181
             probes:
               liveness: &probes
                 enabled: true
@@ -53,7 +46,7 @@ spec:
                 spec:
                   httpGet:
                     path: /status
-                    port: &port 8181
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1

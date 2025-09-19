@@ -36,8 +36,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/krezh/sonarr
-              tag: 4.0.14.2938
+              repository: ghcr.io/home-operations/sonarr
+              tag: 4.0.15.2940@sha256:ca6c735014bdfb04ce043bf1323a068ab1d1228eea5bab8305ca0722df7baf78
             env:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
@@ -45,6 +45,7 @@ spec:
               SONARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
               SONARR__AUTH__METHOD: External
+              SONARR__UPDATE__BRANCH: devel
             envFrom: &envFrom
               - secretRef:
                   name: sonarr-secret
