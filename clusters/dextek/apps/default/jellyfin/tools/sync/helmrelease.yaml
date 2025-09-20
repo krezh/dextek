@@ -52,7 +52,7 @@ spec:
               RUN_ONLY_ONCE: true
               USER_MAPPING: '{"Krezh": "Krezh", "beeren": "Beeren"}'
               WHITELIST_LIBRARY: "Anime,Movies,TV Shows"
-              LIBRARY_MAPPING = '{ "Shows": "TV Shows", "Movie": "Movies" }'
+              LIBRARY_MAPPING: '{ "Shows": "TV Shows", "Movie": "Movies" }'
             resources:
               requests:
                 cpu: 10m
