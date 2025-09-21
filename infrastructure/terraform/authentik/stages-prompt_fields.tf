@@ -7,6 +7,7 @@ resource "authentik_stage_prompt_field" "username" {
   initial_value            = "try:\n    return user.username\nexcept:\n    return ''"
   initial_value_expression = true
   placeholder              = "try:\n    return user.username\nexcept:\n    return ''"
+  placeholder_expression   = true
   order                    = 200
 }
 
@@ -15,10 +16,11 @@ resource "authentik_stage_prompt_field" "name" {
   field_key                = "name"
   type                     = "text"
   required                 = true
-  label                    = "Name"
+  label                    = "Nickname"
   initial_value            = "try:\n    return user.name\nexcept:\n    return ''"
   initial_value_expression = true
   placeholder              = "try:\n    return user.name\nexcept:\n    return ''"
+  placeholder_expression   = true
   order                    = 201
 }
 
@@ -31,6 +33,7 @@ resource "authentik_stage_prompt_field" "email" {
   initial_value            = "try:\n    return user.email\nexcept:\n    return ''"
   initial_value_expression = true
   placeholder              = "try:\n    return user.email\nexcept:\n    return ''"
+  placeholder_expression   = true
   order                    = 202
 }
 
@@ -43,6 +46,7 @@ resource "authentik_stage_prompt_field" "locale" {
   initial_value            = "try:\n    return user.attributes.get('settings', {}).get('locale', '')\nexcept:\n    return ''"
   initial_value_expression = true
   placeholder              = "try:\n    return user.attributes.get('settings', {}).get('locale', '')\nexcept:\n    return ''"
+  placeholder_expression   = true
   order                    = 203
 }
 
