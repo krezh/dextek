@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app sabnzbd
+  name: &app nzbget
   namespace: downloads
 spec:
   interval: 30m
@@ -30,37 +30,27 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/sabnzbd
-              tag: 4.5.3
+              repository: ghcr.io/home-operations/nzbget
+              tag: 25.3.0@sha256:4a4cf04d8e87a1b5fb1894477701146e06ae41c736208b14ade1662db07adc1a
             env:
-              SABNZBD__PORT: &port 8080
-              SABNZBD__HOST_WHITELIST_ENTRIES: >-
-                sabnzbd,
-                sabnzbd.downloads,
-                sabnzbd.downloads.svc,
-                sabnzbd.downloads.svc.cluster,
-                sabnzbd.downloads.svc.cluster.local,
-                sab.plexuz.xyz
-              SABNZBD__DOWNLOAD_DIR: /downloads/incomplete
-              SABNZBD__COMPLETE_DIR: /downloads/complete
-            envFrom: &envFrom
-              - secretRef:
-                  name: sabnzbd-secret
+              NZBGET__PORT: &port 8080
             probes:
               liveness: &probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /api?mode=version
+                    path: /jsonrpc/status
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 250m
@@ -72,11 +62,11 @@ spec:
         controller: app
         ports:
           http:
-            port: 80
+            port: &svcPort 80
             targetPort: *port
     route:
       app:
-        hostnames: ["sab.plexuz.xyz"]
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "{{ .Release.Name | title }}"
@@ -85,7 +75,7 @@ spec:
           gethomepage.dev/icon: "{{ .Release.Name }}.png"
           gethomepage.dev/widget.url: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local"
           gethomepage.dev/widget.type: "{{ .Release.Name }}"
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SABNZBD_APIKEY}}` }}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_NZBGET_APIKEY}}` }}"
           gethomepage.dev/pod-selector: >-
             app.kubernetes.io/instance in (
               {{ .Release.Name }}
@@ -97,13 +87,13 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 80
+                port: *svcPort
             matches:
               - path:
                   type: PathPrefix
                   value: /
       api:
-        hostnames: ["sab.plexuz.xyz"]
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         parentRefs:
           - name: gateway-external
             namespace: network
@@ -111,7 +101,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 80
+                port: *svcPort
             matches:
               - path:
                   type: PathPrefix
@@ -119,7 +109,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: sabnzbd-config
+        existingClaim: nzbget-config
       media:
         type: nfs
         server: 10.10.0.2
