@@ -140,6 +140,22 @@ module "sabnzbd" {
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/sabnzbd.png"
 }
 
+module "nzbget" {
+  source = "./modules/forward-auth-application"
+  slug   = "nzbget"
+
+  name       = "NZBGet"
+  app_domain = "nzbget.${var.domain["external"]}"
+  app_group  = "Downloads"
+
+  access_groups = [data.authentik_group.superuser.id]
+
+  policy_engine_mode      = "any"
+  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
+
+  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nzbget.png"
+}
+
 module "whisparr" {
   source = "./modules/forward-auth-application"
   slug   = "whisparr"
