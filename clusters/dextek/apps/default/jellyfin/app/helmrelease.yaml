@@ -110,7 +110,7 @@ spec:
         existingClaim: jellyfin-config
         globalMounts:
           - path: /config
-          - path: /cache
+          #- path: /cache
       media:
         type: nfs
         server: 10.10.0.2
