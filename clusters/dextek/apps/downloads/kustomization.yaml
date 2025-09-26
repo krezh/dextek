@@ -18,7 +18,7 @@ resources:
   - ./bazarr
   - ./maintainerr
   - ./jellyseerr
-  - ./jellseerr-jf
+  - ./jellyseerr-jf
   - ./doplarr
   - ./pinchflat
   - ./jdownloader
