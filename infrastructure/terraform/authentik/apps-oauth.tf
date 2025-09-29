@@ -202,6 +202,7 @@ module "karakeep" {
 
   access_token_validity = "hours=4"
 
-  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/karakeep.png"
-  meta_launch_url = "https://karakeep.${var.domain["external"]}"
+  meta_icon        = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/karakeep.png"
+  meta_launch_url  = "https://karakeep.${var.domain["external"]}"
+  meta_description = "A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search "
 }
