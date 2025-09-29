@@ -32,10 +32,9 @@ spec:
               tag: v0.4.2@sha256:509a7fd3031503693dfb438190594448bef47f416d62326dd32a625f8a3bc8ff
             resources:
               requests:
-                cpu: 100m
-                memory: 32Mi
+                memory: 500Mi
               limits:
-                memory: 256Mi
+                memory: 1Gi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
