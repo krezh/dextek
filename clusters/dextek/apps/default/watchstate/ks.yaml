@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app watchstate
+  namespace: flux-system
+spec:
+  targetNamespace: default
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./clusters/dextek/apps/default/watchstate/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  components:
+    - ../../../../../shared/components/defaults
+    - ../../../../../shared/components/ext-auth
+  postBuild:
+    substitute:
+      APP: *app
+      EXT_AUTH_OUTPOST: external
+      EXT_AUTH_TARGET: *app

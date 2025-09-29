@@ -26,6 +26,7 @@ resources:
   - ./publish-k8s-schemas
   - ./karakeep
   - ./attic
+  - ./watchstate
 transformers:
   - |-
     apiVersion: builtin
