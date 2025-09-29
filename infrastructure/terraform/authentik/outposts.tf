@@ -22,6 +22,7 @@ locals {
     module.homeassistant.proxy_provider_id,
     module.checkrr.proxy_provider_id,
     module.nzbget.proxy_provider_id,
+    module.watchstate.proxy_provider_id,
   ]
 }
 
