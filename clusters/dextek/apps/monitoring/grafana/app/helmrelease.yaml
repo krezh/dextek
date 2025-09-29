@@ -15,10 +15,6 @@ spec:
         name: grafana
         namespace: flux-system
       version: 10.0.0
-  install:
-    crds: Create
-  upgrade:
-    crds: CreateReplace
   # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
   values:
     env:
