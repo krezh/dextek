@@ -15,10 +15,6 @@ spec:
         kind: HelmRepository
         name: k8s-gateway
         namespace: flux-system
-  install:
-    crds: Create
-  upgrade:
-    crds: CreateReplace
   values:
     image:
       registry: ghcr.io

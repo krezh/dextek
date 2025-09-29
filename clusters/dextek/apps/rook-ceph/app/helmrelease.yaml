@@ -17,10 +17,6 @@ spec:
       version: v1.18.2
   driftDetection:
     mode: enabled
-  install:
-    crds: CreateReplace
-  upgrade:
-    crds: CreateReplace
   values:
     csi:
       cephFSKernelMountOptions: ms_mode=prefer-crc

@@ -15,14 +15,6 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
   values:
     fullnameOverride: blackbox-exporter
     securityContext:

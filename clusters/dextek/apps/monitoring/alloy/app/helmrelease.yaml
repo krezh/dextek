@@ -14,13 +14,6 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
   # https://github.com/grafana/alloy/blob/main/operations/helm/charts/alloy/values.yaml
   values:
     fullnameOverride: alloy
