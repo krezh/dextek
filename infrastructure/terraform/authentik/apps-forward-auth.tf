@@ -299,19 +299,3 @@ module "pinchflat" {
 
   meta_icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/pinchflat.png"
 }
-
-module "watchstate" {
-  source = "./modules/forward-auth-application"
-  slug   = "watchstate"
-
-  name       = "watchstate"
-  app_domain = "watchstate.${var.domain["external"]}"
-  app_group  = "Tools"
-
-  access_groups = [data.authentik_group.superuser.id]
-
-  policy_engine_mode      = "any"
-  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-
-  meta_icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/watchstate.png"
-}
