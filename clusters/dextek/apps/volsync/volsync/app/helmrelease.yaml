@@ -15,14 +15,6 @@ spec:
         kind: HelmRepository
         name: backube
         namespace: flux-system
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
   # https://github.com/backube/volsync/blob/main/helm/volsync/values.yaml
   values:
     manageCRDs: true

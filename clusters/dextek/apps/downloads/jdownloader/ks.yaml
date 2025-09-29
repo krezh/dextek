@@ -23,6 +23,7 @@ spec:
   timeout: 3m
   components:
     - ../../../../../shared/components/ext-auth
+    - ../../../../../shared/components/defaults
   postBuild:
     substitute:
       APP: *app

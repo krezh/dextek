@@ -16,10 +16,6 @@ spec:
         name: ingress-nginx
         namespace: flux-system
       version: 4.13.2
-  install:
-    crds: Create
-  upgrade:
-    crds: CreateReplace
   values:
     fullnameOverride: nginx-external
     controller:

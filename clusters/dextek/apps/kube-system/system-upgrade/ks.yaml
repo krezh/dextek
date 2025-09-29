@@ -21,6 +21,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+  components:
+    - ../../../../../shared/components/defaults
   postBuild:
     substitute:
       # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
@@ -48,6 +50,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+  components:
+    - ../../../../../shared/components/defaults
   postBuild:
     substitute:
       # renovate: datasource=github-releases depName=siderolabs/talos
