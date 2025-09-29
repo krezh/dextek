@@ -15,15 +15,6 @@ spec:
         kind: HelmRepository
         name: envoy-proxy
         namespace: flux-system
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: -1
-  upgrade:
-    crds: CreateReplace
-    cleanupOnFail: true
-    remediation:
-      retries: 3
   values:
     deployment:
       replicas: 3

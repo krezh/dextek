@@ -18,6 +18,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  components:
+    - ../../../../../shared/components/defaults
   postBuild:
     substitute:
       APP: *app
@@ -42,3 +44,5 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  components:
+    - ../../../../../shared/components/defaults
