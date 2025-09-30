@@ -105,7 +105,7 @@ spec:
             matches:
               - path:
                   type: PathPrefix
-                  value: /api
+                  value: /jsonrpc
     persistence:
       config:
         enabled: true
