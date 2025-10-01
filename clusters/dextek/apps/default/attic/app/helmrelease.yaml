@@ -73,7 +73,18 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 4000Mi
-
+          gc:
+            image:
+              repository: ghcr.io/zhaofengli/attic
+              tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
+            args: ["-f", "/config/server.toml", "--mode", "garbage-collector"]
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 4000Mi
     service:
       app:
         controller: app
@@ -83,10 +94,20 @@ spec:
             targetPort: *port
 
     route:
-      app:
+      external:
         hostnames: ["nix-cache.plexuz.xyz"]
         parentRefs:
           - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+      internal:
+        hostnames: ["nix-cache.talos.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-internal
             namespace: network
             sectionName: https
         rules:
