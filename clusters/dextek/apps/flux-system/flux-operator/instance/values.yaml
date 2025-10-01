@@ -95,6 +95,14 @@ instance:
         target:
           kind: Deployment
           name: helm-controller
+      - # Controller-level SOPS decryption
+        patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --sops-age-secret=sops-age
+        target:
+          kind: Deployment
+          name: kustomize-controller
       # # Enable notifications for 3rd party Flux controllers such as tf-controller
       # # https://fluxcd.io/flux/cheatsheets/bootstrap/#enable-notifications-for-third-party-controllers
       # - patch: |
