@@ -10,8 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: talos-etcd-defrag
   interval: 30m
   retryInterval: 1m
   timeout: 5m
