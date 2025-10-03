@@ -88,6 +88,9 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *port
+            timeouts:
+              request: 0s
+              backendRequest: 0s
       internal:
         hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
         parentRefs:
@@ -98,12 +101,14 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *port
+            timeouts:
+              request: 0s
+              backendRequest: 0s
     persistence:
       config:
         existingClaim: jellyfin-config
         globalMounts:
           - path: /config
-          #- path: /cache
       media:
         type: nfs
         server: 10.10.0.2
