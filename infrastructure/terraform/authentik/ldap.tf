@@ -17,7 +17,7 @@ resource "authentik_outpost" "LDAP" {
     "log_level" : "info"
     "authentik_host" : "https://sso.${var.domain["external"]}/"
     "refresh_interval" : "minutes=5"
-    "kubernetes_replicas" : 1
+    "kubernetes_replicas" : 3
     "kubernetes_namespace" : "auth"
     "object_naming_template" : "ak-outpost-%(name)s"
     "kubernetes_service_type" : "LoadBalancer"
