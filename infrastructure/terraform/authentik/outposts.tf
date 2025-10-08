@@ -39,7 +39,7 @@ resource "authentik_outpost" "internal" {
     "docker_network"                 = null
     "docker_map_ports"               = true
     "container_image"                = null
-    "kubernetes_replicas"            = 1
+    "kubernetes_replicas"            = 3
     "kubernetes_namespace"           = "auth"
     "object_naming_template"         = "ak-outpost-%(name)s"
     "kubernetes_json_patches"        = null
@@ -73,7 +73,7 @@ resource "authentik_outpost" "external" {
     "docker_network"                 = null
     "docker_map_ports"               = true
     "container_image"                = null
-    "kubernetes_replicas"            = 1
+    "kubernetes_replicas"            = 3
     "kubernetes_namespace"           = "auth"
     "object_naming_template"         = "ak-outpost-%(name)s"
     "kubernetes_json_patches"        = null
