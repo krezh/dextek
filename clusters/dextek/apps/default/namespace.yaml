@@ -2,7 +2,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: default
+  labels:
+    resource.kubernetes.io/admin-access: "true"
+    kustomize.toolkit.fluxcd.io/prune: disabled
   annotations:
     volsync.backube/privileged-movers: "true"
-  labels:
-    kustomize.toolkit.fluxcd.io/prune: disabled

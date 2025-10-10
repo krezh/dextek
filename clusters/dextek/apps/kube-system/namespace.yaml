@@ -4,4 +4,5 @@ kind: Namespace
 metadata:
   name: kube-system
   labels:
+    resource.kubernetes.io/admin-access: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
