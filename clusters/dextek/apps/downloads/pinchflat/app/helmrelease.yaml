@@ -94,8 +94,10 @@ spec:
         existingClaim: pinchflat-config
       tmp:
         type: emptyDir
+        medium: Memory
       yt-dlp:
         type: emptyDir
+        medium: Memory
         globalMounts:
           - path: /etc/yt-dlp
       downloads:

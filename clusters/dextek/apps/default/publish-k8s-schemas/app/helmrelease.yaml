@@ -76,6 +76,7 @@ spec:
     persistence:
       tmpfs:
         type: emptyDir
+        medium: Memory
         advancedMounts:
           publish-k8s-schemas:
             generate-schemas:

@@ -118,6 +118,7 @@ spec:
             readOnly: true
       tmpfs:
         type: emptyDir
+        medium: Memory
         advancedMounts:
           jellyfin:
             app:

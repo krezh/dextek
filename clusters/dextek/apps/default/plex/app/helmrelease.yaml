@@ -129,5 +129,6 @@ spec:
       local:
         enabled: true
         type: emptyDir
+        medium: Memory
         globalMounts:
           - path: /.local
