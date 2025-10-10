@@ -14,6 +14,10 @@ spec:
         name: bjw-s
         namespace: flux-system
   values:
+    defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: ollama-gpu
     controllers:
       *app :
         type: statefulset
@@ -31,13 +35,13 @@ spec:
               # OLLAMA_MODELS: &pvc /models
               OLLAMA_GPU_ENABLED: "true"
             resources:
+              claims:
+                - name: gpu
               requests:
                 cpu: 2000m
                 memory: 8Gi
-                gpu.intel.com/i915: "1"
               limits:
                 memory: 16Gi
-                gpu.intel.com/i915: "1"
         pod:
           affinity:
             nodeAffinity:

@@ -46,10 +46,11 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
+              claims:
+                - name: gpu
               requests:
                 cpu: 10m
               limits:
-                gpu.intel.com/i915: 1
                 memory: 1Gi
     defaultPodOptions:
       securityContext:
@@ -62,6 +63,9 @@ spec:
         seccompProfile: { type: RuntimeDefault }
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: pinchflat-gpu
     service:
       app:
         controller: pinchflat
