@@ -1,11 +1,11 @@
 resource "authentik_provider_ldap" "ldap" {
-  name        = "LDAP"
-  base_dn     = "DC=ldap,DC=dextek,DC=io" ## This doesnt matter for authentik
-  bind_flow   = authentik_flow.authentication.uuid
-  unbind_flow = data.authentik_flow.default-provider-invalidation-flow.id
-  mfa_support = false
-  # certificate     = data.authentik_certificate_key_pair.main.id
-  # tls_server_name = "ldap.${var.domain["external"]}"
+  name            = "LDAP"
+  base_dn         = "DC=ldap,DC=dextek,DC=io" ## This doesnt matter for authentik
+  bind_flow       = authentik_flow.authentication.uuid
+  unbind_flow     = data.authentik_flow.default-provider-invalidation-flow.id
+  mfa_support     = false
+  certificate     = data.authentik_certificate_key_pair.generated.id
+  tls_server_name = "ldap-lb.${var.domain["internal"]}"
 }
 
 resource "authentik_outpost" "LDAP" {
