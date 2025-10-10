@@ -3,5 +3,6 @@ kind: Namespace
 metadata:
   name: games
   labels:
+    resource.kubernetes.io/admin-access: "true"
     volsync.backube/privileged-movers: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled

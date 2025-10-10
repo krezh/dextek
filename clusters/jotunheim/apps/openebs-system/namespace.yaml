@@ -4,4 +4,6 @@ kind: Namespace
 metadata:
   name: openebs-system
   labels:
+    resource.kubernetes.io/admin-access: "true"
+  labels:
     kustomize.toolkit.fluxcd.io/prune: disabled
