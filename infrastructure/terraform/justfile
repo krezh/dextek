@@ -1,20 +1,23 @@
 #!/usr/bin/env just --justfile
 
-set quiet
-set ignore-comments
+set quiet := true
+set ignore-comments := true
 
 _default:
-  @just --list
+    @just --list
 
 [no-cd]
 init:
-	tofu init --upgrade
+    tofu init --upgrade
 
 [no-cd]
 apply: init
-  tofu apply --auto-approve
+    tofu apply --auto-approve
 
 [no-cd]
 plan: init
-  tofu plan
+    tofu plan
 
+[no-cd]
+force-unlock:
+    tofu force-unlock "krezh/$(basename $(pwd -P))"
