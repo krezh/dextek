@@ -22,7 +22,6 @@ resources:
   - ./doplarr
   - ./pinchflat
   - ./jdownloader
-  - ./checkrr
   - ./scraparr
 transformers:
   - |-
