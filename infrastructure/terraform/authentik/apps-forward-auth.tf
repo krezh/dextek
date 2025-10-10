@@ -14,20 +14,6 @@ module "echo_server" {
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
 }
 
-module "pgweb" {
-  source = "./modules/forward-auth-application"
-  slug   = "pgweb"
-
-  name       = "PGWeb"
-  app_domain = "pgweb.${var.domain["internal"]}"
-  app_group  = "Infrastructure"
-
-  access_groups = [data.authentik_group.superuser.id]
-
-  policy_engine_mode      = "any"
-  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-}
-
 module "sonarr" {
   source = "./modules/forward-auth-application"
   slug   = "sonarr"
@@ -74,22 +60,6 @@ module "prowlarr" {
   authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
 
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/prowlarr.png"
-}
-
-module "jdownloader2" {
-  source = "./modules/forward-auth-application"
-  slug   = "jdownloader2"
-
-  name       = "JDownloader2"
-  app_domain = "jd.${var.domain["external"]}"
-  app_group  = "Downloads"
-
-  access_groups = [data.authentik_group.superuser.id]
-
-  policy_engine_mode      = "any"
-  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-
-  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jdownloader2.png"
 }
 
 module "bazarr" {
@@ -188,22 +158,6 @@ module "changedetection" {
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/changedetection.png"
 }
 
-module "wallos" {
-  source = "./modules/forward-auth-application"
-  slug   = "wallos"
-
-  name       = "Wallos"
-  app_domain = "wallos.${var.domain["external"]}"
-  app_group  = "Tools"
-
-  access_groups = [data.authentik_group.superuser.id]
-
-  policy_engine_mode      = "any"
-  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-
-  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/wallos.png"
-}
-
 module "homepage" {
   source = "./modules/forward-auth-application"
   slug   = "homepage"
@@ -250,38 +204,6 @@ module "homeassistant" {
   authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
 
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/home-assistant.png"
-}
-
-module "n8n" {
-  source = "./modules/forward-auth-application"
-  slug   = "n8n"
-
-  name       = "n8n"
-  app_domain = "n8n.${var.domain["internal"]}"
-  app_group  = "Tools"
-
-  access_groups = [data.authentik_group.superuser.id]
-
-  policy_engine_mode      = "any"
-  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-
-  meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/n8n.png"
-}
-
-module "checkrr" {
-  source = "./modules/forward-auth-application"
-  slug   = "checkrr"
-
-  name       = "checkrr"
-  app_domain = "checkrr.${var.domain["external"]}"
-  app_group  = "Downloads"
-
-  access_groups = [data.authentik_group.superuser.id]
-
-  policy_engine_mode      = "any"
-  authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-
-  #meta_icon = ""
 }
 
 module "pinchflat" {
