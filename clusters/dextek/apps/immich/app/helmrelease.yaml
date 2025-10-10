@@ -24,6 +24,9 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [44]
       automountServiceAccountToken: false
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: immich-gpu
     controllers:
       server:
         type: deployment
@@ -54,12 +57,13 @@ spec:
             env:
               IMMICH_WORKERS_INCLUDE: api
             resources:
+              claims:
+                - name: gpu
               requests:
                 cpu: 100m
                 memory: 512M
               limits:
                 memory: 1Gi
-                gpu.intel.com/i915: 1
       ml:
         type: deployment
         strategy: RollingUpdate
@@ -81,11 +85,12 @@ spec:
               tag: v2.0.1
             envFrom: *envFrom
             resources:
+              claims:
+                - name: gpu
               requests:
                 memory: 1Gi
               limits:
                 memory: 4Gi
-                gpu.intel.com/i915: 1
       micro:
         type: deployment
         strategy: RollingUpdate
@@ -109,11 +114,12 @@ spec:
             env:
               IMMICH_WORKERS_EXCLUDE: api
             resources:
+              claims:
+                - name: gpu
               requests:
                 memory: 512Mi
               limits:
                 memory: 2Gi
-                gpu.intel.com/i915: 1
     service:
       server:
         controller: server
