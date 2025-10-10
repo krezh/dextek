@@ -1,29 +1,8 @@
-locals {
-  internal_proxy_provider_ids = [
-    module.pinchflat.proxy_provider_id
-  ]
-
-  external_proxy_provider_ids = [
-    module.echo_server.proxy_provider_id,
-    module.sonarr.proxy_provider_id,
-    module.radarr.proxy_provider_id,
-    module.bazarr.proxy_provider_id,
-    module.maintainerr.proxy_provider_id,
-    module.prowlarr.proxy_provider_id,
-    module.sabnzbd.proxy_provider_id,
-    module.whisparr.proxy_provider_id,
-    module.changedetection.proxy_provider_id,
-    module.homepage.proxy_provider_id,
-    module.home.proxy_provider_id,
-    module.homeassistant.proxy_provider_id,
-    module.nzbget.proxy_provider_id,
-  ]
-}
 
 resource "authentik_outpost" "internal" {
   name               = "internal"
   service_connection = authentik_service_connection_kubernetes.local.id
-  protocol_providers = local.internal_proxy_provider_ids
+  protocol_providers = module.fw-auth.internal_proxy_provider_ids
   config = jsonencode({
     "log_level"                      = "info"
     "authentik_host"                 = "https://sso.${var.domain["external"]}/"
@@ -57,7 +36,7 @@ resource "authentik_outpost" "internal" {
 resource "authentik_outpost" "external" {
   name               = "external"
   service_connection = authentik_service_connection_kubernetes.local.id
-  protocol_providers = local.external_proxy_provider_ids
+  protocol_providers = module.fw-auth.external_proxy_provider_ids
   config = jsonencode({
     "log_level"                      = "info"
     "authentik_host"                 = "https://sso.${var.domain["external"]}/"
