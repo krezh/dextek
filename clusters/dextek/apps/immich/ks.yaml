@@ -20,4 +20,4 @@ spec:
   timeout: 5m
   components:
     - ../../../../shared/components/defaults
-    - ../../../../../shared/components/gpu
+    - ../../../../shared/components/gpu
