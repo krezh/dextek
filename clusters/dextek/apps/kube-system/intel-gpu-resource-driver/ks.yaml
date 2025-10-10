@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/apps/kube-system/intel-gpu-resource-driver/app
+  path: ./clusters/dextek/apps/kube-system/intel-gpu-resource-driver/app
   prune: true
   sourceRef:
     kind: GitRepository
