@@ -95,6 +95,7 @@ spec:
       tmp:
         enabled: true
         type: emptyDir
+        medium: Memory
         globalMounts:
           - path: /app/config
 

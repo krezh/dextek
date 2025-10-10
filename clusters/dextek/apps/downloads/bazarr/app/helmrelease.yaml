@@ -110,5 +110,6 @@ spec:
       add-ons:
         enabled: true
         type: emptyDir
+        medium: Memory
         globalMounts:
           - path: /add-ons
