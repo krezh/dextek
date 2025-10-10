@@ -57,3 +57,4 @@ spec:
     persistence:
       tmp:
         type: emptyDir
+        medium: Memory
