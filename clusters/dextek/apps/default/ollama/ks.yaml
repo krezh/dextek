@@ -23,6 +23,7 @@ spec:
   timeout: 3m
   components:
     - ../../../../../shared/components/defaults
+    - ../../../../../shared/components/gpu
   postBuild:
     substitute:
       APP: *app
