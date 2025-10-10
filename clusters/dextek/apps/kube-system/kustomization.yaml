@@ -15,10 +15,10 @@ resources:
   - ./k8tz
   - ./multus
   - ./system-upgrade
-  - ./intel-device-plugin
   - ./spegel
   - ./irqbalance
   - ./talos-etcd-defrag
+  - ./intel-gpu-resource-driver
 transformers:
   - |-
     apiVersion: builtin
