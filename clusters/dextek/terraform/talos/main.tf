@@ -1,5 +1,6 @@
 module "talos" {
-  source                 = "github.com/krezh/dextek//infrastructure/terraform/modules/talos?ref=main"
+  source = "github.com/krezh/dextek//infrastructure/terraform/modules/talos?ref=main"
+  # source                 = "../../../../infrastructure/terraform/modules/talos"
   cluster_name           = "talos-plexuz"
   cluster_vip            = "192.168.20.5"
   cluster_endpoint       = "talos.k8s.plexuz.xyz"
@@ -30,6 +31,10 @@ module "talos" {
       disk_model = "Samsung SSD*"
       driver     = "igc"
       driver_10g = "i40e"
+      node_labels = {
+        "node.kubernetes.io/gpu"        = "true"
+        "topology.kubernetes.io/region" = "main"
+      }
     }
     "ms01-02.k8s.plexuz.xyz" = {
       hostname   = "ms01-02"
@@ -39,6 +44,10 @@ module "talos" {
       disk_model = "Samsung SSD*"
       driver     = "igc"
       driver_10g = "i40e"
+      node_labels = {
+        "node.kubernetes.io/gpu"        = "true"
+        "topology.kubernetes.io/region" = "main"
+      }
     }
     "ms01-03.k8s.plexuz.xyz" = {
       hostname   = "ms01-03"
@@ -48,6 +57,10 @@ module "talos" {
       disk_model = "Samsung SSD*"
       driver     = "igc"
       driver_10g = "i40e"
+      node_labels = {
+        "node.kubernetes.io/gpu"        = "true"
+        "topology.kubernetes.io/region" = "main"
+      }
     }
   }
   bootstrap    = var.bootstrap

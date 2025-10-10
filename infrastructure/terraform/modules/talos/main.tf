@@ -45,6 +45,7 @@ data "talos_machine_configuration" "machine" {
       upsmonHost   = var.upsmon.host,
       upsmonPasswd = var.upsmon.password
     }) : null,
+    contains(keys(each.value), "node_labels") && length(each.value.node_labels) > 0 ? yamlencode({ machine = { nodeLabels = each.value.node_labels } }) : null
   ]
 }
 
