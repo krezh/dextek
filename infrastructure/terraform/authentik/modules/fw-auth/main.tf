@@ -83,3 +83,10 @@ resource "authentik_policy_binding" "app_access" {
   group  = each.value.group
   order  = 0
 }
+
+output "internal_proxy_provider_ids" {
+  value = local.internal_proxy_provider_ids
+}
+output "external_proxy_provider_ids" {
+  value = local.external_proxy_provider_ids
+}
