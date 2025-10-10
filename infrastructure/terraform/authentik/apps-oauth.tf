@@ -24,33 +24,6 @@ module "grafana" {
   meta_launch_url = "https://grafana.${var.domain["internal"]}"
 }
 
-module "minio" {
-  source = "./modules/oidc-application"
-  slug   = "minio"
-
-  name       = "Minio"
-  app_domain = "minio.${var.domain["external"]}"
-  app_group  = "Infrastructure"
-
-  access_groups = [data.authentik_group.superuser.id]
-
-
-  client_id     = jsondecode(data.doppler_secrets.tf_authentik.map.MINIO)["MINIO_OAUTH_CLIENT_ID"]
-  client_secret = jsondecode(data.doppler_secrets.tf_authentik.map.MINIO)["MINIO_OAUTH_CLIENT_SECRET"]
-
-  authentication_flow_id = authentik_flow.authentication.uuid
-  authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
-  invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-  property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
-
-  redirect_uris = ["https://minio.int.${var.domain["external"]}/oauth_callback"]
-
-  access_token_validity = "hours=4"
-
-  meta_icon       = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/minio.png"
-  meta_launch_url = "https://minio.int.${var.domain["external"]}"
-}
-
 module "mealie" {
   source = "./modules/oidc-application"
   slug   = "mealie"
