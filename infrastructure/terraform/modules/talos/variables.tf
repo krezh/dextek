@@ -148,13 +148,14 @@ variable "machine_yaml" {
 variable "nodes" {
   description = "A map of node data"
   type = map(object({
-    hostname   = string
-    platform   = optional(string, "metal") # metal, etc. 
-    role       = string                    # controlplane, worker
-    mac_addr   = string
-    disk_model = string
-    driver     = string
-    driver_10g = optional(string, "none")
+    hostname    = string
+    platform    = optional(string, "metal") # metal, etc.
+    role        = string                    # controlplane, worker
+    mac_addr    = string
+    disk_model  = string
+    driver      = string
+    driver_10g  = optional(string, "none")
+    node_labels = optional(map(string), {})
   }))
   validation {
     condition     = length(var.nodes) > 0
@@ -188,7 +189,21 @@ variable "nodes" {
     condition     = alltrue([for node in var.nodes : length(node.driver) > 0])
     error_message = "The driver must not be empty."
   }
+  validation {
+    condition = alltrue([
+      for node in var.nodes : (
+        node.node_labels == null ||
+        alltrue([
+          for k, v in node.node_labels :
+          can(regex("^(?:(?:[a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?)*)\\/)?[a-zA-Z0-9]([-a-zA-Z0-9_.]*[a-zA-Z0-9])?$", k)) &&
+          can(regex("^([a-zA-Z0-9]([-a-zA-Z0-9_.]*[a-zA-Z0-9])?)?$", v))
+        ])
+      )
+    ])
+    error_message = "All node_labels keys and values must conform to Kubernetes label requirements."
+  }
 }
+
 
 variable "upsmon" {
   description = "Configuration for the NUT UPS monitoring"
