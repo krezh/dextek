@@ -183,17 +183,16 @@ spec:
       enabled: true
     route:
       dashboard:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Rook"
+          gethomepage.dev/instance: "krezh"
+          gethomepage.dev/group: "Monitoring"
+          gethomepage.dev/icon: "rook.png"
         host:
           name: rook.talos.plexuz.xyz
           path: /
           pathType: PathPrefix
-          annotations:
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/name: "Rook"
-            gethomepage.dev/instance: "krezh"
-            gethomepage.dev/group: "Monitoring"
-            gethomepage.dev/icon: "rook.png"
-            gethomepage.dev/pod-selector: ""
         parentRefs:
           - name: gateway-internal
             namespace: network
