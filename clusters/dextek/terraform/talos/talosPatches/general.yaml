@@ -34,6 +34,10 @@ machine:
     extraConfig:
       maxPods: 150
       serializeImagePulls: false
+      # Make image cleanup more aggressive
+      imageMaximumGCAge: 24h # One day
+      imageGCHighThresholdPercent: 60 # Default is 85%
+      imageGCLowThresholdPercent: 30 # Default is 80%
       featureGates:
         UserNamespacesSupport: true
         UserNamespacesPodSecurityStandards: true
