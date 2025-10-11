@@ -25,7 +25,6 @@ spec:
       - name: ceph-blockpool
         spec:
           failureDomain: host
-          enableRBDStats: true
           replicated:
             size: 3
             targetSizeRatio: 1
@@ -53,8 +52,6 @@ spec:
       isDefault: true
       deletionPolicy: Delete
     cephClusterSpec:
-      # cephVersion:
-      #   image: quay.io/ceph/ceph:v19.2.3
       cephConfig:
         global:
           public_network: "10.10.0.0/27"
@@ -67,10 +64,7 @@ spec:
           device_failure_prediction_mode: local # requires mgr module
       cleanupPolicy:
         confirmation: ""
-        sanitizeDisks:
-          dataSource: zero
-          iteration: 1
-          method: quick
+        wipeDevicesFromOtherClusters: true
       crashCollector:
         disable: false
       csi:
@@ -80,6 +74,7 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
+        prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
       mgr:
         count: 3
         modules:
@@ -186,3 +181,20 @@ spec:
     operatorNamespace: rook-ceph
     toolbox:
       enabled: true
+    route:
+      dashboard:
+        host:
+          name: rook.talos.plexuz.xyz
+          path: /
+          pathType: PathPrefix
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: "Rook"
+            gethomepage.dev/instance: "krezh"
+            gethomepage.dev/group: "Monitoring"
+            gethomepage.dev/icon: "rook.png"
+            gethomepage.dev/pod-selector: ""
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
