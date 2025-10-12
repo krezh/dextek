@@ -109,9 +109,11 @@ resource "authentik_flow_stage_binding" "enrollment-invitation-flow-binding-10" 
 }
 
 resource "authentik_flow_stage_binding" "enrollment-invitation-flow-binding-20" {
-  target = authentik_flow.enrollment-invitation.uuid
-  stage  = authentik_stage_user_write.enrollment-user-write.id
-  order  = 20
+  target               = authentik_flow.enrollment-invitation.uuid
+  stage                = authentik_stage_user_write.enrollment-user-write.id
+  order                = 20
+  evaluate_on_plan     = false
+  re_evaluate_policies = true
 }
 
 resource "authentik_flow_stage_binding" "enrollment-invitation-flow-binding-30" {
