@@ -43,7 +43,7 @@ spec:
               MARK_FILE: /tmp/mark.log
               PLEX_BASEURL: https://plex.talos.plexuz.xyz
               RUN_ONLY_ONCE: true
-              USER_MAPPING: '{"Krezh": "Krezh", "beeren": "Beeren", "smircen": "Smirc"}'
+              USER_MAPPING: '{"Krezh": "Krezh", "beeren": "Beeren", "smircen": "Smirc", "Nojeb001": "Norwyn"}'
               WHITELIST_LIBRARY: "Anime,Movies,TV Shows,Shows"
               LIBRARY_MAPPING: '{ "Shows": "TV Shows", "Movie": "Movies" }'
             resources:
