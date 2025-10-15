@@ -19,6 +19,9 @@ spec:
     fullnameOverride: alloy
     serviceMonitor:
       enabled: true
+    controller:
+      extraAnnotations:
+        reloader.stakater.com/auto: "true"
     alloy:
       enableReporting: false
       clustering:
