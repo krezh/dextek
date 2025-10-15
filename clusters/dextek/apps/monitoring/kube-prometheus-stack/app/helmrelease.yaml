@@ -95,7 +95,6 @@ spec:
           runAsGroup: 64535
           fsGroup: 64535
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
-        enableRemoteWriteReceiver: true
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
