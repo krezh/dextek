@@ -18,6 +18,7 @@ resources:
   - ./opnsense-exporter
   - ./alloy
   - ./silence-operator
+  - ./github-exporter
 transformers:
   - |-
     apiVersion: builtin
