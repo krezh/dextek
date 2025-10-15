@@ -130,7 +130,7 @@ loki.write "default" {
 
 prometheus.remote_write "default" {
   endpoint {
-    url = "http://127.0.0.1:12345/push"  // dummy URL; satisfies Alloy schema
+    url = "http://prometheus-operated:9090/push"
   }
 }
 
