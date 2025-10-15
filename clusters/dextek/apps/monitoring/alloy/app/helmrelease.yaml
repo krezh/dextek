@@ -30,11 +30,5 @@ spec:
         create: false
         name: alloy-configmap
         key: config.alloy
-      extraEnv:
-        - name: GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: alloy-secret
-              key: GITHUB_TOKEN
     ingress:
       enabled: false
