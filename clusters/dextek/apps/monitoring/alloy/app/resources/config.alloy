@@ -128,22 +128,17 @@ loki.write "default" {
   }
 }
 
-// --- Prometheus remote_write (required for Alloy scrape) ---
 prometheus.remote_write "default" {
   endpoint {
     url = "http://127.0.0.1:12345/push"  // dummy URL; satisfies Alloy schema
   }
 }
 
-// --- GitHub exporter ---
 prometheus.exporter.github "gh" {
   api_token    = env("GITHUB_TOKEN")
-  users        = ["krezh"]          // or replace with repositories/orgs as needed
-  # repositories = ["krezh/myrepo"]
-  # organizations = ["my-org"]
+  users        = ["krezh"]
 }
 
-// --- Prometheus scrape ---
 prometheus.scrape "github" {
   targets         = prometheus.exporter.github.gh.targets
   scrape_interval = "30m"
