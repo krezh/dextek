@@ -14,7 +14,6 @@ discovery.kubernetes "service" {
 	role = "service"
 }
 
-
 // discovery.relabel rewrites the label set of the input targets by applying one or more relabeling rules.
 // If no rules are defined, then the input targets are exported as-is.
 discovery.relabel "pod_logs" {
@@ -92,7 +91,6 @@ loki.process "pod_logs" {
         cluster = "kubernetes",
       }
   }
-
 	forward_to = [loki.write.default.receiver]
 }
 
@@ -128,4 +126,15 @@ loki.write "default" {
   endpoint {
     url = "http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push"
   }
+}
+
+prometheus.exporter.github "gh" {
+  api_token = env("GITHUB_TOKEN")
+  users         = ["krezh"]
+}
+
+prometheus.scrape "github" {
+  targets         = prometheus.exporter.github.gh.targets
+  scrape_interval = "30m"
+  forward_to      = [prometheus.remote_write.default.receiver]
 }

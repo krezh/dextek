@@ -27,20 +27,11 @@ spec:
         create: false
         name: alloy-configmap
         key: config.alloy
+      extraEnv:
+        - name: GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: alloy-secret
+              key: GITHUB_TOKEN
     ingress:
       enabled: false
-      ingressClassName: nginx-internal
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/name: "Alloy"
-        gethomepage.dev/instance: "krezh"
-        gethomepage.dev/group: "Monitoring"
-        gethomepage.dev/icon: "alloy.png"
-      path: /
-      pathType: Prefix
-      faroPort: 12345
-      hosts:
-        - &host alloy.talos.plexuz.xyz
-      tls:
-        - hosts:
-            - *host
