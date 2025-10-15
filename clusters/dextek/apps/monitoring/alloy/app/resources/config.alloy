@@ -136,5 +136,4 @@ prometheus.exporter.github "gh" {
 prometheus.scrape "github" {
   targets         = prometheus.exporter.github.gh.targets
   scrape_interval = "30m"
-  forward_to      = [prometheus.remote_write.default.receiver]
 }
