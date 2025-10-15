@@ -127,20 +127,3 @@ loki.write "default" {
     url = "http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push"
   }
 }
-
-prometheus.remote_write "default" {
-  endpoint {
-    url = "http://prometheus-operated:9090/api/v1/write"
-  }
-}
-
-prometheus.exporter.github "gh" {
-  api_token    = env("GITHUB_TOKEN")
-  users        = ["krezh"]
-}
-
-prometheus.scrape "github" {
-  targets         = prometheus.exporter.github.gh.targets
-  scrape_interval = "10m"
-  forward_to      = [prometheus.remote_write.default.receiver]
-}
