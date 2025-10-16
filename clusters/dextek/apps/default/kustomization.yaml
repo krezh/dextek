@@ -24,7 +24,7 @@ resources:
   - ./publish-k8s-schemas
   - ./karakeep
   - ./attic
-  #- ./atlantis
+  - ./atlantis
 transformers:
   - |-
     apiVersion: builtin
