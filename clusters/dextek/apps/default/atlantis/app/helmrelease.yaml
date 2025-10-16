@@ -90,6 +90,7 @@ spec:
     environment:
       #ATLANTIS_DEFAULT_TF_VERSION: v1.10.6
       ATLANTIS_WRITE_GIT_CREDS: "true"
+      ATLANTIS_TFE_LOCAL_EXECUTION_MODE: true
     loadEnvFromSecrets:
       - atlantis-secret
 
