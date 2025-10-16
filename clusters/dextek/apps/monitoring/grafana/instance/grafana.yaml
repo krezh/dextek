@@ -14,8 +14,9 @@ spec:
       feedback_links_enabled: "false"
       reporting_enabled: "false"
     auth:
+      disable_login_form: "false"
       signout_redirect_url: https://sso.plexuz.xyz/application/o/grafana/end-session/
-      oauth_auto_login: "true"
+      oauth_auto_login: "false"
       oauth_allow_insecure_email_lookup: "true"
     auth.anonymous:
       enabled: "true"
@@ -76,7 +77,10 @@ spec:
                 - name: REQ_URL
                   value: http://localhost:3000/api/admin/provisioning/dashboards/reload
                 - name: REQ_USERNAME
-                  value: admin
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-secret
+                      key: GF_SECURITY_ADMIN_USER
                 - name: UNIQUE_FILENAMES
                   value: "true"
               securityContext:
