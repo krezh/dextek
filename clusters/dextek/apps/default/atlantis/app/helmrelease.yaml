@@ -15,8 +15,10 @@ spec:
         namespace: flux-system
   install:
     disableSchemaValidation: true
+    disableOpenAPIValidation: true
   upgrade:
     disableSchemaValidation: true
+    disableOpenAPIValidation: true
   driftDetection:
     mode: enabled
   values:
