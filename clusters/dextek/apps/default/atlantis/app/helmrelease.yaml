@@ -68,20 +68,22 @@ spec:
           secretName: atlantis-sops-secret
           items:
             - key: keys.txt
+              path: keys.txt
       - name: github-app-key
         secret:
           secretName: atlantis-secret
           items:
             - key: GH_APP_KEY
+              path: github.pem
     extraVolumeMounts:
       - name: atlantis-data
         mountPath: /atlantis-data
       - name: sops-keys
         mountPath: /home/atlantis/.config/sops/age/keys.txt
-        path: keys.txt
+        subPath: keys.txt
         readOnly: true
       - name: github-app-key
-        path: /config/github.pem
+        mountPath: /config/github.pem
         subPath: github.pem
         readOnly: true
 
