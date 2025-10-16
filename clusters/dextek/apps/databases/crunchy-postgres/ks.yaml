@@ -18,8 +18,6 @@ spec:
   wait: true
   interval: 30m
   timeout: 5m
-  components:
-    - ../../../../../shared/components/defaults
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -44,8 +42,6 @@ spec:
   wait: true
   interval: 30m
   timeout: 5m
-  components:
-    - ../../../../../shared/components/defaults
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -68,8 +64,6 @@ spec:
   wait: true
   interval: 30m
   timeout: 5m
-  components:
-    - ../../../../../shared/components/defaults
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -92,5 +86,3 @@ spec:
   wait: true
   interval: 30m
   timeout: 5m
-  components:
-    - ../../../../../shared/components/defaults

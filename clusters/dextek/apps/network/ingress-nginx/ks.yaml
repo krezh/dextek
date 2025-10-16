@@ -17,8 +17,6 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  components:
-    - ../../../../../shared/components/defaults
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -38,8 +36,6 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  components:
-    - ../../../../../shared/components/defaults
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -59,5 +55,3 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  components:
-    - ../../../../../shared/components/defaults
