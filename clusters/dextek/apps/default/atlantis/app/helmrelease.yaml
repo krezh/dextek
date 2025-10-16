@@ -74,7 +74,7 @@ spec:
           secretName: atlantis-secret
           items:
             - key: GH_APP_KEY
-              path: GH_APP_KEY
+              path: github.pem
     extraVolumeMounts:
       - name: atlantis-data
         mountPath: /atlantis-data
