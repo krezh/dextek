@@ -25,7 +25,7 @@ spec:
     atlantisUrl: https://atlantis.plexuz.xyz
 
     # Replace this with your own repo allowlist:
-    orgAllowlist: "*"
+    orgAllowlist: "github.com/krezh/*"
 
     # logLevel: 'debug'
 
