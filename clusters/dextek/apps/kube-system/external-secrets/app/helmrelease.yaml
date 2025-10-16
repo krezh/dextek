@@ -15,17 +15,15 @@ spec:
         kind: HelmRepository
         name: external-secrets
         namespace: flux-system
-  maxHistory: 3
-  uninstall:
-    keepHistory: false
   values:
+    leaderElect: true
     replicaCount: 1
-    installCRDs: true
     serviceMonitor:
       enabled: true
       interval: 1m
     grafanaDashboard:
       enabled: true
+      grafana_folder: external-secrets
     webhook:
       replicaCount: 1
       serviceMonitor:
