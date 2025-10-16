@@ -72,7 +72,7 @@ spec:
         secret:
           secretName: atlantis-secret
           items:
-            - key: ATLANTIS_GH_APP_KEY
+            - key: GH_APP_KEY
     extraVolumeMounts:
       - name: atlantis-data
         mountPath: /atlantis-data
