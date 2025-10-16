@@ -23,7 +23,6 @@ spec:
     name: flux-system
   components:
     - ../../../../../shared/components/ext-auth
-    - ../../../../../shared/components/defaults
   postBuild:
     substitute:
       APP: *app
