@@ -117,8 +117,9 @@ spec:
               configMap:
                 name: grafana-sidecar-provider
             - name: grafana-sidecar-dashboards
-              emptyDir: {}
+              emptyDir:
+                medium: Memory
             - name: tmpfs
-              emptyDir: {}
-              medium: Memory
+              emptyDir:
+                medium: Memory
   disableDefaultSecurityContext: All
