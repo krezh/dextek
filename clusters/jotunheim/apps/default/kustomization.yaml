@@ -5,5 +5,3 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./zot
-  #- ./minio
-  #- ./teleport
