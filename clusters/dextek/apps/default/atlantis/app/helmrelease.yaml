@@ -14,9 +14,9 @@ spec:
         name: atlantis
         namespace: flux-system
   install:
-    disableValidation: true
+    disableSchemaValidation: true
   upgrade:
-    disableValidation: true
+    disableSchemaValidation: true
   driftDetection:
     mode: enabled
   values:
@@ -76,7 +76,7 @@ spec:
       app.kubernetes.io/instance: atlantis
     podTemplate:
       annotations:
-        reloader.stakater.com/auto: 'true'
+        reloader.stakater.com/auto: "true"
 
     readinessProbe:
       periodSeconds: 5
