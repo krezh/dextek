@@ -15,4 +15,4 @@ spec:
     - backendRefs:
         - kind: Service
           name: atlantis
-          port: 4141
+          port: 80
