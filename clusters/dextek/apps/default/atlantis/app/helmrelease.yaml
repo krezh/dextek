@@ -63,9 +63,27 @@ spec:
       - name: atlantis-data
         persistentVolumeClaim:
           claimName: atlantis-data
+      - name: sops-keys
+        secret:
+          secretName: atlantis-sops-secret
+          items:
+            - key: keys.txt
+      - name: github-app-key
+        secret:
+          secretName: atlantis-secret
+          items:
+            - key: ATLANTIS_GH_APP_KEY
     extraVolumeMounts:
       - name: atlantis-data
         mountPath: /atlantis-data
+      - name: sops-keys
+        mountPath: /home/atlantis/.config/sops/age/keys.txt
+        subPath: keys.txt
+        readOnly: true
+      - name: github-app-key
+        mountPath: /config/github.pem
+        subPath: github.pem
+        readOnly: true
 
     environment:
       #ATLANTIS_DEFAULT_TF_VERSION: v1.10.6
