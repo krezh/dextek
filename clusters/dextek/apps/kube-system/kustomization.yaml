@@ -18,6 +18,7 @@ resources:
   - ./irqbalance
   - ./talos-etcd-defrag
   - ./intel-gpu-resource-driver
+  - ./tuppr
 transformers:
   - |-
     apiVersion: builtin
