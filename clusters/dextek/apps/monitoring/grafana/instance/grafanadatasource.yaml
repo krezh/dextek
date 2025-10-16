@@ -19,6 +19,23 @@ spec:
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
+  name: loki
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasource:
+    type: loki
+    name: loki
+    access: proxy
+    jsonData:
+      maxLines: 250
+    url: http://loki-headless.monitoring.svc.cluster.local:3100
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
   name: alertmanager
 spec:
   instanceSelector:
