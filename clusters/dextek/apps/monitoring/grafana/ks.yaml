@@ -6,7 +6,7 @@ metadata:
   name: grafana
   namespace: flux-system
 spec:
-  interval: 1h
+  interval: 30m
   path: ./clusters/dextek/apps/monitoring/grafana/app
   prune: true
   sourceRef:
@@ -25,7 +25,7 @@ spec:
   dependsOn:
     - name: grafana
     - name: crunchy-postgres-operator-cluster
-  interval: 1h
+  interval: 30m
   path: ./clusters/dextek/apps/monitoring/grafana/instance
   prune: true
   sourceRef:
