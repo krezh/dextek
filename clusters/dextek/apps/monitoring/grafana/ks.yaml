@@ -24,7 +24,7 @@ metadata:
 spec:
   dependsOn:
     - name: grafana
-    - name: rook-ceph-cluster
+    - name: crunchy-postgres-operator-cluster
   interval: 1h
   path: ./clusters/dextek/apps/monitoring/grafana/instance
   prune: true
