@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: atlantis
-        namespace: flux-charts
+        namespace: flux-system
 
   driftDetection:
     mode: enabled
