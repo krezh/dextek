@@ -13,7 +13,6 @@ resources:
   - ./sonarr
   - ./radarr
   - ./prowlarr
-  - ./whisparr
   - ./flaresolverr
   - ./bazarr
   - ./maintainerr
