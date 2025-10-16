@@ -13,18 +13,12 @@ spec:
         kind: HelmRepository
         name: atlantis
         namespace: flux-system
-
+  install:
+    disableValidation: true
+  upgrade:
+    disableValidation: true
   driftDetection:
     mode: enabled
-  maxHistory: 3
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-
   values:
     atlantisUrl: https://atlantis.plexuz.xyz
 
