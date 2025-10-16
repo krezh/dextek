@@ -78,10 +78,10 @@ spec:
         mountPath: /atlantis-data
       - name: sops-keys
         mountPath: /home/atlantis/.config/sops/age/keys.txt
-        subPath: keys.txt
+        path: keys.txt
         readOnly: true
       - name: github-app-key
-        mountPath: /config/github.pem
+        path: /config/github.pem
         subPath: github.pem
         readOnly: true
 
