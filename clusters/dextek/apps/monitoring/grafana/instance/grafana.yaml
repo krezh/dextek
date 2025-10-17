@@ -77,10 +77,7 @@ spec:
                 - name: REQ_URL
                   value: http://localhost:3000/api/admin/provisioning/dashboards/reload
                 - name: REQ_USERNAME
-                  valueFrom:
-                    secretKeyRef:
-                      name: grafana-secret
-                      key: GF_SECURITY_ADMIN_USER
+                  value: admin
                 - name: UNIQUE_FILENAMES
                   value: "true"
               securityContext:
