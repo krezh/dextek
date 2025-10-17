@@ -9,3 +9,4 @@ resources:
   - ./alertmanagerconfig.yaml
   - ./externalsecret.yaml
   - ./scrapeconfigs.yaml
+  - ./dashboard.yaml
