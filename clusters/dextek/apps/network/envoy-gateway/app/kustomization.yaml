@@ -5,3 +5,4 @@ resources:
   - ./helmrelease.yaml
   - ./servicemonitor.yaml
   - ./certificate.yaml
+  - ./dashboard.yaml
