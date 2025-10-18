@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app jellystat
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      app:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/cyfershepard/jellystat
+              tag: unstable@sha256:430c09b3e73f01a8d660788fd74b4e80d6712588f921edab234313362c1c0b34
+            env:
+              MINIMUM_SECONDS_TO_INCLUDE_PLAYBACK: "30"
+            envFrom:
+              - secretRef:
+                  name: jellystat-secret
+              - secretRef:
+                  name: jellystat-postgres-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 1Gi
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: &port 3000
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.plexuz.xyz"
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      backup:
+        type: emptyDir
+        advancedMounts:
+          app:
+            app:
+              - path: /app/backend/backup-data

@@ -105,8 +105,8 @@ spec:
       databases: ["zipline"]
       password:
         type: AlphaNumeric
-    - name: "semaphore"
-      databases: ["semaphore"]
+    - name: "jellystat"
+      databases: ["jellystat"]
       password:
         type: AlphaNumeric
   backups:
