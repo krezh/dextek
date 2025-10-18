@@ -49,7 +49,7 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.plexuz.xyz"
         parentRefs:
-          - name: gateway-internal
+          - name: gateway-external
             namespace: network
             sectionName: https
         rules:
