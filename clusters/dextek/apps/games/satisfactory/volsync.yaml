@@ -21,7 +21,7 @@ spec:
         AWS_SECRET_ACCESS_KEY: "{{ .AWS_SECRET_ACCESS_KEY }}"
   dataFrom:
     - extract:
-        key: VOLSYNC_RESTIC_TEMPLATE
+        key: VOLSYNC_TEMPLATE
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
