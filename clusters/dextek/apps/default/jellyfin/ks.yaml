@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: volsync
   path: ./clusters/dextek/apps/default/jellyfin/app
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -45,7 +45,7 @@ spec:
     - name: jellyfin
     - name: plex
   path: ./clusters/dextek/apps/default/jellyfin/tools
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system

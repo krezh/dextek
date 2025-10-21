@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cert-manager
   path: ./clusters/dextek/apps/kube-system/snapshot-controller/app
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system
