@@ -12,6 +12,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-    - datasourceName: ".*-dst"
-      inputName: VAR_REPLICATIONDESTNAME
-  url: https://grafana.com/api/dashboards/21356/revisions/2/download
+  envs:
+    - name: VAR_REPLICATIONDESTNAME
+      value: .*-dst
+  url: https://grafana.com/api/dashboards/21356/revisions/3/download
