@@ -96,8 +96,6 @@ spec:
     route:
       external:
         hostnames: ["nix-cache.plexuz.xyz"]
-        annotations:
-          external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
         parentRefs:
           - name: gateway-external
             namespace: network
