@@ -27,6 +27,7 @@ spec:
     name: flux-system
   components:
     - ../../../../../shared/components/ext-auth
+    - ../../../../../shared/components/volsync
   postBuild:
     substitute:
       APP: *app

@@ -17,6 +17,7 @@ spec:
     cacheStorageClassName: ${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}
     compression: zstd-fastest
     copyMethod: Snapshot
+    parallelism: 2
     moverSecurityContext:
       runAsUser: ${VOLSYNC_PUID:-568}
       runAsGroup: ${VOLSYNC_PGID:-568}
