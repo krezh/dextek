@@ -15,7 +15,7 @@ spec:
     - name: external-secrets-stores
     - name: volsync
   path: ./clusters/dextek/apps/default/attic/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

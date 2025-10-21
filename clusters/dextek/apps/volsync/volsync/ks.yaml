@@ -12,7 +12,7 @@ spec:
   interval: 30m
   targetNamespace: volsync
   path: ./clusters/dextek/apps/volsync/volsync/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -30,7 +30,7 @@ spec:
   interval: 30m
   targetNamespace: volsync
   path: ./clusters/dextek/apps/volsync/volsync/maintenance
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

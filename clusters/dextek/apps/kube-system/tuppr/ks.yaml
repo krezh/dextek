@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1h
   path: ./clusters/dextek/apps/kube-system/tuppr/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -26,7 +26,7 @@ spec:
     - name: tuppr
   interval: 1h
   path: ./clusters/dextek/apps/kube-system/tuppr/upgrades
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

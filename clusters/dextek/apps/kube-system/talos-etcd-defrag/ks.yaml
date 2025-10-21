@@ -14,7 +14,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   path: ./clusters/dextek/apps/kube-system/talos-etcd-defrag/app
-  prune: false # Set to true
+  prune: true
   wait: true
   sourceRef:
     kind: GitRepository

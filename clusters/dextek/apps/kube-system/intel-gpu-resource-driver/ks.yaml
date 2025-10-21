@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./clusters/dextek/apps/kube-system/intel-gpu-resource-driver/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -10,7 +10,7 @@ spec:
     - name: flux-instance
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/flux-system/tf-controller/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -29,7 +29,7 @@ spec:
   dependsOn:
     - name: tf-controller
   path: ./clusters/dextek/apps/flux-system/tf-controller/terraforms
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
