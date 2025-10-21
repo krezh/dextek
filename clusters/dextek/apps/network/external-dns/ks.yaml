@@ -8,7 +8,7 @@ metadata:
 spec:
   path: ./clusters/dextek/apps/network/external-dns/app
   targetNamespace: network
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system

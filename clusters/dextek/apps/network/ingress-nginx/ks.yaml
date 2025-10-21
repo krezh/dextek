@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cert-manager-issuers
   path: ./clusters/dextek/apps/network/ingress-nginx/certificates
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: ingress-nginx-certificates
   path: ./clusters/dextek/apps/network/ingress-nginx/external
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -47,7 +47,7 @@ spec:
   dependsOn:
     - name: ingress-nginx-certificates
   path: ./clusters/dextek/apps/network/ingress-nginx/internal
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system

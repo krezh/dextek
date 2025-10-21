@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 30m
   path: ./clusters/shared
-  prune: true
+  prune: false # Set to true
   wait: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ metadata:
 spec:
   interval: 30m
   path: ./clusters/dextek/flux/settings
-  prune: true
+  prune: false # Set to true
   wait: true
   sourceRef:
     kind: GitRepository
@@ -45,7 +45,7 @@ spec:
     - name: cluster-shared
     - name: cluster-settings
   path: ./clusters/dextek/apps
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system
