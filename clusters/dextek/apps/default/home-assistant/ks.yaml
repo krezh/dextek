@@ -23,6 +23,7 @@ spec:
   timeout: 3m
   components:
     - ../../../../../shared/components/ext-auth
+    - ../../../../../shared/components/volsync
   postBuild:
     substitute:
       APP: *app

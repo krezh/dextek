@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
+    - name: crunchy-postgres-operator-cluster
   path: ./clusters/dextek/apps/default/zipline/app
   prune: false # Set to true
   sourceRef:
@@ -24,5 +24,3 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi

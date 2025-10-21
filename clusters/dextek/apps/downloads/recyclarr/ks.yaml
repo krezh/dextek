@@ -24,6 +24,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+  components:
+    - ../../../../../shared/components/volsync
   postBuild:
     substitute:
       APP: *app
