@@ -8,7 +8,7 @@ metadata:
 spec:
   path: ./clusters/dextek/apps/volsync/kopia/app
   targetNamespace: volsync
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   targetNamespace: network
   path: ./clusters/dextek/apps/network/envoy-gateway/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -34,7 +34,7 @@ spec:
     - name: envoy-gateway
   targetNamespace: network
   path: ./clusters/dextek/apps/network/envoy-gateway/config
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
