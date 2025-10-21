@@ -1,28 +1,29 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: volsync
-  namespace: volsync
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: volsync
-      version: 0.13.1
-      sourceRef:
-        kind: HelmRepository
-        name: backube
-        namespace: flux-system
-  # https://github.com/backube/volsync/blob/main/helm/volsync/values.yaml
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: volsync
   values:
+    fullnameOverride: volsync # Required for volsync-perfectra1n fork
+    image: &image
+      repository: ghcr.io/perfectra1n/volsync
+      tag: v0.16.12
+    kopia: *image
+    rclone: *image
+    restic: *image
+    rsync: *image
+    rsync-tls: *image
+    syncthing: *image
     manageCRDs: true
-    replicaCount: 1
     metrics:
       disableAuth: true
     podSecurityContext:
       runAsNonRoot: true
       runAsUser: 1000
       runAsGroup: 1000
-      seccompProfile: { type: RuntimeDefault }

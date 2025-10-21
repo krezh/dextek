@@ -23,6 +23,7 @@ spec:
   components:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/gpu
+    - ../../../../../shared/components/volsync
   postBuild:
     substitute:
       APP: *app
