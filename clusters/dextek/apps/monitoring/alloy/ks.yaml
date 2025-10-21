@@ -10,7 +10,7 @@ spec:
     - name: kube-prometheus-stack
   path: ./clusters/dextek/apps/monitoring/alloy/app
   targetNamespace: monitoring
-  prune: true
+  prune: false # Set to true
   sourceRef:
     kind: GitRepository
     name: flux-system
