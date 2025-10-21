@@ -10,7 +10,7 @@ spec:
     - name: rook-ceph-cluster
   targetNamespace: auth
   path: ./clusters/dextek/apps/auth/teleport/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -36,7 +36,7 @@ spec:
     - name: teleport
   targetNamespace: auth
   path: ./clusters/dextek/apps/auth/teleport/agent
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

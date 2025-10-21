@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   path: ./clusters/dextek/apps/monitoring/kube-prometheus-stack/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

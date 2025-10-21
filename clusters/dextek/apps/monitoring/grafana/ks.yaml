@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 30m
   path: ./clusters/dextek/apps/monitoring/grafana/app
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -27,7 +27,7 @@ spec:
     - name: crunchy-postgres-operator-cluster
   interval: 30m
   path: ./clusters/dextek/apps/monitoring/grafana/instance
-  prune: false # Set to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
