@@ -88,7 +88,3 @@ resource "authentik_policy_binding" "bind-invitation-group-assignment" {
   negate  = false
   timeout = 30
 }
-
-output "enrollment_user_write_id" {
-  value = authentik_stage_user_write.enrollment-user-write.id
-}
