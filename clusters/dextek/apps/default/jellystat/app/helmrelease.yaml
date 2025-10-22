@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/cyfershepard/jellystat
-              tag: unstable@sha256:78e23f52423118afa35e2794ad31abf634c3f3e3484c9dbb66fe2640b39224c1
+              tag: unstable@sha256:0b744eff2b5a132b1aff4e5eb29ad5e92356ea30730a8249f7a3f979aa00c2d0
             env:
               MINIMUM_SECONDS_TO_INCLUDE_PLAYBACK: "30"
             envFrom:
