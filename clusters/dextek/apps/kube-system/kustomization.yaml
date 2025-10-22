@@ -19,6 +19,7 @@ resources:
   - ./talos-etcd-defrag
   - ./intel-gpu-resource-driver
   - ./tuppr
+  - ./kauth
 transformers:
   - |-
     apiVersion: builtin
