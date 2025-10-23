@@ -88,7 +88,7 @@ module "oauth_apps" {
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
       property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
-      redirect_uris          = ["https://headlamp.${var.domain["internal"]}/oidc-callback", "https://kauth.talos.plexuz.xyz/callback"]
+      redirect_uris          = ["https://headlamp.${var.domain["internal"]}/oidc-callback", "https://kauth.talos.plexuz.xyz/callback", "http://localhost:8080/callback"]
       meta_icon              = ""
       meta_launch_url        = "blank://blank"
     }
