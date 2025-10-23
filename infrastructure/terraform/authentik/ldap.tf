@@ -6,6 +6,8 @@ resource "authentik_provider_ldap" "ldap" {
   mfa_support     = false
   certificate     = data.authentik_certificate_key_pair.generated.id
   tls_server_name = "ldap-lb.${var.domain["internal"]}"
+  search_mode     = "cached"
+  bind_mode       = "cached"
 }
 
 resource "authentik_outpost" "LDAP" {
@@ -39,7 +41,7 @@ resource "authentik_application" "jellyfin" {
   name              = "Jellyfin"
   slug              = "jellyfin"
   meta_icon         = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png"
-  meta_description  = "My Streaming Service - To Request Stuff https://requests.${var.domain["external"]}"
+  meta_description  = "Requests: https://requests.${var.domain["external"]}"
   meta_launch_url   = "https://jellyfin.${var.domain["external"]}"
   protocol_provider = authentik_provider_ldap.ldap.id
 }

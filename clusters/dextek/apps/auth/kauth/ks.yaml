@@ -6,8 +6,8 @@ metadata:
   name: kauth
   namespace: flux-system
 spec:
-  targetNamespace: kube-system
-  path: ./clusters/dextek/apps/kube-system/kauth/app
+  targetNamespace: auth
+  path: ./clusters/dextek/apps/auth/kauth/app
   prune: true
   sourceRef:
     kind: GitRepository
