@@ -1,60 +1,31 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app kauth
   namespace: kube-system
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: kauth
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: "OnRootMismatch"
-    controllers:
-      app:
-        replicas: 1
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          app:
-            image:
-              repository: ghcr.io/krezh/kauth-server
-              tag: 0.1.11
-            envFrom:
-              - secretRef:
-                  name: kauth-secret
-            resources:
-              requests:
-                memory: 128Mi
-                cpu: 10m
-              limits:
-                memory: 512Mi
-    service:
-      app:
-        controller: app
-        ports:
-          http:
-            port: &port 8080
-    route:
-      app:
-        hostnames: ["kauth.talos.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+    replicaCount: 3
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    envFrom:
+      - secretRef:
+          name: kauth-secrets
+    httpRoute:
+      enabled: true
+      parentRefs:
+        - name: gateway-internal
+          namespace: network
+          sectionName: https
+      hostnames: ["kauth.talos.plexuz.xyz"]
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: /
