@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: teleport-kube-agent
-      version: 18.2.8
+      version: 18.2.10
       sourceRef:
         kind: HelmRepository
         name: teleport
