@@ -1,6 +1,0 @@
-kind: bot
-version: v1
-metadata:
-  name: github-action-bot
-spec:
-  roles: ["kube-admins"]
