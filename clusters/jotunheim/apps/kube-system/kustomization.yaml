@@ -11,5 +11,3 @@ resources:
   - ./cilium
   - ./coredns
   - ./node-feature-discovery
-  - ./system-upgrade
-  - ./kubelet-csr-approver
