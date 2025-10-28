@@ -13,7 +13,7 @@ module "oauth_apps" {
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+      property_mappings      = local.oauth2_scopes
       redirect_uris          = ["https://grafana.${var.domain["internal"]}/login/generic_oauth"]
       meta_icon              = "dashboard-icons"
       meta_launch_url        = "https://grafana.${var.domain["internal"]}"
@@ -33,7 +33,7 @@ module "oauth_apps" {
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+      property_mappings      = local.oauth2_scopes
       redirect_uris          = ["https://mealie.${var.domain["external"]}/login"]
       meta_icon              = "dashboard-icons"
       meta_launch_url        = "https://mealie.${var.domain["external"]}"
@@ -49,7 +49,7 @@ module "oauth_apps" {
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+      property_mappings      = local.oauth2_scopes
       redirect_uris = [
         "https://photos.${var.domain["external"]}/auth/login",
         "https://photos.${var.domain["external"]}/user-settings",
@@ -71,7 +71,7 @@ module "oauth_apps" {
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = data.authentik_property_mapping_provider_scope.oauth2_offline_access.ids
+      property_mappings      = local.oauth2_scopes_offline_access
       redirect_uris          = ["https://zipline.${var.domain["external"]}/api/auth/oauth/oidc"]
       meta_icon              = "dashboard-icons"
       meta_launch_url        = "https://zipline.${var.domain["external"]}"
@@ -87,7 +87,7 @@ module "oauth_apps" {
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = data.authentik_property_mapping_provider_scope.oauth2_offline_access.ids
+      property_mappings      = local.oauth2_scopes_offline_access
       redirect_uris          = ["https://headlamp.${var.domain["internal"]}/oidc-callback", "https://kauth.talos.plexuz.xyz/callback", "http://localhost:8080/callback"]
       meta_icon              = ""
       meta_launch_url        = "blank://blank"
@@ -106,7 +106,7 @@ module "oauth_apps" {
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = data.authentik_property_mapping_provider_scope.oauth2.ids
+      property_mappings      = local.oauth2_scopes
       redirect_uris          = ["https://karakeep.${var.domain["external"]}/api/auth/callback/custom"]
       meta_icon              = "dashboard-icons"
       meta_launch_url        = "https://karakeep.${var.domain["external"]}"
