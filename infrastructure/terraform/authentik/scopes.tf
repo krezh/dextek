@@ -1,17 +1,13 @@
 ## OAuth scopes
-data "authentik_property_mapping_provider_scope" "oauth2" {
-  managed_list = [
-    "goauthentik.io/providers/oauth2/scope-openid",
-    "goauthentik.io/providers/oauth2/scope-email",
-    "goauthentik.io/providers/oauth2/scope-profile"
+locals {
+  oauth2_scopes = [
+    data.authentik_property_mapping_provider_scope.openid.id,
+    data.authentik_property_mapping_provider_scope.profile.id,
+    authentik_property_mapping_provider_scope.email.id,
   ]
-}
 
-data "authentik_property_mapping_provider_scope" "oauth2_offline_access" {
-  managed_list = [
-    "goauthentik.io/providers/oauth2/scope-openid",
-    "goauthentik.io/providers/oauth2/scope-email",
-    "goauthentik.io/providers/oauth2/scope-profile",
-    "goauthentik.io/providers/oauth2/scope-offline_access"
-  ]
+  oauth2_scopes_offline_access = concat(
+    local.oauth2_scopes,
+    [data.authentik_property_mapping_provider_scope.offline_access.id]
+  )
 }
