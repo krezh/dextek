@@ -11,6 +11,10 @@ spec:
     kind: OCIRepository
     name: kauth
   values:
+    monitoring:
+      enabled: true
+      grafanaDashboard:
+        enabled: true
     replicaCount: 3
     podAnnotations:
       reloader.stakater.com/auto: "true"
