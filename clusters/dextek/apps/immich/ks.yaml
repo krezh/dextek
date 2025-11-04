@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: crunchy-postgres-operator-cluster
-    - name: valkey
+    - name: dragonfly-cluster
   path: ./clusters/dextek/apps/immich/app
   prune: true
   sourceRef:
