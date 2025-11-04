@@ -23,9 +23,6 @@ spec:
       envFrom:
         - secretRef:
             name: authentik-secret
-    authentik:
-      redis:
-        host: dragonfly.databases.svc.cluster.local
     prometheus:
       rules:
         enabled: true
