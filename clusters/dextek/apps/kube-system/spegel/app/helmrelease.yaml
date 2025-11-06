@@ -15,7 +15,11 @@ spec:
     - kind: ConfigMap
       name: spegel-helm-values
   values:
-    serviceMonitor:
-      enabled: true
     grafanaDashboard:
+      enabled: true
+      mode: GrafanaOperator
+      grafanaOperator:
+        matchLabels:
+          grafana.internal/instance: grafana
+    serviceMonitor:
       enabled: true
