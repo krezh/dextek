@@ -9,8 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: spegel
-  uninstall:
-    keepHistory: false
   valuesFrom:
     - kind: ConfigMap
       name: spegel-helm-values

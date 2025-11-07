@@ -15,9 +15,6 @@ spec:
         kind: HelmRepository
         name: rook-release
         namespace: flux-system
-  maxHistory: 3
-  uninstall:
-    keepHistory: false
   driftDetection:
     mode: enabled
   values:

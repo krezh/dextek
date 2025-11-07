@@ -6,6 +6,7 @@ metadata:
   name: snapshot-controller
   namespace: flux-system
 spec:
+  targetNamespace: kube-system
   dependsOn:
     - name: cert-manager
   path: ./clusters/dextek/apps/kube-system/snapshot-controller/app

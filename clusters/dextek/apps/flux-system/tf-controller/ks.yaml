@@ -6,6 +6,7 @@ metadata:
   name: tf-controller
   namespace: flux-system
 spec:
+  targetNamespace: flux-system
   dependsOn:
     - name: flux-instance
     - name: external-secrets-stores
@@ -26,6 +27,7 @@ metadata:
   name: tf-controller-terraforms
   namespace: flux-system
 spec:
+  targetNamespace: flux-system
   dependsOn:
     - name: tf-controller
   path: ./clusters/dextek/apps/flux-system/tf-controller/terraforms

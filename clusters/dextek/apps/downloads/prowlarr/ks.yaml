@@ -6,21 +6,21 @@ metadata:
   name: &app prowlarr
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: crunchy-postgres-operator-cluster
   targetNamespace: downloads
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  dependsOn:
+    - name: crunchy-postgres-operator-cluster
   path: ./clusters/dextek/apps/downloads/prowlarr/app
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
   components:
     - ../../../../../shared/components/ext-auth
   postBuild:

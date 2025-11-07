@@ -6,6 +6,7 @@ metadata:
   name: mikrotik-exporter
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./clusters/dextek/apps/monitoring/mikrotik-exporter/app
   prune: true
   sourceRef:

@@ -7,14 +7,9 @@ metadata:
   namespace: default
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: homepage
   values:
     defaultPodOptions:
       securityContext:
@@ -63,6 +58,8 @@ spec:
         ports:
           http:
             port: &port 3000
+    serviceAccount:
+      app: {}
     route:
       app:
         hostnames:
@@ -97,7 +94,6 @@ spec:
         medium: Memory
         globalMounts:
           - path: /app/config
-
     rbac:
       roles:
         app:
@@ -155,7 +151,6 @@ spec:
                 - customresourcedefinitions/status
               verbs:
                 - get
-
       bindings:
         app:
           type: ClusterRoleBinding
@@ -163,6 +158,3 @@ spec:
             identifier: app
           subjects:
             - identifier: app
-
-    serviceAccount:
-      app: {}

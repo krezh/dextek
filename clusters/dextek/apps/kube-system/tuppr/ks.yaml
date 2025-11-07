@@ -6,14 +6,14 @@ metadata:
   name: tuppr
   namespace: flux-system
 spec:
-  interval: 1h
+  targetNamespace: kube-system
   path: ./clusters/dextek/apps/kube-system/tuppr/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  targetNamespace: kube-system
   wait: true
+  interval: 1h
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -22,13 +22,13 @@ metadata:
   name: tuppr-upgrades
   namespace: flux-system
 spec:
+  targetNamespace: kube-system
   dependsOn:
     - name: tuppr
-  interval: 1h
   path: ./clusters/dextek/apps/kube-system/tuppr/upgrades
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  targetNamespace: kube-system
   wait: false
+  interval: 1h

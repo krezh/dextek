@@ -12,15 +12,15 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   path: ./clusters/dextek/apps/downloads/nzbget/app
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
   components:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/volsync

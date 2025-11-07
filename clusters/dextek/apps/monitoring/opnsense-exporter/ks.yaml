@@ -6,6 +6,7 @@ metadata:
   name: opnsense-exporter
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./clusters/dextek/apps/monitoring/opnsense-exporter/app
   prune: true
   sourceRef:

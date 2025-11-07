@@ -7,16 +7,9 @@ metadata:
   namespace: default
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  uninstall:
-    keepHistory: false
+  chartRef:
+    kind: OCIRepository
+    name: echo-server
   values:
     controllers:
       app:
@@ -75,7 +68,7 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
           gethomepage.dev/icon: "echo-server.png"
-          gethomepage.dev/pod-selector: >-
+          gethomepage.dev/pod-selector: |-
             app.kubernetes.io/instance in (
               {{ .Release.Name }}
             )

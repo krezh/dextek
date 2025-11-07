@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
   - ./externalsecret.yaml
 labels:
   - pairs:

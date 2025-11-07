@@ -6,17 +6,9 @@ metadata:
   name: karakeep
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  maxHistory: 3
-  uninstall:
-    keepHistory: false
+  chartRef:
+    kind: OCIRepository
+    name: karakeep
   values:
     defaultPodOptions:
       securityContext:
@@ -139,18 +131,6 @@ spec:
         ports:
           http:
             port: 7700
-    persistence:
-      data:
-        existingClaim: karakeep-config
-        advancedMounts:
-          karakeep:
-            app:
-              - path: /data
-                subPath: karakeep
-          meilisearch:
-            app:
-              - path: /meili_data
-                subPath: meilisearch
     route:
       app:
         hostnames:
@@ -164,7 +144,7 @@ spec:
           # gethomepage.dev/widget.url: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local"
           # gethomepage.dev/widget.type: "{{ .Release.Name }}"
           # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_APIKEY}}` }}"
-          gethomepage.dev/pod-selector: >-
+          gethomepage.dev/pod-selector: |-
             app.kubernetes.io/instance in (
               {{ .Release.Name }}
             )
@@ -176,3 +156,15 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *httpPort
+    persistence:
+      data:
+        existingClaim: karakeep-config
+        advancedMounts:
+          karakeep:
+            app:
+              - path: /data
+                subPath: karakeep
+          meilisearch:
+            app:
+              - path: /meili_data
+                subPath: meilisearch
