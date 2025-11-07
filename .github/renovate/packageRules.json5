@@ -7,5 +7,12 @@
       versioning: "loose",
       matchPackagePatterns: ["changedetection", "plex", "qbittorrent", "mktxp"],
     },
+    {
+      description: "Label OCI Helm charts as helm updates",
+      matchDatasources: ["docker"],
+      matchFileNames: ["**/ocirepository.yaml"],
+      commitMessageTopic: "helm chart {{depName}}",
+      additionalBranchPrefix: "helm-",
+    },
   ],
 }
