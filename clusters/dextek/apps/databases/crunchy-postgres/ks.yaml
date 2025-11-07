@@ -26,14 +26,14 @@ metadata:
   name: &app crunchy-postgres-operator-cluster
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: crunchy-postgres-operator
-    - name: external-secrets-stores
-    - name: rook-ceph-cluster
   targetNamespace: databases
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: crunchy-postgres-operator
+    - name: external-secrets-stores
+    - name: rook-ceph-cluster
   path: ./clusters/dextek/apps/databases/crunchy-postgres/cluster
   prune: true
   sourceRef:
@@ -50,12 +50,12 @@ metadata:
   name: &app crunchy-postgres-userinit-controller
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: crunchy-postgres-operator-cluster
   targetNamespace: databases
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: crunchy-postgres-operator-cluster
   path: ./clusters/dextek/apps/databases/crunchy-postgres/userinit-controller
   prune: true
   sourceRef:
@@ -72,12 +72,12 @@ metadata:
   name: &app crunchy-postgres-stores
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: external-secrets
   targetNamespace: databases
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets
   path: ./clusters/dextek/apps/databases/crunchy-postgres/clustersecretstore
   prune: true
   sourceRef:

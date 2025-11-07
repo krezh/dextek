@@ -12,10 +12,10 @@ spec:
       app.kubernetes.io/name: cilium
   path: ./clusters/dextek/apps/kube-system/cilium/app
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -27,18 +27,18 @@ metadata:
   name: cilium-config
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cilium
   targetNamespace: kube-system
   commonMetadata:
     labels:
       app.kubernetes.io/name: cilium
+  dependsOn:
+    - name: cilium
   path: ./clusters/dextek/apps/kube-system/cilium/config
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 3m

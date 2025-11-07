@@ -15,9 +15,9 @@ spec:
         kind: HelmRepository
         name: tofu-controller
         namespace: flux-system
-  maxHistory: 3
   uninstall:
     keepHistory: false
+  maxHistory: 3
   values:
     awsPackage:
       repository: ghcr.io/flux-iac/aws-primitive-modules

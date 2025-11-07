@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - ../../../../../shared/templates/volsync
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
   - ./externalsecret.yaml

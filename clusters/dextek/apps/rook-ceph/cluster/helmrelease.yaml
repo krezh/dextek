@@ -15,11 +15,11 @@ spec:
         kind: HelmRepository
         name: rook-release
         namespace: flux-system
-  maxHistory: 3
-  uninstall:
-    keepHistory: false
   driftDetection:
     mode: enabled
+  uninstall:
+    keepHistory: false
+  maxHistory: 3
   values:
     cephBlockPools:
       - name: ceph-blockpool

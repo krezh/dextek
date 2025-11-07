@@ -6,14 +6,14 @@ metadata:
   name: grafana
   namespace: flux-system
 spec:
-  interval: 30m
+  targetNamespace: monitoring
   path: ./clusters/dextek/apps/monitoring/grafana/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  targetNamespace: monitoring
   wait: true
+  interval: 30m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -22,14 +22,14 @@ metadata:
   name: grafana-instance
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   dependsOn:
     - name: grafana
     - name: crunchy-postgres-operator-cluster
-  interval: 30m
   path: ./clusters/dextek/apps/monitoring/grafana/instance
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  targetNamespace: monitoring
   wait: false
+  interval: 30m

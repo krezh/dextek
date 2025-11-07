@@ -40,10 +40,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Packer
-packer_cache/
-
-
 # Sops
 .decrypted*.sops.*
 *decrypted*

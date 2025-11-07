@@ -5,15 +5,13 @@ metadata:
   name: irqbalance
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: irqbalance
   values:
+    defaultPodOptions:
+      hostIPC: true
+      hostPID: true
     controllers:
       irqbalance:
         type: daemonset
@@ -32,9 +30,6 @@ spec:
                 memory: 128Mi
             securityContext:
               privileged: true
-    defaultPodOptions:
-      hostIPC: true
-      hostPID: true
     persistence:
       run:
         type: emptyDir

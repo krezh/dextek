@@ -6,15 +6,23 @@ metadata:
   name: &app dragonfly-operator
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: dragonfly
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile: { type: RuntimeDefault }
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     controllers:
       dragonfly-operator:
         strategy: RollingUpdate
@@ -61,19 +69,6 @@ spec:
               capabilities: { drop: ["ALL"] }
         serviceAccount:
           identifier: app
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: *app
     service:
       app:
         controller: *app
@@ -82,6 +77,8 @@ spec:
             port: *port
           metrics:
             port: 8080
+    serviceAccount:
+      app: {}
     serviceMonitor:
       app:
         serviceName: *app
@@ -91,7 +88,6 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-
     rbac:
       roles:
         app:
@@ -99,30 +95,25 @@ spec:
           rules:
             - apiGroups: ["coordination.k8s.io"]
               resources: ["leases"]
-              verbs:
-                ["get", "list", "watch", "create", "update", "patch", "delete"]
+              verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
             - apiGroups: [""]
               resources: ["events"]
               verbs: ["create", "patch"]
             - apiGroups: [""]
               resources: ["pods", "services"]
-              verbs:
-                ["create", "delete", "get", "list", "patch", "update", "watch"]
+              verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
             - apiGroups: ["apps"]
               resources: ["statefulsets"]
-              verbs:
-                ["create", "delete", "get", "list", "patch", "update", "watch"]
+              verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
             - apiGroups: ["dragonflydb.io"]
               resources: ["dragonflies"]
-              verbs:
-                ["create", "delete", "get", "list", "patch", "update", "watch"]
+              verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
             - apiGroups: ["dragonflydb.io"]
               resources: ["dragonflies/finalizers"]
               verbs: ["update"]
             - apiGroups: ["dragonflydb.io"]
               resources: ["dragonflies/status"]
               verbs: ["get", "patch", "update"]
-
       bindings:
         app:
           type: ClusterRoleBinding
@@ -130,6 +121,3 @@ spec:
             identifier: app
           subjects:
             - identifier: app
-
-    serviceAccount:
-      app: {}

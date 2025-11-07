@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
   - ./promrules.yaml
 configMapGenerator:
   - name: nut-exporter

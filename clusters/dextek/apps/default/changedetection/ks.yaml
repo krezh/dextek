@@ -6,12 +6,12 @@ metadata:
   name: &app changedetection
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: volsync
   targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: volsync
   path: ./clusters/dextek/apps/default/changedetection/app
   prune: true
   sourceRef:
