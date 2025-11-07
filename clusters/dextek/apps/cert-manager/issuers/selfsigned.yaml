@@ -17,10 +17,10 @@ metadata:
   namespace: cert-manager
 spec:
   secretName: cluster-selfsigned-ca
-  duration: 43800h # 5y
   issuerRef:
     name: selfsign
     kind: Issuer
+  duration: 43800h # 5y
   commonName: "ca.cluster.cert-manager"
   isCA: true
 ---

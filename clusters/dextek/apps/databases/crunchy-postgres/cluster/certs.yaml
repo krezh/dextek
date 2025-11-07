@@ -7,19 +7,6 @@ metadata:
 spec:
   # Secret names are always required.
   secretName: postgres-tls
-  duration: 2160h # 90d
-  renewBefore: 720h # 30d
-  subject:
-    organizations:
-      - crunchydata
-  commonName: postgres-primary
-  isCA: false
-  privateKey:
-    algorithm: ECDSA
-    size: 256
-  usages:
-    - digital signature
-    - key encipherment
   # Set DNS names to the names of the Postgres hosts
   dnsNames:
     - postgres-primary
@@ -28,6 +15,19 @@ spec:
     name: cluster-selfsigned
     kind: ClusterIssuer
     group: cert-manager.io
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  duration: 2160h # 90d
+  renewBefore: 720h # 30d
+  subject:
+    organizations:
+      - crunchydata
+  commonName: postgres-primary
+  isCA: false
+  usages:
+    - digital signature
+    - key encipherment
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -37,6 +37,17 @@ metadata:
 spec:
   # Secret names are always required.
   secretName: postgres-repl-tls
+  # At least one of a DNS Name, URI, or IP address is required, so we'll
+  # have it match the CN for the benefit of Postgres
+  dnsNames:
+    - _crunchyrepl
+  issuerRef:
+    name: cluster-selfsigned
+    kind: ClusterIssuer
+    group: cert-manager.io
+  privateKey:
+    algorithm: ECDSA
+    size: 256
   duration: 2160h # 90d
   renewBefore: 720h # 30d
   subject:
@@ -46,17 +57,6 @@ spec:
   # cert auth
   commonName: _crunchyrepl
   isCA: false
-  privateKey:
-    algorithm: ECDSA
-    size: 256
   usages:
     - digital signature
     - key encipherment
-  # At least one of a DNS Name, URI, or IP address is required, so we'll
-  # have it match the CN for the benefit of Postgres
-  dnsNames:
-    - _crunchyrepl
-  issuerRef:
-    name: cluster-selfsigned
-    kind: ClusterIssuer
-    group: cert-manager.io

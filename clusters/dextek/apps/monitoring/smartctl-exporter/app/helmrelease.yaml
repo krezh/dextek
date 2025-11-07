@@ -7,17 +7,9 @@ metadata:
   namespace: monitoring
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: prometheus-smartctl-exporter
-      version: 0.16.0
-      sourceRef:
-        kind: HelmRepository
-        name: prometheus-community
-        namespace: flux-system
-  maxHistory: 3
-  uninstall:
-    keepHistory: false
+  chartRef:
+    kind: OCIRepository
+    name: smartctl-exporter
   values:
     fullnameOverride: *app
     config:
@@ -39,6 +31,5 @@ spec:
           replacement: $1
           sourceLabels: ["__meta_kubernetes_pod_node_name"]
           targetLabel: instance
-
     prometheusRules:
       enabled: false

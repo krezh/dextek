@@ -7,17 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: tofu-controller
-      version: 0.16.0-rc.5
-      sourceRef:
-        kind: HelmRepository
-        name: tofu-controller
-        namespace: flux-system
-  maxHistory: 3
-  uninstall:
-    keepHistory: false
+  chartRef:
+    kind: OCIRepository
+    name: tofu-controller
   values:
     awsPackage:
       repository: ghcr.io/flux-iac/aws-primitive-modules

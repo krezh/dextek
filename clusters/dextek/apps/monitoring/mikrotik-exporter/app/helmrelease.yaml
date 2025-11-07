@@ -7,17 +7,9 @@ metadata:
   namespace: monitoring
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  maxHistory: 3
-  uninstall:
-    keepHistory: false
+  chartRef:
+    kind: OCIRepository
+    name: mikrotik-exporter
   values:
     controllers:
       app:
@@ -48,7 +40,6 @@ spec:
         ports:
           http:
             port: 49090
-
     serviceMonitor:
       app:
         serviceName: mikrotik-exporter
@@ -59,7 +50,6 @@ spec:
             path: /
             interval: 1m
             scrapeTimeout: 10s
-
     persistence:
       config:
         enabled: true

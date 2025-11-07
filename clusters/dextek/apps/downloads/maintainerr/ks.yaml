@@ -16,15 +16,15 @@ spec:
     - name: sonarr
     - name: radarr
     - name: jellyseerr
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   path: ./clusters/dextek/apps/downloads/maintainerr/app
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
   components:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/volsync

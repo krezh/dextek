@@ -6,17 +6,17 @@ metadata:
   name: volsync
   namespace: flux-system
 spec:
+  targetNamespace: volsync
   dependsOn:
     - name: rook-ceph-cluster
     - name: snapshot-controller
-  interval: 30m
-  targetNamespace: volsync
   path: ./clusters/dextek/apps/volsync/volsync/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
   wait: true
+  interval: 30m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -25,13 +25,13 @@ metadata:
   name: volsync-maintenance
   namespace: flux-system
 spec:
+  targetNamespace: volsync
   dependsOn:
     - name: volsync
-  interval: 30m
-  targetNamespace: volsync
   path: ./clusters/dextek/apps/volsync/volsync/maintenance
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
   wait: false
+  interval: 30m

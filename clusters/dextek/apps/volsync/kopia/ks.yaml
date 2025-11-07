@@ -6,8 +6,8 @@ metadata:
   name: kopia
   namespace: flux-system
 spec:
-  path: ./clusters/dextek/apps/volsync/kopia/app
   targetNamespace: volsync
+  path: ./clusters/dextek/apps/volsync/kopia/app
   prune: true
   sourceRef:
     kind: GitRepository
