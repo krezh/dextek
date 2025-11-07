@@ -10,9 +10,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: smartctl-exporter
-  uninstall:
-    keepHistory: false
-  maxHistory: 3
   values:
     fullnameOverride: *app
     config:

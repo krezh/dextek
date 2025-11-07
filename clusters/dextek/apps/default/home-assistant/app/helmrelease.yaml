@@ -10,9 +10,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: home-assistant
-  uninstall:
-    keepHistory: false
-  maxHistory: 3
   values:
     defaultPodOptions:
       securityContext:

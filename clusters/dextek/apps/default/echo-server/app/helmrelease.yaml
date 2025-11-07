@@ -10,8 +10,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: echo-server
-  uninstall:
-    keepHistory: false
   values:
     controllers:
       app:
@@ -70,7 +68,7 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
           gethomepage.dev/icon: "echo-server.png"
-          gethomepage.dev/pod-selector: >-
+          gethomepage.dev/pod-selector: |-
             app.kubernetes.io/instance in (
               {{ .Release.Name }}
             )

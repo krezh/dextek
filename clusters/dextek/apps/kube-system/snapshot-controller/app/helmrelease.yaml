@@ -18,7 +18,6 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-  maxHistory: 3
   values:
     controller:
       enabled: true
