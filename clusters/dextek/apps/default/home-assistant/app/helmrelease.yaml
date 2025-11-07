@@ -61,9 +61,8 @@ spec:
           gethomepage.dev/instance: "krezh"
           gethomepage.dev/group: "Tools"
           gethomepage.dev/icon: "{{ .Release.Name }}.png"
-          gethomepage.dev/pod-selector: >-
+          gethomepage.dev/pod-selector: |-
             app.kubernetes.io/instance in (
-
               {{ .Release.Name }}
             )
         parentRefs:
