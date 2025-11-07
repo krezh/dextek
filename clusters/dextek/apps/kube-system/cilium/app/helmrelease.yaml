@@ -7,14 +7,9 @@ metadata:
   namespace: kube-system
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: *app
-      version: 1.18.3
-      sourceRef:
-        kind: HelmRepository
-        name: cilium
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: cilium
   valuesFrom:
     - kind: ConfigMap
       name: cilium-helm-values

@@ -6,12 +6,12 @@ metadata:
   name: &app pinchflat
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: volsync
   targetNamespace: downloads
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: volsync
   path: ./clusters/dextek/apps/downloads/pinchflat/app
   prune: true
   sourceRef:

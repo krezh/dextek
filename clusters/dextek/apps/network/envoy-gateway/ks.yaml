@@ -6,10 +6,10 @@ metadata:
   name: &app envoy-gateway
   namespace: flux-system
 spec:
+  targetNamespace: network
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  targetNamespace: network
   path: ./clusters/dextek/apps/network/envoy-gateway/app
   prune: true
   sourceRef:
@@ -27,12 +27,12 @@ metadata:
   name: &app envoy-gateway-config
   namespace: flux-system
 spec:
+  targetNamespace: network
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: envoy-gateway
-  targetNamespace: network
   path: ./clusters/dextek/apps/network/envoy-gateway/config
   prune: true
   sourceRef:

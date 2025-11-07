@@ -6,6 +6,7 @@ metadata:
   name: nut-exporter
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./clusters/dextek/apps/monitoring/nut-exporter/app
   prune: true
   sourceRef:

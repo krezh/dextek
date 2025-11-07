@@ -28,11 +28,11 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: monitoring
-  dependsOn:
-    - name: silence-operator
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: silence-operator
   path: ./clusters/dextek/apps/monitoring/silence-operator/silences
   prune: true
   sourceRef:

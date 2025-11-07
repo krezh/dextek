@@ -6,15 +6,30 @@ metadata:
   name: &app talos-etcd-defrag
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: talos-etcd-defrag
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+              topologyKey: kubernetes.io/hostname
     controllers:
       talos-etcd-defrag:
         type: cronjob
@@ -68,7 +83,17 @@ spec:
         enabled: true
         labels: {}
         annotations: {}
-
+    persistence:
+      talos-secrets:
+        type: secret
+        name: *app
+        globalMounts:
+          - path: /var/run/secrets/talos.dev
+            readOnly: true
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
     rbac:
       bindings:
         cluster-admin-binding:
@@ -82,36 +107,3 @@ spec:
             - kind: ServiceAccount
               name: *app
               namespace: "{{ .Release.Namespace }}"
-
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-role.kubernetes.io/control-plane
-                    operator: Exists
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
-              topologyKey: kubernetes.io/hostname
-
-    persistence:
-      talos-secrets:
-        type: secret
-        name: *app
-        globalMounts:
-          - path: /var/run/secrets/talos.dev
-            readOnly: true
-      tmp:
-        type: emptyDir
-        globalMounts:
-          - path: /tmp

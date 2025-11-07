@@ -24,10 +24,10 @@ metadata:
   name: rook-ceph-cluster
   namespace: flux-system
 spec:
+  targetNamespace: rook-ceph
   dependsOn:
     - name: rook-ceph
     - name: snapshot-controller
-  targetNamespace: rook-ceph
   path: ./clusters/dextek/apps/rook-ceph/cluster
   prune: true
   sourceRef:
