@@ -20,4 +20,4 @@ plan: init
 
 [no-cd]
 force-unlock:
-    tofu force-unlock "krezh/$(basename $(pwd -P))"
+    tofu force-unlock "krezh/$(tofu workspace show)"

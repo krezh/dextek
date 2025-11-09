@@ -9,12 +9,12 @@ spec:
   interval: 30m
   chart:
     spec:
+      version: 4.14.0
       chart: ingress-nginx
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
         namespace: flux-system
-      version: 4.14.0
   timeout: 15m
   values:
     fullnameOverride: nginx-internal
