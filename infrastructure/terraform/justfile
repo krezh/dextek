@@ -19,5 +19,10 @@ plan: init
     tofu plan
 
 [no-cd]
-force-unlock:
-    tofu force-unlock "krezh/$(tofu workspace show)"
+force-unlock workspace="": init
+    #!/usr/bin/env bash
+    if [ -z "{{ workspace }}" ]; then
+        tofu force-unlock "krezh/$(tofu workspace show)"
+    else
+        tofu force-unlock "krezh/{{ workspace }}"
+    fi
