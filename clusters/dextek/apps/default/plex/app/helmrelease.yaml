@@ -52,23 +52,29 @@ spec:
             protocol: HTTPS
             appProtocol: https
             port: &port 32400
-    ingress:
+    route:
       app:
-        enabled: true
-        className: nginx-internal
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        hosts:
-          - host: &hostlocal "{{ .Release.Name }}.talos.plexuz.xyz"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: *port
-        tls:
-          - hosts:
-              - *hostlocal
+        hostnames:
+          - "{{ .Release.Name }}.talos.plexuz.xyz"
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  remove:
+                    - Range
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /library/streams
+          - backendRefs:
+              - identifier: app
+                port: *port
     persistence:
       config:
         enabled: true
