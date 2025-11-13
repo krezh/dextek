@@ -5,20 +5,13 @@ kind: HelmRelease
 metadata:
   name: silence-operator
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: silence-operator
-      version: 0.19.0
-      sourceRef:
-        kind: HelmRepository
-        name: home-operations
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: silence-operator
   driftDetection:
     mode: enabled
   values:
     alertmanagerAddress: http://kube-prometheus-stack-alertmanager:9093
-    image:
-      registry: quay.io
     networkPolicy:
       enabled: false
