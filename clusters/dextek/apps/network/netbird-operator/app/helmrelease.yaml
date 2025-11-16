@@ -20,7 +20,7 @@ spec:
     # managementURL: "https://api.netbird.io:443"
     cluster:
       name: dextek
-      dns: dextek.netbird.cloud
+      # dns: dextek.netbird.cloud
     netbirdAPI:
       keyFromSecret:
         name: netbird-secret
