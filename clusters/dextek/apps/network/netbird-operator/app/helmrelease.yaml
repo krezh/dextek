@@ -36,5 +36,5 @@ spec:
         # - default
       router:
         enabled: true
-        replicas: 1
+        replicas: 3
       allowAutomaticPolicyCreation: true
