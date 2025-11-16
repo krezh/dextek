@@ -24,6 +24,7 @@ spec:
       keyFromSecret:
         name: netbird-secret
         key: NB_API_KEY
+    routingClientImage: ghcr.io/netbirdio/netbird:rootless-latest
     ingress:
       enabled: true
       kubernetesAPI:
