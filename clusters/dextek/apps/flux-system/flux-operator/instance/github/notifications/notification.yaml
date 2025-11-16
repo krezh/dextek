@@ -20,7 +20,7 @@ spec:
     name: github
   eventSeverity: info
   eventMetadata:
-    cluster: talos-plexuz
+    cluster: DexTek
   eventSources:
     - kind: Kustomization
       name: "*"

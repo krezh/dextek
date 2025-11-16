@@ -6,6 +6,6 @@ metadata:
   namespace: flux-system
 data:
   TIMEZONE: Europe/Stockholm
-  CLUSTER_NAME: talos-plexuz
+  CLUSTER_NAME: DexTek
   CONTROLPLANE_ENDPOINT: talos.k8s.plexuz.xyz
   NAS_FAST: 10.10.0.2
