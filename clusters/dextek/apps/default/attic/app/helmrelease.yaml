@@ -102,6 +102,16 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+      internal:
+        hostnames: ["nix-cache.talos.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:
