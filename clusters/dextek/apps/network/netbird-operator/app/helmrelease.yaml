@@ -36,4 +36,4 @@ spec:
       router:
         enabled: true
         replicas: 3
-      allowAutomaticPolicyCreation: false
+      allowAutomaticPolicyCreation: true
