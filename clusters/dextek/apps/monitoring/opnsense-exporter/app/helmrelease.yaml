@@ -27,7 +27,7 @@ spec:
               - "--log.level=info"
               - "--log.format=json"
               - "--opnsense.protocol=https"
-              - "--opnsense.address=heimdall.usr.int.plexuz.xyz"
+              - "--opnsense.address=192.168.1.1"
               - "--exporter.instance-label=heimdall"
               - "--web.listen-address=:8080"
             envFrom:
