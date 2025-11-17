@@ -18,7 +18,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/mayanayza/netvisor
+              repository: ghcr.io/mayanayza/netvisor/daemon
               tag: v0.9.1
             command: ["/netvisor-daemon"]
             env:
