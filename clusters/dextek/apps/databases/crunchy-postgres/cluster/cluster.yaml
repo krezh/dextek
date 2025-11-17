@@ -109,6 +109,10 @@ spec:
       databases: ["jellystat"]
       password:
         type: AlphaNumeric
+    - name: "netvisor"
+      databases: ["netvisor"]
+      password:
+        type: AlphaNumeric
   backups:
     pgbackrest:
       configuration: &backupConfig

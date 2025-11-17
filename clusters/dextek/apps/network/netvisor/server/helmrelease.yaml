@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app netvisor-server
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: netvisor
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+    controllers:
+      netvisor-server:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mayanayza/netvisor
+              tag: v0.9.1
+            env:
+              NETVISOR_SERVER_PORT: &port 60072
+              NETVISOR_LOG_LEVEL: info
+              NETVISOR_USE_SECURE_SESSION_COOKIES: true
+              NETVISOR_INTEGRATED_DAEMON_URL: http://netvisor-daemon.network.svc.cluster.local:60073
+            envFrom:
+              - secretRef:
+                  name: netvisor-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: *port
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: *port
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+    service:
+      app:
+        controller: netvisor-server
+        ports:
+          http:
+            port: *port
+    route:
+      internal:
+        hostnames: ["netvisor.talos.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
