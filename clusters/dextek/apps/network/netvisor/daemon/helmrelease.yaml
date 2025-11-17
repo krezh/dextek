@@ -20,7 +20,6 @@ spec:
             image:
               repository: ghcr.io/mayanayza/netvisor/daemon
               tag: v0.9.1
-            command: ["/netvisor-daemon"]
             env:
               NETVISOR_SERVER_TARGET: netvisor-server.network.svc.cluster.local
               NETVISOR_SERVER_PORT: 60072
