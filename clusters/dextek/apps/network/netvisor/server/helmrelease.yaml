@@ -30,6 +30,8 @@ spec:
             envFrom:
               - secretRef:
                   name: netvisor-secret
+              - secretRef:
+                  name: netvisor-postgres-secret
             resources:
               requests:
                 cpu: 100m
