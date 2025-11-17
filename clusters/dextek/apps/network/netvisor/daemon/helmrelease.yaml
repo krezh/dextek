@@ -33,6 +33,7 @@ spec:
             envFrom:
               - secretRef:
                   name: netvisor-secret
+            hostNetwork: true
             securityContext:
               capabilities:
                 add:
