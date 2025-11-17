@@ -1,0 +1,69 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app netvisor-daemon
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: netvisor
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+    controllers:
+      netvisor-daemon:
+        type: daemonset
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mayanayza/netvisor
+              tag: v0.9.1
+            command: ["/netvisor-daemon"]
+            env:
+              NETVISOR_SERVER_TARGET: netvisor-server.network.svc.cluster.local
+              NETVISOR_SERVER_PORT: 60072
+              NETVISOR_DAEMON_PORT: &port 60073
+              NETVISOR_BIND_ADDRESS: 0.0.0.0
+              NETVISOR_LOG_LEVEL: info
+              NETVISOR_HEARTBEAT_INTERVAL: 30
+            envFrom:
+              - secretRef:
+                  name: netvisor-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+                  - NET_RAW
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+    service:
+      app:
+        controller: netvisor-daemon
+        ports:
+          http:
+            port: *port
