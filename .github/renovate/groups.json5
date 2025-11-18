@@ -200,5 +200,18 @@
       separateMinorPatch: true,
       sourceUrl: "https://github.com/atuinsh/atuin",
     },
+    {
+      description: ["Netvisor Group"],
+      groupName: "Netvisor",
+      matchPackagePatterns: [
+        "netvisor",
+      ],
+      matchDatasources: ["docker", "helm", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/mayanayza/netvisor",
+    },
   ],
 }
