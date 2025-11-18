@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mayanayza/netvisor/server
-              tag: v1.0.0
+              tag: v0.9.1
             env:
               NETVISOR_SERVER_PORT: &port 60072
               NETVISOR_LOG_LEVEL: info
