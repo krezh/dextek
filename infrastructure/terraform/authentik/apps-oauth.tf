@@ -143,7 +143,7 @@ module "oauth_apps" {
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
       property_mappings      = local.oauth2_scopes
-      redirect_uris          = ["https://wakapi.${var.domain["internal"]}/oauth/callback/authentik"]
+      redirect_uris          = ["https://wakapi.${var.domain["internal"]}/oidc/authentik/callback"]
       meta_icon              = "dashboard-icons"
       meta_launch_url        = "https://wakapi.${var.domain["internal"]}"
       meta_description       = "Self-hosted WakaTime-compatible backend for coding statistics"
