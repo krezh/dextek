@@ -32,6 +32,7 @@ spec:
               WAKAPI_LISTEN_IPV4: 0.0.0.0
               WAKAPI_PORT: "3000"
               WAKAPI_DB_MAX_CONNECTIONS: "25"
+              WAKAPI_PUBLIC_URL: https://wakapi.talos.plexuz.xyz
               WAKAPI_OIDC_PROVIDERS_0_NAME: authentik
               WAKAPI_OIDC_PROVIDERS_0_DISPLAY_NAME: Authentik
               WAKAPI_OIDC_PROVIDERS_0_ENDPOINT: https://sso.plexuz.xyz/application/o/wakapi/
