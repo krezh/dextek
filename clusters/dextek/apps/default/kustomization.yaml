@@ -26,6 +26,7 @@ resources:
   - ./attic
   - ./jellystat
   - ./wakapi
+  - ./trilium
 transformers:
   - |-
     apiVersion: builtin
