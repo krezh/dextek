@@ -129,5 +129,25 @@ module "oauth_apps" {
       meta_launch_url        = "https://netvisor.${var.domain["internal"]}"
       meta_description       = "Network discovery and documentation tool"
     }
+    wakapi = {
+      name       = "Wakapi"
+      slug       = "wakapi"
+      app_domain = "wakapi.${var.domain["internal"]}"
+      app_group  = "Tools"
+      access_groups = [
+        data.authentik_group.superuser.id,
+        resource.authentik_group.users.id
+      ]
+      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.WAKAPI)["WAKAPI_OAUTH_CLIENT_ID"]
+      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.WAKAPI)["WAKAPI_OAUTH_CLIENT_SECRET"]
+      authentication_flow_id = authentik_flow.authentication.uuid
+      authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+      invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
+      property_mappings      = local.oauth2_scopes
+      redirect_uris          = ["https://wakapi.${var.domain["internal"]}/oauth/callback/authentik"]
+      meta_icon              = "dashboard-icons"
+      meta_launch_url        = "https://wakapi.${var.domain["internal"]}"
+      meta_description       = "Self-hosted WakaTime-compatible backend for coding statistics"
+    }
   }
 }

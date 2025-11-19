@@ -25,6 +25,7 @@ resources:
   - ./karakeep
   - ./attic
   - ./jellystat
+  - ./wakapi
 transformers:
   - |-
     apiVersion: builtin
