@@ -135,8 +135,7 @@ module "oauth_apps" {
       app_domain = "wakapi.${var.domain["internal"]}"
       app_group  = "Tools"
       access_groups = [
-        data.authentik_group.superuser.id,
-        resource.authentik_group.users.id
+        data.authentik_group.superuser.id
       ]
       client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.WAKAPI)["WAKAPI_OAUTH_CLIENT_ID"]
       client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.WAKAPI)["WAKAPI_OAUTH_CLIENT_SECRET"]
