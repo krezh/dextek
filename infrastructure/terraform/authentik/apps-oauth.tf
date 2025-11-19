@@ -148,24 +148,5 @@ module "oauth_apps" {
       meta_launch_url        = "https://wakapi.${var.domain["internal"]}"
       meta_description       = "Self-hosted WakaTime-compatible backend for coding statistics"
     }
-    trilium = {
-      name       = "Trilium"
-      slug       = "trilium"
-      app_domain = "trilium.${var.domain["internal"]}"
-      app_group  = "Tools"
-      access_groups = [
-        data.authentik_group.superuser.id
-      ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.TRILIUM)["TRILIUM_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.TRILIUM)["TRILIUM_OAUTH_CLIENT_SECRET"]
-      authentication_flow_id = authentik_flow.authentication.uuid
-      authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
-      invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = local.oauth2_scopes
-      redirect_uris          = ["https://trilium.${var.domain["internal"]}/callback"]
-      meta_icon              = "dashboard-icons"
-      meta_launch_url        = "https://trilium.${var.domain["internal"]}"
-      meta_description       = "Personal knowledge base with hierarchical note-taking"
-    }
   }
 }
