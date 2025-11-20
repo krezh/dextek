@@ -17,7 +17,8 @@ resource "authentik_outpost" "LDAP" {
   protocol_providers = [authentik_provider_ldap.ldap.id]
   config = jsonencode({
     "log_level" : "info"
-    "authentik_host" : "https://sso.${var.domain["external"]}/"
+    "authentik_host" : "http://authentik-server.auth.svc.cluster.local"
+    "authentik_host_browser" : "https://sso.${var.domain["external"]}/"
     "refresh_interval" : "minutes=5"
     "kubernetes_replicas" : 1
     "kubernetes_namespace" : "auth"
