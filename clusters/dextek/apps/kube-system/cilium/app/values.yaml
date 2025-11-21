@@ -80,6 +80,9 @@ hubble:
 envoy:
   enabled: false
 
+socketLB:
+  enabled: true
+
 securityContext:
   capabilities:
     ciliumAgent:
