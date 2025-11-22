@@ -82,6 +82,7 @@ envoy:
 
 socketLB:
   enabled: true
+  hostNamespaceOnly: true
 
 securityContext:
   capabilities:
