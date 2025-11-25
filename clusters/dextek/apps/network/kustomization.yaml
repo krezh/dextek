@@ -10,7 +10,6 @@ resources:
   - ./envoy-gateway
   - ./k8s-gateway
   - ./netbird-operator
-  - ./netvisor
 transformers:
   - |-
     apiVersion: builtin
