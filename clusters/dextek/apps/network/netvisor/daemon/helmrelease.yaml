@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mayanayza/netvisor/daemon
-              tag: v0.10.3
+              tag: v1.0.0
             env:
               NETVISOR_SERVER_TARGET: http://netvisor-server.network.svc.cluster.local
               NETVISOR_SERVER_PORT: 60072
