@@ -23,7 +23,15 @@ spec:
   chartRef:
     kind: OCIRepository
     name: gha-runner-scale-set
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
+    runnerScaleSetName: nix-config-runner
     githubConfigUrl: https://github.com/krezh/nix-config
     githubConfigSecret: nix-config-runner-secret
     minRunners: 1
@@ -42,6 +50,8 @@ spec:
       namespace: actions-runner-system
     template:
       spec:
+        securityContext:
+          fsGroup: 1001
         containers:
           - name: runner
             image: ghcr.io/home-operations/actions-runner:2.328.0@sha256:c43873ef6800697dfa181582f6bb02366a9a0afb52026bde7bad7c71b21b1052
@@ -57,7 +67,12 @@ spec:
             volumeMounts:
               - name: nix-store
                 mountPath: /nix
+              - name: tool
+                mountPath: /home/runner/_work/_tool
         volumes:
           - name: nix-store
             persistentVolumeClaim:
               claimName: nix-store
+          - name: tool
+            persistentVolumeClaim:
+              claimName: containers-tool
