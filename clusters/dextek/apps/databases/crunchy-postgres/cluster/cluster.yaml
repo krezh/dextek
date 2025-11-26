@@ -11,7 +11,7 @@ spec:
       crunchy-userinit.ramblurr.github.com/enabled: "true"
       crunchy-userinit.ramblurr.github.com/superuser: &superuser "postgres"
   postgresVersion: 16
-  image: ghcr.io/krezh/cdpg-vchord:16.10.2542@sha256:0b217b45174aa2c39fa41d501ad407c4769ac6b73c8e07e7a9a6e7c78b90b99f
+  image: ghcr.io/krezh/cdpg-vchord:16.11.2547@sha256:ffa13c00bf44314a67b497f5129daf039a4e41677e6411a79d14e02f3d0b3279
   customReplicationTLSSecret:
     name: postgres-repl-tls
   customTLSSecret:
