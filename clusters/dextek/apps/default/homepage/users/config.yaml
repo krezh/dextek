@@ -17,14 +17,6 @@ data:
     gateway: true
   services.yaml: |
     ---
-    - Monitoring:
-        - UptimeKuma:
-            href: https://status.plexuz.xyz
-            icon: uptime-kuma.png
-            widget:
-              slug: 1
-              type: uptimekuma
-              url: https://status.plexuz.xyz
     - Calendars:
         - Calendar:
             widget:
