@@ -93,7 +93,7 @@ spec:
         app:
           type: ClusterRole
           rules:
-             - apiGroups: ["coordination.k8s.io"]
+            - apiGroups: ["coordination.k8s.io"]
               resources: ["leases"]
               verbs:
                 ["get", "list", "watch", "create", "update", "patch", "delete"]
