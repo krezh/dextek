@@ -66,6 +66,8 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
+              - name: NIX_CONFIG
+                value: "sandbox = relaxed"
             volumeMounts:
               - name: nix
                 mountPath: /nix
