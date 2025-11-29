@@ -50,11 +50,9 @@ spec:
       namespace: actions-runner-system
     template:
       spec:
-        hostUsers: true
+        hostUsers: false
         securityContext:
           fsGroup: 1001
-          seccompProfile:
-            type: Unconfined
         containers:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.330.0@sha256:8ace9fc9e84cf7fd1a2982d5237e753ba2a8da2abee9fb2191c64ddfff6e1e01
@@ -65,16 +63,14 @@ spec:
                 value: "false"
               - name: USER
                 value: "runner"
+              - name: NIX_CONFIG
+                value: |
+                  sandbox = false
+                  filter-syscalls = false
               - name: NODE
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
-            securityContext:
-              privileged: true
-              runAsUser: 0
-              runAsGroup: 0
-              seccompProfile:
-                type: Unconfined
             volumeMounts:
               - name: nix
                 mountPath: /nix
