@@ -17,19 +17,12 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nix-config-runner
+  name: &name nix-config-runner
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
     name: gha-runner-scale-set
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
   values:
     runnerScaleSetName: nix-config-runner
     githubConfigUrl: https://github.com/krezh/nix-config
@@ -37,18 +30,26 @@ spec:
     minRunners: 1
     maxRunners: 10
     containerMode:
-      type: "dind"
+      type: kubernetes
+      kubernetesModeWorkVolumeClaim:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: ceph-block
+        resources:
+          requests:
+            storage: 100Gi
     controllerServiceAccount:
       name: actions-runner-controller
       namespace: actions-runner-system
     template:
       spec:
         securityContext:
-          fsGroup: 123
+          fsGroup: 1001
         containers:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.330.0@sha256:8ace9fc9e84cf7fd1a2982d5237e753ba2a8da2abee9fb2191c64ddfff6e1e01
-            command: ["/home/runner/run.sh"]
+            command:
+              - /home/runner/run.sh
             env:
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
                 value: "false"
@@ -61,8 +62,6 @@ spec:
             volumeMounts:
               - name: nix
                 mountPath: /nix
-              - name: tmp
-                mountPath: /tmp
         volumes:
           - name: nix
             ephemeral:
@@ -73,12 +72,3 @@ spec:
                   resources:
                     requests:
                       storage: 100Gi
-          - name: tmp
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: ceph-block
-                  resources:
-                    requests:
-                      storage: 50Gi
