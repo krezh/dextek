@@ -54,7 +54,7 @@ spec:
               #cloud-config
               users:
                 - name: root
-                  passwd: ''
+                  passwd: 's'
                   lock_passwd: false
                 - name: cloud-user
                   sudo: ['ALL=(ALL) NOPASSWD:ALL']
