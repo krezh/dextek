@@ -70,8 +70,8 @@ spec:
                 value: "1"
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
                 value: "false"
-              - name: USER
-                value: "runner"
+              # - name: USER
+              #   value: "runner"
               - name: NODE
                 valueFrom:
                   fieldRef:
