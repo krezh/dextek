@@ -44,12 +44,13 @@ spec:
           cloudInitNoCloud:
             networkData: |
               network:
-                version: 1
-                config:
-                  - type: physical
-                    name: eth0
-                    subnets:
-                      - type: dhcp
+                version: 2
+                ethernets:
+                  enp1s0:
+                    dhcp4: true
+                    gateway4: 192.168.10.1
+                    nameservers:
+                      addresses: [1.1.1.1, 8.8.8.8]
             userData: |-
               #cloud-config
               users:
