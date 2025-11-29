@@ -54,13 +54,12 @@ spec:
               #cloud-config
               users:
                 - name: root
-                  passwd: 's'
-                  lock_passwd: false
                 - name: cloud-user
                   sudo: ['ALL=(ALL) NOPASSWD:ALL']
                   groups: sudo
                   shell: /bin/bash
               runcmd:
+                - "echo 'root:s' | sudo chpasswd"
                 - "sudo touch /root/installed"
                 - "sudo dnf update"
                 - "sudo dnf install httpd fastfetch -y"
