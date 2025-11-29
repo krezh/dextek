@@ -75,7 +75,7 @@ spec:
               - name: USER
                 value: "runner"
               - name: TMPDIR
-                value: /home/runner/cache/tmp
+                value: /home/runner/cache
               - name: NODE
                 valueFrom:
                   fieldRef:
