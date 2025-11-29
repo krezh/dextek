@@ -53,17 +53,6 @@ spec:
         hostUsers: false
         securityContext:
           fsGroup: 1001
-        initContainers:
-          - name: take-cache-dir-ownership
-            image: alpine:3@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412
-            command:
-              - chown
-              - -R
-              - 1001:1001
-              - /var/tmp
-            volumeMounts:
-              - mountPath: /var/tmp
-                name: cache-volume
         containers:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.330.0@sha256:8ace9fc9e84cf7fd1a2982d5237e753ba2a8da2abee9fb2191c64ddfff6e1e01
@@ -74,8 +63,6 @@ spec:
                 value: "false"
               - name: USER
                 value: "runner"
-              # - name: TMPDIR
-              #   value: /home/runner/cache
               - name: NODE
                 valueFrom:
                   fieldRef:
@@ -83,8 +70,6 @@ spec:
             volumeMounts:
               - name: nix
                 mountPath: /nix
-              - mountPath: /var/tmp
-                name: cache-volume
         volumes:
           - name: nix
             ephemeral:
@@ -95,6 +80,3 @@ spec:
                   resources:
                     requests:
                       storage: 100Gi
-          - name: cache-volume
-            persistentVolumeClaim:
-              claimName: actions-runner-controller-cache
