@@ -60,14 +60,13 @@ spec:
               runAsUser: 1001
               runAsGroup: 1001
               allowPrivilegeEscalation: true
+              privileged: true
               # capabilities:
               #   drop:
               #     - ALL
             command:
               - /home/runner/run.sh
             env:
-              - name: RUNNER_ALLOW_RUNASROOT
-                value: "1"
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
                 value: "false"
               - name: USER
