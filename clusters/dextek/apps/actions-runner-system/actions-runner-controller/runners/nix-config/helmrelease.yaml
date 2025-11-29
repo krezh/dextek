@@ -53,6 +53,9 @@ spec:
         hostUsers: false
         securityContext:
           fsGroup: 1001
+          privileged: true
+          seccompProfile:
+            type: Unconfined
         containers:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.330.0@sha256:8ace9fc9e84cf7fd1a2982d5237e753ba2a8da2abee9fb2191c64ddfff6e1e01
@@ -67,6 +70,9 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
+            securityContext:
+              seccompProfile:
+                type: Unconfined
             volumeMounts:
               - name: nix
                 mountPath: /nix
