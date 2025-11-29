@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name kubevirt-actions-runner
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: gha-runner-scale-set
+  values:
+    runnerScaleSetName: kubevirt-actions-runner
+    githubConfigUrl: https://github.com/krezh/nix-config
+    githubConfigSecret: nix-config-runner-secret
+    minRunners: 1
+    maxRunners: 10
+    controllerServiceAccount:
+      name: actions-runner-controller
+      namespace: actions-runner-system
+    template:
+      spec:
+        serviceAccountName: kubevirt-actions-runner
+        containers:
+          - name: runner
+            image: electrocucaracha/kubevirt-actions-runner:latest
+            command: []
+            env:
+              - name: KUBEVIRT_VM_TEMPLATE
+                value: ubuntu-jammy-vm
+              - name: RUNNER_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name

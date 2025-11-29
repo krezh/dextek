@@ -1,0 +1,61 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: ubuntu-jammy-vm
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        name: ubuntu-jammy-dv
+      spec:
+        storage:
+          volumeMode: Filesystem
+        source:
+          pvc:
+            name: ubuntu-img-jammy
+            namespace: actions-runner-system
+  runStrategy: Manual
+  template:
+    spec:
+      terminationGracePeriodSeconds: 30
+      domain:
+        devices:
+          filesystems:
+            - name: runner-info
+              virtiofs: {}
+          disks:
+            - name: os
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+          interfaces:
+            - name: default
+              masquerade: {}
+        cpu:
+          cores: 4
+        resources:
+          requests:
+            memory: 16G
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - dataVolume:
+            name: ubuntu-jammy-dv
+          name: os
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            userData: |-
+              #cloud-config
+              mounts:
+                - [ runner-info, /runner-info/, virtiofs, "rw,relatime,user=runner" ]
+              runcmd:
+                - "sudo runuser -l runner -c '/opt/runner/run.sh --jitconfig $(jq -r '.jitconfig' /runner-info/runner-info.json)'"
+                - sleep 30
+              power_state:
+                delay: now
+                mode: poweroff
+                message: Runner completed
+                timeout: 2
+                condition: true
