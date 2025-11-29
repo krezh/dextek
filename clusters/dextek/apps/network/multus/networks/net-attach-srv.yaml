@@ -11,14 +11,17 @@ spec:
       "name": "multus-srv",
       "plugins": [
         {
-          "type": "macvlan",
-          "master": "eth1.10",
-          "mode": "bridge",
+          "type": "bridge",
+          "bridge": "br10",
+          "isGateway": true,
           "ipam": {
             "type": "host-local",
             "subnet": "192.168.10.0/24",
             "rangeStart": "192.168.10.100",
             "rangeEnd": "192.168.10.200",
+            "routes": [
+              { "dst": "0.0.0.0/0" }
+            ],
             "gateway": "192.168.10.1"
           }
         }
