@@ -33,7 +33,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./clusters/dextek/apps/kubevirt/kubevirt-vms/app
+  path: ./clusters/dextek/apps/kubevirt/kubevirt/vms
   prune: true
   sourceRef:
     kind: GitRepository
