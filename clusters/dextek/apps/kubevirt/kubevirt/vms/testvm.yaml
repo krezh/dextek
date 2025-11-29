@@ -30,7 +30,7 @@ spec:
                 bus: virtio
           interfaces:
             - name: external
-              masquerade: {}
+              bridge: {}
       networks:
         - name: external
           multus:
