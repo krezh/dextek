@@ -2,8 +2,9 @@ apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   name: testvm
+  namespace: kubevirt
 spec:
-  runStrategy: Halted
+  runStrategy: RerunOnFailure
   template:
     metadata:
       labels:
