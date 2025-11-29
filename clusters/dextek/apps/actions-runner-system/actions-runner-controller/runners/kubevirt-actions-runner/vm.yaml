@@ -29,17 +29,17 @@ spec:
             - name: cloudinitdisk
               disk:
                 bus: virtio
-          interfaces:
-            - name: default
-              masquerade: {}
+          # interfaces:
+          #   - name: default
+          #     masquerade: {}
         cpu:
           cores: 4
         resources:
           requests:
             memory: 16G
-      networks:
-        - name: default
-          pod: {}
+      # networks:
+      #   - name: default
+      #     pod: {}
       volumes:
         - dataVolume:
             name: ubuntu-jammy-dv
