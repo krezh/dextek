@@ -25,6 +25,8 @@ spec:
   values:
     kubevirt:
       configuration:
+        networkDefaults:
+          generateMacAddress: true
         developerConfiguration:
           featureGates:
             - EnableVirtioFsConfigVolumes
