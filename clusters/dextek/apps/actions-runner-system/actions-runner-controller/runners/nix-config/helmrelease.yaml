@@ -72,6 +72,10 @@ spec:
                 value: "false"
               # - name: USER
               #   value: "runner"
+              - name: USER
+                value: root
+              - name: HOME
+                value: /root
               - name: NODE
                 valueFrom:
                   fieldRef:
