@@ -12,7 +12,6 @@ spec:
         kubevirt.io/vm: fedora-vm
       annotations:
         kubevirt.io/allow-pod-bridge-network-live-migration: "true"
-
     spec:
       evictionStrategy: LiveMigrate
       domain:
@@ -30,11 +29,12 @@ spec:
               disk:
                 bus: virtio
           interfaces:
-            - name: podnet
+            - name: external
               masquerade: {}
       networks:
-        - name: podnet
-          pod: {}
+        - name: external
+          multus:
+            networkName: network/multus-srv
       volumes:
         - name: fedora-vm-pvc
           persistentVolumeClaim:
