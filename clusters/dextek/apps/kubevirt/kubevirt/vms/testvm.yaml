@@ -5,7 +5,7 @@ kind: VirtualMachine
 metadata:
   name: fedora-vm
 spec:
-  runStrategy: RerunOnFailure # Options: Always | Manual | RerunOnFailure | Halted
+  runStrategy: Manual # Options: Always | Manual | RerunOnFailure | Halted
   template:
     metadata:
       labels:
