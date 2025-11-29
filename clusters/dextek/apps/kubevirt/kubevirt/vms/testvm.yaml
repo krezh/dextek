@@ -30,7 +30,7 @@ spec:
                 bus: virtio
           interfaces:
             - name: external
-              bridge: {} # We use the bridge interface.
+              bridge: {}
       networks:
         - name: external
           multus:

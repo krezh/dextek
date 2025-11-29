@@ -1,5 +1,3 @@
----
-# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/k8s.cni.cncf.io/networkattachmentdefinition_v1.json
 apiVersion: k8s.cni.cncf.io/v1
 kind: NetworkAttachmentDefinition
 metadata:
@@ -15,10 +13,7 @@ spec:
           "master": "eth1.10",
           "mode": "bridge",
           "ipam": {
-            "type": "static",
-            "routes": [
-              {"dst": "0.0.0.0/0", "gw": "192.168.10.1"}
-            ]
+            "type": "dhcp"
           }
         },
         {
