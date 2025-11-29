@@ -34,7 +34,7 @@ spec:
     runnerScaleSetName: nix-config-runner
     githubConfigUrl: https://github.com/krezh/nix-config
     githubConfigSecret: nix-config-runner-secret
-    minRunners: 4
+    minRunners: 5
     maxRunners: 10
     containerMode:
       type: kubernetes
@@ -60,9 +60,9 @@ spec:
               - chown
               - -R
               - 1001:1001
-              - /home/runner/cache
+              - /var/tmp
             volumeMounts:
-              - mountPath: /home/runner/cache
+              - mountPath: /var/tmp
                 name: cache-volume
         containers:
           - name: runner
@@ -74,8 +74,8 @@ spec:
                 value: "false"
               - name: USER
                 value: "runner"
-              - name: TMPDIR
-                value: /home/runner/cache
+              # - name: TMPDIR
+              #   value: /home/runner/cache
               - name: NODE
                 valueFrom:
                   fieldRef:
@@ -83,7 +83,7 @@ spec:
             volumeMounts:
               - name: nix
                 mountPath: /nix
-              - mountPath: /home/runner/cache
+              - mountPath: /var/tmp
                 name: cache-volume
         volumes:
           - name: nix
