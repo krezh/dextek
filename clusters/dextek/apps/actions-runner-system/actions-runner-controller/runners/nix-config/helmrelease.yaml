@@ -71,6 +71,8 @@ spec:
                     fieldPath: status.hostIP
             securityContext:
               privileged: true
+              runAsUser: 0
+              runAsGroup: 0
               seccompProfile:
                 type: Unconfined
             volumeMounts:
