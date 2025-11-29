@@ -38,7 +38,7 @@ spec:
       volumes:
         - name: fedora-vm-pvc
           persistentVolumeClaim:
-            claimName: fedora-vm-pvc
+            claimName: fedora-base-image
         - name: cloudinitdisk
           cloudInitNoCloud:
             networkData: |
@@ -64,18 +64,3 @@ spec:
                 - "sudo systemctl daemon-reload"
                 - "sudo systemctl enable httpd"
                 - "sudo systemctl start --no-block httpd"
-
-  dataVolumeTemplates:
-    - metadata:
-        name: fedora-vm-pvc
-      spec:
-        storage:
-          resources:
-            requests:
-              storage: 35Gi
-          accessModes:
-            - ReadWriteMany
-          storageClassName: "ceph-filesystem"
-        source:
-          http:
-            url: "https://download.fedoraproject.org/pub/fedora/linux/releases/43/Server/x86_64/images/Fedora-Server-Guest-Generic-43-1.6.x86_64.qcow2"
