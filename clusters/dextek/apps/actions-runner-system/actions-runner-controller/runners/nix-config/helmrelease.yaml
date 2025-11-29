@@ -34,7 +34,7 @@ spec:
     runnerScaleSetName: nix-config-runner
     githubConfigUrl: https://github.com/krezh/nix-config
     githubConfigSecret: nix-config-runner-secret
-    minRunners: 1
+    minRunners: 4
     maxRunners: 10
     containerMode:
       type: kubernetes
@@ -56,10 +56,6 @@ spec:
         containers:
           - name: runner
             image: ghcr.io/krezh/actions-runner:2.330.0@sha256:8ace9fc9e84cf7fd1a2982d5237e753ba2a8da2abee9fb2191c64ddfff6e1e01
-            securityContext:
-              runAsUser: 1001
-              runAsGroup: 1001
-              allowPrivilegeEscalation: true
             command:
               - /home/runner/run.sh
             env:
@@ -67,8 +63,6 @@ spec:
                 value: "false"
               - name: USER
                 value: "runner"
-              - name: RUNNER_ROOT
-                value: $HOME/.github-runner
               - name: NODE
                 valueFrom:
                   fieldRef:
@@ -76,8 +70,6 @@ spec:
             volumeMounts:
               - name: nix
                 mountPath: /nix
-              - name: tool
-                mountPath: /home/runner/_work/_tool
         volumes:
           - name: nix
             ephemeral:
