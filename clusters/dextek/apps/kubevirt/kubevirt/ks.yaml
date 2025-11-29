@@ -29,12 +29,12 @@ metadata:
   name: &app kubevirt-cdi
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: kubevirt
   targetNamespace: kubevirt
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: kubevirt
   path: ./clusters/dextek/apps/kubevirt/kubevirt/cdi
   prune: true
   sourceRef:

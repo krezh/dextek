@@ -3,16 +3,6 @@ kind: VirtualMachine
 metadata:
   name: ubuntu-jammy-vm
 spec:
-  dataVolumeTemplates:
-    - metadata:
-        name: ubuntu-jammy-dv
-      spec:
-        storage:
-          volumeMode: Filesystem
-        source:
-          pvc:
-            name: ubuntu-img-jammy
-            namespace: actions-runner-system
   runStrategy: Manual
   template:
     spec:
@@ -59,3 +49,13 @@ spec:
                 message: Runner completed
                 timeout: 2
                 condition: true
+  dataVolumeTemplates:
+    - metadata:
+        name: ubuntu-jammy-dv
+      spec:
+        storage:
+          volumeMode: Filesystem
+        source:
+          pvc:
+            name: ubuntu-img-jammy
+            namespace: actions-runner-system
