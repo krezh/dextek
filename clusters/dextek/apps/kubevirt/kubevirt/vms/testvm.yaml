@@ -31,6 +31,7 @@ spec:
           interfaces:
             - name: external
               bridge: {}
+              macAddress: "02:00:00:8d:7f:09"
       networks:
         - name: external
           multus:
