@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/kubevirt.io/virtualmachine_v1.json
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
@@ -30,11 +31,10 @@ spec:
                 bus: virtio
           interfaces:
             - name: external
-              bridge: {}
+              masquerade: {}
       networks:
         - name: external
-          multus:
-            networkName: network/multus-srv
+          pod: {}
       volumes:
         - name: fedora-vm-pvc
           persistentVolumeClaim:
