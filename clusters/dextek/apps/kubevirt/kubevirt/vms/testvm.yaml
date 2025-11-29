@@ -5,7 +5,7 @@ kind: VirtualMachine
 metadata:
   name: fedora-vm
 spec:
-  runStrategy: Manual # Options: Always | Manual | RerunOnFailure | Halted
+  runStrategy: Always # Options: Always | Manual | RerunOnFailure | Halted
   template:
     metadata:
       labels:
@@ -31,7 +31,6 @@ spec:
           interfaces:
             - name: external
               bridge: {}
-              macAddress: "02:00:00:8d:7f:09"
       networks:
         - name: external
           multus:
@@ -55,8 +54,6 @@ spec:
               #cloud-config
               users:
                 - name: cloud-user
-                  # ssh_authorized_keys:
-                  #   - ssh-rsa ....
                   sudo: ['ALL=(ALL) NOPASSWD:ALL']
                   groups: sudo
                   shell: /bin/bash
