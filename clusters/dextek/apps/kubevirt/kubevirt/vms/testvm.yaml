@@ -31,7 +31,8 @@ spec:
                 bus: virtio
           interfaces:
             - name: podnet
-              masquerade: {}
+              masquerade:
+                mac: "52:54:00:12:34:56"
       networks:
         - name: podnet
           pod: {}
