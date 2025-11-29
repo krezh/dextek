@@ -13,7 +13,6 @@ resources:
   - ./external-secrets
   - ./descheduler
   - ./k8tz
-  - ./multus
   - ./spegel
   - ./irqbalance
   - ./talos-etcd-defrag

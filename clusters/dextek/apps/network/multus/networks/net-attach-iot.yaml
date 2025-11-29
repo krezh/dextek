@@ -1,9 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/k8s.cni.cncf.io/networkattachmentdefinition_v1.json
 apiVersion: k8s.cni.cncf.io/v1
 kind: NetworkAttachmentDefinition
 metadata:
   name: multus-iot
-  namespace: kube-system
 spec:
   config: |-
     {
@@ -14,15 +14,15 @@ spec:
           "type": "macvlan",
           "master": "eth1.100",
           "mode": "bridge",
-          "capabilities": {
-            "ips": true
-          },
           "ipam": {
             "type": "static",
             "routes": [
-              { "dst": "192.168.100.0/24", "gw": "192.168.100.1" }
+              {"dst": "0.0.0.0/0", "gw": "192.168.100.1"}
             ]
           }
+        },
+        {
+          "type": "sbr"
         }
       ]
     }
