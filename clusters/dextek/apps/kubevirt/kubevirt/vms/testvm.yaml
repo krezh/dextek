@@ -61,9 +61,6 @@ spec:
                   groups: sudo
                   shell: /bin/bash
               runcmd:
-                - "sudo sed -i 's/ExecStart=-/ExecStart=-\\/sbin\\/agetty --autologin root --noclear/' /usr/lib/systemd/system/getty@.service"
-                - "sudo systemctl daemon-reload"
-                - "sudo systemctl restart getty@tty1.service"
                 - "sudo touch /root/installed"
                 - "sudo dnf update"
                 - "sudo dnf install httpd fastfetch -y"
