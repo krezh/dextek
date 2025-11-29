@@ -4,7 +4,7 @@ metadata:
   name: testvm
   namespace: kubevirt
 spec:
-  runStrategy: RerunOnFailure
+  runStrategy: Halted
   template:
     metadata:
       labels:
