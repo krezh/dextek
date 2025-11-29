@@ -53,8 +53,8 @@ spec:
               #cloud-config
               users:
                 - name: cloud-user
-                  ssh_authorized_keys:
-                    - ssh-rsa ....
+                  # ssh_authorized_keys:
+                  #   - ssh-rsa ....
                   sudo: ['ALL=(ALL) NOPASSWD:ALL']
                   groups: sudo
                   shell: /bin/bash
