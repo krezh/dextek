@@ -15,16 +15,11 @@ spec:
           "master": "eth1.10",
           "mode": "bridge",
           "ipam": {
-            "type": "static",
-            "routes": [
-              {"dst": "0.0.0.0/0", "gw": "192.168.10.1"}
-            ],
-            "addresses": [
-              {
-                "address": "192.168.10.100/24",
-                "gateway": "192.168.10.1"
-              }
-            ]
+            "type": "host-local",
+            "subnet": "192.168.10.0/24",
+            "rangeStart": "192.168.10.100",
+            "rangeEnd": "192.168.10.200",
+            "gateway": "192.168.10.1"
           }
         }
       ]
