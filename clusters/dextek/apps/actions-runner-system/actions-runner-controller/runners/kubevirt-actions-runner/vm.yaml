@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/kubevirt.io/virtualmachine_v1.json
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
@@ -20,16 +22,17 @@ spec:
               disk:
                 bus: virtio
           interfaces:
-            - name: default
-              masquerade: {}
+            - name: srv
+              bridge: {}
         cpu:
           cores: 4
         resources:
           requests:
             memory: 16G
       networks:
-        - name: default
-          pod: {}
+        - name: srv
+          multus:
+            networkName: network/multus-srv
       volumes:
         - dataVolume:
             name: ubuntu-jammy-dv
