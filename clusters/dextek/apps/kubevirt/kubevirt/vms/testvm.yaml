@@ -1,38 +1,82 @@
+---
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: testvm
-  namespace: kubevirt
+  name: fedora-vm
 spec:
-  runStrategy: Halted
+  running: false
   template:
     metadata:
       labels:
-        kubevirt.io/size: small
-        kubevirt.io/domain: testvm
+        kubevirt.io/vm: fedora-vm
+      annotations:
+        kubevirt.io/allow-pod-bridge-network-live-migration: "true"
+
     spec:
+      evictionStrategy: LiveMigrate
       domain:
+        cpu:
+          cores: 2
+        resources:
+          requests:
+            memory: 4G
         devices:
           disks:
-            - name: containerdisk
+            - name: fedora-vm-pvc
               disk:
                 bus: virtio
             - name: cloudinitdisk
               disk:
                 bus: virtio
           interfaces:
-            - name: default
-              masquerade: {}
-        resources:
-          requests:
-            memory: 64M
+            - name: external
+              bridge: {} # We use the bridge interface.
       networks:
-        - name: default
-          pod: {}
+        - name: external
+          multus:
+            networkName: network/multus-srv
       volumes:
-        - name: containerdisk
-          containerDisk:
-            image: quay.io/kubevirt/cirros-container-disk-demo
+        - name: fedora-vm-pvc
+          persistentVolumeClaim:
+            claimName: fedora-vm-pvc
         - name: cloudinitdisk
           cloudInitNoCloud:
-            userDataBase64: SGkuXG4=
+            networkData: |
+              network:
+                version: 1
+                config:
+                  - type: physical
+                    name: eth0
+                    subnets:
+                      - type: dhcp
+            userData: |-
+              #cloud-config
+              users:
+                - name: cloud-user
+                  ssh_authorized_keys:
+                    - ssh-rsa ....
+                  sudo: ['ALL=(ALL) NOPASSWD:ALL']
+                  groups: sudo
+                  shell: /bin/bash
+              runcmd:
+                - "sudo touch /root/installed"
+                - "sudo dnf update"
+                - "sudo dnf install httpd fastfetch -y"
+                - "sudo systemctl daemon-reload"
+                - "sudo systemctl enable httpd"
+                - "sudo systemctl start --no-block httpd"
+
+  dataVolumeTemplates:
+    - metadata:
+        name: fedora-vm-pvc
+      spec:
+        storage:
+          resources:
+            requests:
+              storage: 35Gi
+          accessModes:
+            - ReadWriteMany
+          storageClassName: "ceph-filesystem"
+        source:
+          http:
+            url: "https://download.fedoraproject.org/pub/fedora/linux/releases/43/Server/x86_64/images/Fedora-Server-Guest-Generic-43-1.6.x86_64.qcow2"
