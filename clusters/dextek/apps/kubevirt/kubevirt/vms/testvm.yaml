@@ -53,6 +53,9 @@ spec:
             userData: |-
               #cloud-config
               users:
+                - name: root
+                  passwd: ''
+                  lock_passwd: false
                 - name: cloud-user
                   sudo: ['ALL=(ALL) NOPASSWD:ALL']
                   groups: sudo
