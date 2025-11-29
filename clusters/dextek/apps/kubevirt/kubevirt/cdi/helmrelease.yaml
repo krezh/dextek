@@ -21,4 +21,4 @@ spec:
     kind: OCIRepository
     name: kubevirt-cdi
   dependsOn:
-    - name: kubevirt-cdi
+    - name: kubevirt-cdi-crds
