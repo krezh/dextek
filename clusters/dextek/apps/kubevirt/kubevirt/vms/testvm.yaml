@@ -42,14 +42,14 @@ spec:
             claimName: fedora-vm-pvc
         - name: cloudinitdisk
           cloudInitNoCloud:
-            # networkData: |
-            #   network:
-            #     version: 1
-            #     config:
-            #       - type: physical
-            #         name: eth0
-            #         subnets:
-            #           - type: dhcp
+            networkData: |
+              network:
+                version: 1
+                config:
+                  - type: physical
+                    name: eth0
+                    subnets:
+                      - type: dhcp
             userData: |-
               #cloud-config
               users:
