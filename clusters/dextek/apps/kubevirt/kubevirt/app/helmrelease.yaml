@@ -22,3 +22,9 @@ spec:
     name: kubevirt-operator
   dependsOn:
     - name: kubevirt-crds
+  values:
+    kubevirt:
+      configuration:
+        developerConfiguration:
+          featureGates:
+            - VirtioFS
