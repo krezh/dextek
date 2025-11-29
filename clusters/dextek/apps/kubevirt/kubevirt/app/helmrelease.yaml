@@ -27,4 +27,5 @@ spec:
       configuration:
         developerConfiguration:
           featureGates:
-            - VirtioFS
+            - EnableVirtioFsConfigVolumes
+            - EnableVirtioFsPVC
