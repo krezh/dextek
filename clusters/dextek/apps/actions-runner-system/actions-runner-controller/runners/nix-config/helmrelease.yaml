@@ -50,7 +50,7 @@ spec:
       namespace: actions-runner-system
     template:
       spec:
-        hostUsers: false
+        #hostUsers: false
         securityContext:
           fsGroup: 1001
         containers:
@@ -68,9 +68,9 @@ spec:
               - /home/runner/run.sh
             env:
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
-                value: "false"
+                value: false
               - name: USER
-                value: "runner"
+                value: runner
               - name: NODE
                 valueFrom:
                   fieldRef:
