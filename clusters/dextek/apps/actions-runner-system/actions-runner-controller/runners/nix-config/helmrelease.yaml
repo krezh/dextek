@@ -50,7 +50,7 @@ spec:
       namespace: actions-runner-system
     template:
       spec:
-        #hostUsers: false
+        hostUsers: false
         securityContext:
           fsGroup: 1001
         containers:
@@ -60,10 +60,6 @@ spec:
               runAsUser: 1001
               runAsGroup: 1001
               allowPrivilegeEscalation: true
-              privileged: true
-              # capabilities:
-              #   drop:
-              #     - ALL
             command:
               - /home/runner/run.sh
             env:
@@ -71,6 +67,8 @@ spec:
                 value: "false"
               - name: USER
                 value: "runner"
+              - name: RUNNER_ROOT
+                value: $HOME/.github-runner
               - name: NODE
                 valueFrom:
                   fieldRef:
