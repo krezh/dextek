@@ -33,6 +33,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: kubevirt
   path: ./clusters/dextek/apps/kubevirt/kubevirt/vms
   prune: true
   sourceRef:
