@@ -6,3 +6,5 @@ metadata:
     resource.kubernetes.io/admin-access: "true"
     volsync.backube/privileged-movers: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
+    kubevirt.io: ""
+    pod-security.kubernetes.io/enforce: privileged
