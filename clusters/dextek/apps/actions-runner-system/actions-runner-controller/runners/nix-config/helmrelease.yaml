@@ -13,7 +13,7 @@ spec:
     runnerScaleSetName: nix-config-runner
     githubConfigUrl: https://github.com/krezh/nix-config
     githubConfigSecret: nix-config-runner-secret
-    minRunners: 1
+    minRunners: 0
     maxRunners: 10
     containerMode:
       type: kubernetes
