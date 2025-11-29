@@ -7,7 +7,7 @@ metadata:
 spec:
   source:
     http:
-      url: "https://download.fedoraproject.org/pub/fedora/linux/releases/43/Server/x86_64/images/Fedora-Server-Guest-Generic-43-1.6.x86_64.qcow2"
+      url: "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/40/Cloud/x86_64/images/Fedora-Cloud-Base-Generic.x86_64-40-1.14.qcow2"
   pvc:
     accessModes:
       - ReadWriteOnce
