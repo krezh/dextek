@@ -1,0 +1,16 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: ubuntu-img-jammy
+  namespace: actions-runner-system
+spec:
+  source:
+    http:
+      url: "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
+  storage:
+    resources:
+      requests:
+        storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    volumeMode: Filesystem
