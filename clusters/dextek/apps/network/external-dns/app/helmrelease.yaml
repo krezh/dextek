@@ -34,7 +34,7 @@ spec:
     policy: sync
     sources: ["crd", gateway-httproute]
     txtPrefix: k8s.
-    txtOwnerId: talos-plexuz
+    txtOwnerId: dextek
     domainFilters: ["plexuz.xyz"]
     serviceMonitor:
       enabled: true
