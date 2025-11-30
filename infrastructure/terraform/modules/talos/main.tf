@@ -38,6 +38,13 @@ data "talos_machine_configuration" "machine" {
       driver_10g         = each.value.driver_10g,
       matchboxUrl        = var.matchbox.url,
     }),
+    contains(keys(each.value), "interfaces") && each.value.interfaces != null && length(each.value.interfaces) > 0 ? yamlencode({
+      machine = {
+        network = {
+          interfaces = each.value.interfaces
+        }
+      }
+    }) : null,
     fileexists("talosPatches/registries.yaml") ? file("talosPatches/registries.yaml") : null,
     each.value.role == "controlplane" ? file("talosPatches/controlplane.yaml") : null,
     each.value.role == "worker" ? file("talosPatches/worker.yaml") : null,
