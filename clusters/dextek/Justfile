@@ -40,7 +40,7 @@ tofu:
 talosconfig:
     #!/usr/bin/env bash
     set -euo pipefail
-    talswitcher ctx talos-{{ CLUSTER_NAME }}
+    talswitcher ctx {{ CLUSTER_NAME }}
 
 talos:
     #!/usr/bin/env bash
