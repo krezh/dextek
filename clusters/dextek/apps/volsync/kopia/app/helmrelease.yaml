@@ -78,7 +78,7 @@ spec:
             subPath: repository.config
       repository:
         type: nfs
-        server: 10.10.0.2
+        server: jotunheim.fast.internal
         path: /mnt/tank/kopia
         globalMounts:
           - path: /repository

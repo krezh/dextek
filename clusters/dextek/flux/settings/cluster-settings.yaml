@@ -8,4 +8,4 @@ data:
   TIMEZONE: Europe/Stockholm
   CLUSTER_NAME: DexTek
   CONTROLPLANE_ENDPOINT: talos.k8s.plexuz.xyz
-  NAS_FAST: 10.10.0.2
+  NAS_FAST: jotunheim.fast.internal

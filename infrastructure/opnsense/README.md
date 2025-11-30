@@ -8,7 +8,7 @@
 pkg install frr8
 ```
 
-### Directories and files for bgp.conf
+### Directories and files for bgpd.conf
 
 ```bash
 vim /usr/local/etc/frr

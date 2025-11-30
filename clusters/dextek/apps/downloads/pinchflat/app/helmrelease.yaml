@@ -99,7 +99,7 @@ spec:
           - path: /etc/yt-dlp
       downloads:
         type: nfs
-        server: 10.10.0.2
+        server: jotunheim.fast.internal
         path: /mnt/tank/media
         advancedMounts:
           pinchflat:
