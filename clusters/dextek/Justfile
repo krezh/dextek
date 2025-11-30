@@ -6,7 +6,6 @@ set ignore-comments := true
 CLUSTER_DIR := "."
 BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
 KUBECONFIG := "$(pwd)/kubeconfig"
-TALOSCONFIG := "$(pwd)/talosconfig"
 TALOS_CONTROLLER := "$(talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
 CLUSTER_NAME := "dextek"
 
