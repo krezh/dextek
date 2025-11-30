@@ -10,7 +10,7 @@ _default:
 reset:
     #!/usr/bin/env bash
     set -euo pipefail
-    ARGS="--reboot --graceful=false --wipe-mode=all"
+    ARGS="--reboot --graceful=false --wipe-mode=all --wait=false"
     NODES=$(talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1')
     for node in $NODES; do
       (

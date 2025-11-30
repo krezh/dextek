@@ -11,7 +11,7 @@ TALOS_CONTROLLER := "$(talosctl config info --output json | jq --raw-output '.en
 
 #TODO Change cluster name
 
-CLUSTER_NAME := "plexuz"
+CLUSTER_NAME := "dextek"
 
 _default:
     just --list

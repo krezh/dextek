@@ -1,7 +1,7 @@
 ---
 # Values: https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
 cluster:
-  name: talos-plexuz
+  name: dextek
   id: 1
 cni:
   exclusive: false
