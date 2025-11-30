@@ -170,13 +170,13 @@ spec:
     persistence:
       library:
         type: nfs
-        server: 10.10.0.2
+        server: jotunheim.fast.internal
         path: /mnt/tank/media/immich
         globalMounts:
           - path: /usr/src/app/upload
       media:
         type: nfs
-        server: 10.10.0.2
+        server: jotunheim.fast.internal
         path: /mnt/tank/media
         globalMounts:
           - path: /media

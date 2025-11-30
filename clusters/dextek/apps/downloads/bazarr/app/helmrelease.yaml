@@ -98,7 +98,7 @@ spec:
         existingClaim: bazarr-config
       media:
         type: nfs
-        server: 10.10.0.2
+        server: jotunheim.fast.internal
         path: /mnt/tank/media
         globalMounts:
           - path: /media

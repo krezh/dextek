@@ -78,7 +78,7 @@ spec:
     persistence:
       uploads:
         type: nfs
-        server: 10.10.0.2
+        server: jotunheim.fast.internal
         path: /mnt/tank/k8s/zipline
         globalMounts:
           - path: *uploads
