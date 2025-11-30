@@ -32,7 +32,7 @@ spec:
       networks:
         - name: srv
           multus:
-            networkName: network/multus-srv
+            networkName: network/srv
       volumes:
         - dataVolume:
             name: ubuntu-jammy-dv
