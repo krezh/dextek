@@ -9,7 +9,6 @@ resources:
   - ./external-dns
   - ./envoy-gateway
   - ./k8s-gateway
-  - ./netbird-operator
   - ./multus
 transformers:
   - |-
