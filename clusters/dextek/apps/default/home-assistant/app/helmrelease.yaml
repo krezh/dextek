@@ -25,7 +25,7 @@ spec:
               [{
                 "name": "iot",
                 "namespace": "network",
-                "ips": ["192.168.100.10/32"],
+                "ips": ["192.168.100.10/24"],
                 "mac": "c6:07:27:af:fb:53"
               }]
         type: statefulset
