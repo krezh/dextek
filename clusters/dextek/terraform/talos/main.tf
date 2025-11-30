@@ -1,7 +1,7 @@
 module "talos" {
   source = "github.com/krezh/dextek//infrastructure/terraform/modules/talos?ref=main"
   #source                 = "../../../../infrastructure/terraform/modules/talos"
-  cluster_name           = "dextek" # TODO: change cluster name
+  cluster_name           = "dextek"
   cluster_vip            = "192.168.20.5"
   cluster_endpoint       = "talos.k8s.plexuz.xyz"
   cluster_subnet         = "10.10.0.0/27"
