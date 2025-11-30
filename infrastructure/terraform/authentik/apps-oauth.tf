@@ -73,7 +73,7 @@ module "oauth_apps" {
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
       property_mappings      = local.oauth2_scopes_offline_access
       redirect_uris          = ["https://zipline.${var.domain["external"]}/api/auth/oauth/oidc"]
-      meta_icon              = "dashboard-icons"
+      meta_icon              = "https://cdn.jsdelivr.net/gh/selfhst/icons@master/png/zipline.png"
       meta_launch_url        = "https://zipline.${var.domain["external"]}"
     }
     kubernetes = {
@@ -111,23 +111,6 @@ module "oauth_apps" {
       meta_icon              = "dashboard-icons"
       meta_launch_url        = "https://karakeep.${var.domain["external"]}"
       meta_description       = "A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search"
-    }
-    netvisor = {
-      name                   = "NetVisor"
-      slug                   = "netvisor"
-      app_domain             = "netvisor.${var.domain["internal"]}"
-      app_group              = "Network"
-      access_groups          = [data.authentik_group.superuser.id]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.NETVISOR)["NETVISOR_OIDC_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.NETVISOR)["NETVISOR_OIDC_CLIENT_SECRET"]
-      authentication_flow_id = authentik_flow.authentication.uuid
-      authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
-      invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = local.oauth2_scopes
-      redirect_uris          = ["https://netvisor.${var.domain["internal"]}/api/auth/oidc/callback"]
-      meta_icon              = "dashboard-icons"
-      meta_launch_url        = "https://netvisor.${var.domain["internal"]}"
-      meta_description       = "Network discovery and documentation tool"
     }
     wakapi = {
       name       = "Wakapi"
