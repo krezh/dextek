@@ -157,6 +157,7 @@ variable "nodes" {
     driver       = string
     driver_10g   = optional(string, "none")
     node_labels  = optional(map(string), {})
+    interfaces   = optional(any)
   }))
   validation {
     condition     = length(var.nodes) > 0
@@ -204,7 +205,6 @@ variable "nodes" {
     error_message = "All node_labels keys and values must conform to Kubernetes label requirements."
   }
 }
-
 
 variable "upsmon" {
   description = "Configuration for the NUT UPS monitoring"
