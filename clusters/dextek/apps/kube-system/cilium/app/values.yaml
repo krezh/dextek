@@ -14,7 +14,7 @@ bgp:
     podCIDR: false
 bgpControlPlane:
   enabled: true
-# devices: bond+
+devices: bond+
 pmtuDiscovery:
   enabled: true
 k8sServiceHost: 127.0.0.1
