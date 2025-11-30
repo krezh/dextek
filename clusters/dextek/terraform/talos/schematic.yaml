@@ -1,6 +1,5 @@
 customization:
   extraKernelArgs:
-    - net.ifnames=0
     - -init_on_alloc # Less security, faster puter
     - -init_on_free # Less security, faster puter
     - -selinux # Less security, faster puter
