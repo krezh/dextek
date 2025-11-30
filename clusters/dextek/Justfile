@@ -8,9 +8,6 @@ BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
 KUBECONFIG := "$(pwd)/kubeconfig"
 TALOSCONFIG := "$(pwd)/talosconfig"
 TALOS_CONTROLLER := "$(talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
-
-#TODO Change cluster name
-
 CLUSTER_NAME := "dextek"
 
 _default:
