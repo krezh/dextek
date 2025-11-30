@@ -89,7 +89,7 @@ module "oauth_apps" {
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
       property_mappings      = local.oauth2_scopes_offline_access
       redirect_uris          = ["https://headlamp.${var.domain["internal"]}/oidc-callback", "https://kauth.talos.plexuz.xyz/callback", "http://localhost:8080/callback"]
-      meta_icon              = ""
+      meta_icon              = "https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/kubernetes.svg"
       meta_launch_url        = "blank://blank"
     }
     karakeep = {
