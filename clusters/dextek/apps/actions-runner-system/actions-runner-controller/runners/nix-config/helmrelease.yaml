@@ -33,7 +33,7 @@ spec:
           fsGroup: 1001
         containers:
           - name: runner
-            image: ghcr.io/krezh/actions-runner:2.330.0@sha256:8ace9fc9e84cf7fd1a2982d5237e753ba2a8da2abee9fb2191c64ddfff6e1e01
+            image: ghcr.io/krezh/actions-runner:2.330.0@sha256:234e2f895e286c6b075f74861d6e6c0fc3327b6a28ba63b58f061546729c50cf
             command:
               - /home/runner/run.sh
             env:
