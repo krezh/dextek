@@ -1,6 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/release-1.10/website/content/v1.10/schemas/config.schema.json
-version: v1alpha1
+# yaml-language-server: $schema=https://github.com/siderolabs/talos/raw/refs/tags/v1.11.5/website/content/v1.11/schemas/config.schema.json
 machine:
   install:
     image: ${factory_repo_url}/metal-installer/${talos_factory_hash}:${talos_version}
@@ -27,11 +26,21 @@ machine:
     net.ipv6.conf.default.disable_ipv6: "1" # Disable IPv6
     user.max_user_namespaces: "11255" # UserNamespacesSupport
     net.ipv4.ping_group_range: 0 2147483647 # Allow ping for all users
+    net.ipv4.neigh.default.gc_thresh1: "4096" # ARP cache
+    net.ipv4.neigh.default.gc_thresh2: "8192" # ARP cache
+    net.ipv4.neigh.default.gc_thresh3: "16384" # ARP cache
+    net.ipv4.tcp_notsent_lowat: "131072" # 10Gb/s
+    net.ipv4.tcp_slow_start_after_idle: "0" # 10Gb/s
   udev:
     rules:
       # Intel GPU
       - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
+  kernel:
+    modules:
+      - name: nbd
   kubelet:
+    disableManifestsDirectory: true
+    defaultRuntimeSeccompProfileEnabled: true
     extraConfig:
       maxPods: 150
       serializeImagePulls: false
@@ -43,11 +52,9 @@ machine:
         UserNamespacesSupport: true
         UserNamespacesPodSecurityStandards: true
         ImageVolume: true
-        ResourceHealthStatus: true
     nodeIP:
       validSubnets:
         - ${cluster_subnet}
-    disableManifestsDirectory: true
   certSANs: &sans
     - ${cluster_endpoint}
     - ${cluster_vip}
@@ -85,6 +92,17 @@ machine:
             - driver: ${driver_10g}
               hardwareAddr: ${mac_addr_10g}
   files:
+    - op: overwrite
+      path: /etc/nfsmount.conf
+      permissions: 0o644
+      content: |
+        [ NFSMount_Global_Options ]
+        nfsvers=4.1
+        hard=True
+        nconnect=8
+        noatime=True
+        rsize=1048576
+        wsize=1048576
     - path: /etc/cri/conf.d/20-customization.part
       op: create
       content: |-
@@ -100,13 +118,16 @@ machine:
     servers:
       - 192.168.20.1
   features:
+    apidCheckExtKeyUsage: true
+    diskQuotaSupport: true
+    rbac: true
     kubePrism:
       enabled: true
       port: 7445
     hostDNS:
       enabled: true
       resolveMemberNames: true
-      forwardKubeDNSToHost: false # Incompatible with Cilium bpf masquerade
+      forwardKubeDNSToHost: true # Requires Cilium socketLB features
     kubernetesTalosAPIAccess:
       enabled: true
       allowedRoles: ["os:admin"]
@@ -142,7 +163,7 @@ cluster:
         - level: Metadata
     extraArgs:
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true,ResourceHealthStatus=true
+      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
       oidc-client-id: kubernetes
       oidc-groups-claim: groups
       oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
