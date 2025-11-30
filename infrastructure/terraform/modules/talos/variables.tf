@@ -148,14 +148,15 @@ variable "machine_yaml" {
 variable "nodes" {
   description = "A map of node data"
   type = map(object({
-    hostname    = string
-    platform    = optional(string, "metal") # metal, etc.
-    role        = string                    # controlplane, worker
-    mac_addr    = string
-    disk_model  = string
-    driver      = string
-    driver_10g  = optional(string, "none")
-    node_labels = optional(map(string), {})
+    hostname     = string
+    platform     = optional(string, "metal") # metal, etc.
+    role         = string                    # controlplane, worker
+    mac_addr     = string
+    mac_addr_10g = optional(string, "none")
+    disk_model   = string
+    driver       = string
+    driver_10g   = optional(string, "none")
+    node_labels  = optional(map(string), {})
   }))
   validation {
     condition     = length(var.nodes) > 0

@@ -1,7 +1,7 @@
 module "talos" {
   source = "github.com/krezh/dextek//infrastructure/terraform/modules/talos?ref=main"
-  # source                 = "../../../../infrastructure/terraform/modules/talos"
-  cluster_name           = "talos-plexuz"
+  #source                 = "../../../../infrastructure/terraform/modules/talos"
+  cluster_name           = "talos-plexuz" # TODO: change cluster name
   cluster_vip            = "192.168.20.5"
   cluster_endpoint       = "talos.k8s.plexuz.xyz"
   cluster_subnet         = "10.10.0.0/27"
@@ -24,39 +24,42 @@ module "talos" {
   }
   nodes = {
     "ms01-01.k8s.plexuz.xyz" = {
-      hostname   = "ms01-01"
-      platform   = "metal"
-      role       = "controlplane"
-      mac_addr   = "58:47:ca:74:f2:40"
-      disk_model = "Samsung SSD*"
-      driver     = "igc"
-      driver_10g = "i40e"
+      hostname     = "ms01-01"
+      platform     = "metal"
+      role         = "controlplane"
+      mac_addr     = "58:47:ca:74:f2:40"
+      mac_addr_10g = "58:47:ca:74:f2:3d"
+      disk_model   = "Samsung SSD*"
+      driver       = "igc"
+      driver_10g   = "i40e"
       node_labels = {
         "node.kubernetes.io/gpu"        = "true"
         "topology.kubernetes.io/region" = "main"
       }
     }
     "ms01-02.k8s.plexuz.xyz" = {
-      hostname   = "ms01-02"
-      platform   = "metal"
-      role       = "controlplane"
-      mac_addr   = "58:47:ca:76:83:aa"
-      disk_model = "Samsung SSD*"
-      driver     = "igc"
-      driver_10g = "i40e"
+      hostname     = "ms01-02"
+      platform     = "metal"
+      role         = "controlplane"
+      mac_addr     = "58:47:ca:76:83:aa"
+      mac_addr_10g = "58:47:ca:76:83:a7"
+      disk_model   = "Samsung SSD*"
+      driver       = "igc"
+      driver_10g   = "i40e"
       node_labels = {
         "node.kubernetes.io/gpu"        = "true"
         "topology.kubernetes.io/region" = "main"
       }
     }
     "ms01-03.k8s.plexuz.xyz" = {
-      hostname   = "ms01-03"
-      platform   = "metal"
-      role       = "controlplane"
-      mac_addr   = "58:47:ca:76:7f:52"
-      disk_model = "Samsung SSD*"
-      driver     = "igc"
-      driver_10g = "i40e"
+      hostname     = "ms01-03"
+      platform     = "metal"
+      role         = "controlplane"
+      mac_addr     = "58:47:ca:76:7f:52"
+      mac_addr_10g = "58:47:ca:76:7f:4f"
+      disk_model   = "Samsung SSD*"
+      driver       = "igc"
+      driver_10g   = "i40e"
       node_labels = {
         "node.kubernetes.io/gpu"        = "true"
         "topology.kubernetes.io/region" = "main"
