@@ -83,9 +83,6 @@ spec:
     service:
       app:
         controller: app
-        annotations:
-          netbird.io/expose: "true"
-          netbird.io/groups: "Attic"
         ports:
           http:
             port: 8080
