@@ -26,6 +26,7 @@ machine:
     net.ipv6.conf.all.disable_ipv6: "1" # Disable IPv6
     net.ipv6.conf.default.disable_ipv6: "1" # Disable IPv6
     user.max_user_namespaces: "11255" # UserNamespacesSupport
+    net.ipv4.ping_group_range: 0 2147483647 # Allow ping for all users
   udev:
     rules:
       # Intel GPU
@@ -58,26 +59,31 @@ machine:
       - 192.168.20.1
     disableSearchDomain: true
     interfaces:
-      - deviceSelector:
-          hardwareAddr: ${mac_addr}
-          driver: ${driver}
-          physical: true
-        mtu: 1500
+      - interface: bond0
         dhcp: true
+        mtu: 1500
         vip:
           ip: ${cluster_vip}
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - driver: ${driver}
+              hardwareAddr: ${mac_addr}
         vlans:
-          - vlanId: 100 # IoT VLAN
-            mtu: 1500
+          - vlanId: 100 # IoT
             dhcp: false
-          - vlanId: 10 # srv VLAN
             mtu: 1500
+          - vlanId: 10 # SRV
             dhcp: false
-      - deviceSelector:
-          driver: ${driver_10g}
-          physical: true
-        mtu: 1500
+            mtu: 1500
+      - interface: bond1
         dhcp: true
+        mtu: 1500
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - driver: ${driver_10g}
+              hardwareAddr: ${mac_addr_10g}
   files:
     - path: /etc/cri/conf.d/20-customization.part
       op: create

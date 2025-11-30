@@ -21,11 +21,12 @@ spec:
       app:
         pod:
           annotations:
-            k8s.v1.cni.cncf.io/networks: |
+            k8s.v1.cni.cncf.io/networks: |-
               [{
-                "name":"multus-iot",
+                "name": "multus-iot",
                 "namespace": "network",
-                "ips": ["192.168.100.10/24"]
+                "ips": ["192.168.100.10/24"],
+                "mac": "c6:07:27:af:fb:53"
               }]
         type: statefulset
         annotations:

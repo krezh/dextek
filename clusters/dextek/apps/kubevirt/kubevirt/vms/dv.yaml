@@ -4,6 +4,7 @@ apiVersion: cdi.kubevirt.io/v1beta1
 kind: DataVolume
 metadata:
   name: fedora-base-image
+  namespace: kubevirt
 spec:
   source:
     http:
