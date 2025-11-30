@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: multus-networks
   path: ./clusters/dextek/apps/kubevirt/kubevirt/app
   prune: true
   sourceRef:
