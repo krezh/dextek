@@ -24,6 +24,14 @@ spec:
     - name: kubevirt-crds
   values:
     kubevirt:
+      certificateRotateStrategy:
+        selfSigned:
+          ca:
+            duration: 168h
+            renewBefore: 48h
+            server:
+              duration: 72h
+              renewBefore: 48h
       configuration:
         developerConfiguration:
           featureGates:
