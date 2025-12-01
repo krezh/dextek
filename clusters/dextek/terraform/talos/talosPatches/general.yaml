@@ -73,6 +73,8 @@ machine:
           deviceSelectors:
             - driver: ${driver}
               hardwareAddr: ${mac_addr}
+            - driver: ${driver}
+              hardwareAddr: ${mac_addr2}
         vlans:
           - vlanId: 100 # IoT
             dhcp: false
