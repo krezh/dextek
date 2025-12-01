@@ -22,8 +22,6 @@ machine:
     sunrpc.tcp_slot_table_entries: "128" # 10Gb/s | NFS
     sunrpc.tcp_max_slot_table_entries: "128" # 10Gb/s | NFS
     vm.nr_hugepages: "1024" # PostgreSQL
-    net.ipv6.conf.all.disable_ipv6: "1" # Disable IPv6
-    net.ipv6.conf.default.disable_ipv6: "1" # Disable IPv6
     user.max_user_namespaces: "11255" # UserNamespacesSupport
     net.ipv4.ping_group_range: 0 2147483647 # Allow ping for all users
     net.ipv4.neigh.default.gc_thresh1: "4096" # ARP cache
