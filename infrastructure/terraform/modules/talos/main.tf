@@ -70,12 +70,21 @@ resource "matchbox_profile" "machine" {
   raw_ignition = data.talos_machine_configuration.machine[each.key].machine_configuration
 }
 
-resource "matchbox_group" "machine" {
+resource "matchbox_group" "machine_mac" {
   for_each = var.nodes
   name     = each.value.hostname
   profile  = matchbox_profile.machine[each.key].name
   selector = {
     mac = lower(each.value.mac_addr)
+  }
+}
+
+resource "matchbox_group" "machine_mac2" {
+  for_each = var.nodes
+  name     = each.value.hostname
+  profile  = matchbox_profile.machine[each.key].name
+  selector = {
+    mac = lower(each.value.mac_addr2)
   }
 }
 
