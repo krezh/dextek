@@ -152,6 +152,7 @@ variable "nodes" {
     platform     = optional(string, "metal") # metal, etc.
     role         = string                    # controlplane, worker
     mac_addr     = string
+    mac_addr2    = string
     mac_addr_10g = optional(string, "none")
     disk_model   = string
     driver       = string
