@@ -2,9 +2,7 @@ terraform {
   cloud {
     organization = "krezh"
     hostname     = "app.terraform.io"
-    workspaces {
-      name = "routeros"
-    }
+    workspaces { name = "routeros" }
   }
   required_providers {
     routeros = {
@@ -19,6 +17,10 @@ terraform {
       source  = "DopplerHQ/doppler"
       version = "1.21.0"
     }
+    acme = {
+      source  = "vancluever/acme"
+      version = "2.38.1"
+    }
   }
   required_version = ">= 1.3.0"
 }
@@ -26,7 +28,7 @@ terraform {
 provider "sops" {}
 
 provider "routeros" {
-  hosturl  = data.sops_file.secrets.data["routeros.ip"]
+  hosturl  = "192.168.1.35"
   username = data.doppler_secrets.prd_routeros.map.ADMIN_USER
   password = data.doppler_secrets.prd_routeros.map.ADMIN_PASSWORD
   insecure = true
@@ -34,4 +36,8 @@ provider "routeros" {
 
 provider "doppler" {
   doppler_token = data.sops_file.secrets.data["doppler.token"]
+}
+
+provider "acme" {
+  server_url = "https://acme-v02.api.letsencrypt.org/directory"
 }

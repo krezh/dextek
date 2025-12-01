@@ -21,10 +21,14 @@ mod talos '.just/talos.just'
 # Crunchy Recipes
 mod crunchy '.just/crunchy.just'
 
+# SOPS Recipes
+mod sops '.just/sops.just'
+
 # Bootstrap Cluster
 bootstrap cluster recipe="all":
   echo "Bootstrapping cluster: {{cluster}}..."
   just ./clusters/{{cluster}}/{{recipe}}
 
-_log lvl msg:
+[private]
+log lvl msg:
   gum log -t rfc3339 -s -l "{{ lvl }}" "{{ msg }}"
