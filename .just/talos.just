@@ -1,7 +1,7 @@
 set shell := ['bash', '-Eeu', '-o', 'pipefail', '-c']
 
 hack_dir := justfile_dir() + '/hack'
-controller := `talosctl config info -o yaml | yq -e '.endpoints[0]'`
+controller := "$(talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
 
 _default:
     @just --list sync
