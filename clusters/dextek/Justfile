@@ -1,7 +1,7 @@
 #!/usr/bin/env just --justfile
 
 set quiet := true
-set ignore-comments := true
+set positional-arguments := true
 
 CLUSTER_DIR := "."
 BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
