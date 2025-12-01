@@ -68,8 +68,6 @@ machine:
       - interface: bond0
         dhcp: true
         mtu: 1500
-        vip:
-          ip: ${cluster_vip}
         bond:
           mode: active-backup
           deviceSelectors:
