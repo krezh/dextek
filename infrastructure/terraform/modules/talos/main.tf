@@ -72,7 +72,7 @@ resource "matchbox_profile" "machine" {
 
 resource "matchbox_group" "machine_mac" {
   for_each = var.nodes
-  name     = each.value.hostname
+  name     = "${each.value.hostname}-${each.value.mac_addr}"
   profile  = matchbox_profile.machine[each.key].name
   selector = {
     mac = lower(each.value.mac_addr)
@@ -81,7 +81,7 @@ resource "matchbox_group" "machine_mac" {
 
 resource "matchbox_group" "machine_mac2" {
   for_each = var.nodes
-  name     = each.value.hostname
+  name     = "${each.value.hostname}-${each.value.mac_addr2}"
   profile  = matchbox_profile.machine[each.key].name
   selector = {
     mac = lower(each.value.mac_addr2)
