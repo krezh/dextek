@@ -47,20 +47,20 @@ talos:
 
 kubeconfig:
     printf "Getting kubeconfig..."
-    until talosctl kubeconfig -n {{ TALOS_CONTROLLER }} --force {{ KUBECONFIG }} > /dev/null 2>&1; do sleep 3; done
+    until talosctl kubeconfig -n {{ TALOS_CONTROLLER }} --force > /dev/null 2>&1; do sleep 3; done
     kubectl config set-cluster {{ CLUSTER_NAME }} --server "https://{{ TALOS_CONTROLLER }}:6443"
     echo " Done"
 
 readyCheck:
     echo "Waiting for Nodes to be ready..."
-    until kubectl --kubeconfig {{ KUBECONFIG }} wait nodes --for=condition=Ready=False --all --timeout=10m > /dev/null 2>&1; do sleep 5; done
+    until kubectl wait nodes --for=condition=Ready=False --all --timeout=10m > /dev/null 2>&1; do sleep 5; done
 
 helmfile:
     printf "Deploying helmfile..."
-    until helmfile --quiet --kubeconfig {{ KUBECONFIG }} --file {{ BOOTSTRAP_DIR }}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
+    until helmfile --quiet --file {{ BOOTSTRAP_DIR }}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
     echo " Done"
-    sops --decrypt {{ BOOTSTRAP_DIR }}/flux/age-key.sops.yaml | kubectl apply --kubeconfig {{ KUBECONFIG }} -f -
-    sops --decrypt {{ BOOTSTRAP_DIR }}/flux/github-deploy-key.sops.yaml | kubectl apply --kubeconfig {{ KUBECONFIG }} -f -
+    sops --decrypt {{ BOOTSTRAP_DIR }}/flux/age-key.sops.yaml | kubectl apply -f -
+    sops --decrypt {{ BOOTSTRAP_DIR }}/flux/github-deploy-key.sops.yaml | kubectl apply -f -
 
 wipe:
     #!/usr/bin/env bash
@@ -82,7 +82,7 @@ wipe:
     done
 
 k9s:
-    k9s --kubeconfig {{ KUBECONFIG }} --all-namespaces --command pods
+    k9s --all-namespaces --command pods
 
 _cleanup:
     rm -f {{ KUBECONFIG }}
