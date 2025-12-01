@@ -3,21 +3,21 @@
 apiVersion: k8s.cni.cncf.io/v1
 kind: NetworkAttachmentDefinition
 metadata:
-  name: iot
+  name: srv
 spec:
   config: |-
     {
       "cniVersion": "1.1.0",
-      "name": "iot",
+      "name": "srv",
       "plugins": [
         {
           "type": "macvlan",
-          "master": "bond0.100",
+          "master": "bond0.10",
           "mode": "bridge",
           "ipam": {
             "type": "static",
             "routes": [
-              {"dst": "0.0.0.0/0", "gw": "192.168.100.1"}
+              {"dst": "0.0.0.0/0", "gw": "192.168.10.1"}
             ]
           }
         },
