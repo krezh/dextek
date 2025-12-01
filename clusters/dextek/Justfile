@@ -48,6 +48,7 @@ talos:
 kubeconfig:
     printf "Getting kubeconfig..."
     until talosctl kubeconfig -n {{ TALOS_CONTROLLER }} --force {{ KUBECONFIG }} > /dev/null 2>&1; do sleep 3; done
+    kubectl config set-cluster {{ CLUSTER_NAME }} --server "https://{{ TALOS_CONTROLLER }}:6443"
     echo " Done"
 
 readyCheck:
