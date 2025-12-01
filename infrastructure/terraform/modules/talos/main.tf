@@ -32,6 +32,7 @@ data "talos_machine_configuration" "machine" {
       hostname           = each.key,
       disk_model         = each.value.disk_model,
       mac_addr           = each.value.mac_addr,
+      mac_addr2          = each.value.mac_addr2,
       mac_addr_10g       = each.value.mac_addr_10g,
       cluster_vip        = var.cluster_vip,
       driver             = each.value.driver,
