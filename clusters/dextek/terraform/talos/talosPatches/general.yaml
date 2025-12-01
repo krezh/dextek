@@ -161,6 +161,7 @@ cluster:
       rules:
         - level: Metadata
     extraArgs:
+      enable-aggregator-routing: "true"
       runtime-config: admissionregistration.k8s.io/v1beta1=true
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
       oidc-client-id: kubernetes
