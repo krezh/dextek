@@ -45,9 +45,9 @@ machine:
       maxPods: 150
       serializeImagePulls: false
       # Make image cleanup more aggressive
-      imageMaximumGCAge: 24h # One day
-      imageGCHighThresholdPercent: 60 # Default is 85%
-      imageGCLowThresholdPercent: 30 # Default is 80%
+      # imageMaximumGCAge: 24h # One day
+      # imageGCHighThresholdPercent: 60 # Default is 85%
+      # imageGCLowThresholdPercent: 30 # Default is 80%
       featureGates:
         UserNamespacesSupport: true
         UserNamespacesPodSecurityStandards: true
@@ -62,8 +62,7 @@ machine:
     - localhost
   network:
     hostname: ${hostname}
-    nameservers:
-      - 192.168.20.1
+    nameservers: [192.168.20.1]
     disableSearchDomain: true
     interfaces:
       - interface: bond0

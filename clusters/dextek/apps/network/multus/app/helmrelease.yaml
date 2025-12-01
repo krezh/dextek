@@ -5,17 +5,24 @@ kind: HelmRelease
 metadata:
   name: multus
 spec:
-  interval: 1h
+  interval: 30m
   chartRef:
     kind: OCIRepository
     name: multus
   values:
-    cni:
-      binPath: /opt/cni/bin
-      netPath: /etc/cni/net.d
+    cni-plugins:
+      image:
+        repository: ghcr.io/home-operations/cni-plugins
+        tag: 1.8.0
     multus:
+      image:
+        repository: ghcr.io/k8snetworkplumbingwg/multus-cni
+        tag: v4.2.3
       resources:
         requests:
           cpu: 10m
         limits:
-          memory: 512Mi
+          memory: 100Mi
+    cni:
+      netPath: /etc/cni/net.d
+      binPath: /opt/cni/bin
