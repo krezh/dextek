@@ -172,6 +172,11 @@ spec:
           ENABLE_OPENID_SIGNUP: true
           USERNAME: preferred_username
           UPDATE_AVATAR: true
+        database:
+          DB_TYPE: postgres
+          SSL_MODE: disable
+          LOG_SQL: false # Disable SQL logging in production
+          SLOW_QUERY_THRESHOLD: 5s # Log slow queries
         repository:
           DEFAULT_BRANCH: main
           ENABLE_PUSH_CREATE_USER: true # Allow push-to-create repos
@@ -184,9 +189,9 @@ spec:
           autoDiscoverUrl: https://sso.plexuz.xyz/application/o/forgejo/.well-known/openid-configuration
           scopes: "openid email profile groups"
           iconUrl: https://sso.plexuz.xyz/static/dist/assets/icons/icon.svg
-      additionalConfigSources:
-        - secret:
-            secretName: forgejo-secret
+      # additionalConfigSources:
+      #   - secret:
+      #       secretName: forgejo-secret
 
     podAnnotations:
       reloader.stakater.com/search: "true"
