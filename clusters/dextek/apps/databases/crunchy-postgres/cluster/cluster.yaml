@@ -113,10 +113,6 @@ spec:
       databases: ["jellystat"]
       password:
         type: AlphaNumeric
-    - name: "netvisor"
-      databases: ["netvisor"]
-      password:
-        type: AlphaNumeric
     - name: "wakapi"
       databases: ["wakapi"]
       password:
