@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/karakeep-app/karakeep
-              tag: 0.28.0
+              tag: 0.29.0
             envFrom: &envFrom
               - secretRef:
                   name: karakeep-secret
