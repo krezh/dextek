@@ -4,6 +4,8 @@ kind: ConfigMap
 metadata:
   name: forgejo-init-scripts
   namespace: default
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 data:
   configure-forgejo.sh: |
     #!/usr/bin/env bash
