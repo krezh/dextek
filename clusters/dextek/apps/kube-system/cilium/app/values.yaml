@@ -31,7 +31,7 @@ bandwidthManager:
   enabled: true
   bbr: true
 bpf:
-  datapathMode: netkit-l2
+  datapathMode: netkit-l2 # Required by kubevirt
   masquerade: true
   preallocateMaps: true
   tproxy: true
