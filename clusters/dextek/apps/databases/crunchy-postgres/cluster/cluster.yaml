@@ -89,6 +89,10 @@ spec:
       databases: ["bazarr"]
       password:
         type: AlphaNumeric
+    - name: "forgejo"
+      databases: ["forgejo"]
+      password:
+        type: AlphaNumeric
     - name: "grafana"
       databases: ["grafana"]
       password:
