@@ -197,23 +197,23 @@ spec:
         - name: GITEA__DATABASE__HOST
           valueFrom:
             secretKeyRef:
-              name: postgres-forgejo-app
-              key: host
+              name: forgejo-secret
+              key: FORGEJO__database__HOST
         - name: GITEA__DATABASE__NAME
           valueFrom:
             secretKeyRef:
-              name: postgres-forgejo-app
-              key: dbname
+              name: forgejo-secret
+              key: FORGEJO__database__NAME
         - name: GITEA__DATABASE__USER
           valueFrom:
             secretKeyRef:
-              name: postgres-forgejo-app
-              key: username
+              name: forgejo-secret
+              key: FORGEJO__database__USER
         - name: GITEA__DATABASE__PASSWD
           valueFrom:
             secretKeyRef:
-              name: postgres-forgejo-app
-              key: password
+              name: forgejo-secret
+              key: FORGEJO__database__PASSWD
         # Security
         - name: GITEA__SECURITY__SECRET_KEY
           valueFrom:
