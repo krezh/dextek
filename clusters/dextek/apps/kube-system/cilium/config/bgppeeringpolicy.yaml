@@ -64,6 +64,7 @@ metadata:
   name: kube-api
   annotations:
     lbipam.cilium.io/ips: 192.168.25.20
+    coredns.io/hostname: ${CLUSTER_NAME}
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
