@@ -22,17 +22,16 @@ spec:
               disk:
                 bus: virtio
           interfaces:
-            - name: srv
-              bridge: {}
+            - name: default
+              masquerade: {}
         cpu:
           cores: 4
         resources:
           requests:
             memory: 16G
       networks:
-        - name: srv
-          multus:
-            networkName: network/srv
+        - name: default
+          pod: {}
       volumes:
         - dataVolume:
             name: ubuntu-jammy-dv
