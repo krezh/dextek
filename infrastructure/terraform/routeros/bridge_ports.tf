@@ -2,6 +2,7 @@ resource "routeros_interface_bridge_port" "ether1" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether1"
   pvid      = 1
+  hw        = true
   comment   = "Heimdall: ${var.comment}"
 }
 
@@ -9,6 +10,7 @@ resource "routeros_interface_bridge_port" "asgard_eth0" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether2"
   pvid      = 20
+  hw        = true
   comment   = "Asgard Eth0: ${var.comment}"
 }
 
@@ -16,6 +18,7 @@ resource "routeros_interface_bridge_port" "vanaheim_eth0" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether3"
   pvid      = 20
+  hw        = true
   comment   = "Vanaheim Eth0: ${var.comment}"
 }
 
@@ -23,6 +26,7 @@ resource "routeros_interface_bridge_port" "alfheim_eth0" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether4"
   pvid      = 20
+  hw        = true
   comment   = "Alfheim Eth0: ${var.comment}"
 }
 
@@ -30,6 +34,7 @@ resource "routeros_interface_bridge_port" "ms01-01_eth0" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether5"
   pvid      = 20
+  hw        = true
   comment   = "ms01-01 Eth0: ${var.comment}"
 }
 
@@ -37,6 +42,7 @@ resource "routeros_interface_bridge_port" "ms01-02_eth0" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether6"
   pvid      = 20
+  hw        = true
   comment   = "ms01-02 Eth0: ${var.comment}"
 }
 
@@ -44,6 +50,7 @@ resource "routeros_interface_bridge_port" "ms01-03_eth0" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether7"
   pvid      = 20
+  hw        = true
   comment   = "ms01-03 Eth0: ${var.comment}"
 }
 
@@ -51,6 +58,7 @@ resource "routeros_interface_bridge_port" "ether9" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether9"
   pvid      = 1
+  hw        = true
   comment   = "Jotunheim: ${var.comment}"
 }
 
@@ -58,6 +66,7 @@ resource "routeros_interface_bridge_port" "ether10" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether10"
   pvid      = 10
+  hw        = true
   comment   = "Jotunheim: ${var.comment}"
 }
 
@@ -65,6 +74,7 @@ resource "routeros_interface_bridge_port" "ether11" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether11"
   pvid      = 20
+  hw        = true
   comment   = "Jotunheim: ${var.comment}"
 }
 
@@ -72,6 +82,7 @@ resource "routeros_interface_bridge_port" "ether13" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether13"
   pvid      = 1
+  hw        = true
   comment   = "Switch U: ${var.comment}"
 }
 
@@ -79,6 +90,7 @@ resource "routeros_interface_bridge_port" "ether20" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether20"
   pvid      = 1
+  hw        = true
   comment   = var.comment
 }
 
@@ -86,6 +98,7 @@ resource "routeros_interface_bridge_port" "ether21" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether21"
   pvid      = 1
+  hw        = true
   comment   = "RPI01: ${var.comment}"
 }
 
@@ -93,6 +106,7 @@ resource "routeros_interface_bridge_port" "ether22" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether22"
   pvid      = 1
+  hw        = true
   comment   = "RPI02: ${var.comment}"
 }
 
@@ -100,6 +114,7 @@ resource "routeros_interface_bridge_port" "ether23" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether23"
   pvid      = 1
+  hw        = true
   comment   = "UAP-PRO-U: ${var.comment}"
 }
 
@@ -107,6 +122,7 @@ resource "routeros_interface_bridge_port" "ether24" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether24"
   pvid      = 1
+  hw        = true
   comment   = "UAP-PRO-N: ${var.comment}"
 }
 
@@ -114,6 +130,7 @@ resource "routeros_interface_bridge_port" "ether31" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether31"
   pvid      = 1
+  hw        = true
   comment   = "TESMART KVM: ${var.comment}"
 }
 
@@ -121,6 +138,7 @@ resource "routeros_interface_bridge_port" "ether32" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether32"
   pvid      = 1
+  hw        = true
   comment   = "PIKVM: ${var.comment}"
 }
 
@@ -128,6 +146,7 @@ resource "routeros_interface_bridge_port" "ether40" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether40"
   pvid      = 1
+  hw        = true
   comment   = var.comment
 }
 
@@ -135,6 +154,7 @@ resource "routeros_interface_bridge_port" "ether48" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "ether48"
   pvid      = 100
+  hw        = true
   comment   = "Sector Alarm Controller: ${var.comment}"
 }
 
@@ -142,6 +162,7 @@ resource "routeros_interface_bridge_port" "sfp-sfpplus1" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "sfp-sfpplus1"
   pvid      = 200
+  hw        = true
   comment   = "Jotunheim: ${var.comment}"
 }
 
@@ -149,6 +170,7 @@ resource "routeros_interface_bridge_port" "sfp-sfpplus2" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "sfp-sfpplus2"
   pvid      = 200
+  hw        = true
   comment   = "Alfheim: ${var.comment}"
 }
 
@@ -156,6 +178,7 @@ resource "routeros_interface_bridge_port" "sfp-sfpplus3" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "sfp-sfpplus3"
   pvid      = 200
+  hw        = true
   comment   = "Vanaheim: ${var.comment}"
 }
 
@@ -163,6 +186,7 @@ resource "routeros_interface_bridge_port" "sfp-sfpplus4" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "sfp-sfpplus4"
   pvid      = 200
+  hw        = true
   comment   = "Asgard: ${var.comment}"
 }
 
@@ -170,6 +194,7 @@ resource "routeros_interface_bridge_port" "qsfpplus1-1" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "qsfpplus1-1"
   pvid      = 200
+  hw        = true
   comment   = "ms01-01: ${var.comment}"
 }
 
@@ -177,6 +202,7 @@ resource "routeros_interface_bridge_port" "qsfpplus1-2" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "qsfpplus1-2"
   pvid      = 200
+  hw        = true
   comment   = "ms01-02: ${var.comment}"
 }
 
@@ -184,6 +210,7 @@ resource "routeros_interface_bridge_port" "qsfpplus1-3" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "qsfpplus1-3"
   pvid      = 200
+  hw        = true
   comment   = "ms01-03: ${var.comment}"
 }
 
@@ -191,5 +218,6 @@ resource "routeros_interface_bridge_port" "qsfpplus1-4" {
   bridge    = routeros_interface_bridge.bridge.name
   interface = "qsfpplus1-4"
   pvid      = 200
+  hw        = true
   comment   = "ms01-04: ${var.comment}"
 }
