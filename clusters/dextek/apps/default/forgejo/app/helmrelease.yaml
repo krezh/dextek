@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -11,134 +11,211 @@ spec:
     kind: OCIRepository
     name: forgejo
   values:
-    controllers:
-      app:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        initContainers:
-          configure-forgejo:
-            image:
-              repository: codeberg.org/forgejo/forgejo
-              tag: 13.0.3-rootless
-            command:
-              - /usr/local/bin/configure-forgejo.sh
-            envFrom: &envFrom
-              - secretRef:
-                  name: forgejo-secret
-              - secretRef:
-                  name: forgejo-oauth-secret
-        containers:
-          app:
-            image:
-              repository: codeberg.org/forgejo/forgejo
-              tag: 13.0.3-rootless
-            env:
-              USER_UID: "1000"
-              USER_GID: "1000"
-            envFrom: *envFrom
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/healthz
-                    port: &port 3000
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 10
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                add: ["SYS_CHROOT"]
-                drop: ["ALL"]
-            resources:
-              requests:
-                cpu: 50m
-                memory: 256Mi
-              limits:
-                memory: 2Gi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+    image:
+      registry: code.forgejo.org
+      repository: forgejo/forgejo
+      tag: 13.0.3
+      rootless: true
+    replicaCount: 1
+    strategy:
+      type: RollingUpdate
+    ingress:
+      enabled: false
+    valkey-cluster:
+      enabled: false
+    postgresql-ha:
+      enabled: false
+    postgresql:
+      enabled: false
+    redis-cluster:
+      enabled: false
+    podSecurityContext:
+      fsGroup: 100
+    containerSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 100
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        add: ["SYS_CHROOT"]
+    gitea:
+      config:
+        server:
+          DOMAIN: git.plexuz.xyz
+          ROOT_URL: https://git.plexuz.xyz
+          HTTP_PORT: 3000
+          DISABLE_SSH: false
+          SSH_DOMAIN: git.talos.plexuz.xyz
+          SSH_PORT: 22
+          SSH_LISTEN_PORT: 22
+          START_SSH_SERVER: true
+          ENABLE_GZIP: true
+          LFS_START_SERVER: true
+          OFFLINE_MODE: false # Enable CDN for static files and Gravatar
+          LANDING_PAGE: explore # Show explore page for non-authenticated users
+        indexer:
+          REPO_INDEXER_ENABLED: true
+          REPO_INDEXER_REPO_TYPES: sources,forks,mirrors,templates
+          ISSUE_INDEXER_TYPE: db
+        database:
+          DB_TYPE: postgres
+          LOG_SQL: false
+          SLOW_QUERY_THRESHOLD: 5s
+        queue:
+          TYPE: redis
+          CONN_STR: redis://dragonfly.databases.svc.cluster.local:6379/5
+          security:
+            # INSTALL_LOCK: true
+            PASSWORD_HASH_ALGO: argon2
+            PASSWORD_COMPLEXITY: lower,upper,digit,spec
+            PASSWORD_CHECK_PWN: true
+            MIN_PASSWORD_LENGTH: 12 # Stronger minimum password
+            REVERSE_PROXY_LIMIT: 1 # Trust X-Forwarded-For from 1 proxy (Envoy)
+        service:
+          DISABLE_REGISTRATION: false
+          REGISTER_EMAIL_CONFIRM: true
+          ENABLE_NOTIFY_MAIL: true
+          ENABLE_CAPTCHA: true
+          REQUIRE_CAPTCHA_FOR_LOGIN: true
+          REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA: true
+          CAPTCHA_TYPE: cfturnstile
+          DEFAULT_KEEP_EMAIL_PRIVATE: true
+          DEFAULT_ALLOW_CREATE_ORGANIZATION: true
+          DEFAULT_ENABLE_TIMETRACKING: true
+          ENABLE_USER_HEATMAP: true
+          AUTO_WATCH_NEW_REPOS: true
+          SHOW_REGISTRATION_BUTTON: true
+          VALID_SITE_URL_SCHEMES: https
+          EXPLORE.REQUIRE_SIGNIN_VIEW: false # Allow anonymous explore
+        qos:
+          ENABLED: true
+        mailer:
+          ENABLED: false
+          PROTOCOL: smtp+starttls
+          SMTP_PORT: 587
+          FROM: admin@plexuz.xyz
+        cache:
+          ADAPTER: redis
+          HOST: redis://dragonfly.databases.svc.cluster.local:6379/5
+        session:
+          PROVIDER: redis
+          PROVIDER_CONFIG: redis://dragonfly.databases.svc.cluster.local:6379/5
+          COOKIE_SECURE: true
+          DOMAIN: git.plexuz.xyz
+          COOKIE_NAME: forgejo_session
+          SESSION_LIFE_TIME: 86400 # 24h session lifetime
+          SAME_SITE: lax # Balance between security and OAuth2 compatibility
+        cron:
+          ENABLED: true
+        cron.git_gc_repos:
+          ENABLED: true
+          SCHEDULE: "@every 168h"
+          TIMEOUT: 60s
+          ARGS: "--aggressive --auto"
+        cron.update_mirrors:
+          SCHEDULE: "@every 10m"
+          PULL_LIMIT: 50
+          PUSH_LIMIT: 50
+        cron.cleanup_actions:
+          ENABLED: true
+          SCHEDULE: "@midnight"
+        metrics:
+          ENABLED: true
+          serviceMonitor:
+            enabled: true
+            namespace: monitoring
+            additionalLabels:
+              release: kube-prometheus-stack
+        time:
+          DEFAULT_UI_LOCATION: Europe/Stockholm
+        federation:
+          ENABLED: true
+        # storage:
+        #   STORAGE_TYPE: minio
+        #   MINIO_ENDPOINT: s3-api.int.plexuz.xyz
+        #   MINIO_BUCKET: forgejo
+        #   MINIO_LOCATION: eu-central-1
+        #   MINIO_USE_SSL: true
+        ui:
+          DEFAULT_THEME: forgejo-auto
+          SHOW_USER_EMAIL: false # Don't show emails on explore
+          AMBIGUOUS_UNICODE_DETECTION: true
+          DEFAULT_SHOW_FULL_NAME: true
+          FEED_MAX_COMMIT_NUM: 10
+          GRAPH_MAX_COMMIT_NUM: 100
+        markdown:
+          ENABLE_HARD_LINE_BREAK_IN_COMMENTS: true
+          ENABLE_MATH: true
+        webhook:
+          ALLOWED_HOST_LIST: external # Allow webhooks to external hosts only
+          SKIP_TLS_VERIFY: false
+          DELIVER_TIMEOUT: 10 # 10 seconds webhook timeout
+        migrations:
+          ALLOW_LOCALNETWORKS: true # Allow migrations from local network addresses
+          ALLOWED_DOMAINS: "*" # Allow migrations from any domain
+        api:
+          ENABLE_SWAGGER: true
+          MAX_RESPONSE_ITEMS: 50
+          DEFAULT_PAGING_NUM: 30
+        git:
+          DISABLE_DIFF_HIGHLIGHT: false
+          MAX_GIT_DIFF_LINES: 1000
+          MAX_GIT_DIFF_FILES: 100
+          ENABLE_AUTO_GIT_WIRE_PROTOCOL: true
+          PULL_REQUEST_PUSH_MESSAGE: true
+          VERBOSE_PUSH: true
+        actions:
+          ENABLED: true
+          DEFAULT_ACTIONS_URL: https://github.com # Use GitHub as primary source for actions
+          ARTIFACT_RETENTION_DAYS: 90
+          LOG_RETENTION_DAYS: 365
+          LOG_COMPRESSION: zstd # Compress action logs
+        openid:
+          ENABLE_OPENID_SIGNIN: true
+          ENABLE_OPENID_SIGNUP: true
+          USERNAME: preferred_username
+          UPDATE_AVATAR: true
+        repository:
+          DEFAULT_BRANCH: main
+          ENABLE_PUSH_CREATE_USER: true # Allow push-to-create repos
+          DISABLE_HTTP_GIT: false
+          DEFAULT_PRIVATE: last # Remember last choice for new repos
+      oauth:
+        - name: Authentik
+          provider: openidConnect
+          existingSecret: forgejo-oauth-secret
+          autoDiscoverUrl: https://sso.plexuz.xyz/application/o/forgejo/.well-known/openid-configuration
+          scopes: "openid email profile groups"
+          iconUrl: https://sso.plexuz.xyz/static/dist/assets/icons/icon.svg
+      additionalConfigSources:
+        - secret:
+            secretName: forgejo-secret
+
+    podAnnotations:
+      reloader.stakater.com/search: "true"
+
     service:
-      app:
-        controller: app
-        ports:
-          http:
-            port: *port
+      annotations:
+        prometheus.io/probe: "true"
+        prometheus.io/protocol: "tcp"
+      http:
+        type: ClusterIP
+        port: 3000
       ssh:
-        controller: app
         type: LoadBalancer
+        port: 22
         externalTrafficPolicy: Local
         annotations:
           coredns.io/hostname: git-lb
-        ports:
-          ssh:
-            port: 22
-            targetPort: 2222
-            protocol: TCP
-    route:
-      external:
-        hostnames: ["git.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-      internal:
-        hostnames: ["git.talos.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
     persistence:
-      config:
-        existingClaim: forgejo-config
-        advancedMounts:
-          app:
-            app:
-              - path: /etc/gitea
-                subPath: gitea-config
-              - path: /data/gitea
-                subPath: gitea-data
-              - path: /var/lib/gitea/git
-                subPath: gitea-lfs
-            configure-forgejo:
-              - path: /etc/gitea
-                subPath: gitea-config
-              - path: /data/gitea
-                subPath: gitea-data
-      init-scripts:
-        type: configMap
-        name: forgejo-init-scripts
-        defaultMode: 0555
-        advancedMounts:
-          app:
-            configure-forgejo:
-              - path: /usr/local/bin/configure-forgejo.sh
-                subPath: configure-forgejo.sh
-      tmp:
-        type: emptyDir
-        medium: Memory
-        globalMounts:
-          - path: /tmp
+      enabled: true
+      mount: true
+      create: false
+      claimName: forgejo-config
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 2Gi
