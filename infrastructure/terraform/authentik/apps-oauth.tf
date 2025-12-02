@@ -148,8 +148,8 @@ module "oauth_apps" {
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
       property_mappings      = local.oauth2_scopes
       redirect_uris = [
-        "https://git.${var.domain["external"]}/user/oauth2/authentik/callback",
-        "https://git.${var.domain["internal"]}/user/oauth2/authentik/callback"
+        "https://git.${var.domain["external"]}/user/oauth2/Authentik/callback",
+        "https://git.${var.domain["internal"]}/user/oauth2/Authentik/callback"
       ]
       meta_icon        = "dashboard-icons"
       meta_launch_url  = "https://git.${var.domain["external"]}"
