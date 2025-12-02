@@ -30,14 +30,11 @@ spec:
               disk:
                 bus: virtio
           interfaces:
-            - name: external
-              bridge: {}
-              macAddress: "02:00:00:ab:cd:ef"
+            - name: default
+              masquerade: {}
       networks:
-        - name: external
-          multus:
-            networkName: network/srv
-            default: true
+        - name: default
+          pod: {}
       volumes:
         - name: fedora-vm-pvc
           persistentVolumeClaim:
