@@ -28,7 +28,7 @@ spec:
           cores: 4
         resources:
           requests:
-            memory: 16G
+            memory: 8G
       networks:
         - name: default
           pod: {}
