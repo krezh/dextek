@@ -3,3 +3,9 @@ variable "comment" {
   type        = string
   default     = "Managed by Terraform"
 }
+
+variable "ingress_filtering" {
+  description = "Enable ingress filtering on bridge ports"
+  type        = bool
+  default     = false
+}

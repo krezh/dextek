@@ -32,10 +32,12 @@ spec:
           interfaces:
             - name: external
               bridge: {}
+              macAddress: "02:00:00:ab:cd:ef"
       networks:
         - name: external
           multus:
             networkName: network/srv
+            default: true
       volumes:
         - name: fedora-vm-pvc
           persistentVolumeClaim:
