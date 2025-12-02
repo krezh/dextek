@@ -57,3 +57,13 @@ resource "authentik_group" "ldap-admins" {
   name         = "ldap-admins"
   is_superuser = false
 }
+
+resource "authentik_group" "forgejo_users" {
+  name         = "forgejo_users"
+  is_superuser = false
+}
+
+resource "authentik_group" "forgejo_admins" {
+  name         = "forgejo_admins"
+  is_superuser = false
+}
