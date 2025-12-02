@@ -60,6 +60,8 @@ spec:
           ISSUE_INDEXER_TYPE: db
         database:
           DB_TYPE: postgres
+          LOG_SQL: false
+          SLOW_QUERY_THRESHOLD: 5s
         queue:
           TYPE: redis
           CONN_STR: redis://dragonfly.databases.svc.cluster.local:6379/5
