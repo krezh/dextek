@@ -214,12 +214,6 @@ spec:
             secretKeyRef:
               name: forgejo-secret
               key: FORGEJO__database__PASSWD
-        # Security
-        - name: GITEA__SECURITY__SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: forgejo-secret
-              key: SECRET_KEY
         # Service
         - name: GITEA__SERVICE__CF_TURNSTILE_SITEKEY
           valueFrom:
