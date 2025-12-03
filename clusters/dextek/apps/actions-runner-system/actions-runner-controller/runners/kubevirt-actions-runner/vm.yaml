@@ -15,8 +15,6 @@ spec:
           filesystems:
             - name: runner-info
               virtiofs: {}
-            - name: github-app-creds
-              virtiofs: {}
           disks:
             - name: os
               disk:
@@ -24,6 +22,10 @@ spec:
             - name: cloudinitdisk
               disk:
                 bus: virtio
+            - name: github-app-creds
+              disk:
+                bus: virtio
+              serial: GHCREDS001
           interfaces:
             - name: default
               masquerade: {}
