@@ -10,7 +10,7 @@ spec:
   storage:
     resources:
       requests:
-        storage: 50Gi
+        storage: 100Gi
     accessModes:
       - ReadWriteOnce
     volumeMode: Filesystem
