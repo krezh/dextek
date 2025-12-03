@@ -4,6 +4,7 @@ apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   name: ubuntu-jammy-vm
+  namespace: actions-runner-system
 spec:
   runStrategy: Manual
   template:
@@ -25,7 +26,7 @@ spec:
             - name: default
               masquerade: {}
         cpu:
-          cores: 4
+          cores: 8
         resources:
           requests:
             memory: 8G
@@ -40,10 +41,26 @@ spec:
           cloudInitNoCloud:
             userData: |-
               #cloud-config
+              users:
+                - name: runner
+                  groups: sudo
+                  shell: /bin/bash
+                  sudo: ['ALL=(ALL) NOPASSWD:ALL']
+              packages:
+                - curl
+                - jq
+                - tar
               mounts:
-                - [ runner-info, /runner-info/, virtiofs, "rw,relatime,user=runner" ]
+                - [ runner-info, /runner-info/, virtiofs, "rw,relatime" ]
               runcmd:
-                - "sudo runuser -l runner -c '/opt/runner/run.sh --jitconfig $(jq -r '.jitconfig' /runner-info/runner-info.json)'"
+                - mkdir -p /opt/runner
+                - cd /opt/runner
+                - RUNNER_VERSION=$(curl -s https://api.github.com/repos/actions/runner/releases/latest | jq -r '.tag_name' | sed 's/v//')
+                - curl -o actions-runner-linux-x64.tar.gz -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
+                - tar xzf actions-runner-linux-x64.tar.gz
+                - chown -R runner:runner /opt/runner
+                - rm actions-runner-linux-x64.tar.gz
+                - sudo -u runner bash -c 'cd /opt/runner && ./run.sh --jitconfig $(jq -r ".jitconfig" /runner-info/runner-info.json)'
                 - sleep 30
               power_state:
                 delay: now
