@@ -55,12 +55,37 @@ spec:
               runcmd:
                 - mkdir -p /opt/runner
                 - cd /opt/runner
-                - RUNNER_VERSION=$(curl -s https://api.github.com/repos/actions/runner/releases/latest | jq -r '.tag_name' | sed 's/v//')
-                - curl -o actions-runner-linux-x64.tar.gz -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
-                - tar xzf actions-runner-linux-x64.tar.gz
-                - chown -R runner:runner /opt/runner
-                - rm actions-runner-linux-x64.tar.gz
-                - sudo -u runner bash -c 'cd /opt/runner && ./run.sh --jitconfig $(jq -r ".jitconfig" /runner-info/runner-info.json)'
+                - |
+                  set -e
+                  echo "Fetching runner version..."
+                  API_RESPONSE=$(curl -s https://api.github.com/repos/actions/runner/releases/latest)
+                  RUNNER_VERSION=$(echo "$API_RESPONSE" | jq -r '.tag_name' | sed 's/v//')
+
+                  if [ -z "$RUNNER_VERSION" ] || [ "$RUNNER_VERSION" = "null" ]; then
+                    echo "Failed to fetch version from API. Response: $API_RESPONSE"
+                    RUNNER_VERSION="2.321.0"
+                    echo "Using fallback version: $RUNNER_VERSION"
+                  else
+                    echo "Using version: $RUNNER_VERSION"
+                  fi
+
+                  DOWNLOAD_URL="https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
+                  echo "Downloading from: $DOWNLOAD_URL"
+
+                  curl -f -L -o actions-runner-linux-x64.tar.gz "$DOWNLOAD_URL"
+
+                  if [ ! -f actions-runner-linux-x64.tar.gz ] || [ $(stat -c%s actions-runner-linux-x64.tar.gz) -lt 10000 ]; then
+                    echo "Download failed or file too small"
+                    exit 1
+                  fi
+
+                  echo "Download successful, extracting..."
+                  tar xzf actions-runner-linux-x64.tar.gz
+                  chown -R runner:runner /opt/runner
+                  rm actions-runner-linux-x64.tar.gz
+
+                  echo "Starting runner..."
+                  sudo -u runner bash -c 'cd /opt/runner && ./run.sh --jitconfig $(jq -r ".jitconfig" /runner-info/runner-info.json)'
                 - sleep 30
               power_state:
                 delay: now
