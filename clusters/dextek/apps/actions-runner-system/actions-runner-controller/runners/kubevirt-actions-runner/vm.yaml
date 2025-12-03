@@ -27,10 +27,9 @@ spec:
           interfaces:
             - name: default
               masquerade: {}
-        cpu:
-          cores: 8
         resources:
           requests:
+            cpu: 8
             memory: 8G
       networks:
         - name: default
