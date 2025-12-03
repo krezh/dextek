@@ -20,7 +20,6 @@ resources:
   - ./it-tools
   - ./changedetection
   - ./zipline
-  - ./ollama
   - ./jellyfin
   - ./publish-k8s-schemas
   - ./karakeep
