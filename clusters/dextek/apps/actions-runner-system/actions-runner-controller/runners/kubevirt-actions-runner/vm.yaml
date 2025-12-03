@@ -15,6 +15,8 @@ spec:
           filesystems:
             - name: runner-info
               virtiofs: {}
+            - name: github-app-creds
+              virtiofs: {}
           disks:
             - name: os
               disk:
@@ -37,17 +39,80 @@ spec:
         - dataVolume:
             name: ubuntu-jammy-dv
           name: os
+        - name: github-app-creds
+          secret:
+            secretName: nix-config-runner-secret
         - name: cloudinitdisk
           cloudInitNoCloud:
             userData: |-
               #cloud-config
+              users:
+                - name: runner
+                  groups: sudo
+                  shell: /bin/bash
+                  sudo: ['ALL=(ALL) NOPASSWD:ALL']
+              packages:
+                - curl
+                - jq
+                - tar
+                - openssl
               mounts:
                 - [ runner-info, /runner-info/, virtiofs, "rw,relatime" ]
+                - [ github-app-creds, /mnt/github-app-creds/, virtiofs, "ro,relatime" ]
               runcmd:
-                - systemctl start docker
+                - mkdir -p /opt/runner
+                - cd /opt/runner
                 - |
                   set -e
-                  echo "Starting GitHub Actions runner..."
+
+                  # Read GitHub App credentials from virtiofs mount
+                  GITHUB_APP_ID=$(cat /mnt/github-app-creds/github_app_id)
+                  GITHUB_APP_INSTALLATION_ID=$(cat /mnt/github-app-creds/github_app_installation_id)
+                  GITHUB_APP_PRIVATE_KEY=$(cat /mnt/github-app-creds/github_app_private_key)
+
+                  echo "Generating GitHub App installation token..."
+
+                  # Base64 encode function
+                  b64enc() { openssl enc -base64 -A | tr '+/' '-_' | tr -d '='; }
+                  NOW=$(date +%s)
+
+                  # Create JWT header and payload
+                  HEADER=$(printf '{"alg":"RS256","typ":"JWT"}' | jq -r -c .)
+                  PAYLOAD=$(printf '{"exp":%s,"iat":%s,"iss":"%s"}' "$((NOW + 590))" "$((NOW - 10))" "${GITHUB_APP_ID}" | jq -r -c .)
+
+                  # Sign the JWT
+                  SIGNED_CONTENT=$(printf '%s' "${HEADER}" | b64enc).$(printf '%s' "${PAYLOAD}" | b64enc)
+                  SIG=$(printf '%s' "${SIGNED_CONTENT}" | openssl dgst -binary -sha256 -sign <(printf "%s" "${GITHUB_APP_PRIVATE_KEY}") | b64enc)
+                  JWT=$(printf '%s.%s' "${SIGNED_CONTENT}" "${SIG}")
+
+                  # Get installation token
+                  TOKEN_RESPONSE=$(curl -s --request POST \
+                    "https://api.github.com/app/installations/${GITHUB_APP_INSTALLATION_ID}/access_tokens" \
+                    --header "Authorization: Bearer $JWT" \
+                    --header 'Accept: application/vnd.github+json' \
+                    --header 'X-GitHub-Api-Version: 2022-11-28')
+
+                  GITHUB_TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.token')
+
+                  if [ -z "$GITHUB_TOKEN" ] || [ "$GITHUB_TOKEN" = "null" ]; then
+                    echo "ERROR: Failed to generate installation token"
+                    echo "Response: $TOKEN_RESPONSE"
+                    exit 1
+                  fi
+
+                  echo "Successfully generated installation token"
+                  echo "Using authenticated API request to get runner version..."
+                  RUNNER_VERSION=$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/actions/runner/releases/latest | jq -r '.tag_name' | sed 's/v//')
+
+                  echo "Runner version: $RUNNER_VERSION"
+
+                  # Download and extract runner
+                  curl -o actions-runner-linux-x64.tar.gz -L "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
+                  tar xzf actions-runner-linux-x64.tar.gz
+                  chown -R runner:runner /opt/runner
+                  rm actions-runner-linux-x64.tar.gz
+
+                  echo "Starting runner..."
                   sudo -u runner bash -c 'cd /opt/runner && ./run.sh --jitconfig $(jq -r ".jitconfig" /runner-info/runner-info.json)'
                 - sleep 30
               power_state:
