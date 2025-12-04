@@ -42,6 +42,7 @@ spec:
               NTFY_WEB_PUSH_FILE: /var/cache/ntfy/webpush.db
               NTFY_METRICS_LISTEN_HTTP: :8080
               NTFY_ENABLE_LOGIN: true
+              NTFY_REQUIRE_LOGIN: true
             envFrom:
               - secretRef:
                   name: ntfy-secret
