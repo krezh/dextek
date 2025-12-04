@@ -10,10 +10,10 @@ spec:
     kind: OCIRepository
     name: gha-runner-scale-set
   values:
-    runnerScaleSetName: nix-config-runner
+    runnerScaleSetName: *name
     githubConfigUrl: https://github.com/krezh/nix-config
     githubConfigSecret: nix-config-runner-secret
-    minRunners: 0
+    minRunners: 1
     maxRunners: 10
     containerMode:
       type: kubernetes
