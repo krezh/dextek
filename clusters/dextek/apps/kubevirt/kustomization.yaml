@@ -13,4 +13,4 @@ transformers:
 resources:
   - ../../../shared/templates/flux
   - ./namespace.yaml
-  - ./kubevirt
+  #- ./kubevirt
