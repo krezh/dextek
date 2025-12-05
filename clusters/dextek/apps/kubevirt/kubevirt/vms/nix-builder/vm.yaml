@@ -61,7 +61,7 @@ spec:
   virtualMachineTemplate:
     metadata:
       labels:
-        ubevirt.io/vmpool: nix-builder-pool
+        kubevirt.io/vmpool: nix-builder-pool
       annotations:
         kubevirt.io/allow-pod-bridge-network-live-migration: "true"
     spec:
