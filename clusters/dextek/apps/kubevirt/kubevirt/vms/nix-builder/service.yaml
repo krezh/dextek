@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nix-builder-pool
+spec:
+  clusterIP: None
+  selector:
+    kubevirt.io/vmpool: nix-builder-pool
+  ports:
+    - name: ssh
+      port: 22
+      targetPort: 22
+      protocol: TCP
