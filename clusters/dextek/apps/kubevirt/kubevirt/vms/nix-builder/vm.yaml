@@ -59,45 +59,44 @@ spec:
     matchLabels:
       kubevirt.io/vmpool: nix-builder
   virtualMachineTemplate:
-    runStrategy: Always # Options: Always | Manual | RerunOnFailure | Halted
-    template:
-      metadata:
-        labels:
-          kubevirt.io/vm: nix-builder
-        annotations:
-          kubevirt.io/allow-pod-bridge-network-live-migration: "true"
-      spec:
-        evictionStrategy: LiveMigrate
-        domain:
-          resources:
-            requests:
-              cpu: 8
-              memory: 8G
-          devices:
-            disks:
-              - name: nix-builder-pvc
-                disk:
-                  bus: virtio
-              - name: cloudinitdisk
-                disk:
-                  bus: virtio
-            interfaces:
-              - name: default
-                masquerade: {}
-        networks:
-          - name: default
-            pod: {}
-        volumes:
-          - name: nix-builder-pvc
-            persistentVolumeClaim:
-              claimName: fedora-base-image
-          - name: cloudinitdisk
-            cloudInitNoCloud:
-              userData: |-
-                #cloud-config
-                users:
-                  - name: root
-                  - name: cloud-user
-                    sudo: ['ALL=(ALL) NOPASSWD:ALL']
-                    groups: sudo
-                    shell: /bin/bash
+    metadata:
+      labels:
+        kubevirt.io/vm: nix-builder
+      annotations:
+        kubevirt.io/allow-pod-bridge-network-live-migration: "true"
+    spec:
+      runStrategy: Always # Options: Always | Manual | RerunOnFailure | Halted
+      evictionStrategy: LiveMigrate
+      domain:
+        resources:
+          requests:
+            cpu: 8
+            memory: 8G
+        devices:
+          disks:
+            - name: nix-builder-pvc
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+          interfaces:
+            - name: default
+              masquerade: {}
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - name: nix-builder-pvc
+          persistentVolumeClaim:
+            claimName: fedora-base-image
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            userData: |-
+              #cloud-config
+              users:
+                - name: root
+                - name: cloud-user
+                  sudo: ['ALL=(ALL) NOPASSWD:ALL']
+                  groups: sudo
+                  shell: /bin/bash
