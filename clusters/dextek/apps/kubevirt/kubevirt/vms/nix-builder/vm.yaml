@@ -93,7 +93,7 @@ spec:
           volumes:
             - name: nix-builder-pvc
               persistentVolumeClaim:
-                claimName: fedora-base-image
+                claimName: nix-builder-image
             - name: cloudinitdisk
               cloudInitNoCloud:
                 userData: |-
