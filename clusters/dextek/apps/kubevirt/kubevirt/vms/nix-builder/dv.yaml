@@ -7,7 +7,7 @@ metadata:
 spec:
   source:
     http:
-      url: "https://github.com/krezh/nix-config/releases/download/kubevirt-2025-12-05-bce24cf826/nixos-kubevirt-2025-12-05-bce24cf826.qcow2"
+      url: "https://github.com/krezh/nix-config/releases/download/kubevirt-2025-12-05-b0fa36c5e2/nixos-kubevirt-2025-12-05-b0fa36c5e2.qcow2"
   pvc:
     accessModes:
       - ReadWriteOnce
