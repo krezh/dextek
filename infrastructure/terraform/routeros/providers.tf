@@ -19,7 +19,7 @@ terraform {
     }
     acme = {
       source  = "vancluever/acme"
-      version = "2.38.1"
+      version = "2.39.0"
     }
   }
   required_version = ">= 1.3.0"
