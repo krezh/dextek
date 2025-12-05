@@ -57,18 +57,17 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      kubevirt.io/vmpool: nix-builder
+      kubevirt.io/vmpool: nix-builder-pool
   virtualMachineTemplate:
     metadata:
       labels:
-        kubevirt.io/vm: nix-builder
+        ubevirt.io/vmpool: nix-builder-pool
       annotations:
         kubevirt.io/allow-pod-bridge-network-live-migration: "true"
     spec:
       runStrategy: Always # Options: Always | Manual | RerunOnFailure | Halted
       template:
         metadata:
-          creationTimestamp: null
           labels:
             kubevirt.io/vmpool: nix-builder-pool
         spec:
