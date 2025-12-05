@@ -67,36 +67,42 @@ spec:
     spec:
       runStrategy: Always # Options: Always | Manual | RerunOnFailure | Halted
       evictionStrategy: LiveMigrate
-      domain:
-        resources:
-          requests:
-            cpu: 8
-            memory: 8G
-        devices:
-          disks:
-            - name: nix-builder-pvc
-              disk:
-                bus: virtio
-            - name: cloudinitdisk
-              disk:
-                bus: virtio
-          interfaces:
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            kubevirt.io/vmpool: vm-pool-cirros
+        spec:
+          domain:
+            resources:
+              requests:
+                cpu: 8
+                memory: 8G
+            devices:
+              disks:
+                - name: nix-builder-pvc
+                  disk:
+                    bus: virtio
+                - name: cloudinitdisk
+                  disk:
+                    bus: virtio
+              interfaces:
+                - name: default
+                  masquerade: {}
+          networks:
             - name: default
-              masquerade: {}
-      networks:
-        - name: default
-          pod: {}
-      volumes:
-        - name: nix-builder-pvc
-          persistentVolumeClaim:
-            claimName: fedora-base-image
-        - name: cloudinitdisk
-          cloudInitNoCloud:
-            userData: |-
-              #cloud-config
-              users:
-                - name: root
-                - name: cloud-user
-                  sudo: ['ALL=(ALL) NOPASSWD:ALL']
-                  groups: sudo
-                  shell: /bin/bash
+              pod: {}
+          volumes:
+            - name: nix-builder-pvc
+              persistentVolumeClaim:
+                claimName: fedora-base-image
+            - name: cloudinitdisk
+              cloudInitNoCloud:
+                userData: |-
+                  #cloud-config
+                  users:
+                    - name: root
+                    - name: cloud-user
+                      sudo: ['ALL=(ALL) NOPASSWD:ALL']
+                      groups: sudo
+                      shell: /bin/bash
