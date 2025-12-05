@@ -70,7 +70,7 @@ spec:
         metadata:
           creationTimestamp: null
           labels:
-            kubevirt.io/vmpool: vm-pool-cirros
+            kubevirt.io/vmpool: nix-builder-pool
         spec:
           domain:
             resources:
