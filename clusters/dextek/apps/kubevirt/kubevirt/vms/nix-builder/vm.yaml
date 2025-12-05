@@ -66,7 +66,6 @@ spec:
         kubevirt.io/allow-pod-bridge-network-live-migration: "true"
     spec:
       runStrategy: Always # Options: Always | Manual | RerunOnFailure | Halted
-      evictionStrategy: LiveMigrate
       template:
         metadata:
           creationTimestamp: null
