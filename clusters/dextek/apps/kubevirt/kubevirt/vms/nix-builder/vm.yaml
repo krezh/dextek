@@ -65,6 +65,21 @@ spec:
       annotations:
         kubevirt.io/allow-pod-bridge-network-live-migration: "true"
     spec:
+      dataVolumeTemplates:
+        - metadata:
+            name: nix-builder-pvc
+          spec:
+            pvc:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 50Gi
+              storageClassName: ceph-block
+            source:
+              pvc:
+                namespace: kubevirt
+                name: nix-builder-image
       runStrategy: Always # Options: Always | Manual | RerunOnFailure | Halted
       template:
         metadata:
@@ -92,8 +107,8 @@ spec:
               pod: {}
           volumes:
             - name: nix-builder-pvc
-              persistentVolumeClaim:
-                claimName: nix-builder-image
+              dataVolume:
+                name: nix-builder-pvc
             - name: cloudinitdisk
               cloudInitNoCloud:
                 userData: |-

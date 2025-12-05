@@ -10,8 +10,8 @@ spec:
       url: "https://github.com/krezh/nix-config/releases/download/kubevirt-2025-12-05-bce24cf826/nixos-kubevirt-2025-12-05-bce24cf826.qcow2"
   pvc:
     accessModes:
-      - ReadWriteMany
+      - ReadWriteOnce
     resources:
       requests:
         storage: 50Gi
-    storageClassName: ceph-filesystem
+    storageClassName: ceph-block
