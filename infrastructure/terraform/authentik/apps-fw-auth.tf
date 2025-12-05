@@ -97,18 +97,6 @@ module "fw-auth" {
       meta_icon               = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nzbget.png"
       outpost                 = "external"
     }
-    whisparr = {
-      app_name                = "Whisparr"
-      slug                    = "whisparr"
-      app_domain              = "whisparr.${var.domain["external"]}"
-      app_group               = "Downloads"
-      access_groups           = [data.authentik_group.superuser.id]
-      policy_engine_mode      = "any"
-      authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-      invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
-      meta_icon               = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/whisparr.png"
-      outpost                 = "external"
-    }
     changedetection = {
       app_name                = "Changedetection"
       slug                    = "changedetection"
