@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/cdi.kubevirt.io/datavolume_v1beta1.json
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: nix-builder-image
+spec:
+  source:
+    http:
+      url: ""
+  pvc:
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: 50Gi
+    storageClassName: ceph-filesystem

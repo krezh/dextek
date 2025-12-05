@@ -63,7 +63,4 @@ spec:
                 - "echo 'root:s' | sudo chpasswd"
                 - "sudo touch /root/installed"
                 - "sudo dnf update"
-                - "sudo dnf install httpd fastfetch -y"
-                - "sudo systemctl daemon-reload"
-                - "sudo systemctl enable httpd"
-                - "sudo systemctl start --no-block httpd"
+                - "sudo dnf install fastfetch -y"
