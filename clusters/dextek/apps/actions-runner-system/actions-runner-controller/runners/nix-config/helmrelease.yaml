@@ -45,6 +45,8 @@ spec:
                 value: "false"
               - name: USER
                 value: "runner"
+              - name: TMPDIR
+                value: /nix-build
               - name: NODE
                 valueFrom:
                   fieldRef:
@@ -52,8 +54,19 @@ spec:
             volumeMounts:
               - name: nix
                 mountPath: /nix
+              - name: nix-build
+                mountPath: /nix-build
         volumes:
           - name: nix
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: ceph-block
+                  resources:
+                    requests:
+                      storage: 100Gi
+          - name: nix-build
             ephemeral:
               volumeClaimTemplate:
                 spec:
