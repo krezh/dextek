@@ -67,11 +67,4 @@ spec:
                     requests:
                       storage: 100Gi
           - name: nix-build
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: ceph-block
-                  resources:
-                    requests:
-                      storage: 100Gi
+            emptyDir: {}
