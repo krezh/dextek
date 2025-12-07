@@ -50,6 +50,9 @@ spec:
                 - name: cloudinitdisk
                   disk:
                     bus: virtio
+                - name: age-secret-disk
+                  disk: {}
+                  serial: AGEKEY123
               interfaces:
                 - name: default
                   masquerade: {}
@@ -60,6 +63,9 @@ spec:
             - name: buildbot-nix-master-pvc
               dataVolume:
                 name: buildbot-nix-master-pvc
+            - name: age-secret-disk
+              secret:
+                secretName: buildbot-age-key
             - name: cloudinitdisk
               cloudInitNoCloud:
                 userData: |-
@@ -70,6 +76,13 @@ spec:
                       sudo: ['ALL=(ALL) NOPASSWD:ALL']
                       groups: sudo
                       shell: /bin/bash
+                  bootcmd:
+                    - mkdir -p /var/lib/sops-nix
+                    - mkdir -p /mnt/age-secret
+                    - mount /dev/$(lsblk --nodeps -no name,serial | grep AGEKEY123 | cut -f1 -d' ') /mnt/age-secret
+                    - cp /mnt/age-secret/key.txt /var/lib/sops-nix/key.txt
+                    - chmod 600 /var/lib/sops-nix/key.txt
+                    - umount /mnt/age-secret
                   runcmd:
                     - |
                       if [ ! -f /var/lib/cloud/initial-config-done ]; then
