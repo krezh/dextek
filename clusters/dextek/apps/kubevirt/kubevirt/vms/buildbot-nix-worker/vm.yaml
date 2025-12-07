@@ -1,0 +1,78 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/pool.kubevirt.io/virtualmachinepool_v1alpha1.json
+apiVersion: pool.kubevirt.io/v1alpha1
+kind: VirtualMachinePool
+metadata:
+  name: buildbot-nix-worker-pool
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      kubevirt.io/vmpool: buildbot-nix-worker-pool
+  virtualMachineTemplate:
+    metadata:
+      labels:
+        kubevirt.io/vmpool: buildbot-nix-worker-pool
+      annotations:
+        kubevirt.io/allow-pod-bridge-network-live-migration: "true"
+    spec:
+      dataVolumeTemplates:
+        - metadata:
+            name: buildbot-nix-worker-pvc
+          spec:
+            pvc:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 50Gi
+              storageClassName: ceph-block
+            source:
+              pvc:
+                namespace: kubevirt
+                name: buildbot-nix-worker-image
+      runStrategy: Always # Options: Always | Manual | RerunOnFailure | Halted
+      template:
+        metadata:
+          labels:
+            kubevirt.io/vmpool: buildbot-nix-worker-pool
+        spec:
+          domain:
+            resources:
+              requests:
+                cpu: 8
+                memory: 8G
+            devices:
+              disks:
+                - name: buildbot-nix-worker-pvc
+                  disk:
+                    bus: virtio
+                - name: cloudinitdisk
+                  disk:
+                    bus: virtio
+              interfaces:
+                - name: default
+                  masquerade: {}
+          networks:
+            - name: default
+              pod: {}
+          volumes:
+            - name: buildbot-nix-worker-pvc
+              dataVolume:
+                name: buildbot-nix-worker-pvc
+            - name: cloudinitdisk
+              cloudInitNoCloud:
+                userData: |-
+                  #cloud-config
+                  users:
+                    - name: root
+                    - name: cloud-user
+                      sudo: ['ALL=(ALL) NOPASSWD:ALL']
+                      groups: sudo
+                      shell: /bin/bash
+                  runcmd:
+                    - |
+                      if [ ! -f /var/lib/cloud/initial-config-done ]; then
+                        nixos-rebuild switch --flake github:krezh/nix-config#nixosConfigurations.buildbot-worker.config.system.build.toplevel 2>&1 | tee /var/log/initial-nixos-rebuild.log
+                        touch /var/lib/cloud/initial-config-done
+                      fi
