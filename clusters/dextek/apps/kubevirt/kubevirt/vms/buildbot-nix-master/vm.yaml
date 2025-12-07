@@ -40,8 +40,8 @@ spec:
           domain:
             resources:
               requests:
-                cpu: 8
-                memory: 8G
+                cpu: 2
+                memory: 4G
             devices:
               disks:
                 - name: buildbot-nix-master-pvc
