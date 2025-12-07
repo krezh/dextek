@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: buildbot-nix-master
+  namespace: kubevirt
+spec:
+  hostnames:
+    - buildbot.plexuz.xyz
+  parentRefs:
+    - name: gateway-external
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - kind: Service
+          name: buildbot-nix-master-pool-0
+          port: 80
