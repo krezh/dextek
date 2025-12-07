@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: buildbot-nix-worker-pool-0
+  labels:
+    coredns.io/hostname: buildbot-nix-worker-0
+spec:
+  type: LoadBalancer
+  selector:
+    vm.kubevirt.io/name: buildbot-nix-worker-pool-0
+  ports:
+    - name: ssh
+      port: 22
+      targetPort: 22
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: buildbot-nix-worker-pool-1
+  labels:
+    coredns.io/hostname: buildbot-nix-worker-1
+spec:
+  type: LoadBalancer
+  selector:
+    vm.kubevirt.io/name: buildbot-nix-worker-pool-1
+  ports:
+    - name: ssh
+      port: 22
+      targetPort: 22
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: buildbot-nix-worker-pool-2
+  labels:
+    coredns.io/hostname: buildbot-nix-worker-2
+spec:
+  type: LoadBalancer
+  selector:
+    vm.kubevirt.io/name: buildbot-nix-worker-pool-2
+  ports:
+    - name: ssh
+      port: 22
+      targetPort: 22
+      protocol: TCP
