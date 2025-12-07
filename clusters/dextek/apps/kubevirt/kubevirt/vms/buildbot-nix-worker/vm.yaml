@@ -73,6 +73,6 @@ spec:
                   runcmd:
                     - |
                       if [ ! -f /var/lib/cloud/initial-config-done ]; then
-                        nixos-rebuild switch --flake github:krezh/nix-config#nixosConfigurations.buildbot-worker.config.system.build.toplevel 2>&1 | tee /var/log/initial-nixos-rebuild.log
+                        nixos-rebuild switch --flake github:krezh/nix-config#buildbot-worker --accept-flake-config 2>&1 | tee /var/log/initial-nixos-rebuild.log
                         touch /var/lib/cloud/initial-config-done
                       fi
