@@ -38,10 +38,10 @@ spec:
             kubevirt.io/vmpool: buildbot-nix-worker-pool
         spec:
           domain:
-            resources:
-              requests:
-                cpu: 8
-                memory: 8G
+            # resources:
+            #   requests:
+            #     cpu: 8
+            #     memory: 8G
             devices:
               disks:
                 - name: buildbot-nix-worker-pvc

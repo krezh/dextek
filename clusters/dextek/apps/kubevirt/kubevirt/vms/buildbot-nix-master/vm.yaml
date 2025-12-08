@@ -38,10 +38,10 @@ spec:
             kubevirt.io/vmpool: buildbot-nix-master-pool
         spec:
           domain:
-            resources:
-              requests:
-                cpu: 2
-                memory: 4G
+            # resources:
+            #   requests:
+            #     cpu: 2
+            #     memory: 4G
             devices:
               disks:
                 - name: buildbot-nix-master-pvc
