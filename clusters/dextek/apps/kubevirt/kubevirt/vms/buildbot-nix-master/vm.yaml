@@ -25,7 +25,7 @@ spec:
                 - ReadWriteOnce
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 100Gi
               storageClassName: ceph-block
             source:
               pvc:
