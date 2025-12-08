@@ -22,3 +22,7 @@ spec:
       port: 443
       targetPort: 443
       protocol: TCP
+    - name: master
+      port: 9989
+      targetPort: 9989
+      protocol: TCP
