@@ -7,7 +7,7 @@ metadata:
 spec:
   source:
     http:
-      url: "https://github.com/krezh/nix-config/releases/download/buildbot-worker-2025-12-07-458f91a0d1/nixos-buildbot-worker-2025-12-07-458f91a0d1.qcow2"
+      url: "https://github.com/krezh/nix-config/releases/download/buildbot-worker-2025-12-08-bb5d384204/nixos-buildbot-worker-2025-12-08-bb5d384204.qcow2"
   pvc:
     accessModes:
       - ReadWriteOnce
