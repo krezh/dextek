@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.63.1
-  url: oci://ghcr.io/kiemlicz/charter/cdi-crds
+    tag: 1.63.2-beta.2
+  url: oci://ghcr.io/krezh/charts/cdi-crds
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
@@ -24,5 +24,5 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.63.1
-  url: oci://ghcr.io/kiemlicz/charter/cdi
+    tag: 1.63.2-beta.2
+  url: oci://ghcr.io/krezh/charts/cdi
