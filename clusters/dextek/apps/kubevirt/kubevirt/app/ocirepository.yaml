@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.6.2
-  url: oci://ghcr.io/kiemlicz/charter/kubevirt-crds
+    tag: 1.7.0
+  url: oci://ghcr.io/krezh/charts/kubevirt-crds
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
@@ -24,5 +24,5 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.6.2
-  url: oci://ghcr.io/kiemlicz/charter/kubevirt
+    tag: 1.7.0
+  url: oci://ghcr.io/krezh/charts/kubevirt
