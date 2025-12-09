@@ -71,15 +71,6 @@ spec:
                 secretName: buildbot-age-key
             - name: cloudinitdisk
               cloudInitNoCloud:
-                networkData: |
-                  network:
-                    version: 2
-                    ethernets:
-                      eth0:
-                        dhcp4: false
-                        nameservers:
-                          addresses: [10.96.0.10]
-                          search: [kubevirt.svc.cluster.local, svc.cluster.local, cluster.local]
                 userData: |-
                   #cloud-config
                   users:
