@@ -38,6 +38,10 @@ spec:
             kubevirt.io/vmpool: buildbot-nix-worker-pool
         spec:
           domain:
+            cpu:
+              cores: 8
+              dedicatedCpuPlacement: false
+              model: host-passthrough
             resources:
               requests:
                 memory: 8G
