@@ -39,7 +39,7 @@ spec:
         spec:
           domain:
             cpu:
-              cores: 8
+              cores: 16
               dedicatedCpuPlacement: false
               model: host-passthrough
             resources:
