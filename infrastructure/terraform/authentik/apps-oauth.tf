@@ -131,29 +131,5 @@ module "oauth_apps" {
       meta_launch_url        = "https://wakapi.${var.domain["internal"]}"
       meta_description       = "Self-hosted WakaTime-compatible backend for coding statistics"
     }
-    forgejo = {
-      name       = "Forgejo"
-      slug       = "forgejo"
-      app_domain = "git.${var.domain["external"]}"
-      app_group  = "Development"
-      access_groups = [
-        data.authentik_group.superuser.id,
-        resource.authentik_group.forgejo_admins.id,
-        resource.authentik_group.forgejo_users.id
-      ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.FORGEJO)["FORGEJO_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.FORGEJO)["FORGEJO_OAUTH_CLIENT_SECRET"]
-      authentication_flow_id = authentik_flow.authentication.uuid
-      authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
-      invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
-      property_mappings      = local.oauth2_scopes
-      redirect_uris = [
-        "https://git.${var.domain["external"]}/user/oauth2/Authentik/callback",
-        "https://git.${var.domain["internal"]}/user/oauth2/Authentik/callback"
-      ]
-      meta_icon        = "dashboard-icons"
-      meta_launch_url  = "https://git.${var.domain["external"]}"
-      meta_description = "Self-hosted Git service"
-    }
   }
 }
