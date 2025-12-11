@@ -68,7 +68,7 @@ path = "/config/store"
 # ## S3 Storage (set type to "s3" and uncomment below)
 
 # # The AWS region
-region = "us-east-1"
+region = "garage"
 
 # # The name of the bucket
 bucket = "binix"
