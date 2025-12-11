@@ -20,7 +20,7 @@ spec:
     controllers:
       app:
         type: deployment
-        replicas: 1
+        replicas: 3
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -111,10 +111,10 @@ spec:
                 port: *port
 
     persistence:
-      config:
-        existingClaim: binix-config
-        globalMounts:
-          - path: /config/store
+      # config:
+      #   existingClaim: binix-config
+      #   globalMounts:
+      #     - path: /config/store
       server-config:
         type: configMap
         name: binix-configmap
