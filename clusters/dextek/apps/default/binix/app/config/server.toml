@@ -15,8 +15,8 @@ allowed-hosts = []
 # API endpoint is synthesized from the client's `Host` header which may
 # be insecure.
 #
-# The API endpoint _must_ end with a slash (e.g., `https://domain.tld/attic/`
-# not `https://domain.tld/attic`).
+# The API endpoint _must_ end with a slash (e.g., `https://domain.tld/binix/`
+# not `https://domain.tld/binix`).
 # api-endpoint = "https://nix-cache.plexuz.xyz/"
 
 # Whether to soft-delete caches
@@ -37,7 +37,7 @@ allowed-hosts = []
 # JWT signing token
 #
 # Set this to the Base64 encoding of some random data.
-# You can also set it via the `ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64` environment
+# You can also set it via the `BINIX_SERVER_TOKEN_HS256_SECRET_BASE64` environment
 # variable.
 # token-hs256-secret-base64 = ""
 
@@ -46,7 +46,7 @@ allowed-hosts = []
 # Connection URL
 #
 # For production use it's recommended to use PostgreSQL.
-# The URL is provided via the ATTIC_SERVER_DATABASE_URL environment variable
+# The URL is provided via the BINIX_SERVER_DATABASE_URL environment variable
 
 # Whether to enable sending on periodic heartbeat queries
 #
@@ -71,7 +71,7 @@ path = "/config/store"
 # region = "us-east-1"
 
 # # The name of the bucket
-# bucket = "attic"
+# bucket = "binix"
 
 # # Custom S3 endpoint
 # #
@@ -126,7 +126,7 @@ type = "zstd"
 # to specify the interval, like "1 day".
 #
 # If zero, automatic garbage collection is disabled, but
-# it can still be run manually with `atticd --mode garbage-collector-once`.
+# it can still be run manually with `binixd --mode garbage-collector-once`.
 interval = "7 days"
 
 # Default retention period
