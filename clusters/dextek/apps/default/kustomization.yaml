@@ -22,7 +22,7 @@ resources:
   - ./jellyfin
   - ./publish-k8s-schemas
   - ./karakeep
-  - ./attic
+  - ./binix
   - ./jellystat
   - ./wakapi
 transformers:
