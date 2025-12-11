@@ -153,7 +153,7 @@ spec:
         - name: repo1
           s3: &garage
             bucket: crunchy-pgo
-            endpoint: http://jotunheim.fast.internal:30188
+            endpoint: https://jotunheim.fast.plexuz.xyz:30022
             region: garage
           schedules:
             full: "0 1 * * 0" # Sunday at 01:00
