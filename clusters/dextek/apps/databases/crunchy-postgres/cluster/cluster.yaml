@@ -8,8 +8,8 @@ metadata:
 spec:
   metadata:
     labels:
-      crunchy-userinit.ramblurr.github.com/enabled: "true"
-      crunchy-userinit.ramblurr.github.com/superuser: &superuser "postgres"
+      crunchy-userinit.drummyfloyd.github.com/enabled: "true"
+      crunchy-userinit.drummyfloyd.github.com/superuser: &superuser "postgres"
   postgresVersion: 16
   image: ghcr.io/krezh/cdpg-vchord:16.11.2547@sha256:c9e66ec91d128f9603982703ebeefd8abe806f0a8601a19456a7a4fe035716d8
   customReplicationTLSSecret:
@@ -153,7 +153,7 @@ spec:
         - name: repo1
           s3: &garage
             bucket: crunchy-pgo
-            endpoint: https://s3.fast.plexuz.xyz:30022
+            endpoint: https://s3.fast.plexuz.xyz
             region: garage
           schedules:
             full: "30 1 * * 0" # Sunday at 01:30
