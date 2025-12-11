@@ -68,6 +68,19 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 4000Mi
+      gc:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          check-config:
+            image:
+              repository: ghcr.io/krezh/binixd
+              tag: 0.2.0@sha256:29ccf8c9c939ceacce1666eecbbdb4c8f0b1c2bfc6e30df7cb1235d9f54b3dad
+              pullPolicy: IfNotPresent
+            args: ["-f", "/config/server.toml", "--mode", "check-config"]
+            envFrom: *envFrom
+        containers:
           gc:
             image:
               repository: ghcr.io/krezh/binixd
