@@ -23,10 +23,6 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 15m
-  components:
-    - ../../../../../shared/components/volsync
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 100Gi
-      VOLSYNC_CACHE_CAPACITY: 10Gi
