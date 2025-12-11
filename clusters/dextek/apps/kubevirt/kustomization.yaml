@@ -12,5 +12,5 @@ transformers:
     unsetOnly: true
 resources:
   - ../../../shared/templates/flux
-  - ./namespace.yaml
+  #- ./namespace.yaml
   - ./kubevirt
