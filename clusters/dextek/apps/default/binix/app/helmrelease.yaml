@@ -20,6 +20,7 @@ spec:
     controllers:
       app:
         type: deployment
+        strategy: RollingUpdate
         replicas: 3
         annotations:
           reloader.stakater.com/auto: "true"
