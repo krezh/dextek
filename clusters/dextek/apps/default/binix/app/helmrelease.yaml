@@ -28,7 +28,7 @@ spec:
           migrations:
             image:
               repository: ghcr.io/krezh/binixd
-              tag: 0.2.29@sha256:cc0de7ce9e99daa28be2c9ec66b4bae365ffcad002d604c1829e1a92a88953ec
+              tag: 0.2.30@sha256:b2d5ca54e9bdf89c36058dae8bf1c386754c753282de6551031dabf54d4697fc
               pullPolicy: IfNotPresent
             args: ["-f", "/config/server.toml", "--mode", "db-migrations"]
             envFrom: &envFrom
@@ -37,7 +37,7 @@ spec:
           check-config:
             image:
               repository: ghcr.io/krezh/binixd
-              tag: 0.2.29@sha256:cc0de7ce9e99daa28be2c9ec66b4bae365ffcad002d604c1829e1a92a88953ec
+              tag: 0.2.30@sha256:b2d5ca54e9bdf89c36058dae8bf1c386754c753282de6551031dabf54d4697fc
               pullPolicy: IfNotPresent
             args: ["-f", "/config/server.toml", "--mode", "check-config"]
             envFrom: *envFrom
@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/binixd
-              tag: 0.2.29@sha256:cc0de7ce9e99daa28be2c9ec66b4bae365ffcad002d604c1829e1a92a88953ec
+              tag: 0.2.30@sha256:b2d5ca54e9bdf89c36058dae8bf1c386754c753282de6551031dabf54d4697fc
             args: ["-f", "/config/server.toml", "--mode", "api-server"]
             envFrom: *envFrom
             probes:
@@ -77,7 +77,7 @@ spec:
           check-config:
             image:
               repository: ghcr.io/krezh/binixd
-              tag: 0.2.29@sha256:cc0de7ce9e99daa28be2c9ec66b4bae365ffcad002d604c1829e1a92a88953ec
+              tag: 0.2.30@sha256:b2d5ca54e9bdf89c36058dae8bf1c386754c753282de6551031dabf54d4697fc
               pullPolicy: IfNotPresent
             args: ["-f", "/config/server.toml", "--mode", "check-config"]
             envFrom: *envFrom
@@ -85,7 +85,7 @@ spec:
           gc:
             image:
               repository: ghcr.io/krezh/binixd
-              tag: 0.2.29@sha256:cc0de7ce9e99daa28be2c9ec66b4bae365ffcad002d604c1829e1a92a88953ec
+              tag: 0.2.30@sha256:b2d5ca54e9bdf89c36058dae8bf1c386754c753282de6551031dabf54d4697fc
             args: ["-f", "/config/server.toml", "--mode", "garbage-collector"]
             envFrom: *envFrom
             resources:
