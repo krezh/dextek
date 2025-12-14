@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: ghcr.io/kiranshila/doplarr
-              tag: v3.6.3@sha256:426517f9913bc330dd3a52830a7fc37ff49eb4ba5782eeee1ea70787f3dce12c
+              tag: v3.7.0@sha256:3ff86c375a1ed6ba0d88a1d08df74e5742943474dbd64c704345c713fafd5e2b
             env:
               DISCORD__REQUESTED_MSG_STYLE: ":none"
               LOG_LEVEL: ":info"
