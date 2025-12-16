@@ -145,8 +145,3 @@ enabled = true
 
 # Maximum chunk size in bytes
 #max-chunk-size = 67108864  # 64 MB
-
-# Maximum memory usage for all sessions combined, in bytes
-# This prevents OOM when multiple large packages are uploaded concurrently.
-# Set this based on your available memory (e.g., for a 4GB pod, use 2GB).
-#max-memory-bytes = 2147483648  # 2 GB
