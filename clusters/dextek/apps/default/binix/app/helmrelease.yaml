@@ -28,7 +28,7 @@ spec:
           migrations:
             image:
               repository: ghcr.io/krezh/binixd
-              tag: test-31123
+              tag: test-2757
               pullPolicy: IfNotPresent
             args: ["-f", "/config/server.toml", "--mode", "db-migrations"]
             envFrom: &envFrom
