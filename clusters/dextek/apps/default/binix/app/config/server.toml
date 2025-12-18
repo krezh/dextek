@@ -144,4 +144,4 @@ enabled = true
 #session-timeout-secs = 1200  # 20 minutes
 
 # Maximum chunk size in bytes
-max-chunk-size = 8388608  # 64 MB
+#max-chunk-size = 67108864  # 64 MB
