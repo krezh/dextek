@@ -6,6 +6,7 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./dashboard.yaml
+  - ./httproute.yaml
 configMapGenerator:
   - name: flux-operator-helm-values
     files:
