@@ -139,6 +139,7 @@ default-retention-period = "3 months"
 [chunked-upload]
 # Whether chunked uploads are enabled
 enabled = true
+skip-nar-hash-validation = true
 
 # Session timeout in seconds
 #session-timeout-secs = 1200  # 20 minutes
