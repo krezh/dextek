@@ -22,7 +22,6 @@ resources:
   - ./jellyfin
   - ./publish-k8s-schemas
   - ./karakeep
-  - ./binix
   - ./jellystat
   - ./wakapi
 transformers:
