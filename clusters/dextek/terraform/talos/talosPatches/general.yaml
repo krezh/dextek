@@ -115,9 +115,7 @@ machine:
     servers:
       - 192.168.20.1
   features:
-    apidCheckExtKeyUsage: true
     diskQuotaSupport: true
-    rbac: true
     kubePrism:
       enabled: true
       port: 7445
