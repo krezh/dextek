@@ -60,11 +60,7 @@ provider "registry.opentofu.org/poseidon/matchbox" {
   version     = "0.5.4"
   constraints = "0.5.4"
   hashes = [
-    "h1:/eLDY5WJhMbRZRV/ecTLjIbZA9zfnq+8X3kEj4lLp0I=",
     "h1:DJR2s8t8E/hxCaIhSw9IKa4eD/L2ee7x2XZOmcKljbE=",
-    "h1:dpFYYMdGqSHQ2/1PqMNqHs7E2juvdBviW2VUxViRkvM=",
-    "h1:m4NRTbkwJuWdXxFZmPx9hxGYgtMy7TU2e931Xd+mrgE=",
-    "h1:ndtu+UHk3qWFsw4pqiyydEu6TKQSfJmLnEeOkOXjyiM=",
     "zh:474d04b83109c8739c54b8e945dd7da5e696ac41d8f2638c04a6eed048fc5375",
     "zh:4e2a608ec1d06f135e03ba0b22bacfdd0cd8a9bc48e52cce08ec93a49fa4d921",
     "zh:bb96b5e57c5682be9677a3b7513315333f4058cb0181b7d2f6a2d4c7381c3de4",
