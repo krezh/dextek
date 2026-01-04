@@ -42,14 +42,6 @@ machine:
     extraConfig:
       maxPods: 150
       serializeImagePulls: false
-      # Make image cleanup more aggressive
-      # imageMaximumGCAge: 24h # One day
-      # imageGCHighThresholdPercent: 60 # Default is 85%
-      # imageGCLowThresholdPercent: 30 # Default is 80%
-      featureGates:
-        UserNamespacesSupport: true
-        UserNamespacesPodSecurityStandards: true
-        ImageVolume: true
     nodeIP:
       validSubnets:
         - ${cluster_subnet}
@@ -94,10 +86,11 @@ machine:
       permissions: 0o644
       content: |
         [ NFSMount_Global_Options ]
-        nfsvers=4.1
+        nfsvers=4.2
         hard=True
-        nconnect=8
+        nconnect=16
         noatime=True
+        async=True
         rsize=1048576
         wsize=1048576
     - path: /etc/cri/conf.d/20-customization.part
@@ -159,7 +152,7 @@ cluster:
     extraArgs:
       enable-aggregator-routing: "true"
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
+      feature-gates: MutatingAdmissionPolicy=true
       oidc-client-id: kubernetes
       oidc-groups-claim: groups
       oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
