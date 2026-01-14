@@ -17,7 +17,7 @@ spec:
         type: RollingUpdate
       env:
         - name: AUTHENTIK_LISTEN__TRUSTED_PROXY_CIDRS
-          value: 10.42.0.0/16
+          value: 10.244.0.0/16
       envFrom:
         - secretRef:
             name: authentik-secret
