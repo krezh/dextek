@@ -34,7 +34,7 @@ spec:
               SONARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
               SONARR__AUTH__METHOD: External
-              SONARR__UPDATE__BRANCH: devel
+              SONARR__UPDATE__BRANCH: develop
             envFrom: &envFrom
               - secretRef:
                   name: sonarr-secret
@@ -120,8 +120,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
-                port: 8080
+              - identifier: app
+                port: anubis
       api:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         parentRefs:
@@ -130,8 +130,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
-                port: 8080
+              - identifier: app
+                port: anubis
             matches:
               - path:
                   type: PathPrefix
