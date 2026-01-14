@@ -10,17 +10,9 @@ spec:
   chartRef:
     kind: OCIRepository
     name: snapshot-controller
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: 3
-  upgrade:
-    crds: CreateReplace
-    remediation:
-      retries: 3
   values:
     controller:
-      enabled: true
-      replicaCount: 2
       serviceMonitor:
         create: true
+    webhook:
+      enabled: false
