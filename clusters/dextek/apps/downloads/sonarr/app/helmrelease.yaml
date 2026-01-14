@@ -94,7 +94,10 @@ spec:
         ports:
           http:
             port: 80
-            targetPort: 8080
+            targetPort: *port
+          anubis:
+            port: 8080
+            targetPort: *port
     route:
       app:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
@@ -118,7 +121,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 80
+                port: 8080
       api:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         parentRefs:
@@ -128,7 +131,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: 80
+                port: 8080
             matches:
               - path:
                   type: PathPrefix
