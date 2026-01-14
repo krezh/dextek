@@ -9,7 +9,6 @@ spec:
     failOpen: false
     headersToExtAuth:
       - cookie
-      - x-forwarded-for
     http:
       backendRefs:
         - kind: Service
@@ -20,7 +19,6 @@ spec:
         - set-cookie
         - x-authentik-*
         - authorization
-        - x-forwarded-for
       path: /outpost.goauthentik.io/auth/envoy
   targetRefs:
     - group: ${EXT_AUTH_GROUP:-gateway.networking.k8s.io}
