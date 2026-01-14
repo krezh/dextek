@@ -59,13 +59,42 @@ spec:
                 memory: 1000M
               limits:
                 memory: 1623Mi
+          anubis:
+            image:
+              repository: ghcr.io/techarohq/anubis
+              tag: latest
+            env:
+              # https://anubis.techaro.lol/docs/admin/installation#environment-variables
+              BIND: ":8080"
+              COOKIE_DOMAIN: plexuz.xyz
+              BIND_NETWORK: tcp
+              DIFFICULTY: "5"
+              METRICS_BIND: ":9090"
+              METRICS_BIND_NETWORK: tcp
+              SERVE_ROBOTS_TXT: "true"
+              TARGET: http://localhost:8989
+              OG_PASSTHROUGH: "false"
+              OG_EXPIRY_TIME: 24h
+            envFrom: &envFrom
+              - secretRef:
+                  name: sonarr-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
     service:
       app:
         controller: app
         ports:
           http:
             port: 80
-            targetPort: *port
+            targetPort: 8080
     route:
       app:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
