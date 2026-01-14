@@ -75,7 +75,7 @@ spec:
               TARGET: http://localhost:8989
               OG_PASSTHROUGH: "true"
               OG_EXPIRY_TIME: 24h
-              CUSTOM_REAL_IP_HEADER: x-forwarded-for
+              CUSTOM_REAL_IP_HEADER: Cf-Connecting-Ip
             envFrom: *envFrom
             securityContext:
               allowPrivilegeEscalation: false
