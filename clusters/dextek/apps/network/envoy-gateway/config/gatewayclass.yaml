@@ -1,10 +1,16 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.networking.k8s.io/gatewayclass_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
   name: envoy
 spec:
   controllerName: gateway.envoyproxy.io/gatewayclass-controller
+  parametersRef:
+    group: gateway.envoyproxy.io
+    kind: EnvoyProxy
+    name: envoy
+    namespace: network
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
@@ -32,7 +38,7 @@ spec:
     http:
       requestTimeout: 0s
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/clienttrafficpolicy_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.envoyproxy.io/clienttrafficpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: ClientTrafficPolicy
 metadata:
@@ -40,8 +46,7 @@ metadata:
 spec:
   clientIPDetection:
     xForwardedFor:
-      trustedCIDRs:
-        - 10.244.0.0/16
+      numTrustedHops: 1
   http2:
     onInvalidMessage: TerminateStream
   http3: {}
