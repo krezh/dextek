@@ -75,9 +75,7 @@ spec:
               TARGET: http://localhost:8989
               OG_PASSTHROUGH: "true"
               OG_EXPIRY_TIME: 24h
-            envFrom: &envFrom
-              - secretRef:
-                  name: sonarr-secret
+            envFrom: *envFrom
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
@@ -131,7 +129,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: 8080
+                port: 80
             matches:
               - path:
                   type: PathPrefix
