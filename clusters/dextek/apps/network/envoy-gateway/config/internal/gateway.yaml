@@ -13,7 +13,7 @@ spec:
     parametersRef:
       group: gateway.envoyproxy.io
       kind: EnvoyProxy
-      name: internal-proxy
+      name: internal-envoy
   listeners:
     - name: http
       protocol: HTTP
