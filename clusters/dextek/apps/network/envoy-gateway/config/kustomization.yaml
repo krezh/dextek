@@ -5,5 +5,4 @@ resources:
   - ./gatewayclass.yaml
   - ./external
   - ./internal
-  - ./httpsredirect.yaml
   - ./servicemonitor.yaml

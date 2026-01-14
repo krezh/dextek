@@ -3,7 +3,7 @@
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy
 metadata:
-  name: internal-proxy-config
+  name: internal-envoy
 spec:
   logging:
     level:
@@ -19,24 +19,14 @@ spec:
             requests:
               cpu: 100m
             limits:
-              memory: 1Gi
+              memory: 2Gi
       envoyService:
         externalTrafficPolicy: Local
         name: envoy-gateway-internal
-        patch:
-          type: StrategicMerge
-          value:
-            spec:
-              # Enable metrics
-              ports:
-                - name: metrics
-                  port: 19001
-                  targetPort: 19001
-                  protocol: TCP
   shutdown:
     drainTimeout: 180s
   telemetry:
     metrics:
       prometheus:
         compression:
-          type: Gzip
+          type: Zstd
