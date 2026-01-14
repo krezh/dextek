@@ -121,7 +121,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: anubis
+                port: 8080
       api:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         parentRefs:
@@ -131,7 +131,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: anubis
+                port: 8080
             matches:
               - path:
                   type: PathPrefix
