@@ -73,7 +73,7 @@ spec:
               METRICS_BIND_NETWORK: tcp
               SERVE_ROBOTS_TXT: "true"
               TARGET: http://localhost:8989
-              OG_PASSTHROUGH: "false"
+              OG_PASSTHROUGH: "true"
               OG_EXPIRY_TIME: 24h
             envFrom: &envFrom
               - secretRef:
