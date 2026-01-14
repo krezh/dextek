@@ -44,35 +44,6 @@
       separateMinorPatch: true,
     },
     {
-      description: "Thanos image and chart - mismatched versions",
-      groupName: "Thanos",
-      matchPackagePatterns: ["thanos"],
-      matchDatasources: ["docker", "github-releases", "helm"],
-      matchUpdateTypes: ["minor", "patch"],
-      group: { commitMessageTopic: "{{{groupName}}} group" },
-      separateMinorPatch: false,
-    },
-    {
-      description: "Vector image",
-      groupName: "Vector",
-      matchPackagePatterns: ["vector"],
-      matchDatasources: ["docker", "github-releases"],
-      matchUpdateTypes: ["minor", "patch"],
-      group: { commitMessageTopic: "{{{groupName}}} group" },
-      separateMinorPatch: false,
-    },
-    {
-      description: "Harbor Images",
-      groupName: "Harbor",
-      matchPackagePatterns: ["goharbor"],
-      matchDatasources: ["helm", "github-releases", "docker"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      separateMinorPatch: true,
-      sourceUrl: "https://github.com/goharbor/harbor",
-    },
-    {
       description: "Talos Group",
       groupName: "Talos",
       matchPackagePatterns: ["siderolabs/installer"],
@@ -117,17 +88,6 @@
       sourceUrl: "https://github.com/radarr/radarr",
     },
     {
-      description: "Zot Images",
-      groupName: "Zot",
-      matchPackagePatterns: ["zot"],
-      matchDatasources: ["docker", "github-releases"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      separateMinorPatch: true,
-      sourceUrl: "https://github.com/project-zot/zot",
-    },
-    {
       description: ["Volsync Group"],
       groupName: "Volsync",
       matchPackagePatterns: ["volsync"],
@@ -137,17 +97,6 @@
         commitMessageTopic: "{{{groupName}}} group",
       },
       separateMinorPatch: true,
-    },
-    {
-      description: ["Teleport Group"],
-      groupName: "Teleport",
-      matchPackagePatterns: ["teleport"],
-      matchDatasources: ["docker", "helm", "github-releases"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      separateMinorPatch: true,
-      sourceUrl: "https://github.com/gravitational/teleport",
     },
     {
       description: ["Authentik Group"],
@@ -177,9 +126,7 @@
     {
       description: ["Zipline Group"],
       groupName: "Zipline",
-      matchPackagePatterns: [
-        "zipline",
-      ],
+      matchPackagePatterns: ["zipline"],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -190,9 +137,7 @@
     {
       description: ["Atuin Group"],
       groupName: "Atuin",
-      matchPackagePatterns: [
-        "atuin",
-      ],
+      matchPackagePatterns: ["atuin"],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -201,17 +146,15 @@
       sourceUrl: "https://github.com/atuinsh/atuin",
     },
     {
-      description: ["Netvisor Group"],
-      groupName: "Netvisor",
-      matchPackagePatterns: [
-        "netvisor",
-      ],
-      matchDatasources: ["docker", "helm", "github-releases"],
+      description: ["Envoy Group"],
+      groupName: "Envoy",
+      matchPackagePatterns: ["envoyproxy/envoy"],
+      matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
       separateMinorPatch: true,
-      sourceUrl: "https://github.com/mayanayza/netvisor",
+      sourceUrl: "https://github.com/envoyproxy/envoy",
     },
   ],
 }
