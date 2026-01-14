@@ -96,7 +96,6 @@ spec:
             targetPort: *port
           anubis:
             port: 8080
-            targetPort: 8080
     route:
       app:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
