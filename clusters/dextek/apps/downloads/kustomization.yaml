@@ -20,7 +20,6 @@ resources:
   - ./jellyseerr-jf
   - ./doplarr
   - ./pinchflat
-  - ./jdownloader
   - ./scraparr
 transformers:
   - |-
