@@ -56,7 +56,7 @@ variable "oauth_apps" {
 }
 
 data "authentik_certificate_key_pair" "generated" {
-  name = "authentik Self-signed Certificate"
+  name = "authentik Self-signed Certificate 2"
 }
 
 resource "authentik_provider_oauth2" "main" {
