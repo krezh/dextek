@@ -1,5 +1,5 @@
 data "authentik_certificate_key_pair" "generated" {
-  name = "authentik Self-signed Certificate"
+  name = "authentik Self-signed Certificate 2"
 }
 
 resource "authentik_brand" "plexuz" {
