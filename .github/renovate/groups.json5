@@ -156,5 +156,16 @@
       separateMinorPatch: true,
       sourceUrl: "https://github.com/envoyproxy/envoy",
     },
+    {
+      description: ["Jellyfin Group"],
+      groupName: "Jellyfin",
+      matchPackagePatterns: ["jellyfin/jellyfin"],
+      matchDatasources: ["docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/jellyfin/jellyfin",
+    },
   ],
 }
