@@ -15,6 +15,7 @@ resources:
   - ./unifi-controller
   - ./atuin
   - ./echo-server
+  - ./forgejo-runner
   - ./mealie
   - ./it-tools
   - ./changedetection
