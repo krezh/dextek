@@ -92,7 +92,6 @@ spec:
               storageClass: ceph-block
 
     defaultPodOptions:
-      priorityClassName: cluster-low
       securityContext:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
