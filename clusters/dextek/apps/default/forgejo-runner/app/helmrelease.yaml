@@ -1,0 +1,156 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app forgejo-runner
+  namespace: default
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: forgejo-runner
+  values:
+    controllers:
+      forgejo-runner:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          register:
+            image:
+              repository: code.forgejo.org/forgejo/runner
+              tag: 12.5.3@sha256:f81b095e785a9b09f7765b24382ec11fd884ceffc058b5eeecd111703a118bc0
+            command:
+              - "sh"
+              - "-c"
+              - >
+                if [ ! -f /data/.runner ]; then
+                  echo "Registering runner...";
+                  forgejo-runner register --no-interactive \
+                    --token $(RUNNER_TOKEN) \
+                    --name $(RUNNER_NAME) \
+                    --instance $(FORGEJO_INSTANCE_URL) \
+                    --labels "$(LABELS)";
+                else
+                  echo "Runner already registered, skipping.";
+                fi
+            env:
+              FORGEJO_INSTANCE_URL: https://codeberg.org
+              LABELS: "ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-latest"
+            envFrom:
+              - secretRef:
+                  name: forgejo-runner-secret
+
+        containers:
+          daemon:
+            image:
+              repository: docker
+              tag: 29.1.5-dind-rootless@sha256:3f2db3470a9c852cb3493b458358ec3a170a710b68f699db161b7ed87ec8583a
+            securityContext:
+              privileged: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 1Gi
+              limits:
+                memory: 4Gi
+            env:
+              - name: DOCKER_TLS_CERTDIR
+                value: /certs
+
+          app:
+            image:
+              repository: code.forgejo.org/forgejo/runner
+              tag: 12.5.3@sha256:f81b095e785a9b09f7765b24382ec11fd884ceffc058b5eeecd111703a118bc0
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+            command:
+              - "sh"
+              - "-c"
+              - "while ! nc -z localhost 2376 </dev/null; do echo 'waiting for docker daemon...'; sleep 5; done; forgejo-runner --config /config/config.yaml daemon"
+            env:
+              - name: DOCKER_HOST
+                value: tcp://localhost:2376
+              - name: DOCKER_CERT_PATH
+                value: /certs/client
+              - name: DOCKER_TLS_VERIFY
+                value: "1"
+
+        statefulset:
+          volumeClaimTemplates:
+            - name: data
+              globalMounts:
+                - path: /data
+              accessMode: "ReadWriteOnce"
+              size: 100Gi
+              storageClass: ceph-block
+
+    defaultPodOptions:
+      priorityClassName: cluster-low
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 45315
+
+    configMaps:
+      config:
+        data:
+          config.yaml: |
+            log:
+              level: info
+
+            runner:
+              file: .runner
+              capacity: 1
+              envs:
+                DOCKER_HOST: tcp://127.0.0.1:2376
+                DOCKER_TLS_VERIFY: 1
+                DOCKER_CERT_PATH: /certs/client
+              env_file: .env
+              timeout: 3h
+              insecure: false
+              fetch_timeout: 5s
+              fetch_interval: 2s
+              labels: []
+
+            cache:
+              enabled: true
+              dir: ""
+              host: ""
+              port: 0
+
+            container:
+              network: "host"
+              enable_ipv6: false
+              privileged: false
+              options: "-v /certs/client:/certs/client"
+              workdir_parent:
+              valid_volumes:
+                - /certs/client
+              docker_host: ""
+
+            host:
+              workdir_parent:
+
+    persistence:
+      config:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
+      certs:
+        type: emptyDir
