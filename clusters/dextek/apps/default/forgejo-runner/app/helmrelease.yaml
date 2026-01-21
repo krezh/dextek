@@ -14,6 +14,7 @@ spec:
     controllers:
       forgejo-runner:
         type: statefulset
+        replicas: 3
         annotations:
           reloader.stakater.com/auto: "true"
 
