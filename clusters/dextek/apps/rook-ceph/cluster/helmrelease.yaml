@@ -18,6 +18,8 @@ spec:
   driftDetection:
     mode: enabled
   values:
+    cephImage:
+      imagePullPolicy: IfNotPresent
     cephBlockPools:
       - name: ceph-blockpool
         spec:
