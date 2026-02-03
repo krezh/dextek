@@ -6,3 +6,5 @@ data:
   init.sql: |-
     \c immich\\
     CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
+    \c tracearr\\
+    CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
