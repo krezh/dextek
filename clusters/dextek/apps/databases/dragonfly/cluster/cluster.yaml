@@ -24,7 +24,7 @@ spec:
     requests:
       cpu: 100m
     limits:
-      memory: 512Mi
+      memory: 1Gi
   snapshot:
     cron: "*/1 * * * *"
     persistentVolumeClaimSpec:
