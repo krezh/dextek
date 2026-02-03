@@ -73,10 +73,6 @@ spec:
       password:
         type: AlphaNumeric
     # Applications
-    - name: "binix"
-      databases: ["binix"]
-      password:
-        type: AlphaNumeric
     - name: "atuin"
       databases: ["atuin"]
       password:
@@ -87,10 +83,6 @@ spec:
         type: AlphaNumeric
     - name: "bazarr"
       databases: ["bazarr"]
-      password:
-        type: AlphaNumeric
-    - name: "forgejo"
-      databases: ["forgejo"]
       password:
         type: AlphaNumeric
     - name: "grafana"
@@ -115,6 +107,10 @@ spec:
         type: AlphaNumeric
     - name: "wakapi"
       databases: ["wakapi"]
+      password:
+        type: AlphaNumeric
+    - name: "tracearr"
+      databases: ["tracearr"]
       password:
         type: AlphaNumeric
   backups:

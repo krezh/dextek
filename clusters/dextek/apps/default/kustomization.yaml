@@ -25,6 +25,7 @@ resources:
   - ./karakeep
   - ./jellystat
   - ./wakapi
+  - ./tracearr
 transformers:
   - |-
     apiVersion: builtin
