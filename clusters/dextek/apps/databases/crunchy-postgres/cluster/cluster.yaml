@@ -36,7 +36,7 @@ spec:
         synchronous_commit: "on"
         parameters:
           max_connections: 500
-          shared_preload_libraries: "vchord.so"
+          shared_preload_libraries: "vchord.so,timescaledb"
           search_path: '"$user", public, vchord'
         pg_hba:
           - hostnossl all all 10.244.0.0/16 md5 # Needed because dbman does not support SSL yet
