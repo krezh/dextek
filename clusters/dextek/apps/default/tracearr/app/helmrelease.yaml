@@ -1,0 +1,61 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app tracearr
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: tracearr
+  values:
+    controllers:
+      app:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/connorgallopo/tracearr
+              tag: 1.4.12@sha256:3ac79a0cae844ea4642ae8098a12f2bdea191d5f11c03b38b3085d41ccb36b90
+            envFrom:
+              - secretRef:
+                  name: tracearr-secret
+              - secretRef:
+                  name: tracearr-postgres-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 1Gi
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: &port 3000
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.plexuz.xyz"
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          tracearr:
+            app:
+              - path: /app/data/image-cache
+                subPath: cache
+              - path: /tmp
+                subPath: tmp
