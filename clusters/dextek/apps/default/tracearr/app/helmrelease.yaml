@@ -53,7 +53,7 @@ spec:
       tmpfs:
         type: emptyDir
         advancedMounts:
-          tracearr:
+          app:
             app:
               - path: /app/data/image-cache
                 subPath: cache
