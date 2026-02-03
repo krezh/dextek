@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: ghcr.io/promhippie/github-exporter
-              tag: 8.1.1
+              tag: 9.0.0
             envFrom:
               - secretRef:
                   name: github-exporter-secret
