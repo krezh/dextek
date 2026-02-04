@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/postgres-operator.crunchydata.com/pgupgrade_v1beta1.json
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PGUpgrade
+metadata:
+  name: postgres-upgrade
+  namespace: databases
+spec:
+  image: ghcr.io/krezh/cdpg-vchord-18-upgrade:18.1.2550@sha256:8a8346dcd19ee0cb55f9cb89a15b6aa6b0bbec795e205010b7771be86214f653
+  postgresClusterName: postgres
+  fromPostgresVersion: 16
+  toPostgresVersion: 18
