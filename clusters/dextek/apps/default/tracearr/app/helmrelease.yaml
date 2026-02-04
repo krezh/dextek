@@ -20,6 +20,8 @@ spec:
             image:
               repository: ghcr.io/connorgallopo/tracearr
               tag: 1.4.12@sha256:3ac79a0cae844ea4642ae8098a12f2bdea191d5f11c03b38b3085d41ccb36b90
+            env:
+              NODE_ENV: production
             envFrom:
               - secretRef:
                   name: tracearr-secret
