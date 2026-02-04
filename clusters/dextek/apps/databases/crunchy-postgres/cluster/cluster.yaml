@@ -1,6 +1,6 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/postgres-operator.crunchydata.com/postgrescluster_v1beta1.json
-apiVersion: postgres-operator.crunchydata.com/v1beta1
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/postgres-operator.crunchydata.com/postgrescluster_v1.json
+apiVersion: postgres-operator.crunchydata.com/v1
 kind: PostgresCluster
 metadata:
   name: &name postgres
@@ -10,8 +10,8 @@ spec:
     labels:
       crunchy-userinit.drummyfloyd.github.com/enabled: "true"
       crunchy-userinit.drummyfloyd.github.com/superuser: &superuser "postgres"
-  postgresVersion: 16
-  image: ghcr.io/krezh/cdpg-vchord:16.11.2547@sha256:349fb7a192c31914f00261ae775dc4a7d0f05c62062867b833144a22871d05d4
+  postgresVersion: 18
+  image: ghcr.io/krezh/cdpg-vchord-18:18.1.2550@sha256:cd22e52015aaf487a96836e89d1ffb19803883d82b439c355333f7132b4f5d38
   customReplicationTLSSecret:
     name: postgres-repl-tls
   customTLSSecret:
@@ -35,8 +35,10 @@ spec:
         max_wal_size: 5GB
         synchronous_commit: "on"
         parameters:
+          max_locks_per_transaction: 4096
           max_connections: 500
           shared_preload_libraries: "vchord.so,timescaledb"
+          timescaledb.telemetry_level: "off"
           search_path: '"$user", public, vchord'
         pg_hba:
           - hostnossl all all 10.244.0.0/16 md5 # Needed because dbman does not support SSL yet
