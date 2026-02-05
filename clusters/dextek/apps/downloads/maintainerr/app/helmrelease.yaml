@@ -30,9 +30,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 500Mi
+                memory: 370Mi
               limits:
-                memory: 1Gi
+                memory: 370Mi
     service:
       app:
         controller: app
