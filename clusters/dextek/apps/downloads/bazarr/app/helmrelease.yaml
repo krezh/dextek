@@ -28,9 +28,9 @@ spec:
             resources:
               requests:
                 cpu: 43m
-                memory: 295Mi
+                memory: 388Mi
               limits:
-                memory: 295Mi
+                memory: 1Gi
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
@@ -44,9 +44,9 @@ spec:
             resources:
               requests:
                 cpu: 63m
-                memory: 48Mi
+                memory: 53M
               limits:
-                memory: 48Mi
+                memory: 60M
     service:
       app:
         controller: app
