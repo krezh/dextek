@@ -51,7 +51,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 1Gi
+                memory: 499Mi
       chrome:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -78,7 +78,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 1Gi
+                memory: 499Mi
       meilisearch:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -112,7 +112,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 4Gi
+                memory: 499Mi
     service:
       app:
         forceRename: karakeep
