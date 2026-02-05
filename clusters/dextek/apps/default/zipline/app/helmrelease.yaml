@@ -35,9 +35,9 @@ spec:
                   name: zipline-postgres-secret
             resources:
               requests:
-                memory: 500Mi
+                memory: 382Mi
               limits:
-                memory: 2Gi
+                memory: 382Mi
     service:
       app:
         controller: zipline
