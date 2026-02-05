@@ -38,9 +38,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 173Mi
+                memory: 200Mi
               limits:
-                memory: 173Mi
+                memory: 400Mi
     service:
       scraparr:
         controller: *name

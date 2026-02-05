@@ -55,7 +55,7 @@ spec:
                 enabled: false
             resources:
               limits:
-                memory: 597Mi
+                memory: 2143Mi
           anubis:
             image:
               repository: ghcr.io/techarohq/anubis
@@ -83,7 +83,7 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 11Mi
+                memory: 128Mi
     service:
       app:
         controller: app
