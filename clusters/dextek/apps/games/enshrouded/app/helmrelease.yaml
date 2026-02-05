@@ -42,9 +42,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 1566Mi
+                memory: 2Gi
               limits:
-                memory: 1566Mi
+                memory: 4Gi
             probes:
               startup:
                 enabled: false

@@ -25,9 +25,9 @@ spec:
             resources:
               requests:
                 cpu: 15m
-                memory: 10Mi
+                memory: 30Mi
               limits:
-                memory: 10Mi
+                memory: 50Mi
     service:
       app:
         controller: app
