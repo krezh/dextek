@@ -58,7 +58,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 1Gi
+                memory: 656Mi
     service:
       app:
         controller: pinchflat

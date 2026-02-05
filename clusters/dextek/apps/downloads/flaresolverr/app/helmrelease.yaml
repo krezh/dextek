@@ -22,7 +22,7 @@ spec:
                 cpu: 10m
                 memory: 410Mi
               limits:
-                memory: 1Gi
+                memory: 507Mi
     service:
       app:
         controller: flaresolverr

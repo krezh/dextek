@@ -61,7 +61,7 @@ spec:
                 cpu: 250m
                 memory: 1Gi
               limits:
-                memory: 8Gi
+                memory: 4030Mi
     service:
       app:
         controller: app
