@@ -114,7 +114,7 @@ spec:
               requests:
                 memory: 512Mi
               limits:
-                memory: 579Mi
+                memory: 1000Mi
     service:
       server:
         controller: server
