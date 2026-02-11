@@ -30,7 +30,7 @@ spec:
           scraparr:
             image:
               repository: ghcr.io/thecfu/scraparr
-              tag: 3.0.0@sha256:4f1c73d7754cb97d8aefcec81be76ffe8360e2725d2d340519f5743f493da796
+              tag: 3.0.1@sha256:01124d637c1f9b1c4e1247d4bdae134d51f4609b31ed5d7136457a6a5914e870
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
