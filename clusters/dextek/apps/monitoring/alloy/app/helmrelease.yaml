@@ -6,9 +6,14 @@ metadata:
   name: alloy
 spec:
   interval: 30h
-  chartRef:
-    kind: OCIRepository
-    name: alloy
+  chart:
+    spec:
+      chart: alloy
+      version: 1.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
   # https://github.com/grafana/alloy/blob/main/operations/helm/charts/alloy/values.yaml
   values:
     fullnameOverride: alloy
