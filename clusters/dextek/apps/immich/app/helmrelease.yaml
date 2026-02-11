@@ -52,8 +52,6 @@ spec:
             env:
               IMMICH_WORKERS_INCLUDE: api
             resources:
-              claims:
-                - name: gpu
               requests:
                 cpu: 100m
                 memory: 512M
@@ -114,7 +112,7 @@ spec:
               requests:
                 memory: 512Mi
               limits:
-                memory: 579Mi
+                memory: 1500Mi
     service:
       server:
         controller: server
