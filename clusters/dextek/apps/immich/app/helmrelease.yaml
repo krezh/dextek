@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.5.5
+              tag: v2.5.6
             envFrom: &envFrom
               - configMapRef:
                   name: immich-configmap
@@ -75,7 +75,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v2.5.5
+              tag: v2.5.6
             envFrom: *envFrom
             resources:
               claims:
@@ -102,7 +102,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.5.5
+              tag: v2.5.6
             envFrom: *envFrom
             env:
               IMMICH_WORKERS_EXCLUDE: api
