@@ -7,9 +7,20 @@ metadata:
   namespace: monitoring
 spec:
   interval: 30m
+<<<<<<< HEAD
+  chart:
+    spec:
+      chart: loki
+      version: 6.53.0
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+=======
   chartRef:
     kind: OCIRepository
     name: loki
+>>>>>>> ac9f41a5d (migrate more to ocirepo)
   values:
     deploymentMode: SingleBinary
     loki:
