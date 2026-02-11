@@ -7,14 +7,9 @@ metadata:
   namespace: rook-ceph
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: rook-ceph
-      sourceRef:
-        kind: HelmRepository
-        name: rook-release
-        namespace: flux-system
-      version: v1.19.1
+  chartRef:
+    kind: OCIRepository
+    name: rook-ceph
   driftDetection:
     mode: enabled
   values:

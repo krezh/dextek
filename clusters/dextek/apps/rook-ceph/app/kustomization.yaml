@@ -6,3 +6,4 @@ resources:
   - ./helmrelease.yaml
   - ./ceph-dashboard-password.secret.sops.yaml
   - ./dashboard.yaml
+  - ./ocirepository.yaml
