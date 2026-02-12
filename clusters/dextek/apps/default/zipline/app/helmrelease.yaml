@@ -37,7 +37,7 @@ spec:
               requests:
                 memory: 366Mi
               limits:
-                memory: 366Mi
+                memory: 700Mi
     service:
       app:
         controller: zipline
