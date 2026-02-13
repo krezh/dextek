@@ -91,6 +91,12 @@ spec:
               accessMode: "ReadWriteOnce"
               size: 100Gi
               storageClass: ceph-block
+            - name: nix-store
+              globalMounts:
+                - path: /nix-store
+              accessMode: "ReadWriteOnce"
+              size: 150Gi
+              storageClass: ceph-block
 
     defaultPodOptions:
       securityContext:
@@ -135,10 +141,11 @@ spec:
               network: "host"
               enable_ipv6: false
               privileged: false
-              options: "-v /certs/client:/certs/client"
+              options: "-v /certs/client:/certs/client -v /nix-store:/nix"
               workdir_parent:
               valid_volumes:
                 - /certs/client
+                - /nix-store
               docker_host: ""
 
             host:
