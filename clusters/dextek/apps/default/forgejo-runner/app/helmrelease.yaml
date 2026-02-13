@@ -140,7 +140,7 @@ spec:
             container:
               network: "host"
               enable_ipv6: false
-              privileged: false
+              privileged: true
               options: "-v /certs/client:/certs/client -v /nix-store:/nix"
               workdir_parent:
               valid_volumes:
