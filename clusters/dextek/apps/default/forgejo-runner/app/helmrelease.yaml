@@ -55,8 +55,8 @@ spec:
               requests:
                 cpu: 10m
                 memory: 1Gi
-              limits:
-                memory: 8Gi
+              # limits:
+              #   memory: 8Gi
             env:
               - name: DOCKER_TLS_CERTDIR
                 value: /certs
