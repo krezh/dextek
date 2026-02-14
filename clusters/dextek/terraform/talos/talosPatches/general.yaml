@@ -42,6 +42,10 @@ machine:
     extraConfig:
       maxPods: 150
       serializeImagePulls: false
+      # Make image cleanup more aggressive
+      imageMaximumGCAge: 24h # One day
+      imageGCHighThresholdPercent: 60 # Default is 85%
+      imageGCLowThresholdPercent: 30 # Default is 80%
     nodeIP:
       validSubnets:
         - ${cluster_subnet}
@@ -51,7 +55,6 @@ machine:
     - 127.0.0.1
     - localhost
   network:
-    hostname: ${hostname}
     nameservers: [192.168.20.1]
     disableSearchDomain: true
     interfaces:
@@ -177,3 +180,8 @@ cluster:
                   - maxSkew: 1
                     topologyKey: kubernetes.io/hostname
                     whenUnsatisfiable: ScheduleAnyway
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+auto: off
+hostname: ${hostname}
