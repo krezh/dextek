@@ -84,6 +84,10 @@ spec:
       databases: ["atuin"]
       password:
         type: AlphaNumeric
+    - name: "attic"
+      databases: ["attic"]
+      password:
+        type: AlphaNumeric
     - name: "authentik"
       databases: ["authentik"]
       password:
