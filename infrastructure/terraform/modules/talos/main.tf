@@ -21,7 +21,7 @@ data "talos_machine_configuration" "machine" {
   examples           = false
 
   machine_secrets = talos_machine_secrets.talos.machine_secrets
-  config_patches = [
+  config_patches = compact([
     templatefile("talosPatches/general.yaml", {
       cluster_name       = var.cluster_name,
       talos_version      = var.talos_version,
@@ -39,8 +39,6 @@ data "talos_machine_configuration" "machine" {
       driver_10g         = each.value.driver_10g,
       matchboxUrl        = var.matchbox.url,
     }),
-    contains(keys(each.value), "interfaces") && each.value.interfaces != null && length(each.value.interfaces) > 0 ? yamlencode({
-    machine = { network = { interfaces = each.value.interfaces } } }) : null,
     fileexists("talosPatches/registries.yaml") ? file("talosPatches/registries.yaml") : null,
     each.value.role == "controlplane" ? file("talosPatches/controlplane.yaml") : null,
     each.value.role == "worker" ? file("talosPatches/worker.yaml") : null,
@@ -49,8 +47,8 @@ data "talos_machine_configuration" "machine" {
     fileexists("talosPatches/nut.yaml") ? templatefile("talosPatches/nut.yaml", {
       upsmonHost   = var.upsmon.host,
       upsmonPasswd = var.upsmon.password
-    }) : null
-  ]
+    }) : null,
+  ])
 }
 
 resource "matchbox_profile" "machine" {
