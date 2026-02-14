@@ -4,7 +4,7 @@
     {
       description: "Flux Images and tags",
       groupName: "Flux",
-      matchPackagePatterns: ["flux-operator"],
+      matchPackagePatterns: ["controlplaneio"],
       matchDatasources: ["docker", "github-tags"],
       versioning: "samver",
       group: {
