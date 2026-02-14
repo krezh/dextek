@@ -4,7 +4,18 @@
     {
       description: "Flux Images and tags",
       groupName: "Flux",
-      matchPackagePatterns: ["flux"],
+      matchPackagePatterns: ["flux-operator"],
+      matchDatasources: ["docker", "github-tags"],
+      versioning: "samver",
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
+    {
+      description: "Tofu-Controller Images and tags",
+      groupName: "Tofu-Controller",
+      matchPackagePatterns: ["tofu-controller"],
       matchDatasources: ["docker", "github-tags"],
       versioning: "samver",
       group: {
