@@ -11,6 +11,7 @@ metadata:
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/app: flux
     gethomepage.dev/description: Kubernetes CD
+    gethomepage.dev/instance: "krezh"
 spec:
   hostnames:
     - flux.talos.plexuz.xyz
