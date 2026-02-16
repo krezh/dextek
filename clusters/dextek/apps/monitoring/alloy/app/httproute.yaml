@@ -11,6 +11,7 @@ metadata:
     gethomepage.dev/name: Alloy
     gethomepage.dev/group: Monitoring
     gethomepage.dev/app: alloy
+    gethomepage.dev/instance: "krezh"
 spec:
   hostnames:
     - alloy.talos.plexuz.xyz
