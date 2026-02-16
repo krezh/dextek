@@ -18,7 +18,6 @@ resources:
   - ./maintainerr
   - ./jellyseerr
   - ./jellyseerr-jf
-  - ./doplarr
   - ./pinchflat
   - ./scraparr
 transformers:

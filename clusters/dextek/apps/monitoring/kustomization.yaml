@@ -15,10 +15,8 @@ resources:
   - ./kromgo
   - ./mikrotik-exporter
   - ./headlamp
-  - ./opnsense-exporter
   - ./alloy
   - ./silence-operator
-  - ./github-exporter
 transformers:
   - |-
     apiVersion: builtin

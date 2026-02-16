@@ -15,7 +15,6 @@ resources:
   - ./unifi-controller
   - ./atuin
   - ./echo-server
-  - ./forgejo-runner
   - ./mealie
   - ./it-tools
   - ./changedetection
@@ -23,7 +22,6 @@ resources:
   - ./jellyfin
   - ./publish-k8s-schemas
   - ./karakeep
-  - ./jellystat
   - ./wakapi
   - ./tracearr
   - ./attic
