@@ -55,7 +55,7 @@ spec:
                 enabled: false
             resources:
               limits:
-                memory: 1000Mi
+                memory: 2000Mi
           anubis:
             image:
               repository: ghcr.io/techarohq/anubis
