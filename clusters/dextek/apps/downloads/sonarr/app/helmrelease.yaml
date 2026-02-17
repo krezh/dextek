@@ -58,7 +58,7 @@ spec:
                 cpu: 48m
                 memory: 657Mi
               limits:
-                memory: 1500Mi
+                memory: 2000Mi
           anubis:
             image:
               repository: ghcr.io/techarohq/anubis
