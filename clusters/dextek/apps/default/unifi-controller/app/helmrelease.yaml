@@ -29,7 +29,7 @@ spec:
               UNIFI_STDOUT: "true"
               JVM_INIT_HEAP_SIZE: ""
               JVM_MAX_HEAP_SIZE: 1024M
-              DB_MONGO_LOCAL: true
+              DB_MONGO_LOCAL: "true"
             resources:
               requests:
                 cpu: 15m
