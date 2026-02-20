@@ -7,7 +7,6 @@ sonarr:
 
     # Custom Format Configuration
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
 
     quality_definition:
       type: series
@@ -273,7 +272,6 @@ radarr:
 
     # Custom Format Configuration
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
 
     # Quality Definition
     # This section defines the Quality Definitions that will be used in your Radarr instance
