@@ -13,6 +13,7 @@ spec:
     annotations:
       coredns.io/hostname: gateway-external
       external-dns.alpha.kubernetes.io/hostname: *hostname
+      lbipam.cilium.io/ips: 192.168.25.51
     parametersRef:
       group: gateway.envoyproxy.io
       kind: EnvoyProxy
