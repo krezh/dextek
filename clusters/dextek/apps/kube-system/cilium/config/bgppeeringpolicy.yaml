@@ -52,7 +52,7 @@ spec:
     - name: cilium
       localASN: 64514
       peers:
-        - name: heimdall
+        - name: udmpromax
           peerASN: 64512
           peerAddress: 192.168.20.1
           peerConfigRef:
