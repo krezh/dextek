@@ -37,6 +37,7 @@ data "talos_machine_configuration" "machine" {
       cluster_vip        = var.cluster_vip,
       driver             = each.value.driver,
       driver_10g         = each.value.driver_10g,
+      static_ip_10g      = each.value.static_ip_10g,
       matchboxUrl        = var.matchbox.url,
     }),
     fileexists("talosPatches/registries.yaml") ? file("talosPatches/registries.yaml") : null,
