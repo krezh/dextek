@@ -59,7 +59,7 @@ spec:
           url: "192.168.1.35"
         - name: pikvm-http
           module: http_2xx
-          url: "https://pikvm.int.plexuz.xyz"
+          url: "https://pikvm.lan.plexuz.xyz"
     prometheusRule:
       enabled: true
       additionalLabels:
