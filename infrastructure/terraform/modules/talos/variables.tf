@@ -159,6 +159,7 @@ variable "nodes" {
     driver_10g   = optional(string, "none")
     node_labels  = optional(map(string), {})
     interfaces   = optional(any)
+    static_ip_10g = optional(string, "none")
   }))
   validation {
     condition     = length(var.nodes) > 0

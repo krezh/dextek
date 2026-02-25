@@ -39,7 +39,7 @@ machine_apply node: machine
           for file in controlplane_*.yaml; do
             node_name=$(basename "$file" .yaml | cut -d'_' -f2)
             echo "Applying configuration for node: $node_name from file: $file"
-            talosctl apply -f $file -n $node_name.k8s.plexuz.xyz
+            talosctl apply -f $file -n $node_name.k8s.plexuz.xyz -e $node_name.k8s.plexuz.xyz
           done
           exit 0
         fi
