@@ -55,7 +55,7 @@ spec:
       metadata:
         labels:
           app.kubernetes.io/name: crunchy-postgres
-      replicas: &replicas 1
+      replicas: &replicas 2
       resources:
         limits:
           memory: 4Gi
