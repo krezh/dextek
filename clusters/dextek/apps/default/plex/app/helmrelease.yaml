@@ -49,6 +49,7 @@ spec:
         type: LoadBalancer
         annotations:
           coredns.io/hostname: plex-lb
+          lbipam.cilium.io/ips: 192.168.25.6
         externalTrafficPolicy: Local
         ports:
           https:
