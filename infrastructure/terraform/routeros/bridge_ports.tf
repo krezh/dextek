@@ -4,7 +4,7 @@ resource "routeros_interface_bridge_port" "ether1" {
   pvid              = 1
   hw                = true
   ingress_filtering = var.ingress_filtering
-  comment           = "Heimdall: ${var.comment}"
+  comment           = "UDM Pro Max: ${var.comment}"
 }
 
 resource "routeros_interface_bridge_port" "asgard_eth0" {

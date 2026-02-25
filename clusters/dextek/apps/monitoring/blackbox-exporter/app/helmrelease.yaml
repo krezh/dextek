@@ -48,9 +48,6 @@ spec:
         interval: 2m
         scrapeTimeout: 30s
       targets:
-        - name: heimdall-icmp
-          module: icmp
-          url: "${SECRET_HEIMDALL_FQDN}"
         - name: rpi01-icmp
           module: icmp
           url: "${SECRET_RPI01_FQDN}"

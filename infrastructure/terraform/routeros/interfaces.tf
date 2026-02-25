@@ -4,7 +4,7 @@
 # Active interfaces are uncommented and have descriptive comments
 # Unused interfaces are commented out and marked as UNUSED
 
-# ether1 - Heimdall
+# ether1 - UDM Pro Max
 resource "routeros_interface_ethernet" "ether1" {
   factory_name = "ether1"
   name         = "ether1"
