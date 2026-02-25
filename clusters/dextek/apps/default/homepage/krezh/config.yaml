@@ -33,14 +33,6 @@ data:
               url: https://jotunheim.srv.plexuz.xyz
               key: "{{HOMEPAGE_VAR_TRUENAS_APIKEY}}"
               enablePools: true
-        - Heimdall:
-            href: https://heimdall.usr.int.plexuz.xyz
-            icon: opnsense.png
-            widget:
-              type: opnsense
-              url: https://heimdall.usr.int.plexuz.xyz
-              username: "{{HOMEPAGE_VAR_OPNSENSE_USER}}"
-              password: "{{HOMEPAGE_VAR_OPNSENSE_PASS}}"
         - PiKVM:
             href: https://pikvm.int.plexuz.xyz
             icon: pikvm.png
