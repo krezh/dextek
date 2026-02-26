@@ -4,52 +4,62 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: unpoller
-  namespace: monitoring
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: unpoller
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
     controllers:
-      app:
-        type: deployment
-        replicas: 1
-        strategy: RollingUpdate
-        annotations:
-          reloader.stakater.com/auto: "true"
+      unpoller:
         containers:
           app:
             image:
               repository: ghcr.io/unpoller/unpoller
-              tag: v2.34.0
+              tag: v2.34.0@sha256:73423ddfe304e866b2cda2d3ecf8e68c15317c93a22945ad7d941d3ca3a6d022
             env:
-              #UP_UNIFI_DEFAULT_ROLE: home-ops
-              UP_UNIFI_DEFAULT_URL: https://unifi-controller.default.svc.cluster.local:8443
-              UP_UNIFI_DEFAULT_VERIFY_SSL: false
+              UP_UNIFI_DEFAULT_ROLE: dextek
+              UP_UNIFI_DEFAULT_URL: https://192.168.1.1
+              UP_PROMETHEUS_HTTP_LISTEN: 0.0.0.0:80
               UP_INFLUXDB_DISABLE: true
             envFrom:
               - secretRef:
-                  name: unpoller-secret
+                  name: "{{ .Release.Name }}-secret"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
-                memory: 37Mi
               limits:
-                memory: 37Mi
+                memory: 128Mi
     service:
       app:
-        controller: app
         ports:
           http:
-            port: 9130
+            port: *port
     serviceMonitor:
       app:
-        serviceName: unpoller
-        enabled: true
         endpoints:
           - port: http
-            scheme: http
-            path: /metrics
             interval: 2m # Unifi API only polls at 2m intervals
-            scrapeTimeout: 5s
+            scrapeTimeout: 10s
