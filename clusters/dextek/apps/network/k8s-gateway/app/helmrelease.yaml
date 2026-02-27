@@ -35,5 +35,5 @@ spec:
       type: LoadBalancer
     serviceAccount:
       create: true
-    ttl: 1
+    # ttl: 1
     watchedResources: [Ingress, Service, HTTPRoute]
