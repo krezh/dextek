@@ -1,7 +1,7 @@
 resource "ssh_resource" "get_talos" {
-  #triggers = {
-  #  always_run = "${timestamp()}"
-  #}
+  triggers = {
+    always_run = "${timestamp()}"
+  }
   host        = var.matchbox.host
   user        = var.matchbox.user
   agent       = false

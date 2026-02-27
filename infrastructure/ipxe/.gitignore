@@ -1,3 +1,5 @@
 ipxe.efi
 snponly.efi
 undionly.kpxe
+cacert.pem
+etag.txt
