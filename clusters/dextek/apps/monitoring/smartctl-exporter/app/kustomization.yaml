@@ -7,4 +7,4 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-  - ./dashboard.yaml
+  - ./grafanadashboard.yaml

@@ -8,4 +8,4 @@ resources:
   - ./ocirepository.yaml
   - ./referencegrant.yaml
   - ./httproute.yaml
-  - ./dashboard.yaml
+  - ./grafanadashboard.yaml
