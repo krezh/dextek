@@ -14,4 +14,4 @@ spec:
       inputName: DS_PROMETHEUS
     - datasourceName: prometheus
       inputName: DS_MIMIR
-  url: https://grafana.com/api/dashboards/22934/revisions/3/download
+  url: https://grafana.com/api/dashboards/22934/revisions/8/download
