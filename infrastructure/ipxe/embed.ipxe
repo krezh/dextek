@@ -1,0 +1,3 @@
+#!ipxe
+dhcp
+chain tftp://${next-server}/boot.ipxe

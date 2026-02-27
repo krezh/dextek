@@ -10,20 +10,15 @@ SRC=$(pwd)/ipxe/src
 git clone https://github.com/ipxe/ipxe.git
 
 cp "general.h" "${SRC}/config/general.h"
+cp "embed.ipxe" "${SRC}"
 
 cd "$SRC" || exit
 
 curl -SsL -o cacert.pem --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem
 
-#cat <<EOF > embed.ipxe
-#!ipxe
-#boot
-#EOF
-
-
 
 # Make bin-x86_64-linux/ipxe.pxe
-make bin-x86_64-efi/snponly.efi bin-x86_64-efi/ipxe.efi CERT=cacert.pem TRUST=cacert.pem #bin-x86_64-pcbios/undionly.kpxe #EMBED=embed.ipxe 
+make bin-x86_64-efi/snponly.efi bin-x86_64-efi/ipxe.efi CERT=cacert.pem TRUST=cacert.pem EMBED=embed.ipxe #bin-x86_64-pcbios/undionly.kpxe
 
 cd - || exit
 

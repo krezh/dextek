@@ -63,6 +63,7 @@ resource "matchbox_profile" "machine" {
     "slab_nomerge",
     "pti=on",
     "printk.devkmsg=on",
+    "panic=60",
     "talos.platform=${each.value.platform}",
     "talos.config=${var.matchbox.url}/ignition?mac=$${mac:hexhyp}"
   ]
