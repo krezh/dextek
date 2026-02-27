@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./ceph-dashboard-password.secret.sops.yaml
-  - ./dashboard.yaml
+  - ./grafanadashboard.yaml
   - ./ocirepository.yaml
