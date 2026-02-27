@@ -61,8 +61,6 @@ machine:
       - interface: bond0
         dhcp: true
         mtu: 1500
-        routes:
-          - metric: 1024
         bond:
           mode: active-backup
           deviceSelectors:
