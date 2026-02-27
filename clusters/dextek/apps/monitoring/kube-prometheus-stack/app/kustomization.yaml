@@ -9,4 +9,4 @@ resources:
   - ./dashboards
   - ./alertmanagerconfig.yaml
   - ./externalsecret.yaml
-  - ./dashboard.yaml
+  - ./grafanadashboard.yaml

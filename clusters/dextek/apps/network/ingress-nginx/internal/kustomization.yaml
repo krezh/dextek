@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: network
 resources:
   - ./helmrelease.yaml
-  - ./dashboard.yaml
+  - ./grafanadashboard.yaml
