@@ -1,0 +1,28 @@
+{{- $projectId := "5e13949c-f810-489d-88bd-0749b9474dbb" -}}
+{{- $env := "default" -}}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: infisical-auth
+  namespace: kube-system
+stringData:
+  clientId: {{ (getSecretByName $projectId $env "/Kubernetes/DexTek/Infisical" "INFISICAL_CLIENT_ID").Value }}
+  clientSecret: {{ (getSecretByName $projectId $env "/Kubernetes/DexTek/Infisical" "INFISICAL_CLIENT_SECRET").Value }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sops-age
+  namespace: flux-system
+stringData:
+  age.agekey: {{ printf "%q" (getSecretByName $projectId $env "/Kubernetes/DexTek/Flux" "FLUX_AGE_KEY").Value }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-deploy-key
+  namespace: flux-system
+stringData:
+  identity: {{ printf "%q" (getSecretByName $projectId $env "/Kubernetes/DexTek/Flux" "FLUX_GITHUB_SSH_PRIVATE_KEY").Value }}
+  known_hosts: {{ printf "%q" (getSecretByName $projectId $env "/Kubernetes/DexTek/Flux" "FLUX_GITHUB_KNOWN_HOSTS").Value }}
