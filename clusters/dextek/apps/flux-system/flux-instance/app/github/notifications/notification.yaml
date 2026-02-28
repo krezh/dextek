@@ -24,5 +24,3 @@ spec:
   eventSources:
     - kind: Kustomization
       name: "*"
-    - kind: Terraform
-      name: "*"
