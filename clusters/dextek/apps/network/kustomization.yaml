@@ -6,7 +6,8 @@ resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
   - ./ingress-nginx
-  - ./external-dns
+  - ./cloudflare-dns
+  - ./unifi-dns
   - ./envoy-gateway
   - ./k8s-gateway
   - ./multus

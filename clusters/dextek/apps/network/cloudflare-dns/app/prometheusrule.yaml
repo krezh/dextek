@@ -3,7 +3,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: external-dns-rules
+  name: cloudflare-dns-rules
 spec:
   groups:
     - name: external-dns.rules
