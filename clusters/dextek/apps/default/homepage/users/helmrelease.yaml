@@ -41,15 +41,15 @@ spec:
                 memory: 100M
               limits:
                 memory: 400M
+            probes:
+              liveness: &probes
+                enabled: false
+              readiness: *probes
+              startup: *probes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-              probes:
-                liveness: &probes
-                  enabled: false
-                readiness: *probes
-                startup: *probes
         serviceAccount:
           identifier: app
     service:
