@@ -36,11 +36,14 @@ spec:
     - patchType: JSONPatch
       jsonPatch:
         expression: >-
-          object.spec.containers.enumerate().filter(e,
-            has(e.value.resources) && has(e.value.resources.limits) && "cpu" in e.value.resources.limits
-          ).map(e,
+          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].filter(i,
+            i < object.spec.containers.size() &&
+            has(object.spec.containers[i].resources) &&
+            has(object.spec.containers[i].resources.limits) &&
+            "cpu" in object.spec.containers[i].resources.limits
+          ).map(i,
             JSONPatch{
               op: "remove",
-              path: "/spec/containers/" + string(e.index) + "/resources/limits/cpu"
+              path: "/spec/containers/" + string(i) + "/resources/limits/cpu"
             }
           )
