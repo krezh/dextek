@@ -7,9 +7,3 @@ resources:
   - ./helmrelease.yaml
   - ./grafanadashboard.yaml
   - ./httproute.yaml
-configMapGenerator:
-  - name: flux-operator-helm-values
-    files:
-      - values.yaml=./values.yaml
-configurations:
-  - kustomizeconfig.yaml
