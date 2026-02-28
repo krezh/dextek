@@ -27,6 +27,7 @@ run_parallel() {
   local num_processes=$2
 
   echo "$command_list" | xargs -I CMD -P "$num_processes" bash -c 'CMD'
+  sleep 5
 }
 
 # Set the number of processes you want to run simultaneously
