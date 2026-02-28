@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingAdmissionPolicyBinding
+metadata:
+  name: remove-cpu-limits
+spec:
+  policyName: remove-cpu-limits
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicy-admissionregistration-v1beta1.json
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingAdmissionPolicy
+metadata:
+  name: remove-cpu-limits
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - pods
+  matchConditions:
+    - name: has-cpu-limits
+      expression: >-
+        object.spec.containers.exists(c,
+          has(c.resources) && has(c.resources.limits) && "cpu" in c.resources.limits
+        )
+  failurePolicy: Fail
+  reinvocationPolicy: IfNeeded
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: >-
+          object.spec.containers.enumerate().filter(e,
+            has(e.value.resources) && has(e.value.resources.limits) && "cpu" in e.value.resources.limits
+          ).map(e,
+            JSONPatch{
+              op: "remove",
+              path: "/spec/containers/" + string(e.index) + "/resources/limits/cpu"
+            }
+          )
