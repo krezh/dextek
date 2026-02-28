@@ -6,10 +6,6 @@ helmDefaults:
   wait: true
   waitForJobs: true
 
-repositories:
-  - name: cilium
-    url: https://helm.cilium.io
-
 releases:
   - name: prometheus-operator-crds
     namespace: monitoring
@@ -24,7 +20,7 @@ releases:
     chart: oci://quay.io/cilium/charts/cilium
     version: 1.19.1
     values:
-      - ../apps/kube-system/cilium/app/values.yaml
+      - helmfile.d/templates/values.yaml.gotmpl
     needs:
       - monitoring/prometheus-operator-crds
 
@@ -33,7 +29,7 @@ releases:
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.45.2
     values:
-      - ../apps/kube-system/coredns/app/values.yaml
+      - helmfile.d/templates/values.yaml.gotmpl
     needs:
       - kube-system/cilium
 
@@ -42,7 +38,7 @@ releases:
     chart: oci://ghcr.io/spegel-org/helm-charts/spegel
     version: 0.6.0
     values:
-      - ../apps/kube-system/spegel/app/values.yaml
+      - helmfile.d/templates/values.yaml.gotmpl
     needs:
       - monitoring/prometheus-operator-crds
       - kube-system/cilium
@@ -53,7 +49,7 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.43.0
     values:
-      - ../apps/flux-system/flux-operator/app/values.yaml
+      - helmfile.d/templates/values.yaml.gotmpl
     needs:
       - kube-system/cilium
 
@@ -63,7 +59,7 @@ releases:
     version: 0.43.0
     wait: false
     values:
-      - ../apps/flux-system/flux-operator/instance/values.yaml
+      - helmfile.d/templates/values.yaml.gotmpl
     needs:
       - monitoring/prometheus-operator-crds
       - flux-system/flux-operator

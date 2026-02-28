@@ -55,12 +55,31 @@ readyCheck:
     echo "Waiting for Nodes to be ready..."
     until kubectl wait nodes --for=condition=Ready=False --all --timeout=10m > /dev/null 2>&1; do sleep 5; done
 
-helmfile:
-    printf "Deploying helmfile..."
-    until helmfile --quiet --file {{ BOOTSTRAP_DIR }}/helmfile.yaml apply --skip-diff-on-install --suppress-diff; do sleep 3; done
+namespaces:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "Applying namespaces..."
+    find apps -mindepth 1 -maxdepth 1 -type d | while IFS= read -r dir; do
+        if ! kustomize build "$dir" | yq ea -e 'select(.kind == "Namespace")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f - 2>/dev/null; then
+            echo "No namespace found in $(basename "$dir") or already applied"
+        fi
+    done
     echo " Done"
-    sops --decrypt {{ BOOTSTRAP_DIR }}/flux/age-key.sops.yaml | kubectl apply -f -
-    sops --decrypt {{ BOOTSTRAP_DIR }}/flux/github-deploy-key.sops.yaml | kubectl apply -f -
+
+crds:
+    printf "Applying CRDs..."
+    until helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/00-crds.yaml template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f - > /dev/null 2>&1; do sleep 3; done
+    echo " Done"
+
+apps:
+    printf "Deploying apps via helmfile..."
+    until helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/01-apps.yaml sync --hide-notes; do sleep 3; done
+    echo " Done"
+
+helmfile: namespaces crds apps
+    printf "Applying Flux secrets..."
+    infisical export --template={{ BOOTSTRAP_DIR }}/resources.yaml.tmpl | kubectl apply -f -
+    echo " Done"
 
 wipe:
     #!/usr/bin/env bash
