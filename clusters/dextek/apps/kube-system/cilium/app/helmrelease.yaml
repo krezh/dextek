@@ -10,10 +10,54 @@ spec:
   chartRef:
     kind: OCIRepository
     name: cilium
-  valuesFrom:
-    - kind: ConfigMap
-      name: cilium-helm-values
   values:
+    cluster:
+      name: dextek
+      id: 1
+    cni:
+      exclusive: false
+    endpointRoutes:
+      enabled: true
+    bgpControlPlane:
+      enabled: true
+    devices: bond+
+    pmtuDiscovery:
+      enabled: true
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 7445
+    rollOutCiliumPods: true
+    localRedirectPolicies:
+      enabled: true
+    kubeProxyReplacement: true
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
+    bandwidthManager:
+      enabled: true
+      bbr: true
+    bpf:
+      datapathMode: netkit
+      masquerade: true
+      preallocateMaps: true
+    bpfClockProbe: true
+    enableIPv4BIGTCP: true
+    ipam:
+      mode: kubernetes
+    l2announcements:
+      enabled: false
+    operator:
+      dashboards:
+        enabled: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      replicas: 2
+      rollOutPods: true
+    autoDirectNodeRoutes: true
+    ipv4NativeRoutingCIDR: 10.244.0.0/16
+    routingMode: native
     hubble:
       enabled: true
       metrics:
@@ -38,3 +82,39 @@ spec:
       ui:
         enabled: true
         rollOutPods: true
+    envoy:
+      enabled: false
+    socketLB:
+      enabled: true
+      hostNamespaceOnly: true
+    securityContext:
+      capabilities:
+        ciliumAgent:
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - PERFMON
+          - BPF
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        trustCRDsExist: true
+    dashboards:
+      enabled: true
+    cgroup:
+      autoMount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
