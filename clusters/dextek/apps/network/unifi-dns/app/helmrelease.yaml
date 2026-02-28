@@ -38,6 +38,8 @@ spec:
           initialDelaySeconds: 10
           timeoutSeconds: 5
     triggerLoopOnEvent: true
+    extraArgs:
+      - --ignore-ingress-tls-spec
     policy: sync
     sources:
       - gateway-httproute
