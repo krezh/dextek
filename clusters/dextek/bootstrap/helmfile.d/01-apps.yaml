@@ -30,7 +30,7 @@ releases:
           - --server-side
           - --field-manager=kustomize-controller
           - --kustomize
-          - ../../../apps/kube-system/cilium/config/
+          - ../../apps/kube-system/cilium/config/
         events:
           - postsync
         showlogs: true
