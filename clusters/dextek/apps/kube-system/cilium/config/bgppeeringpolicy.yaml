@@ -7,7 +7,8 @@ metadata:
 spec:
   allowFirstLastIPs: "No"
   blocks:
-    - cidr: 192.168.25.10/24
+    - start: 192.168.25.10
+      stop: 192.168.25.254
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/cilium.io/ciliumbgpadvertisement_v2.json
 apiVersion: cilium.io/v2
