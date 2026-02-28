@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app external-dns
+  name: &app cloudflare-dns
 spec:
   interval: 30m
   chartRef:
     kind: OCIRepository
-    name: external-dns
+    name: cloudflare
   values:
     fullnameOverride: *app
     provider: cloudflare
@@ -16,7 +16,7 @@ spec:
       - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: &secret cloudflare-external-dns
+            name: &secret cloudflare-dns
             key: CF_API_TOKEN
       - name: &name CF_ZONE_ID
         valueFrom:
