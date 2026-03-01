@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app cilium
+  name: cilium
   namespace: kube-system
 spec:
   interval: 30m
@@ -40,6 +40,9 @@ spec:
       datapathMode: netkit
       masquerade: true
       preallocateMaps: true
+      distributedLRU:
+        enabled: true
+        # mapDynamicSizeRatio: 0.08
     bpfClockProbe: true
     enableIPv4BIGTCP: true
     ipam:
