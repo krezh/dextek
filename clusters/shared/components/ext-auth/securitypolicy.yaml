@@ -9,8 +9,13 @@ spec:
     failOpen: false
     recomputeRoute: true
     headersToExtAuth:
-      - Authorization
-      - cookie
+      - "X-Forwarded-For"
+      - "X-Real-Ip"
+      - "accept"
+      - "cookie"
+      - "authorization"
+      - "proxy-authorization"
+      - "x-forwarded-proto"
     http:
       backendRefs:
         - kind: Service
@@ -20,9 +25,8 @@ spec:
       headersToBackend:
         - set-cookie
         - x-authentik-*
-        - authorization
       path: /outpost.goauthentik.io/auth/envoy
   targetRefs:
-    - group: ${EXT_AUTH_GROUP:-gateway.networking.k8s.io}
-      kind: ${EXT_AUTH_KIND:-HTTPRoute}
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
       name: ${EXT_AUTH_TARGET:-${APP}}
