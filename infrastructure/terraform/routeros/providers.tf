@@ -28,7 +28,7 @@ terraform {
 provider "sops" {}
 
 provider "routeros" {
-  hosturl  = "192.168.1.35"
+  hosturl  = "https://192.168.1.35"
   username = data.doppler_secrets.prd_routeros.map.ADMIN_USER
   password = data.doppler_secrets.prd_routeros.map.ADMIN_PASSWORD
   insecure = true
