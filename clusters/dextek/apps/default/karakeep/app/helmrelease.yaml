@@ -112,7 +112,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 499Mi
+                memory: 700Mi
     service:
       app:
         forceRename: karakeep
