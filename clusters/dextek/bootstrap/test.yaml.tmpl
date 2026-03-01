@@ -1,9 +1,0 @@
-{{$secrets := secret "5e13949c-f810-489d-88bd-0749b9474dbb "default" "/Kubernetes/DexTek"}}
-{{$length := len $secrets}}
-{{- "{"}}
-{{- with $secrets }}
-{{- range $index, $secret := . }}
-"{{ $secret.Key }}": "{{ $secret.Value }}"{{if lt $index (minus $length 1)}},{{end}}
-{{- end }}
-{{- end }}
-{{ "}" -}}
