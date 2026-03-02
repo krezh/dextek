@@ -14,7 +14,7 @@ spec:
       publish-k8s-schemas:
         type: cronjob
         cronjob:
-          schedule: "0 * * * *"
+          schedule: "0 */4 * * *"
           concurrencyPolicy: "Replace"
           backoffLimit: 0
           failedJobsHistory: 1
