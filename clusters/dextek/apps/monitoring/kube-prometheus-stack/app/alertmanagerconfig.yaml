@@ -73,7 +73,6 @@ spec:
           priority: |-
             {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
           sendResolved: true
-          sound: gamelan
           title: >-
             [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
             {{ .CommonLabels.alertname }}
@@ -84,4 +83,5 @@ spec:
           userKey:
             name: *secret
             key: PUSHOVER_USER_KEY
-          urlTitle: View in Alertmanager
+          url: https://siren.talos.plexuz.xyz/a/{{ .Fingerprint }}
+          urlTitle: View in Siren

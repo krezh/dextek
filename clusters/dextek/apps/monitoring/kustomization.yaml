@@ -17,6 +17,7 @@ resources:
   - ./headlamp
   - ./alloy
   - ./silence-operator
+  - ./siren
 transformers:
   - |-
     apiVersion: builtin
