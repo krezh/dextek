@@ -83,4 +83,4 @@ spec:
           userKey:
             name: *secret
             key: PUSHOVER_USER_KEY
-          url: https://siren.talos.plexuz.xyz/a/{{ .Fingerprint }}
+          url: https://siren.talos.plexuz.xyz/a/{{ .Alerts.Fingerprint }}
