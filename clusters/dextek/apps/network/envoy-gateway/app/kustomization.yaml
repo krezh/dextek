@@ -7,3 +7,4 @@ resources:
   - ./servicemonitor.yaml
   - ./certificate.yaml
   - ./grafanadashboard.yaml
+  - ./envoy.yaml
