@@ -14,7 +14,6 @@ resources:
   - ./unpoller
   - ./kromgo
   - ./mikrotik-exporter
-  - ./headlamp
   - ./alloy
   - ./silence-operator
   - ./siren
