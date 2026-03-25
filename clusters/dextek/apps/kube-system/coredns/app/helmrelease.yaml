@@ -37,10 +37,10 @@ spec:
             configBlock: |-
               rcode NXDOMAIN
           - name: kubernetes
-            parameters: cluster.local in-addr.arpa ip6.arpa
+            parameters: cluster.local in-addr.arpa
             configBlock: |-
               pods verified
-              fallthrough in-addr.arpa ip6.arpa
+              fallthrough in-addr.arpa
           - name: autopath
             parameters: "@kubernetes"
           - name: forward
