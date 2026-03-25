@@ -29,6 +29,8 @@ machine:
     net.ipv4.neigh.default.gc_thresh3: "16384" # ARP cache
     net.ipv4.tcp_notsent_lowat: "131072" # 10Gb/s
     net.ipv4.tcp_slow_start_after_idle: "0" # 10Gb/s
+    net.ipv6.conf.all.disable_ipv6: "1" # Disable IPv6
+    net.ipv6.conf.default.disable_ipv6: "1" # Disable IPv6
   udev:
     rules:
       # Intel GPU
@@ -117,7 +119,7 @@ machine:
     hostDNS:
       enabled: true
       resolveMemberNames: true
-      forwardKubeDNSToHost: true # Requires Cilium socketLB features
+      forwardKubeDNSToHost: false # Requires Cilium socketLB features
     kubernetesTalosAPIAccess:
       enabled: true
       allowedRoles: ["os:admin"]
