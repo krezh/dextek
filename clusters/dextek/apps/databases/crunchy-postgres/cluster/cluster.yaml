@@ -11,7 +11,7 @@ spec:
       crunchy-userinit.drummyfloyd.github.com/enabled: "true"
       crunchy-userinit.drummyfloyd.github.com/superuser: &superuser "postgres"
   postgresVersion: 18
-  image: ghcr.io/krezh/cdpg-vchord-18:18.3.2610@sha256:11d79b1fb87303a30351f48e18735efceda221a374544d38acb5f99435325ca4
+  image: ghcr.io/krezh/cdpg-vchord-18:18.3.2610@sha256:eee27b65fca70fa4e29faecb5c45c1a082d6c9ca86ae15191ecf65fb0e923952
   customReplicationTLSSecret:
     name: postgres-repl-tls
   customTLSSecret:
