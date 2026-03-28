@@ -7,7 +7,6 @@ resources:
   - ./downloads-pvc.yaml
   - ../../../shared/templates/flux
   - ./sabnzbd
-  - ./nzbget
   - ./qbittorrent
   - ./recyclarr
   - ./sonarr
