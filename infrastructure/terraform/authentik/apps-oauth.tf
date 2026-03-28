@@ -3,11 +3,14 @@ module "oauth_apps" {
 
   oauth_apps = {
     grafana = {
-      name                   = "Grafana"
-      slug                   = "grafana"
-      app_domain             = "grafana.${var.domain["internal"]}"
-      app_group              = "Monitoring"
-      access_groups          = [data.authentik_group.superuser.id, authentik_group.grafana_admins.id]
+      name       = "Grafana"
+      slug       = "grafana"
+      app_domain = "grafana.${var.domain["internal"]}"
+      app_group  = "Monitoring"
+      access_groups = [
+        data.authentik_group.superuser.id,
+        authentik_group.grafana_admins.id
+      ]
       client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.GRAFANA)["GRAFANA_OAUTH_CLIENT_ID"]
       client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.GRAFANA)["GRAFANA_OAUTH_CLIENT_SECRET"]
       authentication_flow_id = authentik_flow.authentication.uuid
@@ -39,11 +42,13 @@ module "oauth_apps" {
       meta_launch_url        = "https://mealie.${var.domain["external"]}"
     }
     immich = {
-      name                   = "Immich"
-      slug                   = "immich"
-      app_domain             = "photos.${var.domain["external"]}"
-      app_group              = "Tools"
-      access_groups          = [data.authentik_group.superuser.id]
+      name       = "Immich"
+      slug       = "immich"
+      app_domain = "photos.${var.domain["external"]}"
+      app_group  = "Tools"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
       client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.IMMICH)["IMMICH_OAUTH_CLIENT_ID"]
       client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.IMMICH)["IMMICH_OAUTH_CLIENT_SECRET"]
       authentication_flow_id = authentik_flow.authentication.uuid
@@ -61,11 +66,13 @@ module "oauth_apps" {
       meta_launch_url = "https://photos.${var.domain["external"]}"
     }
     zipline = {
-      name                   = "Zipline"
-      slug                   = "zipline"
-      app_domain             = "zipline.${var.domain["external"]}"
-      app_group              = "Tools"
-      access_groups          = [data.authentik_group.superuser.id]
+      name       = "Zipline"
+      slug       = "zipline"
+      app_domain = "zipline.${var.domain["external"]}"
+      app_group  = "Tools"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
       client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.ZIPLINE)["ZIPLINE_OAUTH_CLIENT_ID"]
       client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.ZIPLINE)["ZIPLINE_OAUTH_CLIENT_SECRET"]
       authentication_flow_id = authentik_flow.authentication.uuid
@@ -77,11 +84,13 @@ module "oauth_apps" {
       meta_launch_url        = "https://zipline.${var.domain["external"]}"
     }
     kubernetes = {
-      name                   = "Kubernetes"
-      slug                   = "kubernetes"
-      app_domain             = var.domain["external"]
-      app_group              = "Infrastructure"
-      access_groups          = [data.authentik_group.superuser.id]
+      name       = "Kubernetes"
+      slug       = "kubernetes"
+      app_domain = var.domain["external"]
+      app_group  = "Infrastructure"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
       client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.KUBERNETES)["KUBERNETES_OAUTH_CLIENT_ID"]
       client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.KUBERNETES)["KUBERNETES_OAUTH_CLIENT_SECRET"]
       authentication_flow_id = authentik_flow.authentication.uuid
