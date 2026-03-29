@@ -10,5 +10,5 @@ resource "authentik_source_plex" "plex" {
   ]
   allow_friends = false
   client_id     = "Authentik"
-  plex_token    = jsondecode(data.doppler_secrets.tf_authentik.map.PLEX)["PLEX_TOKEN"]
+  plex_token    = data.infisical_secrets.plex.secrets["PLEX_TOKEN"].value
 }
