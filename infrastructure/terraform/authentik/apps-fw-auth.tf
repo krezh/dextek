@@ -74,7 +74,7 @@ module "fw-auth" {
       outpost                 = "external"
     }
     sabnzbd = {
-      app_name                = "Sabnzbd"
+      app_name                = "SABnzbd"
       slug                    = "sabnzbd"
       app_domain              = "sab.${var.domain["external"]}"
       app_group               = "Downloads"
