@@ -116,3 +116,8 @@ output "application_ids" {
 output "oauth2_provider_ids" {
   value = { for k, provider in authentik_provider_oauth2.main : k => provider.id }
 }
+
+output "app_keys" {
+  value       = keys(var.oauth_apps)
+  description = "List of OAuth app keys"
+}

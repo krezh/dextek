@@ -15,9 +15,9 @@ terraform {
       source  = "carlpett/sops"
       version = "1.4.1"
     }
-    doppler = {
-      source  = "DopplerHQ/doppler"
-      version = "1.21.1"
+    infisical = {
+      source  = "Infisical/infisical"
+      version = "0.16.10"
     }
   }
 }
@@ -28,13 +28,17 @@ data "sops_file" "secrets" {
   source_file = "secret.sops.yaml"
 }
 
-provider "doppler" {
-  doppler_token = data.sops_file.secrets.data["doppler.token"]
+provider "infisical" {
+  host = "https://eu.infisical.com"
+  auth = {
+    universal = {
+      client_id     = data.sops_file.secrets.data["infisical.client_id"]
+      client_secret = data.sops_file.secrets.data["infisical.client_secret"]
+    }
+  }
 }
-
-data "doppler_secrets" "tf_authentik" {}
 
 provider "authentik" {
   url   = "https://sso.${var.domain["external"]}"
-  token = jsondecode(data.doppler_secrets.tf_authentik.map.AUTHENTIK)["AUTHENTIK_TOKEN"]
+  token = ephemeral.infisical_secret.authentik_token.value
 }
