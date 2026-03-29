@@ -11,8 +11,8 @@ module "oauth_apps" {
         data.authentik_group.superuser.id,
         authentik_group.grafana_admins.id
       ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.GRAFANA)["GRAFANA_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.GRAFANA)["GRAFANA_OAUTH_CLIENT_SECRET"]
+      client_id              = data.infisical_secrets.grafana.secrets["GRAFANA_OAUTH_CLIENT_ID"].value
+      client_secret          = data.infisical_secrets.grafana.secrets["GRAFANA_OAUTH_CLIENT_SECRET"].value
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
@@ -31,8 +31,8 @@ module "oauth_apps" {
         resource.authentik_group.mealie_admins.id,
         resource.authentik_group.mealie_users.id
       ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.MEALIE)["MEALIE_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.MEALIE)["MEALIE_OAUTH_CLIENT_SECRET"]
+      client_id              = data.infisical_secrets.mealie.secrets["MEALIE_OAUTH_CLIENT_ID"].value
+      client_secret          = data.infisical_secrets.mealie.secrets["MEALIE_OAUTH_CLIENT_SECRET"].value
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
@@ -49,8 +49,8 @@ module "oauth_apps" {
       access_groups = [
         data.authentik_group.superuser.id
       ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.IMMICH)["IMMICH_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.IMMICH)["IMMICH_OAUTH_CLIENT_SECRET"]
+      client_id              = data.infisical_secrets.immich.secrets["IMMICH_OAUTH_CLIENT_ID"].value
+      client_secret          = data.infisical_secrets.immich.secrets["IMMICH_OAUTH_CLIENT_SECRET"].value
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
@@ -73,8 +73,8 @@ module "oauth_apps" {
       access_groups = [
         data.authentik_group.superuser.id
       ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.ZIPLINE)["ZIPLINE_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.ZIPLINE)["ZIPLINE_OAUTH_CLIENT_SECRET"]
+      client_id              = data.infisical_secrets.zipline.secrets["ZIPLINE_OAUTH_CLIENT_ID"].value
+      client_secret          = data.infisical_secrets.zipline.secrets["ZIPLINE_OAUTH_CLIENT_SECRET"].value
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
@@ -91,8 +91,8 @@ module "oauth_apps" {
       access_groups = [
         data.authentik_group.superuser.id
       ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.KUBERNETES)["KUBERNETES_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.KUBERNETES)["KUBERNETES_OAUTH_CLIENT_SECRET"]
+      client_id              = data.infisical_secrets.kubernetes.secrets["KUBERNETES_OAUTH_CLIENT_ID"].value
+      client_secret          = data.infisical_secrets.kubernetes.secrets["KUBERNETES_OAUTH_CLIENT_SECRET"].value
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
@@ -110,8 +110,8 @@ module "oauth_apps" {
         data.authentik_group.superuser.id,
         resource.authentik_group.users.id
       ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.KARAKEEP)["KARAKEEP_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.KARAKEEP)["KARAKEEP_OAUTH_CLIENT_SECRET"]
+      client_id              = data.infisical_secrets.karakeep.secrets["KARAKEEP_OAUTH_CLIENT_ID"].value
+      client_secret          = data.infisical_secrets.karakeep.secrets["KARAKEEP_OAUTH_CLIENT_SECRET"].value
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
@@ -129,8 +129,8 @@ module "oauth_apps" {
       access_groups = [
         data.authentik_group.superuser.id
       ]
-      client_id              = jsondecode(data.doppler_secrets.tf_authentik.map.WAKAPI)["WAKAPI_OAUTH_CLIENT_ID"]
-      client_secret          = jsondecode(data.doppler_secrets.tf_authentik.map.WAKAPI)["WAKAPI_OAUTH_CLIENT_SECRET"]
+      client_id              = data.infisical_secrets.wakapi.secrets["WAKAPI_OAUTH_CLIENT_ID"].value
+      client_secret          = data.infisical_secrets.wakapi.secrets["WAKAPI_OAUTH_CLIENT_SECRET"].value
       authentication_flow_id = authentik_flow.authentication.uuid
       authorization_flow_id  = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_id   = data.authentik_flow.default-provider-invalidation-flow.id
