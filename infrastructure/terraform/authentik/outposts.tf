@@ -4,16 +4,17 @@ resource "authentik_outpost" "internal" {
   service_connection = authentik_service_connection_kubernetes.local.id
   protocol_providers = module.fw-auth.internal_proxy_provider_ids
   config = jsonencode({
-    "log_level"                      = "info"
-    "authentik_host"                 = "http://authentik-server.auth.svc.cluster.local"
-    "authentik_host_browser"         = "https://sso.${var.domain["external"]}/"
-    "authentik_host_insecure"        = false
-    "refresh_interval"               = "minutes=5"
-    "kubernetes_replicas"            = 1
-    "kubernetes_namespace"           = "auth"
-    "object_naming_template"         = "ak-outpost-%(name)s"
-    "kubernetes_service_type"        = "ClusterIP"
-    "kubernetes_disabled_components" = ["ingress", "traefik middleware"]
+    "log_level"                        = "info"
+    "authentik_host"                   = "http://authentik-server.auth.svc.cluster.local"
+    "authentik_host_browser"           = "https://sso.${var.domain["external"]}/"
+    "authentik_host_insecure"          = false
+    "refresh_interval"                 = "minutes=5"
+    "kubernetes_replicas"              = 1
+    "kubernetes_namespace"             = "auth"
+    "object_naming_template"           = "ak-outpost-%(name)s"
+    "kubernetes_service_type"          = "ClusterIP"
+    "kubernetes_disabled_components"   = ["ingress", "traefik middleware"]
+    "kubernetes_httproute_annotations" = {}
     "kubernetes_httproute_parent_refs" = [
       {
         name        = "gateway-internal"
@@ -29,16 +30,17 @@ resource "authentik_outpost" "external" {
   service_connection = authentik_service_connection_kubernetes.local.id
   protocol_providers = module.fw-auth.external_proxy_provider_ids
   config = jsonencode({
-    "log_level"                      = "info"
-    "authentik_host"                 = "http://authentik-server.auth.svc.cluster.local"
-    "authentik_host_browser"         = "https://sso.${var.domain["external"]}/"
-    "authentik_host_insecure"        = false
-    "refresh_interval"               = "minutes=5"
-    "kubernetes_replicas"            = 1
-    "kubernetes_namespace"           = "auth"
-    "object_naming_template"         = "ak-outpost-%(name)s"
-    "kubernetes_service_type"        = "ClusterIP"
-    "kubernetes_disabled_components" = ["ingress", "traefik middleware"]
+    "log_level"                        = "info"
+    "authentik_host"                   = "http://authentik-server.auth.svc.cluster.local"
+    "authentik_host_browser"           = "https://sso.${var.domain["external"]}/"
+    "authentik_host_insecure"          = false
+    "refresh_interval"                 = "minutes=5"
+    "kubernetes_replicas"              = 1
+    "kubernetes_namespace"             = "auth"
+    "object_naming_template"           = "ak-outpost-%(name)s"
+    "kubernetes_service_type"          = "ClusterIP"
+    "kubernetes_disabled_components"   = ["ingress", "traefik middleware"]
+    "kubernetes_httproute_annotations" = {}
     "kubernetes_httproute_parent_refs" = [
       {
         name        = "gateway-external"

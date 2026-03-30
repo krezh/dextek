@@ -48,17 +48,18 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: gateway-internal
+  annotations:
+    gatus.home-operations.com/endpoint: |-
+      group: internal
+      guarded: true
+      ui:
+        hide-hostname: true
+        hide-url: true
 spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
       coredns.io/hostname: gateway-internal
-      gatus.home-operations.com/endpoint: |-
-        group: internal
-        guarded: true
-        ui:
-          hide-hostname: true
-          hide-url: true
     parametersRef:
       group: gateway.envoyproxy.io
       kind: EnvoyProxy
