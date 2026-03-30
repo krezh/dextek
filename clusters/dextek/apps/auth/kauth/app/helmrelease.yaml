@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app kauth
-  namespace: kube-system
 spec:
   interval: 1h
   chartRef:
@@ -23,6 +22,9 @@ spec:
           name: kauth-secret
     httpRoute:
       enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          conditions: ["[STATUS] == 404"]
       parentRefs:
         - name: gateway-internal
           namespace: network
