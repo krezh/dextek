@@ -5,6 +5,9 @@ kind: HTTPRoute
 metadata:
   name: webhook-receiver
   namespace: flux-system
+  annotations:
+    gatus.home-operations.com/endpoint: |-
+      conditions: ["[STATUS] == 404"]
 spec:
   hostnames:
     - fluxhook.plexuz.xyz
@@ -14,9 +17,7 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
-          name: webhook-receiver
+        - name: webhook-receiver
           port: 80
       matches:
         - path:

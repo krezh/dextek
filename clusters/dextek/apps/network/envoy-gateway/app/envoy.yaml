@@ -53,6 +53,12 @@ spec:
   infrastructure:
     annotations:
       coredns.io/hostname: gateway-internal
+      gatus.home-operations.com/endpoint: |-
+        group: internal
+        guarded: true
+        ui:
+          hide-hostname: true
+          hide-url: true
     parametersRef:
       group: gateway.envoyproxy.io
       kind: EnvoyProxy
@@ -82,6 +88,10 @@ metadata:
   name: gateway-external
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname ingress.plexuz.xyz
+    gatus.home-operations.com/endpoint: |-
+      client:
+        dns-resolver: tcp://1.1.1.1:53
+      group: external
 spec:
   gatewayClassName: envoy
   infrastructure:
