@@ -10,6 +10,7 @@ spec:
     kind: OCIRepository
     name: kauth
   values:
+    fullnameOverride: kauth
     monitoring:
       enabled: true
       grafanaDashboard:
