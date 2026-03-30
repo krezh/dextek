@@ -21,9 +21,9 @@ spec:
       route:
         enabled: true
         hostnames:
-          - victoria-logs.plexuz.xyz
+          - victoria-logs.talos.plexuz.xyz
         parentRefs:
-          - name: gateway-external
+          - name: gateway-internal
             namespace: network
         extraRules:
           - filters:
