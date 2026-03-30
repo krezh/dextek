@@ -17,6 +17,7 @@ resources:
   - ./alloy
   - ./silence-operator
   - ./siren
+  - ./gatus
 transformers:
   - |-
     apiVersion: builtin
