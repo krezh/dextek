@@ -8,7 +8,7 @@ resource "authentik_stage_identification" "authentication-identification" {
   password_stage            = authentik_stage_password.authentication-password.id
   recovery_flow             = authentik_flow.recovery.uuid
   # passwordless_flow         = authentik_flow.passwordless_authentication.uuid
-  sources = [authentik_source_plex.plex.uuid]
+  sources = []
 }
 
 resource "authentik_stage_password" "authentication-password" {
