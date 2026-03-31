@@ -6,8 +6,8 @@ resource "authentik_provider_ldap" "ldap" {
   mfa_support     = false
   certificate     = data.authentik_certificate_key_pair.generated.id
   tls_server_name = "ldap-lb.${var.domain["internal"]}"
-  search_mode     = "cached"
-  bind_mode       = "cached"
+  search_mode     = "direct"
+  bind_mode       = "direct"
 }
 
 resource "authentik_outpost" "LDAP" {
