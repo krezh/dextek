@@ -59,7 +59,7 @@ spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      coredns.io/hostname: gateway-internal
+      external-dns.alpha.kubernetes.io/hostname: gateway-internal.talos.plexuz.xyz
     parametersRef:
       group: gateway.envoyproxy.io
       kind: EnvoyProxy
@@ -97,7 +97,6 @@ spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      coredns.io/hostname: gateway-external
       external-dns.alpha.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/ips: 192.168.25.51
     parametersRef:
