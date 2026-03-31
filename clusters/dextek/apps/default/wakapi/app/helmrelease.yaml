@@ -78,16 +78,6 @@ spec:
     route:
       app:
         hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "{{ .Release.Name | title }}"
-          gethomepage.dev/instance: "krezh"
-          gethomepage.dev/group: "Tools"
-          gethomepage.dev/icon: "{{ .Release.Name }}.png"
-          gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/instance in (
-              {{ .Release.Name }}
-            )
         parentRefs:
           - name: gateway-internal
             namespace: network

@@ -5,13 +5,6 @@ kind: HTTPRoute
 metadata:
   name: flux
   annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: flux.png
-    gethomepage.dev/name: Flux
-    gethomepage.dev/group: Infrastructure
-    gethomepage.dev/app: flux
-    gethomepage.dev/description: Kubernetes CD
-    gethomepage.dev/instance: "krezh"
 spec:
   hostnames:
     - flux.talos.plexuz.xyz

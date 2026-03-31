@@ -97,30 +97,6 @@ module "fw-auth" {
       meta_icon               = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/changedetection.png"
       outpost                 = "external"
     }
-    homepage = {
-      app_name                = "Homepage"
-      slug                    = "homepage"
-      app_domain              = "homepage.${var.domain["external"]}"
-      app_group               = ""
-      access_groups           = [data.authentik_group.superuser.id]
-      policy_engine_mode      = "any"
-      authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-      invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
-      meta_icon               = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homepage.png"
-      outpost                 = "external"
-    }
-    home = {
-      app_name                = "Home"
-      slug                    = "home"
-      app_domain              = var.domain["external"]
-      app_group               = ""
-      access_groups           = [resource.authentik_group.users.id, data.authentik_group.superuser.id]
-      policy_engine_mode      = "any"
-      authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-      invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
-      meta_icon               = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homepage.png"
-      outpost                 = "external"
-    }
     homeassistant = {
       app_name                = "Home Assistant"
       slug                    = "homeassistant"
