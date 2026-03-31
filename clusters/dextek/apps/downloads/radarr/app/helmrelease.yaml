@@ -56,34 +56,6 @@ spec:
             resources:
               limits:
                 memory: 2000Mi
-          anubis:
-            image:
-              repository: ghcr.io/techarohq/anubis
-              tag: latest
-            env:
-              # https://anubis.techaro.lol/docs/admin/installation#environment-variables
-              BIND: ":8080"
-              COOKIE_DOMAIN: plexuz.xyz
-              BIND_NETWORK: tcp
-              DIFFICULTY: "5"
-              METRICS_BIND: ":9090"
-              METRICS_BIND_NETWORK: tcp
-              SERVE_ROBOTS_TXT: "true"
-              TARGET: http://localhost:7878
-              OG_PASSTHROUGH: "true"
-              OG_EXPIRY_TIME: 24h
-              CUSTOM_REAL_IP_HEADER: Cf-Connecting-Ip
-            envFrom: *envFrom
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              capabilities:
-                drop:
-                  - ALL
-            resources:
-              requests:
-                cpu: 100m
-                memory: 12Mi
     service:
       app:
         controller: app
@@ -91,8 +63,6 @@ spec:
           http:
             port: 80
             targetPort: *port
-          anubis:
-            port: 8080
     route:
       app:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
@@ -103,7 +73,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: 8080
+                port: 80
       api:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         annotations:
@@ -116,7 +86,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: 8080
+                port: 80
             matches:
               - path:
                   type: PathPrefix
