@@ -57,7 +57,7 @@ spec:
         controller: app
         type: LoadBalancer
         annotations:
-          coredns.io/hostname: enshrouded-lb
+          external-dns.alpha.kubernetes.io/hostname: enshrouded.talos.plexuz.xyz
         externalTrafficPolicy: Local
         ports:
           gameport:
