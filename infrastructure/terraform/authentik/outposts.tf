@@ -9,7 +9,7 @@ resource "authentik_outpost" "internal" {
     "authentik_host_browser"           = "https://sso.${var.domain["external"]}/"
     "authentik_host_insecure"          = false
     "refresh_interval"                 = "minutes=5"
-    "kubernetes_replicas"              = 2
+    "kubernetes_replicas"              = 1
     "kubernetes_namespace"             = "auth"
     "object_naming_template"           = "ak-outpost-%(name)s"
     "kubernetes_service_type"          = "ClusterIP"
@@ -35,7 +35,7 @@ resource "authentik_outpost" "external" {
     "authentik_host_browser"           = "https://sso.${var.domain["external"]}/"
     "authentik_host_insecure"          = false
     "refresh_interval"                 = "minutes=5"
-    "kubernetes_replicas"              = 2
+    "kubernetes_replicas"              = 1
     "kubernetes_namespace"             = "auth"
     "object_naming_template"           = "ak-outpost-%(name)s"
     "kubernetes_service_type"          = "ClusterIP"
