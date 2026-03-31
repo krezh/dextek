@@ -25,12 +25,6 @@ spec:
           enabled: true
           hostnames: ["alertmanager.talos.plexuz.xyz"]
           annotations:
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/name: "Alert Manager"
-            gethomepage.dev/instance: "krezh"
-            gethomepage.dev/group: "Monitoring"
-            gethomepage.dev/icon: "alertmanager.png"
-            gethomepage.dev/pod-selector: >-
               app.kubernetes.io/name in (
                 alertmanager
               )

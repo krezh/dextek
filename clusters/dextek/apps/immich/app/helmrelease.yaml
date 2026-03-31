@@ -127,20 +127,6 @@ spec:
     route:
       external:
         hostnames: ["photos.plexuz.xyz"]
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "{{ .Release.Name | title }}"
-          gethomepage.dev/instance: "krezh"
-          gethomepage.dev/group: "Media"
-          gethomepage.dev/icon: "{{ .Release.Name }}.png"
-          gethomepage.dev/widget.url: "http://immich-server.{{ .Release.Namespace }}.svc.cluster.local:2283"
-          gethomepage.dev/widget.type: "{{ .Release.Name }}"
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_APIKEY}}` }}"
-          gethomepage.dev/widget.version: "2"
-          gethomepage.dev/pod-selector: >-
-            app.kubernetes.io/instance in (
-              {{ .Release.Name }}
-            )
         parentRefs:
           - name: gateway-external
             namespace: network
