@@ -92,6 +92,9 @@ spec:
                 port: 80
       api:
         hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            url: https://{{ .Release.Name }}.plexuz.xyz/ping
         parentRefs:
           - name: gateway-external
             namespace: network
@@ -104,6 +107,9 @@ spec:
               - path:
                   type: PathPrefix
                   value: /api
+              - path:
+                  type: PathPrefix
+                  value: /ping
     persistence:
       config:
         enabled: true
