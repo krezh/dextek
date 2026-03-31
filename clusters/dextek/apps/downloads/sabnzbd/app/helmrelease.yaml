@@ -87,8 +87,7 @@ spec:
       api:
         hostnames: ["sab.plexuz.xyz"]
         annotations:
-          gatus.home-operations.com/endpoint: |-
-            url: https://sab.plexuz.xyz/api?mode=version
+          gatus.home-operations.com/enabled: "false"
         parentRefs:
           - name: gateway-external
             namespace: network
