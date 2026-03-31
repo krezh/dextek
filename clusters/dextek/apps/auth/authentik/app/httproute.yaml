@@ -5,6 +5,8 @@ kind: HTTPRoute
 metadata:
   name: root-domain-redirect
   namespace: auth
+  annotations:
+    gatus.home-operations.com/enabled: "false"
 spec:
   hostnames:
     - plexuz.xyz
