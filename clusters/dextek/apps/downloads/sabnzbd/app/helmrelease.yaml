@@ -101,6 +101,8 @@ spec:
                   value: /
       api:
         hostnames: ["sab.plexuz.xyz"]
+        annotations:
+          gatus.home-operations.com/enabled: "false"
         parentRefs:
           - name: gateway-external
             namespace: network
