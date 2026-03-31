@@ -6,12 +6,6 @@ metadata:
   name: alloy
   namespace: monitoring
   annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: alloy.png
-    gethomepage.dev/name: Alloy
-    gethomepage.dev/group: Monitoring
-    gethomepage.dev/app: alloy
-    gethomepage.dev/instance: "krezh"
 spec:
   hostnames:
     - alloy.talos.plexuz.xyz

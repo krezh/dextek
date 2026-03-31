@@ -178,12 +178,6 @@ spec:
     route:
       dashboard:
         annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Rook"
-          gethomepage.dev/instance: "krezh"
-          gethomepage.dev/group: "Monitoring"
-          gethomepage.dev/icon: "rook.png"
-          gethomepage.dev/pod-selector: ""
         host:
           name: rook.talos.plexuz.xyz
           path: /
