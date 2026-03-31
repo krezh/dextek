@@ -21,7 +21,7 @@ spec:
     controller:
       service:
         annotations:
-          coredns.io/hostname: ingress-internal
+          external-dns.alpha.kubernetes.io/hostname: ingress-internal.talos.plexuz.xyz
         externalTrafficPolicy: Local
       ingressClassResource:
         name: nginx-internal
