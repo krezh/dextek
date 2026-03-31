@@ -69,6 +69,8 @@ spec:
       app:
         hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
         annotations:
+          gatus.home-operations.com/endpoint: |-
+            url: https://{{ .Release.Name }}.talos.plexuz.xyz/healthcheck
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "{{ .Release.Name | title }}"
           gethomepage.dev/instance: "krezh"
