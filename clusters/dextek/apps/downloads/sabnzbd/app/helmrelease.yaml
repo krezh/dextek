@@ -73,6 +73,8 @@ spec:
       app:
         hostnames: ["sab.plexuz.xyz"]
         annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 400"]
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "{{ .Release.Name | title }}"
           gethomepage.dev/instance: "krezh"
