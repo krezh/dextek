@@ -24,10 +24,6 @@ spec:
         main:
           enabled: true
           hostnames: ["alertmanager.talos.plexuz.xyz"]
-          annotations:
-              app.kubernetes.io/name in (
-                alertmanager
-              )
           parentRefs:
             - name: gateway-internal
               namespace: network
