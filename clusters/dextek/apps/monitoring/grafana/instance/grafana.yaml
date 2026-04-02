@@ -43,6 +43,17 @@ spec:
     server:
       enable_gzip: "true"
       root_url: https://grafana.talos.plexuz.xyz
+  httpRoute:
+    spec:
+      hostnames:
+        - grafana.talos.plexuz.xyz
+      parentRefs:
+        - name: gateway-internal
+          namespace: network
+      rules:
+        - backendRefs:
+            - name: grafana-service
+              port: 3000
   deployment:
     spec:
       strategy:
