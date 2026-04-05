@@ -22,6 +22,18 @@ resource "authentik_outpost" "internal" {
         sectionName = "https"
       }
     ]
+    "kubernetes_json_patches" = {
+      deployment = [
+        {
+          op   = "add"
+          path = "/spec/template/spec/containers/0/env/-"
+          value = {
+            name  = "TMPDIR"
+            value = "/tmp"
+          }
+        }
+      ]
+    }
   })
 }
 
@@ -48,5 +60,17 @@ resource "authentik_outpost" "external" {
         sectionName = "https"
       }
     ]
+    "kubernetes_json_patches" = {
+      deployment = [
+        {
+          op   = "add"
+          path = "/spec/template/spec/containers/0/env/-"
+          value = {
+            name  = "TMPDIR"
+            value = "/tmp"
+          }
+        }
+      ]
+    }
   })
 }
