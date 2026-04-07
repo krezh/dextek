@@ -73,8 +73,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: app
-                port: *port
+              - name: jellyfin-anubis
+                port: 8080
             timeouts:
               request: 0s
               backendRequest: 0s
