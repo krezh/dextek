@@ -1,4 +1,12 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  packageRules: [  ],
+  packageRules: [
+    {
+      description: "Disable PostgreSQL major version updates",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["docker.io/postgres"],
+      matchUpdateTypes: ["major"],
+      enabled: false,
+    },
+  ],
 }
