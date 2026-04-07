@@ -1,5 +1,5 @@
 ---
-name: root
+name: attic
 services:
   caddy:
     image: caddy:2-alpine
