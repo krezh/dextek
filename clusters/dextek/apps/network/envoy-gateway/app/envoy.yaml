@@ -160,8 +160,7 @@ spec:
           value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
   clientIPDetection:
     xForwardedFor:
-      trustedCIDRs:
-        - 10.244.0.0/16 # Cluster pod CIDR
+      numTrustedHops: 1
   http2:
     onInvalidMessage: TerminateStream
   http3: {}
