@@ -1,0 +1,9 @@
+---
+working_dir: ./docker/vps-attic
+auto_discover: true
+auto_discover_opts:
+  depth: 1
+  delete: true
+external_secrets:
+  ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64: 5e13949c-f810-489d-88bd-0749b9474dbb:default:/Docker/Attic/ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64
+  ATTIC_DOMAIN: 5e13949c-f810-489d-88bd-0749b9474dbb:default:/Docker/Attic/ATTIC_DOMAIN
