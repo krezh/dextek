@@ -20,7 +20,7 @@ services:
       timeout: 5s
       retries: 3
   attic:
-    image: ghcr.io/zhaofengli/attic@sha256:a9b0f964adfaa19fe156ffc90216a8768e76776b1834e149ba7957729fd8851a
+    image: ghcr.io/zhaofengli/attic@sha256:18574aba70fc89d2b695273fbe2e7b2f8ad7e8e786b4cc535124fbe14bada1d0
     restart: unless-stopped
     environment:
       ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64: "${ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64}"
