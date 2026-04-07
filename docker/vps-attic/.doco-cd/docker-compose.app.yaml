@@ -1,11 +1,6 @@
 ---
 # This file is not managed by doco-cd because it can't manage itself
 
-secrets:
-  infisical_client_id:
-    file: /opt/doco-cd/infisical_client_id
-  infisical_client_secret:
-    file: /opt/doco-cd/infisical_client_secret
 services:
   app:
     container_name: doco-cd
@@ -18,8 +13,8 @@ services:
           interval: 3600
       SECRET_PROVIDER: infisical
       SECRET_PROVIDER_SITE_URL: https://eu.infisical.com
-      SECRET_PROVIDER_CLIENT_ID_FILE: /run/secrets/infisical_client_id
-      SECRET_PROVIDER_CLIENT_SECRET_FILE: /run/secrets/infisical_client_secret
+      SECRET_PROVIDER_CLIENT_ID: ${INFISICAL_CLIENT_ID}
+      SECRET_PROVIDER_CLIENT_SECRET: ${INFISICAL_CLIENT_SECRET}
       TZ: Europe/Stockholm
     healthcheck:
       test:
@@ -32,9 +27,6 @@ services:
       retries: 3
     image: ghcr.io/kimdre/doco-cd:0.76.0@sha256:ef0df49fca5ccaa4c4e01e13bf99d15609c093dd08f53f0c94dacac2a72ed4bd
     restart: unless-stopped
-    secrets:
-      - infisical_client_id
-      - infisical_client_secret
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - data:/data
