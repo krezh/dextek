@@ -119,6 +119,7 @@
       },
       separateMinorPatch: true,
       sourceUrl: "https://github.com/goauthentik/authentik",
+      changelogUrl: "https://github.com/goauthentik/authentik/releases/tag/version%2F{{{version}}}",
     },
     {
       description: ["Dragonfly Operator Group"],
