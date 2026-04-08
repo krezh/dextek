@@ -119,7 +119,7 @@
       },
       separateMinorPatch: true,
       sourceUrl: "https://github.com/goauthentik/authentik",
-      extractVersion: "^(?:version/)?(?<version>.+)$",
+      versioning: "regex:^(?:version/)?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
     },
     {
       description: ["Dragonfly Operator Group"],
