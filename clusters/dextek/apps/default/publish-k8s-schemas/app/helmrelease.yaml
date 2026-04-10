@@ -14,17 +14,17 @@ spec:
       publish-k8s-schemas:
         type: cronjob
         cronjob:
-          schedule: "0 */4 * * *"
-          concurrencyPolicy: "Replace"
-          backoffLimit: 0
+          backoffLimit: 4
+          concurrencyPolicy: Forbid
           failedJobsHistory: 1
-          successfulJobsHistory: 0
+          schedule: "0 */4 * * *"
+          successfulJobsHistory: 1
         pod:
           restartPolicy: OnFailure
           securityContext:
-            runAsUser: 65534
             runAsGroup: 65534
             runAsNonRoot: true
+            runAsUser: 65534
         initContainers:
           generate-schemas:
             image:
@@ -45,35 +45,57 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/bjw-s-labs/wrangler
-              tag: 4.78.0@sha256:bb9450fce0992b13b3b399f08a93e41af2d6e933c3597e9460916967763096f5
-            envFrom:
-              - secretRef:
-                  name: publish-k8s-schemas-secret
-            args:
-              - pages
-              - deploy
-              - /data/crdSchemas
-              - --project-name
-              - kubernetes-schemas
+              repository: alpine/git
+              tag: v2.52.0
+            env:
+              GIT_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: publish-k8s-schemas-secret
+                    key: GIT_TOKEN
+              GIT_REPO: github.com/krezh/k8s-schemas.git
+              GIT_AUTHOR_NAME:
+                value: &git_author k8s-schemas-bot
+              GIT_AUTHOR_EMAIL:
+                value: &git_author_email k8s-schemas-bot@plexuz.xyz
+              GIT_COMMITTER_NAME:
+                value: *git_author
+              GIT_COMMITTER_EMAIL:
+                value: *git_author_email
+            command:
+              - /bin/sh
+              - -c
+              - |
+                set -eu
+                export HOME=/tmp
+                git clone --depth=1 \
+                  "https://x-access-token:${GIT_TOKEN}@${GIT_REPO}" \
+                  /tmp/repo
+                mkdir -p /tmp/repo/schemas
+                cp -r /data/crdSchemas/. /tmp/repo/schemas/
+                cd /tmp/repo
+                git add .
+                if git diff --cached --quiet; then
+                  echo "No changes to commit"
+                  exit 0
+                fi
+                git commit -m "chore: update CRD schemas ($(date -u '+%Y-%m-%dT%H:%M:%SZ'))"
+                git push
             resources:
               requests:
                 cpu: 10m
                 memory: 128Mi
               limits:
-                memory: 1Gi
+                memory: 128Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities:
                 drop:
                   - ALL
-    serviceAccount:
-      publish-k8s-schemas: {}
     persistence:
       tmpfs:
         type: emptyDir
-        medium: Memory
         advancedMounts:
           publish-k8s-schemas:
             generate-schemas:
@@ -82,10 +104,12 @@ spec:
               - path: /tmp
                 subPath: tmp
             app:
-              - path: /config
-                subPath: config
               - path: /data
                 subPath: data
+              - path: /tmp
+                subPath: tmp
+    serviceAccount:
+      publish-k8s-schemas: {}
     rbac:
       roles:
         publish-k8s-schemas:
