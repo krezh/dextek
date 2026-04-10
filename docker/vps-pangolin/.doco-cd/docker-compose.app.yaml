@@ -1,0 +1,38 @@
+---
+# This file is not managed by doco-cd because it can't manage itself
+
+services:
+  app:
+    container_name: doco-cd
+    environment:
+      DEPLOY_CONFIG_BASE_DIR: ./docker/vps-pangolin/
+      LOG_LEVEL: info
+      POLL_CONFIG: |-
+        - url: https://github.com/krezh/dextek.git
+          reference: main
+          interval: 3600
+      SECRET_PROVIDER: infisical
+      SECRET_PROVIDER_SITE_URL: https://eu.infisical.com
+      SECRET_PROVIDER_CLIENT_ID: ${INFISICAL_CLIENT_ID}
+      SECRET_PROVIDER_CLIENT_SECRET: ${INFISICAL_CLIENT_SECRET}
+      TZ: Europe/Stockholm
+    healthcheck:
+      test:
+        - CMD
+        - /doco-cd
+        - healthcheck
+      start_period: 15s
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    image: ghcr.io/kimdre/doco-cd:0.77.0@sha256:3ca4f69ddf11eabe32cfd09ded1a129195ded93e32ca31b3f808e6c251dc0d51
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - data:/data
+volumes:
+  data: {}
+networks:
+  default:
+    name: pangolin
+    external: true
