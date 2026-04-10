@@ -153,9 +153,15 @@ kind: ClientTrafficPolicy
 metadata:
   name: envoy
 spec:
+  headers:
+    earlyRequestHeaders:
+      set:
+        - name: X-Real-Ip
+          value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
   clientIPDetection:
     xForwardedFor:
-      numTrustedHops: 1
+      trustedCIDRs:
+        - 10.244.0.0/16
   http2:
     onInvalidMessage: TerminateStream
   http3: {}
