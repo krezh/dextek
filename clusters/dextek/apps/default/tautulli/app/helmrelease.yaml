@@ -19,7 +19,6 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
     controllers:
       app:
-        type: statefulset
         containers:
           app:
             image:
