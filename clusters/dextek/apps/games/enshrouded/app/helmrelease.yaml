@@ -29,7 +29,6 @@ spec:
               - "/bin/sh"
               - "-c"
               - "cp /tmp/enshrouded_server.json /home/steam/enshrouded/enshrouded_server.json; cat /home/steam/enshrouded/enshrouded_server.json;"
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
