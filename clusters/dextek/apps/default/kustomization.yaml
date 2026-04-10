@@ -22,6 +22,7 @@ resources:
   - ./karakeep
   - ./wakapi
   - ./tracearr
+  - ./attic
 transformers:
   - |-
     apiVersion: builtin

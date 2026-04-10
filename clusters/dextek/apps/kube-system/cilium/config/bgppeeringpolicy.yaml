@@ -65,7 +65,7 @@ metadata:
   name: kube-api
   annotations:
     lbipam.cilium.io/ips: 192.168.25.20
-    external-dns.alpha.kubernetes.io/hostname: ${CLUSTER_NAME}.talos.plexuz.xyz
+    external-dns.alpha.kubernetes.io/hostname: dextek.talos.plexuz.xyz
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
