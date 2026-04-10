@@ -68,10 +68,8 @@ spec:
               - |
                 set -eu
                 export HOME=/tmp
-                echo "DEBUG GIT_REPO=[${GIT_REPO}]"
-                echo "DEBUG TOKEN_LEN=${#GIT_TOKEN}"
                 git clone --depth=1 \
-                  "https://x-access-token:${GIT_TOKEN}@${GIT_REPO}" \
+                  "https://x-access-token:$${GIT_TOKEN}@$${GIT_REPO}" \
                   /tmp/repo
                 mkdir -p /tmp/repo/schemas
                 cp -r /data/crdSchemas/. /tmp/repo/schemas/
