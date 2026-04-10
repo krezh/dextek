@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/externaldns.k8s.io/dnsendpoint_v1alpha1.json
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: pangolin
+spec:
+  endpoints:
+    - dnsName: ingress-ext.plexuz.xyz
+      recordType: A
+      targets:
+        - 62.238.2.224
+    - dnsName: pangolin.plexuz.xyz
+      recordType: CNAME
+      targets:
+        - ingress-ext.plexuz.xyz
+    - dnsName: pangolin-api.plexuz.xyz
+      recordType: CNAME
+      targets:
+        - ingress-ext.plexuz.xyz
