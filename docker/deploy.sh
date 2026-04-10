@@ -26,6 +26,6 @@ if [ ! -f "$PROJECT_DIR/.doco-cd/docker-compose.app.yaml" ]; then
 fi
 
 echo "Deploying $PROJECT_NAME..."
-docker compose --project-directory "$PROJECT_DIR" -f ".doco-cd/docker-compose.app.yaml" up -d
+docker compose --project-directory "$PROJECT_DIR" --env-file "$PROJECT_DIR/.env" -f "$PROJECT_DIR/.doco-cd/docker-compose.app.yaml" up -d
 
 echo "Done!"
