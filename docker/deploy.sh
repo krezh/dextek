@@ -31,7 +31,10 @@ COMPOSE="docker compose --project-directory $PROJECT_DIR --env-file $PROJECT_DIR
 case "$ACTION" in
     up)
         if ! docker network inspect pangolin &>/dev/null; then
-            docker network create pangolin
+            docker network create \
+                --label com.docker.compose.network=default \
+                --label com.docker.compose.project=pangolin \
+                pangolin
         fi
         echo "Deploying $PROJECT_NAME..."
         $COMPOSE up -d
