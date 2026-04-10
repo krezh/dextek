@@ -54,6 +54,7 @@ machine:
   certSANs: &sans
     - ${cluster_endpoint}
     - ${cluster_vip}
+    - ${cluster_name}.talos.plexuz.xyz
     - 127.0.0.1
     - localhost
   network:
