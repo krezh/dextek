@@ -35,4 +35,3 @@ volumes:
 networks:
   default:
     name: pangolin
-    external: true
