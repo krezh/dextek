@@ -25,6 +25,10 @@ if [ ! -f "$PROJECT_DIR/.doco-cd/docker-compose.app.yaml" ]; then
     exit 1
 fi
 
+if ! docker network inspect pangolin &>/dev/null; then
+    docker network create pangolin
+fi
+
 echo "Deploying $PROJECT_NAME..."
 docker compose --project-directory "$PROJECT_DIR" --env-file "$PROJECT_DIR/.env" -f "$PROJECT_DIR/.doco-cd/docker-compose.app.yaml" up -d
 
