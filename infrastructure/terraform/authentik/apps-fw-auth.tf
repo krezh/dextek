@@ -110,7 +110,7 @@ module "fw-auth" {
       outpost                 = "external"
     }
     pinchflat = {
-      app_name                = "pinchflat"
+      app_name                = "Pinchflat"
       slug                    = "pinchflat"
       app_domain              = "pinchflat.${var.domain["internal"]}"
       app_group               = "Downloads"
@@ -120,6 +120,18 @@ module "fw-auth" {
       invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
       meta_icon               = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/pinchflat.png"
       outpost                 = "internal"
+    }
+    librespeed = {
+      app_name                = "LibreSpeed"
+      slug                    = "librespeed"
+      app_domain              = "speed.${var.domain["external"]}"
+      app_group               = "Tools"
+      access_groups           = [data.authentik_group.superuser.id, authentik_group.users.id]
+      policy_engine_mode      = "any"
+      authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
+      invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
+      meta_icon               = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/librespeed.png"
+      outpost                 = "external"
     }
   }
 }

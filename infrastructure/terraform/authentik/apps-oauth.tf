@@ -33,7 +33,7 @@ module "oauth_apps" {
     immich = {
       external   = true
       app_domain = "photos.${var.domain["external"]}"
-      app_group  = "Tools"
+      app_group  = "Media"
       access_groups = [
         data.authentik_group.superuser.id
       ]

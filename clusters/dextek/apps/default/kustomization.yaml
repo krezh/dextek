@@ -23,6 +23,7 @@ resources:
   - ./wakapi
   - ./tracearr
   - ./attic
+  - ./librespeed
 transformers:
   - |-
     apiVersion: builtin

@@ -41,6 +41,7 @@ resource "authentik_outpost" "LDAP" {
 resource "authentik_application" "jellyfin" {
   name              = "Jellyfin"
   slug              = "jellyfin"
+  group             = "Media"
   meta_icon         = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png"
   meta_description  = "Requests: https://requests.${var.domain["external"]}"
   meta_launch_url   = "https://jellyfin.${var.domain["external"]}"
