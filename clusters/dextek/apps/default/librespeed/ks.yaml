@@ -25,4 +25,4 @@ spec:
     substitute:
       APP: *app
       EXT_AUTH_OUTPOST: external
-      EXT_AUTH_TARGET: librespeed-external
+      EXT_AUTH_TARGET: *app
