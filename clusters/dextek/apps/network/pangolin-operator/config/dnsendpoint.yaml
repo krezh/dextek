@@ -18,3 +18,7 @@ spec:
       recordType: CNAME
       targets:
         - ingress-ext.plexuz.xyz
+    - dnsName: pangolin-doco.plexuz.xyz
+      recordType: CNAME
+      targets:
+        - ingress-ext.plexuz.xyz
