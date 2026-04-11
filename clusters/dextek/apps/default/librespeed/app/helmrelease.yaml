@@ -1,0 +1,72 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name librespeed
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: librespeed
+  values:
+    fullnameOverride: *name
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      hostUsers: false
+      enableServiceLinks: false
+      securityContext:
+        # https://github.com/librespeed/speedtest/issues/663
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: false
+    controllers:
+      librespeed:
+        strategy: RollingUpdate
+        containers:
+          librespeed:
+            image:
+              repository: ghcr.io/librespeed/speedtest
+              tag: 5.5.1@sha256:1c8ca636a9b68d023c819c5ce6e7fab3f5214b963138eb9ef6aaddf9ae111c77
+            env:
+              MODE: standalone
+            probes:
+              liveness: &probes
+                enabled: true
+              readiness: *probes
+              startup: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              # cp: cannot create regular file '/var/www/html/speedtest.js': Read-only file system
+              readOnlyRootFilesystem: false
+              capabilities:
+                add:
+                  - CHOWN
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 100Mi
+    service:
+      librespeed:
+        controller: *name
+        ports:
+          http:
+            port: &port 8080
+    route:
+      app:
+        hostnames:
+          - speed.plexuz.xyz
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: librespeed
+                port: *port
