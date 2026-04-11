@@ -8,7 +8,7 @@ spec:
   name: dextek
   autoDiscover:
     annotationPrefix: pangolin-operator
-    denyCountries: RU,CN,KP,IR,BY,IL
+    denyCountries: RU,CN,KP,IR,BY,IL,TR,KZ
     gatewayName: gateway-external
     gatewayNamespace: network
     ssl: true
