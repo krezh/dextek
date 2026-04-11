@@ -28,8 +28,8 @@ spec:
         containers:
           librespeed:
             image:
-              repository: ghcr.io/librespeed/speedtest-rust
-              tag: v1.4.0
+              repository: ghcr.io/librespeed/speedtest
+              tag: 5.5.1@sha256:1c8ca636a9b68d023c819c5ce6e7fab3f5214b963138eb9ef6aaddf9ae111c77
             env:
               MODE: standalone
             probes:
