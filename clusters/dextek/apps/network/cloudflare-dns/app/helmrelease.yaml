@@ -35,7 +35,8 @@ spec:
     sources: ["crd", gateway-httproute]
     txtPrefix: k8s.
     txtOwnerId: dextek
-    domainFilters: ["plexuz.xyz"]
+    domainFilters:
+      - plexuz.xyz
     serviceMonitor:
       enabled: true
     podAnnotations:
