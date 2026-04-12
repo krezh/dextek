@@ -143,6 +143,9 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
   tcpKeepalive: {}
+  http2:
+    initialConnectionWindowSize: 64Mi
+    initialStreamWindowSize: 64Mi
   timeout:
     http:
       connectionIdleTimeout: 15s
