@@ -19,7 +19,7 @@ spec:
     controllers:
       app:
         type: deployment
-        replicas: 3
+        replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -67,11 +67,6 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 4000Mi
-      gc:
-        type: statefulset
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
           gc:
             image:
               repository: ghcr.io/zhaofengli/attic
@@ -89,7 +84,8 @@ spec:
         controller: app
         ports:
           http:
-            port: *port
+            port: 8080
+            targetPort: *port
     route:
       external:
         hostnames: ["nix-cache.plexuz.xyz"]
@@ -102,7 +98,7 @@ spec:
               - name: *app
                 port: *port
       internal:
-        hostnames: ["nix-cache.plexuz.xyz"]
+        hostnames: ["nix-cache.talos.plexuz.xyz"]
         parentRefs:
           - name: gateway-internal
             namespace: network
@@ -111,7 +107,12 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+
     persistence:
+      config:
+        existingClaim: attic-config
+        globalMounts:
+          - path: /config/store
       server-config:
         type: configMap
         name: attic-configmap
