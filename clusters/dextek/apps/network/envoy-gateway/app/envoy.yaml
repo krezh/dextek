@@ -144,9 +144,9 @@ spec:
       kind: Gateway
   tcpKeepalive: {}
   http2:
-    maxConcurrentStreams: 10000
-    initialConnectionWindowSize: 128Mi
-    initialStreamWindowSize: 128Mi
+    maxConcurrentStreams: 1000
+    initialConnectionWindowSize: 64Mi
+    initialStreamWindowSize: 64Mi
   timeout:
     http:
       connectionIdleTimeout: 15s
@@ -169,9 +169,9 @@ spec:
         - 10.244.0.0/16
   http2:
     onInvalidMessage: TerminateStream
-    maxConcurrentStreams: 10000
-    initialConnectionWindowSize: 128Mi
-    initialStreamWindowSize: 128Mi
+    maxConcurrentStreams: 1000
+    initialConnectionWindowSize: 64Mi
+    initialStreamWindowSize: 64Mi
   http3: {}
   targetSelectors:
     - group: gateway.networking.k8s.io
