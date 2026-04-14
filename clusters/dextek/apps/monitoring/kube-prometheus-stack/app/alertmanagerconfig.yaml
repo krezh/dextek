@@ -79,7 +79,7 @@ spec:
           ttl: 3600s
           token:
             name: &secret alertmanager-secret
-            key: PUSHOVER_TOKEN
+            key: ALERTMANAGER_PUSHOVER_TOKEN
           userKey:
             name: *secret
             key: PUSHOVER_USER_KEY
