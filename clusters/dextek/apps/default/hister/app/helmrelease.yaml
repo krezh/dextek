@@ -26,7 +26,7 @@ spec:
               tag: latest
             env:
               HISTER__SERVER__ADDRESS: 0.0.0.0:8080
-              HISTER__SERVER__BASE_URL: https://hister.plexuz.xyz
+              HISTER__SERVER__BASE_URL: https://hister.talos.plexuz.xyz
             resources:
               requests:
                 cpu: 15m
@@ -41,9 +41,9 @@ spec:
             port: &port 8080
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
         parentRefs:
-          - name: gateway-external
+          - name: gateway-internal
             namespace: network
             sectionName: https
         rules:
