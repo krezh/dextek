@@ -6,6 +6,6 @@ metadata:
   name: infrastructure
 spec:
   interval: 1m
-  url: oci://ghcr.io/krezh/manifests/infrastructure
   ref:
     tag: main
+  url: oci://ghcr.io/krezh/manifests/infrastructure
