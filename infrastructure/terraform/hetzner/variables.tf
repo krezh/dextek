@@ -3,5 +3,5 @@ variable "ssh_user" {
 }
 
 locals {
-  ssh_key = file("~/.ssh/id_ed25519")
+  ssh_key = fileexists("~/.ssh/id_ed25519") ? file("~/.ssh/id_ed25519") : ephemeral.infisical_secret.ssh_private_key.value
 }
