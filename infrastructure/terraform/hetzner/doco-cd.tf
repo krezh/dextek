@@ -1,5 +1,5 @@
 resource "docker_network" "pangolin" {
-  depends_on = [ssh_resource.docker_install]
+  depends_on = [ssh_resource.docker_tls_setup]
 
   name   = "pangolin"
   driver = "bridge"
@@ -16,13 +16,13 @@ resource "docker_network" "pangolin" {
 }
 
 resource "docker_volume" "doco_cd_data" {
-  depends_on = [ssh_resource.docker_install]
+  depends_on = [ssh_resource.docker_tls_setup]
 
   name = "doco_cd_data"
 }
 
 resource "docker_image" "doco_cd" {
-  depends_on = [ssh_resource.docker_install]
+  depends_on = [ssh_resource.docker_tls_setup]
 
   name = "ghcr.io/kimdre/doco-cd:0.80.0@sha256:85e26d3cc4f3927bf865f3544cc30abb5f6551cdd96c8a10396eaeb0f019f4a5"
 }

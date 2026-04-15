@@ -37,6 +37,14 @@ resource "hcloud_firewall" "pangolin" {
   name = "Pangolin"
 
   rule {
+    description = "Docker TLS"
+    direction   = "in"
+    protocol    = "tcp"
+    port        = "2376"
+    source_ips  = ["0.0.0.0/0", "::/0"]
+  }
+
+  rule {
     description = "SSH Tunneling"
     direction   = "in"
     protocol    = "tcp"

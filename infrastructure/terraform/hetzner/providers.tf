@@ -23,6 +23,10 @@ terraform {
       source  = "loafoe/ssh"
       version = "2.7.0"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "4.1.0"
+    }
   }
 }
 
@@ -35,7 +39,9 @@ provider "hcloud" {
 }
 
 provider "docker" {
-  host     = "ssh://${var.ssh_user}@${hcloud_server.pangolin.ipv4_address}"
-  ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-i", pathexpand("~/.ssh/id_ed25519")]
+  host          = "tcp://${hcloud_server.pangolin.ipv4_address}:2376"
+  ca_material   = tls_self_signed_cert.docker_ca.cert_pem
+  cert_material = tls_locally_signed_cert.docker_client.cert_pem
+  key_material  = tls_private_key.docker_client.private_key_pem
 }
 
