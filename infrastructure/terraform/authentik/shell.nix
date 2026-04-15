@@ -9,12 +9,12 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
-    export TF_VAR_infisical_client_id=$(infisical secrets get INFISICAL_CLIENT_ID \
+    export INFISICAL_UNIVERSAL_AUTH_CLIENT_ID=$(infisical secrets get INFISICAL_ID \
       --env default \
       --path=/Kubernetes/DexTek/TFController \
       --plain)
 
-    export TF_VAR_infisical_client_secret=$(infisical secrets get INFISICAL_CLIENT_SECRET \
+    export INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET=$(infisical secrets get INFISICAL_SECRET \
       --env=default \
       --path=/Kubernetes/DexTek/TFController \
       --plain)
