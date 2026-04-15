@@ -1,11 +1,3 @@
-variable "infisical_client_id" {
-  sensitive = true
-}
-
-variable "infisical_client_secret" {
-  sensitive = true
-}
-
 variable "ssh_user" {
   default = "root"
 }
