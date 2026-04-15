@@ -24,7 +24,7 @@ resource "docker_volume" "doco_cd_data" {
 resource "docker_image" "doco_cd" {
   depends_on = [ssh_resource.docker_tls_setup]
 
-  name = "ghcr.io/kimdre/doco-cd:0.80.0@sha256:85e26d3cc4f3927bf865f3544cc30abb5f6551cdd96c8a10396eaeb0f019f4a5"
+  name = "ghcr.io/kimdre/doco-cd:0.80.1@sha256:a0ab70473dfa746ce132b2142168ce7295c20d901fd6d3d26b470a19efa6335f"
 }
 
 resource "docker_container" "doco_cd" {
