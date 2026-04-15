@@ -1,6 +1,5 @@
 resource "tls_private_key" "docker_ca" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+  algorithm = "ED25519"
 }
 
 resource "tls_self_signed_cert" "docker_ca" {
@@ -17,8 +16,7 @@ resource "tls_self_signed_cert" "docker_ca" {
 }
 
 resource "tls_private_key" "docker_server" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+  algorithm = "ED25519"
 }
 
 resource "tls_cert_request" "docker_server" {
@@ -42,8 +40,7 @@ resource "tls_locally_signed_cert" "docker_server" {
 }
 
 resource "tls_private_key" "docker_client" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+  algorithm = "ED25519"
 }
 
 resource "tls_cert_request" "docker_client" {
