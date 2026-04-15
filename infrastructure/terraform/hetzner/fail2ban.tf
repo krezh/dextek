@@ -30,7 +30,7 @@ resource "ssh_resource" "fail2ban_config_cleanup" {
 }
 
 resource "docker_image" "fail2ban" {
-  depends_on = [ssh_resource.docker_install]
+  depends_on = [ssh_resource.docker_tls_setup]
 
   name = "crazymax/fail2ban:1.1.0"
 }
@@ -38,7 +38,7 @@ resource "docker_image" "fail2ban" {
 resource "docker_container" "fail2ban" {
   depends_on = [
     ssh_resource.fail2ban_config,
-    ssh_resource.docker_install
+    ssh_resource.docker_tls_setup
   ]
 
   name         = "fail2ban"
