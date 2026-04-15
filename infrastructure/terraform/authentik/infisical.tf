@@ -15,53 +15,59 @@ ephemeral "infisical_secret" "authentik_token" {
 data "infisical_secrets" "grafana" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Grafana"
+  folder_path  = "/Kubernetes/DexTek/Grafana"
 }
 
 data "infisical_secrets" "mealie" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Mealie"
+  folder_path  = "/Kubernetes/DexTek/Mealie"
 }
 
 data "infisical_secrets" "immich" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Immich"
+  folder_path  = "/Kubernetes/DexTek/Immich"
 }
 
 data "infisical_secrets" "zipline" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Zipline"
+  folder_path  = "/Kubernetes/DexTek/Zipline"
 }
 
 data "infisical_secrets" "kubernetes" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Kubernetes"
+  folder_path  = "/Kubernetes/DexTek/Kubernetes"
 }
 
 data "infisical_secrets" "karakeep" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Karakeep"
+  folder_path  = "/Kubernetes/DexTek/Karakeep"
 }
 
 data "infisical_secrets" "wakapi" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Wakapi"
+  folder_path  = "/Kubernetes/DexTek/Wakapi"
 }
 
 data "infisical_secrets" "plex" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Plex"
+  folder_path  = "/Kubernetes/DexTek/Plex"
 }
 
 data "infisical_secrets" "pangolin" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
   folder_path  = "/Terraform/Authentik/Pangolin"
+}
+
+data "infisical_secrets" "miniflux" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Miniflux"
 }
