@@ -25,6 +25,7 @@ resources:
   - ./attic
   - ./librespeed
   - ./notifier
+  - ./hister
 transformers:
   - |-
     apiVersion: builtin
