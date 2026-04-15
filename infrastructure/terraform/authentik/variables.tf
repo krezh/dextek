@@ -6,3 +6,11 @@ variable "domain" {
     internal = "talos.plexuz.xyz"
   }
 }
+
+variable "infisical_client_id" {
+  sensitive = true
+}
+
+variable "infisical_client_secret" {
+  sensitive = true
+}
