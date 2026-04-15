@@ -3,13 +3,13 @@
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
-  name: authentik
+  name: hetzner
   namespace: flux-system
 spec:
   suspend: false
   approvePlan: auto
   interval: 12h
-  path: ./authentik
+  path: ./dextek/hetzner
   sourceRef:
     kind: OCIRepository
     name: infrastructure

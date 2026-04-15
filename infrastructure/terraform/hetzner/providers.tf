@@ -3,29 +3,27 @@ terraform {
     organization = "krezh"
     hostname     = "app.terraform.io"
     workspaces {
-      name = "authentik"
+      name = "hetzner"
     }
   }
   required_providers {
-    authentik = {
-      source  = "goauthentik/authentik"
-      version = "2025.12.1"
-    }
-    sops = {
-      source  = "carlpett/sops"
-      version = "1.4.1"
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = "1.60.1"
     }
     infisical = {
       source  = "Infisical/infisical"
       version = "0.16.15"
     }
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "4.2.0"
+    }
+    ssh = {
+      source  = "loafoe/ssh"
+      version = "2.7.0"
+    }
   }
-}
-
-provider "sops" {}
-
-data "sops_file" "secrets" {
-  source_file = "secret.sops.yaml"
 }
 
 provider "infisical" {
@@ -38,7 +36,11 @@ provider "infisical" {
   }
 }
 
-provider "authentik" {
-  url   = "https://sso.${var.domain["external"]}"
-  token = ephemeral.infisical_secret.authentik_token.value
+provider "hcloud" {
+  token = ephemeral.infisical_secret.hcloud_token.value
 }
+
+provider "docker" {
+  host = "ssh://${var.ssh_user}@${hcloud_server.pangolin.ipv4_address}"
+}
+
