@@ -22,6 +22,18 @@ spec:
     name: tf-controller-tfrc-secret
   runnerPodTemplate:
     spec:
+      volumeMounts:
+        - name: ssh-key
+          mountPath: /home/runner/.ssh/id_ed25519
+          subPath: id_ed25519
+      volumes:
+        - name: ssh-key
+          secret:
+            secretName: tf-controller-infisical-secret
+            defaultMode: 0600
+            items:
+              - key: SSH_PRIVATE_KEY
+                path: id_ed25519
       envFrom:
         - secretRef:
             name: tf-controller-infisical-secret
