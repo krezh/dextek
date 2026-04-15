@@ -36,6 +36,6 @@ provider "hcloud" {
 
 provider "docker" {
   host     = "ssh://${var.ssh_user}@${hcloud_server.pangolin.ipv4_address}"
-  ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null"]
+  ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-i", pathexpand("~/.ssh/id_ed25519")]
 }
 
