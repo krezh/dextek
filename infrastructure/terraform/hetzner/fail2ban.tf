@@ -9,11 +9,11 @@ resource "ssh_resource" "fail2ban_config" {
   user        = var.ssh_user
   private_key = local.ssh_key
 
-  pre_commands = ["mkdir -p /opt/fail2ban/jail.d/${dirname(each.value)}"]
+  pre_commands = ["mkdir -p /opt/fail2ban/${dirname(each.value)}"]
 
   file {
     content     = file("${path.module}/fail2ban/${each.value}")
-    destination = "/opt/fail2ban/jail.d/${each.value}"
+    destination = "/opt/fail2ban/${each.value}"
     permissions = "0644"
   }
 }
@@ -26,7 +26,7 @@ resource "ssh_resource" "fail2ban_config_cleanup" {
   user        = var.ssh_user
   private_key = local.ssh_key
 
-  commands = ["rm -f /opt/fail2ban/jail.d/${each.value}"]
+  commands = ["rm -f /opt/fail2ban/${each.value}"]
 }
 
 resource "docker_image" "fail2ban" {
@@ -54,6 +54,11 @@ resource "docker_container" "fail2ban" {
     "TZ=UTC",
     "F2B_LOG_LEVEL=INFO",
   ]
+
+  volumes {
+    host_path      = "/var/run/docker.sock"
+    container_path = "/var/run/docker.sock"
+  }
 
   volumes {
     host_path      = "/var/log"
