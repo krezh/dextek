@@ -10,8 +10,7 @@ ephemeral "infisical_secret" "hcloud_token" {
   folder_path  = "/Terraform/Hetzner"
 }
 
-ephemeral "infisical_secret" "ssh_private_key" {
-  name         = "SSH_PRIVATE_KEY"
+data "infisical_secrets" "hetzner" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
   folder_path  = "/Terraform/Hetzner"
