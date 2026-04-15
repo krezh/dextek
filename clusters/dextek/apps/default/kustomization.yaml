@@ -26,6 +26,7 @@ resources:
   - ./librespeed
   - ./notifier
   - ./hister
+  - ./miniflux
 transformers:
   - |-
     apiVersion: builtin

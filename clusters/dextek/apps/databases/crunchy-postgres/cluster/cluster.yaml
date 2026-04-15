@@ -124,6 +124,10 @@ spec:
       databases: ["tracearr"]
       password:
         type: AlphaNumeric
+    - name: "miniflux"
+      databases: ["miniflux"]
+      password:
+        type: AlphaNumeric
   backups:
     pgbackrest:
       configuration: &backupConfig
