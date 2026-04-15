@@ -107,5 +107,16 @@ module "oauth_apps" {
       redirect_uri_paths = ["/auth/idp/1/oidc/callback"]
       meta_description   = "Self-hosted Cloudflare Tunnels"
     }
+    miniflux = {
+      external  = true
+      app_group = "Tools"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = data.infisical_secrets.miniflux.secrets["MINIFLUX_OAUTH_CLIENT_ID"].value
+      client_secret      = data.infisical_secrets.miniflux.secrets["MINIFLUX_OAUTH_CLIENT_SECRET"].value
+      redirect_uri_paths = ["/oauth2/oidc/callback"]
+      meta_description   = "Self-hosted RSS"
+    }
   }
 }
