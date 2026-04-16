@@ -11,43 +11,52 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   changed-clusters:
     name: Changed Clusters
     runs-on: ubuntu-latest
+    environment: prod
+    permissions:
+      contents: read
     outputs:
-      matrix: ${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}
+      matrix: ${{ steps.changed-clusters.outputs.changed_files }}
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         id: app-token
         with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
+          client-id: "${{ secrets.BOT_APP_ID }}"
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: "${{ steps.app-token.outputs.token }}"
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Get Changed Clusters
         id: changed-clusters
-        uses: JJGadgets/tj-actions-changed-files@9200e69727eb73eb060652b19946b8a2fdfb654b
+        uses: bjw-s-labs/action-changed-files@a9a36fb08ce06db9b02fbd8026cc2c0945eb9841 # v0.6.0
         with:
-          files: clusters/**
-          files_ignore: clusters/shared/**
-          dir_names: true
-          dir_names_max_depth: 2
-          matrix: true
+          patterns: |
+            clusters/**
+            !clusters/shared/**
+          include_only_directories: true
+          max_depth: 2
 
       - name: List All Changed Clusters
-        run: echo "${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}"
+        env:
+          CHANGED_FILES: ${{ steps.changed-clusters.outputs.changed_files }}
+        run: echo "$CHANGED_FILES"
 
   extract-images:
     name: Extract Images
     runs-on: ubuntu-latest
     needs: ["changed-clusters"]
+    environment: prod
     permissions:
       pull-requests: write
     strategy:
@@ -62,7 +71,7 @@ jobs:
         uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3
         id: app-token
         with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
+          client-id: "${{ secrets.BOT_APP_ID }}"
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Setup yq
@@ -78,6 +87,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: "${{ steps.app-token.outputs.token }}"
+          persist-credentials: false
           ref: "${{ github.event.repository.default_branch }}"
           path: default
 
@@ -85,6 +95,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: "${{ steps.app-token.outputs.token }}"
+          persist-credentials: false
           path: pull
 
       - name: Gather Images in Default Branch
@@ -134,6 +145,7 @@ jobs:
     name: Test images
     runs-on: ubuntu-latest
     needs: ["extract-images"]
+    permissions: {}
     strategy:
       matrix:
         images: ${{ fromJSON(needs.extract-images.outputs.matrix) }}
@@ -141,7 +153,9 @@ jobs:
       fail-fast: false
     steps:
       - name: Inspect Image
-        run: docker buildx imagetools inspect ${{ matrix.images }}
+        env:
+          IMAGE: ${{ matrix.images }}
+        run: docker buildx imagetools inspect "$IMAGE"
 
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   test-images-success:
@@ -149,6 +163,7 @@ jobs:
     needs: ["test-images"]
     name: Test Images Successful
     runs-on: ubuntu-latest
+    permissions: {}
     steps:
       - if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         name: Check matrix status
