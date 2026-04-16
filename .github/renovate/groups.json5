@@ -183,7 +183,7 @@
     {
       description: ["Pangolin Group"],
       groupName: "Pangolin",
-      matchPackagePatterns: ["Pangolin"],
+      matchPackagePatterns: ["pangolin-operator"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
