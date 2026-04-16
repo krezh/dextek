@@ -180,5 +180,15 @@
       separateMinorPatch: true,
       sourceUrl: "https://github.com/jellyfin/jellyfin",
     },
+    {
+      description: ["Pangolin Group"],
+      groupName: "Pangolin",
+      matchPackagePatterns: ["Pangolin"],
+      matchDatasources: ["docker", "github-releases"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+    },
   ],
 }
