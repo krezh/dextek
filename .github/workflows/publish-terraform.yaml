@@ -11,6 +11,7 @@ jobs:
   publish-infrastructure:
     name: Publish Infrastructure
     runs-on: ubuntu-latest
+    environment: prod
     permissions:
       packages: write
       id-token: write
@@ -19,13 +20,14 @@ jobs:
         uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         id: app-token
         with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
+          client-id: "${{ secrets.BOT_APP_ID }}"
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: "${{ steps.app-token.outputs.token }}"
+          persist-credentials: false
 
       - name: Setup Cosign
         uses: sigstore/cosign-installer@cad07c2e89fa2edd6e2d7bab4c1aa38e53f76003 # v4.1.1
@@ -47,6 +49,8 @@ jobs:
 
       - name: Publish manifests
         shell: bash
+        env:
+          OCI_TAG: ${{ steps.generate-tag.outputs.tag }}
         run: |
           mkdir /tmp/terraform
           cp -r infrastructure/terraform/* /tmp/terraform
@@ -58,11 +62,13 @@ jobs:
             cp -r "$tf_dir"/* "$dest_dir"/
           done
           ls /tmp/terraform
-          flux push artifact oci://${{ steps.generate-tag.outputs.tag }} \
+          flux push artifact oci://$OCI_TAG \
               --path="/tmp/terraform" \
               --source="$(git config --get remote.origin.url)" \
               --revision="$(git branch --show-current)/$(git rev-parse HEAD)"
 
       - name: Tag manifests
         shell: bash
-        run: flux tag artifact oci://${{ steps.generate-tag.outputs.tag }} --tag main
+        env:
+          OCI_TAG: ${{ steps.generate-tag.outputs.tag }}
+        run: flux tag artifact oci://$OCI_TAG --tag main
