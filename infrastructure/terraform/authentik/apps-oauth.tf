@@ -50,7 +50,8 @@ module "oauth_apps" {
       external  = true
       app_group = "Tools"
       access_groups = [
-        data.authentik_group.superuser.id
+        data.authentik_group.superuser.id,
+        authentik_group.users.id
       ]
       client_id          = data.infisical_secrets.zipline.secrets["ZIPLINE_OAUTH_CLIENT_ID"].value
       client_secret      = data.infisical_secrets.zipline.secrets["ZIPLINE_OAUTH_CLIENT_SECRET"].value
@@ -100,7 +101,8 @@ module "oauth_apps" {
       external  = true
       app_group = "Infrastructure"
       access_groups = [
-        data.authentik_group.superuser.id
+        data.authentik_group.superuser.id,
+        authentik_group.users.id
       ]
       client_id          = data.infisical_secrets.pangolin.secrets["PANGOLIN_OAUTH_CLIENT_ID"].value
       client_secret      = data.infisical_secrets.pangolin.secrets["PANGOLIN_OAUTH_CLIENT_SECRET"].value
@@ -111,7 +113,8 @@ module "oauth_apps" {
       external  = true
       app_group = "Tools"
       access_groups = [
-        data.authentik_group.superuser.id
+        data.authentik_group.superuser.id,
+        authentik_group.users.id
       ]
       client_id          = data.infisical_secrets.miniflux.secrets["MINIFLUX_OAUTH_CLIENT_ID"].value
       client_secret      = data.infisical_secrets.miniflux.secrets["MINIFLUX_OAUTH_CLIENT_SECRET"].value
