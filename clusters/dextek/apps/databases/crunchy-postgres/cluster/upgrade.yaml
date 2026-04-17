@@ -6,7 +6,7 @@ metadata:
   name: postgres-upgrade
   namespace: databases
 spec:
-  image: ghcr.io/krezh/cdpg-vchord-18-upgrade:18.3.2610@sha256:90a040527e2f8c159729b5c86841b67a167f790f1ff65ec4d56a78e98b5988a8
+  image: ghcr.io/krezh/cdpg-vchord-18-upgrade:18.3.2610@sha256:3d84404a06f09bf83c21ae7537209bc32a34bd6cca0553897ae7cd0c0d0b827e
   postgresClusterName: postgres
   fromPostgresVersion: 16
   toPostgresVersion: 18
