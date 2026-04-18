@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/keda.sh/scaledobject_v1alpha1.json
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: immich-server-nas-nfs-scaler
+spec:
+  advanced:
+    restoreToOriginalReplicaCount: true
+  cooldownPeriod: 0
+  minReplicaCount: 0
+  maxReplicaCount: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: immich-server
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        query: max_over_time(probe_success{instance=~"jotunheim.fast.internal:2049"}[1m])
+        threshold: "1"
+        ignoreNullValues: "0"
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/keda.sh/scaledobject_v1alpha1.json
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: immich-ml-nas-nfs-scaler
+spec:
+  advanced:
+    restoreToOriginalReplicaCount: true
+  cooldownPeriod: 0
+  minReplicaCount: 0
+  maxReplicaCount: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: immich-ml
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        query: max_over_time(probe_success{instance=~"jotunheim.fast.internal:2049"}[1m])
+        threshold: "1"
+        ignoreNullValues: "0"
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/keda.sh/scaledobject_v1alpha1.json
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: immich-micro-nas-nfs-scaler
+spec:
+  advanced:
+    restoreToOriginalReplicaCount: true
+  cooldownPeriod: 0
+  minReplicaCount: 0
+  maxReplicaCount: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: immich-micro
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        query: max_over_time(probe_success{instance=~"jotunheim.fast.internal:2049"}[1m])
+        threshold: "1"
+        ignoreNullValues: "0"
