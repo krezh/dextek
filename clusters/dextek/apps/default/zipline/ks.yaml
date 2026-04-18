@@ -21,6 +21,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  components:
+    - ../../../../../shared/components/keda/nas-nfs-scaler
   postBuild:
     substitute:
       APP: *app
