@@ -24,6 +24,7 @@ spec:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/gpu
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/keda/nas-nfs-scaler
   postBuild:
     substitute:
       APP: *app
