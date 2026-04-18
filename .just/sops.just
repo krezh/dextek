@@ -20,7 +20,7 @@ update-keys:
     set -euo pipefail
     SECRET_FILES=$(find {{ ROOT_DIR }} -type f -name '*.sops.yaml' ! -name ".sops.yaml")
     for file in $SECRET_FILES; do
-      sops updatekeys --yes "$file"
+      sops updatekeys "$file"
     done
 
 # Show list of sops files to edit
