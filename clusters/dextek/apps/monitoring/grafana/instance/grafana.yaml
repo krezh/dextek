@@ -14,9 +14,9 @@ spec:
       feedback_links_enabled: "false"
       reporting_enabled: "false"
     auth:
-      disable_login_form: "false"
+      disable_login_form: "true"
       signout_redirect_url: https://sso.plexuz.xyz/application/o/grafana/end-session/
-      oauth_auto_login: "false"
+      oauth_auto_login: "true"
       oauth_allow_insecure_email_lookup: "true"
     auth.anonymous:
       enabled: "true"
