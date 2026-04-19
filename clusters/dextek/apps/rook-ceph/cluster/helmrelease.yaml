@@ -60,7 +60,7 @@ spec:
         confirmation: ""
         wipeDevicesFromOtherClusters: true
       crashCollector:
-        disable: false
+        disable: true
       csi:
         readAffinity:
           enabled: true
