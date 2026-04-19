@@ -20,7 +20,7 @@ spec:
     mtu: 1380
     acceptClients: true
     useNativeInterface: true
-    replicas: 1
+    replicas: 3
     resources:
       requests:
         cpu: 10m
