@@ -17,6 +17,7 @@ resources:
   - ./silence-operator
   - ./siren
   - ./gatus
+  - ./vpa
 transformers:
   - |-
     apiVersion: builtin
