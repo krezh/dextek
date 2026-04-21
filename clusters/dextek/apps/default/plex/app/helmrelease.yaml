@@ -17,7 +17,7 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: "OnRootMismatch"
-        supplementalGroups: [44]
+        supplementalGroups: [ 44 ]
       resourceClaims:
         - name: gpu
           resourceClaimTemplateName: plex-gpu
@@ -40,9 +40,9 @@ spec:
                 - name: gpu
               requests:
                 cpu: 100m
-                memory: 4Gi
+                memory: 2Gi
               limits:
-                memory: 8Gi
+                memory: 4Gi
     service:
       app:
         controller: app
