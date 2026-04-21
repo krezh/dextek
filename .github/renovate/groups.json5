@@ -18,8 +18,7 @@
     {
       description: ["Flux Group"],
       groupName: "Flux",
-      matchPackageNames: ["fluxcd/flux2", "controlplaneio-fluxcd/distribution"],
-      matchDatasources: ["github-releases", "github-action"],
+      matchPackagePatterns: ["fluxcd/flux2", "controlplaneio-fluxcd/distribution"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
