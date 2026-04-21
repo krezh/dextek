@@ -68,6 +68,6 @@ spec:
       config:
         type: configMap
         name: notifier-configmap
-        defaultMode: 775
+        defaultMode: 0775
         globalMounts:
           - readOnly: true
