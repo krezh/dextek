@@ -75,18 +75,6 @@ module "oauth_apps" {
       ]
       meta_launch_url = "blank://blank"
     }
-    karakeep = {
-      external  = true
-      app_group = "Tools"
-      access_groups = [
-        data.authentik_group.superuser.id,
-        resource.authentik_group.users.id
-      ]
-      client_id          = data.infisical_secrets.karakeep.secrets["KARAKEEP_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.karakeep.secrets["KARAKEEP_OAUTH_CLIENT_SECRET"].value
-      redirect_uri_paths = ["/api/auth/callback/custom"]
-      meta_description   = "A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search"
-    }
     wakapi = {
       app_group = "Tools"
       access_groups = [
