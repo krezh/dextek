@@ -2,22 +2,25 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   packageRules: [
     {
-      description: "Flux Images and tags",
-      groupName: "Flux",
-      matchPackagePatterns: ["controlplaneio"],
-      matchDatasources: ["docker", "github-tags"],
-      versioning: "samver",
+      description: "Flux Operator Group",
+      groupName: "flux-operator",
+      matchDatasources: ["docker"],
+      matchPackageNames: [
+        "/flux-operator/",
+        "/flux-instance/",
+        "/flux-operator-manifests/",
+      ],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
+      minimumGroupSize: 3,
     },
     {
       description: "Tofu-Controller Images and tags",
       groupName: "Tofu-Controller",
       matchPackagePatterns: ["tofu-controller"],
       matchDatasources: ["docker", "github-tags"],
-      versioning: "samver",
+      versioning: "semver",
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
