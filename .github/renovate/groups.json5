@@ -16,6 +16,17 @@
       minimumGroupSize: 3,
     },
     {
+      description: ["Flux Group"],
+      groupName: "Flux",
+      matchPackageNames: ["fluxcd/flux2", "controlplaneio-fluxcd/distribution"],
+      matchDatasources: ["github-releases", "github-action"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
+      sourceUrl: "https://github.com/fluxcd/flux2",
+    },
+    {
       description: "Tofu-Controller Images and tags",
       groupName: "Tofu-Controller",
       matchPackagePatterns: ["tofu-controller"],
