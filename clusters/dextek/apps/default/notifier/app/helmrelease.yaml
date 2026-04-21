@@ -46,12 +46,12 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: { drop: [ "ALL" ] }
             resources:
               requests:
                 cpu: 100m
               limits:
-                memory: 512Mi
+                memory: 100Mi
     service:
       app:
         ports:
@@ -68,6 +68,6 @@ spec:
       config:
         type: configMap
         name: notifier-configmap
-        defaultMode: 0775
+        defaultMode: 775
         globalMounts:
           - readOnly: true
