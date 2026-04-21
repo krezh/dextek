@@ -19,13 +19,11 @@ resources:
   - ./zipline
   - ./jellyfin
   - ./publish-k8s-schemas
-  - ./karakeep
   - ./wakapi
   - ./tracearr
   - ./attic
   - ./librespeed
   - ./notifier
-  - ./hister
   - ./miniflux
 transformers:
   - |-

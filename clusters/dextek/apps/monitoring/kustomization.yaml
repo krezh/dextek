@@ -13,7 +13,6 @@ resources:
   - ./blackbox-exporter
   - ./unpoller
   - ./kromgo
-  - ./mikrotik-exporter
   - ./alloy
   - ./silence-operator
   - ./siren
