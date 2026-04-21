@@ -1,0 +1,7 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: default
+spec:
+  updatePolicy:
+    updateMode: "InPlaceOrRecreate"
