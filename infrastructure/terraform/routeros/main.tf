@@ -1,9 +1,3 @@
-data "sops_file" "secrets" {
-  source_file = "secret.sops.yaml"
-}
-
-data "doppler_secrets" "prd_routeros" {}
-
 resource "routeros_system_identity" "identity" {
   name = "yggdrasil"
 }
@@ -17,7 +11,7 @@ resource "routeros_system_user" "mikrotik-exporter" {
   depends_on = [routeros_system_user_group.mikrotik-exporter]
   name       = "mikrotik-exporter"
   group      = "mikrotik-exporter"
-  password   = data.doppler_secrets.prd_routeros.map.MIKROTIK_EXPORTER
+  password   = data.infisical_secrets.routeros.secrets["MIKROTIK_EXPORTER"].value
   comment    = var.comment
 }
 

@@ -9,13 +9,9 @@ terraform {
       source  = "terraform-routeros/routeros"
       version = "1.99.1"
     }
-    sops = {
-      source  = "carlpett/sops"
-      version = "1.4.1"
-    }
-    doppler = {
-      source  = "DopplerHQ/doppler"
-      version = "1.21.2"
+    infisical = {
+      source  = "Infisical/infisical"
+      version = "0.16.17"
     }
     acme = {
       source  = "vancluever/acme"
@@ -25,17 +21,15 @@ terraform {
   required_version = ">= 1.3.0"
 }
 
-provider "sops" {}
-
 provider "routeros" {
   hosturl  = "https://192.168.1.35"
-  username = data.doppler_secrets.prd_routeros.map.ADMIN_USER
-  password = data.doppler_secrets.prd_routeros.map.ADMIN_PASSWORD
+  username = data.infisical_secrets.routeros.secrets["ADMIN_USER"].value
+  password = data.infisical_secrets.routeros.secrets["ADMIN_PASSWORD"].value
   insecure = true
 }
 
-provider "doppler" {
-  doppler_token = data.sops_file.secrets.data["doppler.token"]
+provider "infisical" {
+  host = "https://eu.infisical.com"
 }
 
 provider "acme" {

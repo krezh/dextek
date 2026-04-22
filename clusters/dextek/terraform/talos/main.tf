@@ -13,14 +13,14 @@ module "talos" {
     api         = "matchbox.int.plexuz.xyz:8081"
     host        = "matchbox.int.plexuz.xyz"
     user        = "matchbox"
-    private_key = data.sops_file.secrets.data["matchbox.sshkey"]
-    client_cert = data.sops_file.secrets.data["matchbox.client_crt"]
-    client_key  = data.sops_file.secrets.data["matchbox.client_key"]
-    ca          = data.sops_file.secrets.data["matchbox.ca_crt"]
+    private_key = data.infisical_secrets.matchbox.secrets["SSHKEY"].value
+    client_cert = data.infisical_secrets.matchbox.secrets["CLIENT_CRT"].value
+    client_key  = data.infisical_secrets.matchbox.secrets["CLIENT_KEY"].value
+    ca          = data.infisical_secrets.matchbox.secrets["CA_CRT"].value
   }
   upsmon = {
-    host     = data.sops_file.secrets.data["nut.host"]
-    password = data.sops_file.secrets.data["nut.password"]
+    host     = data.infisical_secrets.nut.secrets["HOST"].value
+    password = data.infisical_secrets.nut.secrets["PASSWORD"].value
   }
   nodes = {
     "ms01-01.k8s.plexuz.xyz" = {
