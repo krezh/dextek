@@ -7,9 +7,9 @@ terraform {
     }
   }
   required_providers {
-    sops = {
-      source  = "lokkersp/sops"
-      version = "0.6.10"
+    infisical = {
+      source  = "Infisical/infisical"
+      version = "0.16.17"
     }
     matchbox = {
       source  = "poseidon/matchbox"
@@ -19,6 +19,6 @@ terraform {
   required_version = ">= 1.3.0"
 }
 
-data "sops_file" "secrets" {
-  source_file = "secrets.sops.yaml"
+provider "infisical" {
+  host = "https://eu.infisical.com"
 }
