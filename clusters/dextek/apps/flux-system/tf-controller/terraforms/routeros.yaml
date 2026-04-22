@@ -26,11 +26,3 @@ spec:
       envFrom:
         - secretRef:
             name: tf-controller-infisical-secret
-      volumeMounts:
-        - name: sops
-          mountPath: /home/runner/.config/sops/age/keys.txt
-          subPath: keys.txt
-      volumes:
-        - name: sops
-          secret:
-            secretName: tf-controller-sops-secret

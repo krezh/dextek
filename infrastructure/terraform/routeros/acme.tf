@@ -1,5 +1,5 @@
 resource "acme_registration" "reg" {
-  email_address = data.doppler_secrets.prd_routeros.map.LETSENCRYPT_EMAIL
+  email_address = data.infisical_secrets.routeros.secrets["LETSENCRYPT_EMAIL"].value
 }
 
 resource "acme_certificate" "certificate" {
@@ -13,7 +13,7 @@ resource "acme_certificate" "certificate" {
   dns_challenge {
     provider = "cloudflare"
     config = {
-      CF_DNS_API_TOKEN = "${data.doppler_secrets.prd_routeros.map.CLOUDFLARE_API_TOKEN}"
+      CF_DNS_API_TOKEN = "${data.infisical_secrets.routeros.secrets["CLOUDFLARE_API_TOKEN"].value}"
     }
   }
 }
