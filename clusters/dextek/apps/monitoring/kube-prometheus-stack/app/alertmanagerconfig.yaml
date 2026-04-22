@@ -7,7 +7,7 @@ metadata:
   namespace: monitoring
 spec:
   route:
-    groupBy: ["alertname", "job"]
+    groupBy: [ "alertname", "job" ]
     groupInterval: 10m
     groupWait: 1m
     receiver: pushover
@@ -32,7 +32,7 @@ spec:
             value: critical
             matchType: =
   inhibitRules:
-    - equal: ["alertname", "namespace"]
+    - equal: [ "alertname", "namespace" ]
       sourceMatch:
         - name: severity
           value: critical
@@ -74,8 +74,8 @@ spec:
             {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
           sendResolved: true
           title: >-
-            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
-            {{ .CommonLabels.alertname }}
+            [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{
+            .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
           ttl: 3600s
           token:
             name: &secret alertmanager-secret
@@ -83,4 +83,4 @@ spec:
           userKey:
             name: *secret
             key: PUSHOVER_USER_KEY
-          url: https://siren.talos.plexuz.xyz/alerts
+          urlTitle: View in Alertmanager
