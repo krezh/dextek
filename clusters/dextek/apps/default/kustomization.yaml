@@ -19,7 +19,6 @@ resources:
   - ./zipline
   - ./jellyfin
   - ./publish-k8s-schemas
-  - ./wakapi
   - ./tracearr
   - ./attic
   - ./librespeed
