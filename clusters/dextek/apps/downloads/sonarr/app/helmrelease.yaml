@@ -106,12 +106,3 @@ spec:
         enabled: true
         type: persistentVolumeClaim
         existingClaim: downloads
-      scripts-anime-delete:
-        enabled: true
-        type: configMap
-        name: sonarr-anime-delete
-        defaultMode: 775
-        globalMounts:
-          - path: /scripts/anime-delete.sh
-            subPath: anime-delete.sh
-            readOnly: true
