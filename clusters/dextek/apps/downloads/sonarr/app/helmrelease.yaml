@@ -55,9 +55,9 @@ spec:
             resources:
               requests:
                 cpu: 48m
-                memory: 657Mi
+                memory: 657M
               limits:
-                memory: 2000Mi
+                memory: 2004M
     service:
       app:
         controller: app
@@ -67,7 +67,7 @@ spec:
             targetPort: *port
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        hostnames: [ "{{ .Release.Name }}.plexuz.xyz" ]
         parentRefs:
           - name: gateway-external
             namespace: network
@@ -77,7 +77,7 @@ spec:
               - identifier: app
                 port: 80
       api:
-        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        hostnames: [ "{{ .Release.Name }}.plexuz.xyz" ]
         annotations:
           gatus.home-operations.com/enabled: "false"
         parentRefs:
@@ -110,7 +110,7 @@ spec:
         enabled: true
         type: configMap
         name: sonarr-anime-delete
-        defaultMode: 0775
+        defaultMode: 775
         globalMounts:
           - path: /scripts/anime-delete.sh
             subPath: anime-delete.sh
