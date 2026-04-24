@@ -4,5 +4,6 @@ metadata:
   name: databases
   labels:
     resource.kubernetes.io/admin-access: "true"
+    goldilocks.fairwinds.com/enabled: "true"
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
