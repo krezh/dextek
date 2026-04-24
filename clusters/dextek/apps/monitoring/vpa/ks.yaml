@@ -27,7 +27,7 @@ spec:
   targetNamespace: monitoring
   dependsOn:
     - name: vpa
-  path: ./clusters/dextek/apps/monitoring/goldilocks/app
+  path: ./clusters/dextek/apps/monitoring/vpa/goldilocks
   prune: true
   sourceRef:
     kind: GitRepository
