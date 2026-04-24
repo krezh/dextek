@@ -25,9 +25,9 @@ spec:
             resources:
               requests:
                 cpu: 25m
-                memory: 10Mi
+                memory: 10M
               limits:
-                memory: 10Mi
+                memory: 10M
             securityContext:
               privileged: true
     persistence:

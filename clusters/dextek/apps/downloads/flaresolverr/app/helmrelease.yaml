@@ -20,9 +20,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 410Mi
+                memory: 410M
               limits:
-                memory: 1000Mi
+                memory: 913M
     service:
       app:
         controller: flaresolverr

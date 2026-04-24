@@ -64,9 +64,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 250Mi
+                memory: 250M
               limits:
-                memory: 4000Mi
+                memory: 4000M
           gc:
             image:
               repository: ghcr.io/zhaofengli/attic
@@ -76,9 +76,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 250Mi
+                memory: 250M
               limits:
-                memory: 2000Mi
+                memory: 2000M
     service:
       app:
         controller: app

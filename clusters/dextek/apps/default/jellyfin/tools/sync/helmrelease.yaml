@@ -44,7 +44,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 512Mi
+                memory: 512M
         pod:
           hostUsers: false
           restartPolicy: Never

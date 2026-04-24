@@ -41,9 +41,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 1701Mi
+                memory: 1701M
               limits:
-                memory: 1701Mi
+                memory: 1701M
             probes:
               startup:
                 enabled: false

@@ -29,9 +29,9 @@ spec:
             resources:
               requests:
                 cpu: 50m
-                memory: 400Mi
+                memory: 400M
               limits:
-                memory: 519Mi
+                memory: 519M
     persistence:
       config:
         existingClaim: redbot-config

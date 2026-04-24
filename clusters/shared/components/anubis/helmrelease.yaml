@@ -59,9 +59,9 @@ spec:
                   periodSeconds: 5
             resources:
               requests:
-                memory: 64Mi
+                memory: 64M
               limits:
-                memory: 256Mi
+                memory: 256M
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
