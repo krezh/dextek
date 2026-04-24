@@ -145,8 +145,8 @@ spec:
   tcpKeepalive: {}
   http2:
     maxConcurrentStreams: 1000
-    initialConnectionWindowSize: 64Mi
-    initialStreamWindowSize: 64Mi
+    initialConnectionWindowSize: 64M
+    initialStreamWindowSize: 64M
   timeout:
     http:
       connectionIdleTimeout: 15s
@@ -170,8 +170,8 @@ spec:
   http2:
     onInvalidMessage: TerminateStream
     maxConcurrentStreams: 1000
-    initialConnectionWindowSize: 64Mi
-    initialStreamWindowSize: 64Mi
+    initialConnectionWindowSize: 64M
+    initialStreamWindowSize: 64M
   http3: {}
   targetSelectors:
     - group: gateway.networking.k8s.io
