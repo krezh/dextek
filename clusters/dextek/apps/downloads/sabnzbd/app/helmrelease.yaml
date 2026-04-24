@@ -29,8 +29,7 @@ spec:
             env:
               SABNZBD__PORT: &port 8080
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
-                sabnzbd,
-                sabnzbd.downloads,
+                sabnzbd, sabnzbd.downloads,
                 sabnzbd.downloads.svc,
                 sabnzbd.downloads.svc.cluster,
                 sabnzbd.downloads.svc.cluster.local,
@@ -60,7 +59,7 @@ spec:
                 cpu: 250m
                 memory: 1Gi
               limits:
-                memory: 8000Mi
+                memory: 6134M
     service:
       app:
         controller: app
