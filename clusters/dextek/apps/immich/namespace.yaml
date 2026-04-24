@@ -6,3 +6,4 @@ metadata:
   labels:
     resource.kubernetes.io/admin-access: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
+    goldilocks.fairwinds.com/enabled: "true"
