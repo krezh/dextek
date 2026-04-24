@@ -44,10 +44,10 @@ spec:
             args: ["start"]
             resources:
               requests:
-                memory: 27Mi
+                memory: 27M
                 cpu: 10m
               limits:
-                memory: 27Mi
+                memory: 27M
     service:
       app:
         controller: app

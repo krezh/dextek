@@ -17,7 +17,7 @@ spec:
       existingSecret: pangolin-operator-secret
     resources:
       limits:
-        memory: 256Mi
+        memory: 256M
       requests:
         cpu: 10m
-        memory: 64Mi
+        memory: 64M

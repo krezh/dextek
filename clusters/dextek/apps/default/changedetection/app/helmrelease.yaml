@@ -25,9 +25,9 @@ spec:
             resources:
               requests:
                 cpu: 15m
-                memory: 96Mi
+                memory: 96M
               limits:
-                memory: 96Mi
+                memory: 96M
           browser:
             image:
               repository: docker.io/browserless/chrome
@@ -49,7 +49,7 @@ spec:
                 cpu: 15m
                 memory: 500M
               limits:
-                memory: 1648Mi
+                memory: 1648M
     service:
       main:
         controller: main
