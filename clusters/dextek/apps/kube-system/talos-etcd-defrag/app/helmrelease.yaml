@@ -48,7 +48,7 @@ spec:
             image:
               repository: ghcr.io/siderolabs/talosctl
               # renovate: datasource=github-releases depName=siderolabs/talos
-              tag: v1.12.6
+              tag: v1.12.7
             args:
               - -n
               - "$(NODE_IP)"
