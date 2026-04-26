@@ -58,7 +58,7 @@ spec:
                 cpu: 100m
                 memory: 297M
               limits:
-                memory: 297M
+                memory: 608M
       ml:
         type: deployment
         strategy: RollingUpdate
@@ -87,7 +87,7 @@ spec:
               requests:
                 memory: 297M
               limits:
-                memory: 297M
+                memory: 608M
       micro:
         type: deployment
         strategy: RollingUpdate
@@ -118,7 +118,7 @@ spec:
               requests:
                 memory: 297M
               limits:
-                memory: 297M
+                memory: 608M
     service:
       server:
         controller: server
