@@ -9,7 +9,7 @@ resources:
   - ./cloudflare-dns
   - ./unifi-dns
   - ./envoy-gateway
-  - ./kguardian
+  #- ./kguardian
   - ./multus
   - ./pangolin-operator
 transformers:
