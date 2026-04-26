@@ -54,7 +54,7 @@ spec:
                 enabled: false
             resources:
               limits:
-                memory: 1894M
+                memory: 1049M
     service:
       app:
         controller: app

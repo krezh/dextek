@@ -39,7 +39,7 @@ spec:
                 cpu: 100m
                 memory: 109M
               limits:
-                memory: 2Gi
+                memory: 131M
             securityContext:
               runAsUser: 568
               runAsGroup: 568
@@ -59,7 +59,7 @@ spec:
                 cpu: 10m
                 memory: 10M
               limits:
-                memory: 100M
+                memory: 192M
 
           gluetun:
             image:
@@ -84,7 +84,7 @@ spec:
                 cpu: 10m
                 memory: 10M
               limits:
-                memory: 100M
+                memory: 131M
             securityContext:
               capabilities:
                 add:
@@ -122,7 +122,7 @@ spec:
                 cpu: 10m
                 memory: 10M
               limits:
-                memory: 100M
+                memory: 102M
     service:
       qbittorrent:
         controller: qbittorrent

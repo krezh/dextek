@@ -56,9 +56,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 512M
+                memory: 297M
               limits:
-                memory: 579M
+                memory: 297M
       ml:
         type: deployment
         strategy: RollingUpdate
@@ -85,9 +85,9 @@ spec:
               claims:
                 - name: gpu
               requests:
-                memory: 2000M
+                memory: 297M
               limits:
-                memory: 2000M
+                memory: 297M
       micro:
         type: deployment
         strategy: RollingUpdate
@@ -116,9 +116,9 @@ spec:
               claims:
                 - name: gpu
               requests:
-                memory: 512M
+                memory: 297M
               limits:
-                memory: 1500M
+                memory: 297M
     service:
       server:
         controller: server
