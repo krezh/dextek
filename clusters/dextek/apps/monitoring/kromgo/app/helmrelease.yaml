@@ -63,7 +63,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 100M
+                memory: 105M
     service:
       kromgo:
         controller: kromgo

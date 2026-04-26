@@ -57,7 +57,7 @@ spec:
                 cpu: 48m
                 memory: 657M
               limits:
-                memory: 2004M
+                memory: 1125M
     service:
       app:
         controller: app
