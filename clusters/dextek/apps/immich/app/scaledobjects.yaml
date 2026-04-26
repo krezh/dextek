@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/keda.sh/scaledobject_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/keda.sh/scaledobject_v1alpha1.json
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -7,7 +7,7 @@ metadata:
 spec:
   advanced:
     restoreToOriginalReplicaCount: true
-  cooldownPeriod: 0
+  cooldownPeriod: 15
   minReplicaCount: 0
   maxReplicaCount: 3
   scaleTargetRef:
@@ -22,7 +22,7 @@ spec:
         threshold: "1"
         ignoreNullValues: "0"
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/keda.sh/scaledobject_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/keda.sh/scaledobject_v1alpha1.json
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -30,9 +30,9 @@ metadata:
 spec:
   advanced:
     restoreToOriginalReplicaCount: true
-  cooldownPeriod: 0
+  cooldownPeriod: 15
   minReplicaCount: 0
-  maxReplicaCount: 3
+  maxReplicaCount: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -45,7 +45,7 @@ spec:
         threshold: "1"
         ignoreNullValues: "0"
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/keda.sh/scaledobject_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/keda.sh/scaledobject_v1alpha1.json
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -53,9 +53,9 @@ metadata:
 spec:
   advanced:
     restoreToOriginalReplicaCount: true
-  cooldownPeriod: 0
+  cooldownPeriod: 15
   minReplicaCount: 0
-  maxReplicaCount: 3
+  maxReplicaCount: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
