@@ -66,7 +66,7 @@ spec:
                 cpu: 10m
                 memory: 250M
               limits:
-                memory: 2271M
+                memory: 2691M
           gc:
             image:
               repository: ghcr.io/zhaofengli/attic
