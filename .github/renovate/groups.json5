@@ -47,14 +47,7 @@
     {
       description: "Talos Group",
       groupName: "Talos",
-      matchPackageNames: [
-        "/kube-apiserver/",
-        "/kube-controller-manager/",
-        "/kube-proxy/",
-        "/kube-scheduler/",
-        "/kubelet/",
-        "/installer/",
-      ],
+      matchPackageNames: ["/installer/"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -64,7 +57,13 @@
     {
       description: "Kubernetes Group",
       groupName: "Kubernetes",
-      matchPackageNames: ["siderolabs/kubelet"],
+      matchPackageNames: [
+        "/kube-apiserver/",
+        "/kube-controller-manager/",
+        "/kube-proxy/",
+        "/kube-scheduler/",
+        "/kubelet/",
+      ],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -159,7 +158,7 @@
     {
       description: ["Jellyfin Group"],
       groupName: "Jellyfin",
-      matchPackageNames: ["jellyfin/jellyfin"],
+      matchPackageNames: ["/jellyfin/"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -169,7 +168,7 @@
     {
       description: ["Towonel Group"],
       groupName: "Towonel",
-      matchPackageNames: ["towonel-agent/", "towonel-node/"],
+      matchPackageNames: ["/towonel-agent/", "/towonel-node/"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
