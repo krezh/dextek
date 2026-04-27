@@ -177,6 +177,8 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
   tcpKeepalive: {}
+  proxyProtocol:
+    optional: true
   timeout:
     http:
       idleTimeout: 60s
