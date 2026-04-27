@@ -8,7 +8,7 @@ resource "docker_network" "edge" {
 resource "docker_image" "towonel" {
   depends_on = [ssh_resource.docker_tls_setup]
   # renovate: datasource=docker depName=git.erwanleboucher.dev/eleboucher/towonel-node
-  name = "registry.erwanleboucher.dev/eleboucher/towonel-node:0.0.21"
+  name = "registry.erwanleboucher.dev/eleboucher/towonel-node:0.0.22"
 }
 
 resource "docker_container" "towonel" {
