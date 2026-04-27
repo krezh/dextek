@@ -1,59 +1,26 @@
-
 data "authentik_group" "superuser" {
   name = "superuser"
 }
 
-resource "authentik_group" "downloads" {
-  name         = "Downloads"
-  is_superuser = false
+locals {
+  groups = toset([
+    "Downloads",
+    "Grafana Admins",
+    "Home",
+    "Infrastructure",
+    "Monitoring",
+    "users",
+    "mealie_users",
+    "mealie_admins",
+    "jellyfin-users",
+    "jellyfin-admins",
+    "ldap-admins",
+  ])
 }
 
-resource "authentik_group" "grafana_admins" {
-  name         = "Grafana Admins"
-  is_superuser = false
-}
+resource "authentik_group" "groups" {
+  for_each = local.groups
 
-resource "authentik_group" "home" {
-  name         = "Home"
-  is_superuser = false
-}
-
-resource "authentik_group" "infrastructure" {
-  name         = "Infrastructure"
-  is_superuser = false
-}
-
-resource "authentik_group" "monitoring" {
-  name         = "Monitoring"
-  is_superuser = false
-}
-
-resource "authentik_group" "users" {
-  name         = "users"
-  is_superuser = false
-}
-
-resource "authentik_group" "mealie_users" {
-  name         = "mealie_users"
-  is_superuser = false
-}
-
-resource "authentik_group" "mealie_admins" {
-  name         = "mealie_admins"
-  is_superuser = false
-}
-
-resource "authentik_group" "jellyfin-users" {
-  name         = "jellyfin-users"
-  is_superuser = false
-}
-
-resource "authentik_group" "jellyfin-admins" {
-  name         = "jellyfin-admins"
-  is_superuser = false
-}
-
-resource "authentik_group" "ldap-admins" {
-  name         = "ldap-admins"
+  name         = each.value
   is_superuser = false
 }

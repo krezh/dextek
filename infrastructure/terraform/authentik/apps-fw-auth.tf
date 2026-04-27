@@ -126,7 +126,7 @@ module "fw-auth" {
       slug                    = "librespeed"
       app_domain              = "speed.${var.domain["external"]}"
       app_group               = "Tools"
-      access_groups           = [data.authentik_group.superuser.id, authentik_group.users.id]
+      access_groups           = [data.authentik_group.superuser.id, authentik_group.groups["users"].id]
       policy_engine_mode      = "any"
       authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
