@@ -47,12 +47,11 @@
     {
       description: "Talos Group",
       groupName: "Talos",
-      matchPackageNames: ["/installer/"],
-      matchDatasources: ["docker"],
+      matchPackageNames: ["/installer/", "/talosctl/"],
+      matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
-      minimumGroupSize: 2,
       sourceUrl: "https://github.com/siderolabs/talos",
     },
     {
@@ -169,12 +168,14 @@
     {
       description: ["Towonel Group"],
       groupName: "Towonel",
-      matchPackageNames: ["/towonel/"],
+      matchPackageNames: [
+        "git.erwanleboucher.dev/eleboucher/towonel-agent",
+        "git.erwanleboucher.dev/eleboucher/towonel-node",
+      ],
       matchDatasources: ["docker"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
-      minimumGroupSize: 2,
       sourceUrl: "https://git.erwanleboucher.dev/eleboucher/towonel",
     },
   ],
