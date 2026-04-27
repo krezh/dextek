@@ -6,11 +6,11 @@ metadata:
   name: prometheus-adapter
   namespace: flux-system
 spec:
-  interval: 1h
-  path: ./kubernetes/apps/monitoring/prometheus-adapter/app
+  targetNamespace: monitoring
+  path: ./clusters/dextek/apps/monitoring/prometheus-adapter/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  targetNamespace: monitoring
   wait: false
+  interval: 1h

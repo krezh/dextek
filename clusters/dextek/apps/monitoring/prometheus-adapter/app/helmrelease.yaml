@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: prometheus-adapter
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: prometheus-adapter
-  interval: 1h
   values:
     prometheus:
       url: http://prometheus-operated.monitoring.svc.cluster.local
@@ -16,9 +16,9 @@ spec:
     rules:
       default: false
       external:
-        - seriesQuery: '{__name__="probe_success"}'
+        - seriesQuery: '{ __name__="probe_success" }'
           resources:
             namespaced: false
           name:
             as: probe_success
-          metricsQuery: max_over_time(<<.Series>>{<<.LabelMatchers>>}[1m])
+          metricsQuery: max_over_time(<<.Series>>{ <<.LabelMatchers>> }[1m])

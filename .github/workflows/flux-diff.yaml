@@ -32,6 +32,7 @@ jobs:
         with:
           patterns: |
             clusters/**
+            !clusters/shared
             !clusters/shared/**
           include_only_directories: true
           max_depth: 2
