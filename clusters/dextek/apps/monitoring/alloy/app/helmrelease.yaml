@@ -28,15 +28,15 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/hostname: syslog.talos.plexuz.xyz
       externalTrafficPolicy: Local
-    extraPorts:
-      - name: syslog-udp
-        port: 1514
-        targetPort: 1514
-        protocol: UDP
     alloy:
       enableReporting: false
       clustering:
         enabled: true
+      extraPorts:
+        - name: syslog-udp
+          port: 1514
+          targetPort: 1514
+          protocol: UDP
       configMap:
         create: false
         name: alloy-configmap
