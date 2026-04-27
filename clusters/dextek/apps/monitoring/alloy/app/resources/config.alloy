@@ -122,6 +122,92 @@ loki.process "cluster_events" {
   }
 }
 
+// loki.relabel extracts and normalizes metadata from syslog headers
+loki.relabel "unifi_syslog" {
+  // Severity normalization - default level
+  rule {
+    source_labels = ["__syslog_message_severity"]
+    target_label  = "detected_level"
+  }
+
+  // Critical severity levels
+  rule {
+    source_labels = ["__syslog_message_severity"]
+    regex         = "(?i)(emergency|alert|critical)"
+    target_label  = "detected_level"
+    replacement   = "critical"
+  }
+
+  // Warning severity
+  rule {
+    source_labels = ["__syslog_message_severity"]
+    regex         = "(?i)(warning)"
+    target_label  = "detected_level"
+    replacement   = "warn"
+  }
+
+  // Info severity levels
+  rule {
+    source_labels = ["__syslog_message_severity"]
+    regex         = "(?i)(notice|informational)"
+    target_label  = "detected_level"
+    replacement   = "info"
+  }
+
+  // Extract hostname from syslog header
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "host"
+  }
+
+  // Extract app name from syslog header
+  rule {
+    source_labels = ["__syslog_message_app_name"]
+    target_label  = "app"
+  }
+}
+
+// loki.source.syslog receives syslog messages from UniFi devices over UDP
+loki.source.syslog "unifi" {
+  listener {
+    address                = "0.0.0.0:1514"
+    protocol               = "udp"
+    syslog_format          = "rfc3164"
+    use_incoming_timestamp = false
+    labels                 = {
+      job = "unifi",
+    }
+  }
+  relabel_rules = loki.relabel.unifi_syslog.rules
+  forward_to    = [loki.process.unifi.receiver]
+}
+
+// loki.process parses UniFi-specific log formats
+loki.process "unifi" {
+  // Extract app and message from UniFi syslog content
+  // Format 1 (AP/Switch): "mac,device-firmware: process[pid]: message"
+  // Example: "6c63f8863465,U7-Pro-Wall-8.3.2+18064: hostapd[5343]: wifi1ap6: STA ..."
+  // Format 2 (Gateway): "hostname process[pid]: message"
+  // Example: "UCG-Fiber bash[2616997]: HISTORY: ..."
+  stage.regex {
+    expression = "^(?:[\\w,\\-\\.\\+]+:\\s+|[\\w\\-]+\\s+)?(?P<app>[\\w\\-]+)(?:\\[\\d+\\])?:\\s*(?P<message>.*)$"
+  }
+
+  // Set app label from regex
+  stage.labels {
+    values = {
+      app = "",
+    }
+  }
+
+  // Output just the message content
+  stage.output {
+    source = "message"
+  }
+
+  forward_to = [loki.write.default.receiver]
+}
+
 loki.write "default" {
   endpoint {
     url = "http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push"
