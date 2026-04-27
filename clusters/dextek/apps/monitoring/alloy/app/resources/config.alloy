@@ -124,6 +124,8 @@ loki.process "cluster_events" {
 
 // loki.relabel extracts and normalizes metadata from syslog headers
 loki.relabel "unifi_syslog" {
+  forward_to = [loki.process.unifi.receiver]
+
   // Severity normalization - default level
   rule {
     source_labels = ["__syslog_message_severity"]
@@ -178,8 +180,7 @@ loki.source.syslog "unifi" {
       job = "unifi",
     }
   }
-  relabel_rules = loki.relabel.unifi_syslog.rules
-  forward_to    = [loki.process.unifi.receiver]
+  forward_to = [loki.relabel.unifi_syslog.receiver]
 }
 
 // loki.process parses UniFi-specific log formats
