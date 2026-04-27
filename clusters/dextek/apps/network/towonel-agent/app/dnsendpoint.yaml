@@ -10,7 +10,7 @@ spec:
       recordType: A
       targets:
         - 62.238.2.224
-    - dnsName: twnl.plexuz.xyz
+    - dnsName: towonel.plexuz.xyz
       recordType: CNAME
       targets:
         - ingress-ext.plexuz.xyz
