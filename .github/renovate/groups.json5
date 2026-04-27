@@ -50,7 +50,7 @@
     {
       description: "Talos Group",
       groupName: "Talos",
-      matchPackageNames: ["siderolabs/installer", "siderolabs/talosctl"],
+      matchPackageNames: ["/siderolabs/installer/", "/siderolabs/talosctl/"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -176,7 +176,10 @@
     {
       description: ["Towonel Group"],
       groupName: "Towonel",
-      matchPackageNames: ["eleboucher/towonel"],
+      matchPackageNames: [
+        "/eleboucher/towonel-agent/",
+        "/eleboucher/towonel-node/",
+      ],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
