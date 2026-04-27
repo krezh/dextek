@@ -176,7 +176,7 @@
     {
       description: ["Towonel Group"],
       groupName: "Towonel",
-      matchPackagePatterns: ["eleboucher/towonel"],
+      matchPackageNames: ["/eleboucher/towonel/"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
