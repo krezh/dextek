@@ -32,8 +32,8 @@ spec:
               tag: 0.0.20
             env:
               RUST_LOG: info
-              # Wildcard: route ALL *.plexuz.xyz to gateway-external
               TOWONEL_AGENT_SERVICES: '[{ "hostname":"*.plexuz.xyz","origin":"gateway-external.network.svc.cluster.local:443" }]'
+              TOWONEL_AGENT_TRUSTED_EDGES: '["bb5c5312f32a409789160cd776b108ccbd1200bebbaf616f462396d5c839ad70"]'
               TOWONEL_INVITE_TOKEN:
                 valueFrom:
                   secretKeyRef:
