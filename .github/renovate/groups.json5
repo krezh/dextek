@@ -48,19 +48,9 @@
       separateMinorPatch: true,
     },
     {
-      description: "External Snapshotter charts",
-      groupName: "External Snapshotter",
-      matchPackageNames: ["snapshot-controller", "snapshot-validation-webhook"],
-      matchDatasources: ["helm"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      separateMinorPatch: true,
-    },
-    {
       description: "Talos Group",
       groupName: "Talos",
-      matchPackagePatterns: ["siderolabs/installer"],
+      matchPackagePatterns: ["siderolabs/installer", "siderolabs/talosctl"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -184,14 +174,15 @@
       sourceUrl: "https://github.com/jellyfin/jellyfin",
     },
     {
-      description: ["Pangolin Group"],
-      groupName: "Pangolin",
-      matchPackagePatterns: ["pangolin-operator"],
+      description: ["Towonel Group"],
+      groupName: "Towonel",
+      matchPackagePatterns: ["eleboucher/towonel"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
       separateMinorPatch: true,
+      sourceUrl: "https://git.erwanleboucher.dev/eleboucher/towonel",
     },
   ],
 }
