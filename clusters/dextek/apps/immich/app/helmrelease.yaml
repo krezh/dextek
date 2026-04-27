@@ -87,7 +87,7 @@ spec:
               requests:
                 memory: 297M
               limits:
-                memory: 608M
+                memory: 1000M
       micro:
         type: deployment
         strategy: RollingUpdate
