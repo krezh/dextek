@@ -16,7 +16,6 @@ resources:
   - ./k8tz
   - ./spegel
   - ./irqbalance
-  - ./keda
   - ./ksgate
   - ./talos-etcd-defrag
   - ./intel-gpu-resource-driver

@@ -157,7 +157,7 @@ cluster:
     extraArgs:
       enable-aggregator-routing: "true"
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-      feature-gates: MutatingAdmissionPolicy=true
+      feature-gates: HPAScaleToZero=true,MutatingAdmissionPolicy=true
       oidc-client-id: kubernetes
       oidc-groups-claim: groups
       oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
