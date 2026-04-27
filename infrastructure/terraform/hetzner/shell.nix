@@ -9,14 +9,11 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
-    export INFISICAL_UNIVERSAL_AUTH_CLIENT_ID=$(infisical secrets get INFISICAL_ID \
-      --env default \
-      --path=/Kubernetes/DexTek/TFController \
-      --plain)
+    eval $(infisical export --format=dotenv-export --silent --path=/Kubernetes/DexTek/TFController --env=default)
 
-    export INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET=$(infisical secrets get INFISICAL_SECRET \
-      --env=default \
-      --path=/Kubernetes/DexTek/TFController \
-      --plain)
+    export INFISICAL_UNIVERSAL_AUTH_CLIENT_ID=$INFISICAL_ID
+    echo INFISICAL_UNIVERSAL_AUTH_CLIENT_ID exported
+    export INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET=$INFISICAL_SECRET
+    echo INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET exported
   '';
 }
