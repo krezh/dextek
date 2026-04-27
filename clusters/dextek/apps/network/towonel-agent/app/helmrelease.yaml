@@ -28,7 +28,7 @@ spec:
         containers:
           app:
             image:
-              repository: git.erwanleboucher.dev/eleboucher/towonel-agent
+              repository: registry.erwanleboucher.dev/eleboucher/towonel-agent
               tag: 0.0.21
             env:
               RUST_LOG: info
