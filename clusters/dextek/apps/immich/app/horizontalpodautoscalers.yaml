@@ -1,0 +1,114 @@
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: immich-server
+spec:
+  minReplicas: 0
+  maxReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: immich-server
+  metrics:
+    - type: External
+      external:
+        metric:
+          name: probe_success
+          selector:
+            matchLabels:
+              job: nfs_probe
+        target:
+          type: Value
+          value: "1"
+  behavior:
+    scaleDown:
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+    scaleUp:
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: immich-ml
+spec:
+  minReplicas: 0
+  maxReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: immich-ml
+  metrics:
+    - type: External
+      external:
+        metric:
+          name: probe_success
+          selector:
+            matchLabels:
+              job: nfs_probe
+        target:
+          type: Value
+          value: "1"
+  behavior:
+    scaleDown:
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+    scaleUp:
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: immich-micro
+spec:
+  minReplicas: 0
+  maxReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: immich-micro
+  metrics:
+    - type: External
+      external:
+        metric:
+          name: probe_success
+          selector:
+            matchLabels:
+              job: nfs_probe
+        target:
+          type: Value
+          value: "1"
+  behavior:
+    scaleDown:
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+    scaleUp:
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
