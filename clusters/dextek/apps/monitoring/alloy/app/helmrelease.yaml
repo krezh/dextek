@@ -22,6 +22,17 @@ spec:
     controller:
       extraAnnotations:
         reloader.stakater.com/auto: "true"
+    service:
+      enabled: true
+      type: LoadBalancer
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: syslog.talos.plexuz.xyz
+      externalTrafficPolicy: Local
+      ports:
+        syslog-udp:
+          port: 1514
+          targetPort: 1514
+          protocol: UDP
     alloy:
       enableReporting: false
       clustering:
