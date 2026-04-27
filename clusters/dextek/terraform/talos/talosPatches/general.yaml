@@ -110,7 +110,6 @@ machine:
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
         [plugins."io.containerd.cri.v1.runtime"]
-          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
           device_ownership_from_security_context = true
   features:
     diskQuotaSupport: true
@@ -156,8 +155,7 @@ cluster:
         - level: Metadata
     extraArgs:
       enable-aggregator-routing: "true"
-      runtime-config: admissionregistration.k8s.io/v1beta1=true
-      feature-gates: HPAScaleToZero=true,MutatingAdmissionPolicy=true
+      feature-gates: HPAScaleToZero=true
       oidc-client-id: kubernetes
       oidc-groups-claim: groups
       oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
