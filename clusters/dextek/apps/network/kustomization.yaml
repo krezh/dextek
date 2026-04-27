@@ -11,7 +11,7 @@ resources:
   - ./envoy-gateway
   #- ./kguardian
   - ./multus
-  - ./pangolin-operator
+  - ./towonel-agent
 transformers:
   - |-
     apiVersion: builtin
