@@ -3,7 +3,7 @@ data "hcloud_ssh_keys" "all" {}
 resource "hcloud_server" "pangolin" {
   depends_on = [hcloud_network_subnet.default]
 
-  name        = "Pangolin"
+  name        = "Towonel"
   server_type = "cx23"
   image       = "ubuntu-24.04"
   location    = "hel1"
@@ -13,7 +13,7 @@ resource "hcloud_server" "pangolin" {
   firewall_ids = [
     hcloud_firewall.inbound_https.id,
     hcloud_firewall.default.id,
-    hcloud_firewall.pangolin.id,
+    hcloud_firewall.towonel.id,
   ]
 
   network {

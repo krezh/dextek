@@ -15,9 +15,3 @@ data "infisical_secrets" "hetzner" {
   workspace_id = local.infisical_project_id
   folder_path  = "/Terraform/Hetzner"
 }
-
-data "infisical_secrets" "pangolin" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Docker/Pangolin"
-}
