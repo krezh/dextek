@@ -18,7 +18,7 @@
     {
       description: "Tofu-Controller Images and tags",
       groupName: "Tofu-Controller",
-      matchPackagePatterns: ["tofu-controller"],
+      matchPackageNames: ["tofu-controller"],
       matchDatasources: ["docker", "github-tags"],
       versioning: "semver",
       group: {
@@ -29,7 +29,7 @@
     {
       description: "Immich Images",
       groupName: "Immich",
-      matchPackagePatterns: ["immich"],
+      matchPackageNames: ["immich"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -40,7 +40,7 @@
     {
       description: "Rook-Ceph charts and image",
       groupName: "Rook-Ceph",
-      matchPackagePatterns: ["rook.ceph"],
+      matchPackageNames: ["rook.ceph"],
       matchDatasources: ["helm", "docker"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -50,7 +50,7 @@
     {
       description: "Talos Group",
       groupName: "Talos",
-      matchPackagePatterns: ["siderolabs/installer", "siderolabs/talosctl"],
+      matchPackageNames: ["siderolabs/installer", "siderolabs/talosctl"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -61,7 +61,7 @@
     {
       description: "Kubernetes Group",
       groupName: "Kubernetes",
-      matchPackagePatterns: ["siderolabs/kubelet"],
+      matchPackageNames: ["siderolabs/kubelet"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -72,7 +72,7 @@
     {
       description: "Maintainerr Images",
       groupName: "Maintainerr",
-      matchPackagePatterns: ["maintainerr"],
+      matchPackageNames: ["maintainerr"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -83,7 +83,7 @@
     {
       description: "Radarr Images",
       groupName: "Radarr",
-      matchPackagePatterns: ["radarr"],
+      matchPackageNames: ["radarr"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -94,7 +94,7 @@
     {
       description: ["Volsync Group"],
       groupName: "Volsync",
-      matchPackagePatterns: ["volsync"],
+      matchPackageNames: ["volsync"],
       matchDatasources: ["docker", "helm"],
       matchUpdateTypes: ["minor", "patch"],
       group: {
@@ -105,7 +105,7 @@
     {
       description: ["Authentik Group"],
       groupName: "Authentik",
-      matchPackagePatterns: ["authentik"],
+      matchPackageNames: ["authentik"],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -118,7 +118,7 @@
     {
       description: ["Dragonfly Operator Group"],
       groupName: "Dragonfly Operator",
-      matchPackagePatterns: [
+      matchPackageNames: [
         "dragonflydb/operator",
         "dragonflydb/dragonfly-operator",
       ],
@@ -132,7 +132,7 @@
     {
       description: ["Zipline Group"],
       groupName: "Zipline",
-      matchPackagePatterns: ["zipline"],
+      matchPackageNames: ["zipline"],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -143,7 +143,7 @@
     {
       description: ["Atuin Group"],
       groupName: "Atuin",
-      matchPackagePatterns: ["atuin"],
+      matchPackageNames: ["atuin"],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -154,7 +154,7 @@
     {
       description: ["Envoy Group"],
       groupName: "Envoy",
-      matchPackagePatterns: ["envoyproxy/envoy"],
+      matchPackageNames: ["envoyproxy/envoy"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -165,7 +165,7 @@
     {
       description: ["Jellyfin Group"],
       groupName: "Jellyfin",
-      matchPackagePatterns: ["jellyfin/jellyfin"],
+      matchPackageNames: ["jellyfin/jellyfin"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -176,7 +176,7 @@
     {
       description: ["Towonel Group"],
       groupName: "Towonel",
-      matchPackageNames: ["/eleboucher/towonel/"],
+      matchPackageNames: ["eleboucher/towonel"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
