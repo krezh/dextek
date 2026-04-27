@@ -33,8 +33,8 @@ resource "hcloud_firewall" "default" {
   }
 }
 
-resource "hcloud_firewall" "pangolin" {
-  name = "Pangolin"
+resource "hcloud_firewall" "towonel" {
+  name = "Towonel"
 
   rule {
     description = "Docker TLS"
@@ -53,18 +53,10 @@ resource "hcloud_firewall" "pangolin" {
   }
 
   rule {
-    description = "WireGuard"
+    description = "Towonel Hub"
     direction   = "in"
-    protocol    = "udp"
-    port        = "51820"
-    source_ips  = ["0.0.0.0/0", "::/0"]
-  }
-
-  rule {
-    description = "Gerbil"
-    direction   = "in"
-    protocol    = "udp"
-    port        = "21820"
+    protocol    = "tcp"
+    port        = "8443"
     source_ips  = ["0.0.0.0/0", "::/0"]
   }
 }
