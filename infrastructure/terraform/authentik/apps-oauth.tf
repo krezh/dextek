@@ -12,10 +12,10 @@ module "oauth_apps" {
       app_group = "Monitoring"
       access_groups = [
         data.authentik_group.superuser.id,
-        authentik_group.grafana_admins.id
+        authentik_group.groups["Grafana Admins"].id
       ]
-      client_id          = data.infisical_secrets.grafana.secrets["GRAFANA_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.grafana.secrets["GRAFANA_OAUTH_CLIENT_SECRET"].value
+      client_id          = module.app_secrets.secrets["grafana"].secrets["GRAFANA_OAUTH_CLIENT_ID"].value
+      client_secret      = module.app_secrets.secrets["grafana"].secrets["GRAFANA_OAUTH_CLIENT_SECRET"].value
       redirect_uri_paths = ["/login/generic_oauth"]
     }
     mealie = {
@@ -23,11 +23,11 @@ module "oauth_apps" {
       app_group = "Tools"
       access_groups = [
         data.authentik_group.superuser.id,
-        resource.authentik_group.mealie_admins.id,
-        resource.authentik_group.mealie_users.id
+        authentik_group.groups["mealie_admins"].id,
+        authentik_group.groups["mealie_users"].id
       ]
-      client_id          = data.infisical_secrets.mealie.secrets["MEALIE_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.mealie.secrets["MEALIE_OAUTH_CLIENT_SECRET"].value
+      client_id          = module.app_secrets.secrets["mealie"].secrets["MEALIE_OAUTH_CLIENT_ID"].value
+      client_secret      = module.app_secrets.secrets["mealie"].secrets["MEALIE_OAUTH_CLIENT_SECRET"].value
       redirect_uri_paths = ["/login"]
     }
     immich = {
@@ -37,8 +37,8 @@ module "oauth_apps" {
       access_groups = [
         data.authentik_group.superuser.id
       ]
-      client_id          = data.infisical_secrets.immich.secrets["IMMICH_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.immich.secrets["IMMICH_OAUTH_CLIENT_SECRET"].value
+      client_id          = module.app_secrets.secrets["immich"].secrets["IMMICH_OAUTH_CLIENT_ID"].value
+      client_secret      = module.app_secrets.secrets["immich"].secrets["IMMICH_OAUTH_CLIENT_SECRET"].value
       redirect_uri_paths = ["/auth/login", "/user-settings"]
       redirect_uris = [
         "https://photos.${var.domain["internal"]}/auth/login",
@@ -51,10 +51,10 @@ module "oauth_apps" {
       app_group = "Tools"
       access_groups = [
         data.authentik_group.superuser.id,
-        authentik_group.users.id
+        authentik_group.groups["users"].id
       ]
-      client_id          = data.infisical_secrets.zipline.secrets["ZIPLINE_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.zipline.secrets["ZIPLINE_OAUTH_CLIENT_SECRET"].value
+      client_id          = module.app_secrets.secrets["zipline"].secrets["ZIPLINE_OAUTH_CLIENT_ID"].value
+      client_secret      = module.app_secrets.secrets["zipline"].secrets["ZIPLINE_OAUTH_CLIENT_SECRET"].value
       property_mappings  = local.oauth2_scopes_offline_access
       redirect_uri_paths = ["/api/auth/oauth/oidc"]
       redirect_uris      = ["https://zipline.${var.domain["internal"]}/api/auth/oauth/oidc"]
@@ -66,8 +66,8 @@ module "oauth_apps" {
       access_groups = [
         data.authentik_group.superuser.id
       ]
-      client_id         = data.infisical_secrets.kubernetes.secrets["KUBERNETES_OAUTH_CLIENT_ID"].value
-      client_secret     = data.infisical_secrets.kubernetes.secrets["KUBERNETES_OAUTH_CLIENT_SECRET"].value
+      client_id         = module.app_secrets.secrets["kubernetes"].secrets["KUBERNETES_OAUTH_CLIENT_ID"].value
+      client_secret     = module.app_secrets.secrets["kubernetes"].secrets["KUBERNETES_OAUTH_CLIENT_SECRET"].value
       property_mappings = local.oauth2_scopes_offline_access
       redirect_uris = [
         "https://kauth.talos.plexuz.xyz/callback",
@@ -75,37 +75,15 @@ module "oauth_apps" {
       ]
       meta_launch_url = "blank://blank"
     }
-    wakapi = {
-      app_group = "Tools"
-      access_groups = [
-        data.authentik_group.superuser.id
-      ]
-      client_id          = data.infisical_secrets.wakapi.secrets["WAKAPI_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.wakapi.secrets["WAKAPI_OAUTH_CLIENT_SECRET"].value
-      redirect_uri_paths = ["/oidc/authentik/callback"]
-      meta_description   = "Self-hosted WakaTime-compatible backend for coding statistics"
-    }
-    pangolin = {
-      external  = true
-      app_group = "Infrastructure"
-      access_groups = [
-        data.authentik_group.superuser.id,
-        authentik_group.users.id
-      ]
-      client_id          = data.infisical_secrets.pangolin.secrets["PANGOLIN_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.pangolin.secrets["PANGOLIN_OAUTH_CLIENT_SECRET"].value
-      redirect_uri_paths = ["/auth/idp/1/oidc/callback"]
-      meta_description   = "Self-hosted Cloudflare Tunnels"
-    }
     miniflux = {
       external  = true
       app_group = "Tools"
       access_groups = [
         data.authentik_group.superuser.id,
-        authentik_group.users.id
+        authentik_group.groups["users"].id
       ]
-      client_id          = data.infisical_secrets.miniflux.secrets["MINIFLUX_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.miniflux.secrets["MINIFLUX_OAUTH_CLIENT_SECRET"].value
+      client_id          = module.app_secrets.secrets["miniflux"].secrets["MINIFLUX_OAUTH_CLIENT_ID"].value
+      client_secret      = module.app_secrets.secrets["miniflux"].secrets["MINIFLUX_OAUTH_CLIENT_SECRET"].value
       redirect_uri_paths = ["/oauth2/oidc/callback"]
       meta_description   = "Self-hosted RSS"
     }

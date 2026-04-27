@@ -7,8 +7,9 @@ resource "authentik_stage_identification" "authentication-identification" {
   show_matched_user         = false
   password_stage            = authentik_stage_password.authentication-password.id
   recovery_flow             = authentik_flow.recovery.uuid
-  # passwordless_flow         = authentik_flow.passwordless_authentication.uuid
-  sources = []
+  passwordless_flow         = authentik_flow.passwordless-authentication.uuid
+  webauthn_stage            = authentik_stage_authenticator_validate.webauthn-validation.id
+  sources                   = []
 }
 
 resource "authentik_stage_password" "authentication-password" {
@@ -110,6 +111,22 @@ resource "authentik_stage_prompt" "user-settings" {
 resource "authentik_stage_user_write" "user-settings-write" {
   name                     = "user-settings-write"
   create_users_as_inactive = false
-  create_users_group       = authentik_group.users.id
+  create_users_group       = authentik_group.groups["users"].id
   user_type                = "internal"
+}
+
+# ## WebAuthn stages
+resource "authentik_stage_authenticator_webauthn" "webauthn-setup" {
+  name                     = "webauthn-setup"
+  friendly_name            = "Passkey"
+  user_verification        = "preferred"
+  authenticator_attachment = "cross-platform"
+  resident_key_requirement = "preferred"
+}
+
+resource "authentik_stage_authenticator_validate" "webauthn-validation" {
+  name                       = "webauthn-validation"
+  device_classes             = ["webauthn"]
+  not_configured_action      = "deny"
+  webauthn_user_verification = "preferred"
 }

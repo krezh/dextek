@@ -12,62 +12,18 @@ ephemeral "infisical_secret" "authentik_token" {
   folder_path  = "/Terraform/Authentik/Authentik"
 }
 
-data "infisical_secrets" "grafana" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Grafana"
-}
+module "app_secrets" {
+  source = "./modules/infisical-app"
 
-data "infisical_secrets" "mealie" {
-  env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Mealie"
-}
+  env_slug     = local.infisical_env
 
-data "infisical_secrets" "immich" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Immich"
-}
-
-data "infisical_secrets" "zipline" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Zipline"
-}
-
-data "infisical_secrets" "kubernetes" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Kubernetes"
-}
-
-data "infisical_secrets" "karakeep" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Karakeep"
-}
-
-data "infisical_secrets" "wakapi" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Wakapi"
-}
-
-data "infisical_secrets" "plex" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Plex"
-}
-
-data "infisical_secrets" "pangolin" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Authentik/Pangolin"
-}
-
-data "infisical_secrets" "miniflux" {
-  env_slug     = local.infisical_env
-  workspace_id = local.infisical_project_id
-  folder_path  = "/Kubernetes/DexTek/Miniflux"
+  app_secrets = {
+    grafana    = "/Kubernetes/DexTek/Grafana"
+    mealie     = "/Kubernetes/DexTek/Mealie"
+    immich     = "/Kubernetes/DexTek/Immich"
+    zipline    = "/Kubernetes/DexTek/Zipline"
+    kubernetes = "/Kubernetes/DexTek/Kubernetes"
+    miniflux   = "/Kubernetes/DexTek/Miniflux"
+  }
 }
