@@ -36,17 +36,32 @@ resource "docker_container" "towonel" {
     "TOWONEL_HUB_OPERATOR_API_KEY_PATH=/data/operator.key",
     "TOWONEL_HUB_URL=http://localhost:8443",
     "TOWONEL_EDGE_ENABLED=true",
-    "TOWONEL_EDGE_LISTEN_ADDR=0.0.0.0:4443",
+    "TOWONEL_EDGE_LISTEN_ADDR=0.0.0.0:443",
     "TOWONEL_EDGE_HEALTH_LISTEN_ADDR=0.0.0.0:9092",
     "TOWONEL_EDGE_PUBLIC_ADDRESSES=tunnel.plexuz.xyz:443",
     "TOWONEL_EDGE_TLS_CERT_DIR=/data/certs",
-    "TOWONEL_EDGE_TLS_ACME_EMAIL=letsencrypt@plexuz.xyz",
-    "TOWONEL_EDGE_TLS_HTTP_LISTEN_ADDR=0.0.0.0:8081",
+    "TOWONEL_EDGE_TLS_ACME_EMAIL=${data.infisical_secrets.towonel.secrets["TOWONEL_ACME_EMAIL"].value}",
+    "TOWONEL_EDGE_TLS_HTTP_LISTEN_ADDR=0.0.0.0:80",
   ]
 
   volumes {
-    #host_path      = "/opt/towonel"
+    volume_name    = "towonel_data"
     container_path = "/data"
+  }
+
+  ports {
+    external = 443
+    internal = 443
+  }
+
+  ports {
+    external = 8443
+    internal = 8443
+  }
+
+  ports {
+    external = 80
+    internal = 80
   }
 
   networks_advanced {
@@ -58,10 +73,10 @@ resource "docker_container" "towonel" {
     start_period = "30s"
     interval     = "30s"
     timeout      = "5s"
+    retries      = 3
   }
 
   memory = 512
-  cpus   = 2.0
 
   log_driver = "json-file"
   log_opts = {
