@@ -45,15 +45,7 @@ resource "hcloud_firewall" "towonel" {
   }
 
   rule {
-    description = "SSH Tunneling"
-    direction   = "in"
-    protocol    = "tcp"
-    port        = "2222"
-    source_ips  = ["0.0.0.0/0", "::/0"]
-  }
-
-  rule {
-    description = "Towonel Hub"
+    description = "Hub"
     direction   = "in"
     protocol    = "tcp"
     port        = "8443"
