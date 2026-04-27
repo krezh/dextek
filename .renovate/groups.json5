@@ -168,9 +168,9 @@
     {
       description: ["Towonel Group"],
       groupName: "Towonel",
-      matchPackageNames: [
-        "git.erwanleboucher.dev/eleboucher/towonel-agent",
-        "git.erwanleboucher.dev/eleboucher/towonel-node",
+      matchPackagePatterns: [
+        "eleboucher/towonel-agent$",
+        "eleboucher/towonel-node$",
       ],
       matchDatasources: ["docker"],
       group: {
