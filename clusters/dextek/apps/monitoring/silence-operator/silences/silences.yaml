@@ -35,6 +35,7 @@ spec:
       value: SmartDeviceTestFailed
       isRegex: false
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/monitoring.giantswarm.io/silence_v1alpha1.json
 apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
