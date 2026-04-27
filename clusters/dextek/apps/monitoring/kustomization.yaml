@@ -17,6 +17,7 @@ resources:
   - ./silence-operator
   - ./gatus
   - ./vpa
+  - ./prometheus-adapter
 transformers:
   - |-
     apiVersion: builtin
