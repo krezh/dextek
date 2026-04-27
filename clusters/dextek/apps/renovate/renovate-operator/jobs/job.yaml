@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
+apiVersion: renovate-operator.mogenius.com/v1alpha1
+kind: RenovateJob
+metadata:
+  name: renovate-job
+spec:
+  discoveryFilters:
+    - "krezh/*"
+  extraEnv:
+    - name: LOG_LEVEL
+      value: debug
+  image: ghcr.io/renovatebot/renovate:43.141.6
+  parallelism: 0
+  schedule: "0 * * * *"
+  provider:
+    name: forgejo
+    endpoint: https://codeberg.org/api/v1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  secretRef: renovate-secret
+  webhook:
+    enabled: true
+    authentication:
+      enabled: false # Set to true and configure secret if you want webhook authentication
