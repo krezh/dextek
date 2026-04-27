@@ -139,9 +139,36 @@ resource "authentik_flow_stage_binding" "user-settings-flow-binding-20" {
   order  = 20
 }
 
+resource "authentik_flow_stage_binding" "user-settings-flow-binding-30" {
+  target = authentik_flow.user-settings.uuid
+  stage  = authentik_stage_authenticator_webauthn.webauthn-setup.id
+  order  = 30
+}
+
 resource "authentik_flow_stage_binding" "user-settings-flow-binding-100" {
   target = authentik_flow.user-settings.uuid
   stage  = authentik_stage_user_write.user-settings-write.id
+  order  = 100
+}
+
+## Passwordless authentication flow
+resource "authentik_flow" "passwordless-authentication" {
+  name               = "passwordless-authentication-flow"
+  title              = "Passwordless Login"
+  slug               = "passwordless-authentication"
+  designation        = "authentication"
+  policy_engine_mode = "all"
+}
+
+resource "authentik_flow_stage_binding" "passwordless-authentication-flow-binding-00" {
+  target = authentik_flow.passwordless-authentication.uuid
+  stage  = authentik_stage_authenticator_validate.webauthn-validation.id
+  order  = 0
+}
+
+resource "authentik_flow_stage_binding" "passwordless-authentication-flow-binding-100" {
+  target = authentik_flow.passwordless-authentication.uuid
+  stage  = authentik_stage_user_login.authentication-login.id
   order  = 100
 }
 
