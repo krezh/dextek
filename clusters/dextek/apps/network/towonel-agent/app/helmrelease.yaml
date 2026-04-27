@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: towonel-agent
 spec:
+  interval: 30m
   chartRef:
     kind: OCIRepository
     name: towonel-agent
-  interval: 30m
   values:
     defaultPodOptions:
       automountServiceAccountToken: false
@@ -24,7 +24,7 @@ spec:
         type: deployment
         replicas: 2
         annotations:
-          reloader.stakater.com/auto: 'true'
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
@@ -33,7 +33,7 @@ spec:
             env:
               RUST_LOG: info
               # Wildcard: route ALL *.plexuz.xyz to gateway-external
-              TOWONEL_AGENT_SERVICES: '[{"hostname":"*.plexuz.xyz","origin":"gateway-external.network.svc.cluster.local:443"}]'
+              TOWONEL_AGENT_SERVICES: '[{ "hostname":"*.plexuz.xyz","origin":"gateway-external.network.svc.cluster.local:443" }]'
               TOWONEL_INVITE_TOKEN:
                 valueFrom:
                   secretKeyRef:
