@@ -3,7 +3,10 @@
   packageRules: [
     {
       description: "Separate PRs for main cluster",
-      matchFileNames: ["**/clusters/dextek/**"],
+      matchFileNames: [
+        "**/clusters/dextek/**",
+        "**/infrastructure/terraform/**",
+      ],
       additionalBranchPrefix: "dextek-",
     },
     {
