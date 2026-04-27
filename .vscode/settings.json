@@ -1,0 +1,30 @@
+{
+  "catppuccin-icons.associations.files": {
+    "*.gotmpl": "smarty",
+    "helmfile.yaml": "helm",
+    "kubeconfig": "kubernetes",
+    "talosconfig": "kubernetes"
+  },
+  "catppuccin-icons.associations.folders": {
+    // top level
+    ".github/workflows": "ci",
+    ".private": "archive",
+    ".renovate": "robot",
+    "bootstrap": "seeders",
+    "bootstrap/helmfile.d": "helm",
+    "flux": "pipe",
+    "talos": "linux",
+    // namespaces
+    "actions-runner-system": "github",
+    "cert-manager": "guard",
+    "default": "home",
+    "external-secrets": "secure",
+    "flux-system": "pipe",
+    "kube-system": "kubernetes",
+    "network": "connection",
+    "monitoring": "event",
+    "rook-ceph": "dump",
+    "system-upgrade": "update",
+    "volsync": "aws"
+  }
+}

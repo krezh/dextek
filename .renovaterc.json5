@@ -1,0 +1,23 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "github>krezh/dextek//.renovate/autoMerge.json5",
+    "github>krezh/dextek//.renovate/allowedVersions.json5",
+    "github>krezh/dextek//.renovate/groups.json5",
+    "github>krezh/dextek//.renovate/customManagers.json5",
+    "github>krezh/dextek//.renovate/packageRules.json5",
+    "github>krezh/dextek//.renovate/clusters.json5",
+    "github>krezh/dextek//.renovate/grafanaDashboards.json5",
+    "github>krezh/dextek//.renovate/overrides.json5",
+  ],
+  ignorePaths: ["**/archive/**", "**/.archive/**", "**/*.sops.*"],
+  flux: {
+    managerFilePatterns: ["/clusters/.+\\.ya?ml$/"],
+  },
+  "helm-values": {
+    managerFilePatterns: ["/clusters/.+\\.ya?ml$/"],
+  },
+  kubernetes: {
+    managerFilePatterns: ["/clusters/.+\\.ya?ml$/"],
+  },
+}
