@@ -10,6 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+      substitution.flux.home.arpa/disabled: "true"
   path: ./clusters/dextek/apps/ci/forgejo-runner/app
   prune: true
   sourceRef:
