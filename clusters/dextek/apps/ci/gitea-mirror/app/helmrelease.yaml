@@ -26,9 +26,6 @@ spec:
             image:
               repository: ghcr.io/raylabshq/gitea-mirror
               tag: v3.15.6
-            envFrom:
-              - secretRef:
-                  name: gitea-mirror-secret
             resources:
               requests:
                 cpu: 10m
