@@ -21,9 +21,6 @@ mod talos '.just/talos.just'
 # Crunchy Recipes
 mod crunchy '.just/crunchy.just'
 
-# SOPS Recipes
-mod sops '.just/sops.just'
-
 # Bootstrap Cluster
 bootstrap cluster recipe="all":
   echo "Bootstrapping cluster: {{cluster}}..."
