@@ -18,7 +18,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [ 44 ]
+        supplementalGroups: [44]
       resourceClaims:
         - name: gpu
           resourceClaimTemplateName: jellyfin-gpu
@@ -50,14 +50,14 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: [ "ALL" ] }
+              capabilities: { drop: ["ALL"] }
             resources:
               claims:
                 - name: gpu
               requests:
                 cpu: 100m
               limits:
-                memory: 3013M
+                memory: 4000M
     service:
       app:
         controller: jellyfin
@@ -66,7 +66,7 @@ spec:
             port: *port
     route:
       app:
-        hostnames: [ "{{ .Release.Name }}.plexuz.xyz" ]
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         parentRefs:
           - name: gateway-external
             namespace: network
@@ -79,7 +79,7 @@ spec:
               request: 0s
               backendRequest: 0s
       internal:
-        hostnames: [ "{{ .Release.Name }}.talos.plexuz.xyz" ]
+        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
         parentRefs:
           - name: gateway-internal
             namespace: network
