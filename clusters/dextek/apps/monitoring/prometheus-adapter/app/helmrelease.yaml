@@ -22,9 +22,3 @@ spec:
           name:
             as: probe_success
           metricsQuery: max_over_time(<<.Series>>{ <<.LabelMatchers>> }[2m])
-        - seriesQuery: '{ __name__="forgejo_pending_jobs" }'
-          resources:
-            namespaced: false
-          name:
-            as: forgejo_pending_jobs
-          metricsQuery: max_over_time(<<.Series>>{ <<.LabelMatchers>> }[1m])
