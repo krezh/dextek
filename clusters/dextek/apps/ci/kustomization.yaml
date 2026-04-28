@@ -6,6 +6,7 @@ resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
   - ./forgejo-runner
+  - ./gitea-mirror
 transformers:
   - |-
     apiVersion: builtin
