@@ -41,10 +41,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Sops
-.decrypted*.sops.*
-*decrypted*
-
 # Linters
 megalinter-reports/
 

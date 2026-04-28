@@ -13,14 +13,6 @@ stringData:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: sops-age
-  namespace: flux-system
-stringData:
-  age.agekey: {{ printf "%q" (getSecretByName $projectId $env "/Kubernetes/DexTek/Flux" "FLUX_AGE_KEY").Value }}
----
-apiVersion: v1
-kind: Secret
-metadata:
   name: github-deploy-key
   namespace: flux-system
 stringData:

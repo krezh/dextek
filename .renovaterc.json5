@@ -10,7 +10,6 @@
     "github>krezh/dextek//.renovate/grafanaDashboards.json5",
     "github>krezh/dextek//.renovate/overrides.json5",
   ],
-  ignorePaths: ["**/archive/**", "**/.archive/**", "**/*.sops.*"],
   flux: {
     managerFilePatterns: ["/clusters/.+\\.ya?ml$/"],
   },
