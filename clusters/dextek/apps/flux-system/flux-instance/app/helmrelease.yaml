@@ -23,10 +23,10 @@ spec:
       sync:
         interval: 30m
         kind: GitRepository
-        url: ssh://git@github.com/krezh/dextek
+        url: ssh://git@codeberg.org/krezh/dextek
         ref: refs/heads/main
         path: clusters/dextek/flux/config
-        pullSecret: github-deploy-key
+        pullSecret: deploy-key
       commonMetadata:
         labels:
           app.kubernetes.io/name: flux
