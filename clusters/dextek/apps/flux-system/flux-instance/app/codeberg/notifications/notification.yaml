@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/notification.toolkit.fluxcd.io/provider_v1beta3.json
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Provider
+metadata:
+  name: codeberg
+spec:
+  type: gitea
+  address: https://codeberg.org
+  secretRef:
+    name: codeberg-token
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/notification.toolkit.fluxcd.io/alert_v1beta3.json
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  name: codeberg
+spec:
+  providerRef:
+    name: codeberg
+  eventSeverity: info
+  eventMetadata:
+    cluster: DexTek
+  eventSources:
+    - kind: Kustomization
+      name: "*"
