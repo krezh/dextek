@@ -1,5 +1,7 @@
 set shell := ['bash', '-Eeu', '-o', 'pipefail', '-c']
 
+set lazy
+
 hack_dir := justfile_dir() + '/hack'
 controller := "$(talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
 

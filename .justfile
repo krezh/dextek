@@ -2,6 +2,7 @@
 
 set quiet
 set ignore-comments
+set lazy
 
 _default:
   just --list

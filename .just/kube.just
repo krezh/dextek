@@ -1,5 +1,7 @@
 set shell := ['bash', '-Eeu', '-o', 'pipefail', '-c']
 
+set lazy
+
 _default:
 	@just --list kube
 
