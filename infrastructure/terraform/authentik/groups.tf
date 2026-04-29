@@ -15,6 +15,7 @@ locals {
     "jellyfin-users",
     "jellyfin-admins",
     "ldap-admins",
+    "forgejo-admins",
   ])
 }
 

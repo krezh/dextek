@@ -1,6 +1,7 @@
 set shell := ['bash', '-Eeu', '-o', 'pipefail', '-c']
 
-set quiet := true
+set quiet
+set lazy
 
 _default:
 	@just --list crunchy

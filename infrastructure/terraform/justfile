@@ -1,7 +1,8 @@
 #!/usr/bin/env just --justfile
 
-set quiet := true
-set ignore-comments := true
+set quiet
+set ignore-comments
+set lazy
 
 _default:
     @just --list
