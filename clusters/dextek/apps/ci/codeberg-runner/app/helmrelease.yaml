@@ -172,7 +172,7 @@ spec:
                 echo "Registering runner..."
                 cd /persistent && forgejo-runner register \
                   --instance https://codeberg.org \
-                  --token "${CODEBERG_RUNNER_TOKEN}" \
+                  --token "${RUNNER_TOKEN}" \
                   --name k8s-runner \
                   --labels "default:k8spod:/config/podspec-default.yaml" \
                   --no-interactive
