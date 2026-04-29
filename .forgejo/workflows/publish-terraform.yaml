@@ -22,25 +22,23 @@ jobs:
           token: "${{ github.token }}"
           persist-credentials: false
 
-      - name: Setup Cosign
-        uses: https://github.com/sigstore/cosign-installer@cad07c2e89fa2edd6e2d7bab4c1aa38e53f76003 # v4.1.1
-
       - name: Setup Flux CLI
-        uses: https://github.com/fluxcd/flux2/action@04acaec6161ac4fb1a82ffafa88901c03271d34f # v2.8.6
+        shell: bash
+        run: curl -s https://fluxcd.io/install.sh | sudo bash
+
+      - name: Set registry host
+        id: registry
+        shell: bash
+        run: echo "host=$(echo '${{ github.server_url }}' | sed 's|https://||' | sed 's|http://||')" >> "${GITHUB_OUTPUT}"
 
       - name: Login to Forgejo Container Registry
-        uses: https://github.com/docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
-        with:
-          registry: ${{ github.server_url }}
-          username: "${{ github.actor }}"
-          password: "${{ github.token }}"
+        shell: bash
+        run: echo "${{ github.token }}" | docker login "${{ steps.registry.outputs.host }}" -u "${{ github.actor }}" --password-stdin
 
       - name: Generate tag
         id: generate-tag
         shell: bash
-        run: |
-          REGISTRY_HOST=$(echo "${{ github.server_url }}" | sed 's|https://||' | sed 's|http://||')
-          echo "tag=${REGISTRY_HOST}/${{ github.repository }}/manifests/infrastructure:$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
+        run: echo "tag=${{ steps.registry.outputs.host }}/${{ github.repository }}/manifests/infrastructure:$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
 
       - name: Publish manifests
         shell: bash
