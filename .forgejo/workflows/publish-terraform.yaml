@@ -11,7 +11,6 @@ jobs:
   publish-infrastructure:
     name: Publish Infrastructure
     runs-on: ubuntu-latest
-    environment: prod
     permissions:
       packages: write
       id-token: write
@@ -33,7 +32,7 @@ jobs:
 
       - name: Login to Forgejo Container Registry
         shell: bash
-        run: echo "${{ github.token }}" | docker login "${{ steps.registry.outputs.host }}" -u "${{ github.actor }}" --password-stdin
+        run: echo "${{ secrets.PACKAGE_TOKEN }}" | docker login "${{ steps.registry.outputs.host }}" -u "${{ github.actor }}" --password-stdin
 
       - name: Generate tag
         id: generate-tag
