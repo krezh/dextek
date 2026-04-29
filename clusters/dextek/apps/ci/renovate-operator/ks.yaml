@@ -6,11 +6,11 @@ metadata:
   name: &app renovate-operator
   namespace: flux-system
 spec:
-  targetNamespace: renovate
+  targetNamespace: ci
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./clusters/dextek/apps/renovate/renovate-operator/app
+  path: ./clusters/dextek/apps/ci/renovate-operator/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,13 +27,13 @@ metadata:
   name: renovate-operator-jobs
   namespace: flux-system
 spec:
-  targetNamespace: renovate
+  targetNamespace: ci
   commonMetadata:
     labels:
       app.kubernetes.io/name: renovate-operator
   dependsOn:
     - name: renovate-operator
-  path: ./clusters/dextek/apps/renovate/renovate-operator/jobs
+  path: ./clusters/dextek/apps/ci/renovate-operator/jobs
   prune: true
   sourceRef:
     kind: GitRepository
