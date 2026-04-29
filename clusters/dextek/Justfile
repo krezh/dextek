@@ -1,7 +1,8 @@
 #!/usr/bin/env just --justfile
 
-set quiet := true
-set positional-arguments := true
+set quiet
+set positional-arguments
+set lazy
 
 CLUSTER_DIR := "."
 BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
