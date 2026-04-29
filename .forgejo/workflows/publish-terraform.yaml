@@ -1,0 +1,74 @@
+---
+name: "Publish Terraform"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths: ["infrastructure/terraform/**", "clusters/**/terraform/**"]
+
+jobs:
+  publish-infrastructure:
+    name: Publish Infrastructure
+    runs-on: ubuntu-latest
+    environment: prod
+    permissions:
+      packages: write
+      id-token: write
+    steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        id: app-token
+        with:
+          client-id: "${{ secrets.BOT_APP_ID }}"
+          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
+          persist-credentials: false
+
+      - name: Setup Cosign
+        uses: sigstore/cosign-installer@cad07c2e89fa2edd6e2d7bab4c1aa38e53f76003 # v4.1.1
+
+      - name: Setup Flux CLI
+        uses: fluxcd/flux2/action@04acaec6161ac4fb1a82ffafa88901c03271d34f # v2.8.6
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        with:
+          registry: ghcr.io
+          username: "${{ github.actor }}"
+          password: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Generate tag
+        id: generate-tag
+        shell: bash
+        run: echo "tag=ghcr.io/${{ github.repository_owner }}/manifests/infrastructure:$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
+
+      - name: Publish manifests
+        shell: bash
+        env:
+          OCI_TAG: ${{ steps.generate-tag.outputs.tag }}
+        run: |
+          mkdir /tmp/terraform
+          cp -r infrastructure/terraform/* /tmp/terraform
+          for tf_dir in clusters/*/terraform/*; do
+            cluster_name=$(basename "$(dirname "$(dirname "$tf_dir")")")
+            terraform_folder_name=$(basename "$tf_dir")
+            dest_dir="/tmp/terraform/${cluster_name}/${terraform_folder_name}"
+            mkdir -p "$dest_dir"
+            cp -r "$tf_dir"/* "$dest_dir"/
+          done
+          ls /tmp/terraform
+          flux push artifact oci://$OCI_TAG \
+              --path="/tmp/terraform" \
+              --source="$(git config --get remote.origin.url)" \
+              --revision="$(git branch --show-current)/$(git rev-parse HEAD)"
+
+      - name: Tag manifests
+        shell: bash
+        env:
+          OCI_TAG: ${{ steps.generate-tag.outputs.tag }}
+        run: flux tag artifact oci://$OCI_TAG --tag main
