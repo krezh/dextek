@@ -28,17 +28,19 @@ jobs:
       - name: Setup Flux CLI
         uses: https://github.com/fluxcd/flux2/action@04acaec6161ac4fb1a82ffafa88901c03271d34f # v2.8.6
 
-      - name: Login to GitHub Container Registry
+      - name: Login to Forgejo Container Registry
         uses: https://github.com/docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
         with:
-          registry: ghcr.io
+          registry: ${{ github.server_url }}
           username: "${{ github.actor }}"
-          password: "${{ secrets.GITHUB_TOKEN }}"
+          password: "${{ github.token }}"
 
       - name: Generate tag
         id: generate-tag
         shell: bash
-        run: echo "tag=ghcr.io/${{ github.repository_owner }}/manifests/infrastructure:$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
+        run: |
+          REGISTRY_HOST=$(echo "${{ github.server_url }}" | sed 's|https://||' | sed 's|http://||')
+          echo "tag=${REGISTRY_HOST}/${{ github.repository }}/manifests/infrastructure:$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
 
       - name: Publish manifests
         shell: bash
