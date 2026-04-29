@@ -87,18 +87,5 @@ module "oauth_apps" {
       redirect_uri_paths = ["/oauth2/oidc/callback"]
       meta_description   = "Self-hosted RSS"
     }
-    forgejo = {
-      external   = true
-      app_domain = "git.${var.domain["external"]}"
-      app_group  = "Infrastructure"
-      access_groups = [
-        data.authentik_group.superuser.id,
-        authentik_group.groups["forgejo-admins"].id
-      ]
-      client_id          = module.app_secrets.secrets["forgejo"].secrets["FORGEJO_OAUTH_CLIENT_ID"].value
-      client_secret      = module.app_secrets.secrets["forgejo"].secrets["FORGEJO_OAUTH_CLIENT_SECRET"].value
-      redirect_uri_paths = ["/user/oauth2/authentik/callback"]
-      meta_description   = "Self-hosted Git"
-    }
   }
 }
