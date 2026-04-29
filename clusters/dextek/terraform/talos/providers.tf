@@ -9,7 +9,7 @@ terraform {
   required_providers {
     infisical = {
       source  = "Infisical/infisical"
-      version = "0.16.18"
+      version = "0.16.19"
     }
     matchbox = {
       source  = "poseidon/matchbox"
