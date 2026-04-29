@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: forgejo-runner
+  name: codeberg-runner
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: forgejo-runner
+    name: codeberg-runner
   values:
     configMaps:
       config:
@@ -134,7 +134,7 @@ spec:
             restartPolicy: Never
 
     controllers:
-      forgejo-runner:
+      codeberg-runner:
         type: statefulset
         replicas: 1
         statefulset:
@@ -146,7 +146,7 @@ spec:
               size: 1Gi
         pod:
           labels:
-            app.kubernetes.io/component: forgejo-runner
+            app.kubernetes.io/component: codeberg-runner
           annotations:
             reloader.stakater.com/auto: "true"
           securityContext:
@@ -172,13 +172,13 @@ spec:
                 echo "Registering runner..."
                 cd /persistent && forgejo-runner register \
                   --instance https://codeberg.org \
-                  --token "${FORGEJO_RUNNER_TOKEN}" \
+                  --token "${CODEBERG_RUNNER_TOKEN}" \
                   --name k8s-runner \
                   --labels "default:k8spod:/config/podspec-default.yaml" \
                   --no-interactive
             envFrom:
               - secretRef:
-                  name: forgejo-runner-secret
+                  name: codeberg-runner-secret
 
         containers:
           runner:
@@ -218,14 +218,14 @@ spec:
 
     rbac:
       bindings:
-        forgejo-runner:
+        codeberg-runner:
           type: RoleBinding
           roleRef:
-            identifier: forgejo-runner
+            identifier: codeberg-runner
           subjects:
-            - identifier: forgejo-runner
+            - identifier: codeberg-runner
       roles:
-        forgejo-runner:
+        codeberg-runner:
           type: Role
           rules:
             - apiGroups:
@@ -255,4 +255,4 @@ spec:
                 - get
 
     serviceAccount:
-      forgejo-runner: {}
+      codeberg-runner: {}
