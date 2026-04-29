@@ -13,8 +13,8 @@ stringData:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: github-deploy-key
+  name: deploy-key
   namespace: flux-system
 stringData:
-  identity: {{ printf "%q" (getSecretByName $projectId $env "/Kubernetes/DexTek/Flux" "FLUX_GITHUB_SSH_PRIVATE_KEY").Value }}
-  known_hosts: {{ printf "%q" (getSecretByName $projectId $env "/Kubernetes/DexTek/Flux" "FLUX_GITHUB_KNOWN_HOSTS").Value }}
+  identity: {{ printf "%q" (getSecretByName $projectId $env "/Kubernetes/DexTek/Flux" "FLUX_CODEBERG_SSH_PRIVATE_KEY").Value }}
+  known_hosts: {{ printf "%q" (getSecretByName $projectId $env "/Kubernetes/DexTek/Flux" "FLUX_CODEBERG_KNOWN_HOSTS").Value }}
