@@ -5,7 +5,7 @@ name: "Flux Local"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["clusters/**", "!clusters/**/terraform"]
+    paths: ["clusters/**", "!clusters/**/terraform/**"]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || forgejo.ref }}
