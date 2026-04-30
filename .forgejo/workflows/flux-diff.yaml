@@ -124,7 +124,7 @@ jobs:
           COMMENT_ID=$(curl -s \
             -H "Authorization: token ${GH_TOKEN}" \
             "${{ github.api_url }}/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
-            | jq -r --arg marker "${MARKER}" '.[​] | select(.body | startswith($marker)) | .id' | head -1)
+            | jq -r --arg marker "${MARKER}" '.[] | select(.body | startswith($marker)) | .id' | head -1)
           if [[ -n "${COMMENT_ID}" ]]; then
             curl -s -X PATCH \
               -H "Authorization: token ${GH_TOKEN}" \
