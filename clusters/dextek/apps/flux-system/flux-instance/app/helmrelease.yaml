@@ -23,7 +23,7 @@ spec:
       sync:
         interval: 30m
         kind: GitRepository
-        url: ssh://git@codeberg.org/DexTek/dextek
+        url: ssh://git@codeberg.org/dextek/dextek
         ref: refs/heads/main
         path: clusters/dextek/flux/config
         pullSecret: deploy-key

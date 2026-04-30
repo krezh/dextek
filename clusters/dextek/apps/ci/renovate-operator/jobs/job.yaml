@@ -6,7 +6,7 @@ metadata:
   name: renovate-job
 spec:
   discoveryFilters:
-    - "DexTek/*"
+    - "dextek/*"
   extraEnv:
     - name: LOG_LEVEL
       value: debug
