@@ -10,6 +10,15 @@ spec:
   extraEnv:
     - name: LOG_LEVEL
       value: debug
+    - name: RENOVATE_ALLOWED_COMMANDS
+      value: |-
+        [
+          "^bash -c 'PKG=\\$\\(grep",
+          "^nix run github:Mic92/nix-update",
+          "^nix run github:nix-community/gomod2nix",
+          "^nix run github:purpleclay/go-overlay#govendor",
+          "^bash .github/scripts/update-hash.sh",
+        ]
   image: ghcr.io/krezh/renovate-nix:43.160.1
   parallelism: 10
   schedule: "0 * * * *"
