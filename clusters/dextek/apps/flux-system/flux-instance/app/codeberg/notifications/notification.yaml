@@ -6,7 +6,7 @@ metadata:
   name: codeberg
 spec:
   type: gitea
-  address: https://codeberg.org/DexTek/dextek
+  address: https://codeberg.org/dextek/dextek
   secretRef:
     name: codeberg-token
 ---
