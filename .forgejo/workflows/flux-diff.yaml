@@ -113,7 +113,7 @@ jobs:
       - name: Add Comment
         if: ${{ steps.diff.outputs.diff != '' }}
         env:
-          GH_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           HEADER: "${{ github.event.pull_request.number }}/${{ matrix.paths }}/${{ matrix.resources }}"
           DIFF_CONTENT: ${{ steps.diff.outputs.diff }}
