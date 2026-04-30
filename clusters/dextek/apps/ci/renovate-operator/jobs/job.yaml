@@ -10,7 +10,7 @@ spec:
   extraEnv:
     - name: LOG_LEVEL
       value: debug
-  image: ghcr.io/krezh/renovate-nix:43.159.1
+  image: ghcr.io/krezh/renovate-nix:43.159.2
   parallelism: 10
   schedule: "0 * * * *"
   provider:
