@@ -20,3 +20,9 @@ spec:
           namespace: network
     webhook:
       enabled: true
+      route:
+        enabled: true
+        hostnames: ["renovate-webhook.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network

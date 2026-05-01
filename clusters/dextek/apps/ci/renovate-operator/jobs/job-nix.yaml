@@ -33,8 +33,22 @@ spec:
     requests:
       cpu: 100m
       memory: 128Mi
-  secretRef: renovate-secret
+  secretRef: &secret renovate-secret
   webhook:
     enabled: true
     authentication:
-      enabled: false # Set to true and configure secret if you want webhook authentication
+      enabled: true
+      secretRef:
+        name: *secret
+        key: &key RENOVATE_TOKEN
+    forgejo:
+      sync:
+        enabled: true
+        webhookURL: https://renovate-webhook.plexuz.xyz/webhook/v1/forgejo
+        topic: renovate-nix
+        tokenSecretRef:
+          name: *secret
+          key: *key
+        authTokenSecretRef:
+          name: *secret
+          key: *key
