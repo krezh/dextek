@@ -11,7 +11,7 @@ terraform {
     }
     infisical = {
       source  = "Infisical/infisical"
-      version = "0.16.20"
+      version = "0.16.21"
     }
     acme = {
       source  = "vancluever/acme"
