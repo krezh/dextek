@@ -45,15 +45,26 @@ spec:
                 name: main
                 resources:
                   limits:
-                    memory: 2Gi
+                    memory: 8G
                   requests:
                     cpu: 100m
-                    memory: 256Mi
+                    memory: 4G
                 volumeMounts:
                   - name: workspace
                     mountPath: /workspace
+                  - name: nix
+                    mountPath: /nix
             volumes:
               - name: workspace
+                ephemeral:
+                  volumeClaimTemplate:
+                    spec:
+                      accessModes: ["ReadWriteOnce"]
+                      storageClassName: ceph-block
+                      resources:
+                        requests:
+                          storage: 100Gi
+              - name: nix
                 ephemeral:
                   volumeClaimTemplate:
                     spec:
