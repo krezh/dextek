@@ -25,6 +25,5 @@ module "app_secrets" {
     zipline    = "/Kubernetes/DexTek/Zipline"
     kubernetes = "/Kubernetes/DexTek/Kubernetes"
     miniflux   = "/Kubernetes/DexTek/Miniflux"
-    forgejo    = "/Kubernetes/DexTek/Forgejo"
   }
 }
