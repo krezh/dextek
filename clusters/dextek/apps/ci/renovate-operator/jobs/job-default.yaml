@@ -31,7 +31,7 @@ spec:
       enabled: true
       secretRef:
         name: *secret
-        key: &key OPERATOR_WEBHOOK_KEY
+        key: OPERATOR_WEBHOOK_KEY
     forgejo:
       sync:
         enabled: true
@@ -39,3 +39,6 @@ spec:
         tokenSecretRef:
           name: *secret
           key: RENOVATE_TOKEN
+        authTokenSecretRef:
+          name: *secret
+          key: OPERATOR_WEBHOOK_KEY
