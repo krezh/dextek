@@ -3,8 +3,11 @@
 apiVersion: renovate-operator.mogenius.com/v1alpha1
 kind: RenovateJob
 metadata:
-  name: renovate-job
+  name: default
 spec:
+  image: ghcr.io/renovatebot/renovate:43.160.2
+  discoverTopics:
+    - renovate-default
   discoveryFilters:
     - dextek/*
   extraEnv:
@@ -12,16 +15,6 @@ spec:
       value: debug
     - name: RENOVATE_GIT_AUTHOR
       value: dextek-bot <dextek-bot@noreply.codeberg.org>
-    - name: RENOVATE_ALLOWED_COMMANDS
-      value: |-
-        [
-          "^bash -c 'PKG=\\$\\(grep",
-          "^nix run github:Mic92/nix-update",
-          "^nix run github:nix-community/gomod2nix",
-          "^nix run github:purpleclay/go-overlay#govendor",
-          "^bash .forgejo/scripts/update-hash.sh",
-        ]
-  image: ghcr.io/krezh/renovate-nix:43.160.2
   parallelism: 10
   schedule: 0 * * * *
   provider:
