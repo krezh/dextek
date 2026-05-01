@@ -21,7 +21,7 @@ spec:
           "^nix run github:purpleclay/go-overlay#govendor",
           "^bash .forgejo/scripts/update-hash.sh",
         ]
-  image: ghcr.io/krezh/renovate-nix:43.160.1
+  image: ghcr.io/krezh/renovate-nix:43.160.2
   parallelism: 10
   schedule: 0 * * * *
   provider:
