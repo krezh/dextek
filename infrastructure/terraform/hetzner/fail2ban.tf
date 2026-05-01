@@ -2,7 +2,9 @@ resource "ssh_resource" "fail2ban_config" {
   for_each = fileset("${path.module}/fail2ban", "**")
 
   triggers = {
-    content = file("${path.module}/fail2ban/${each.value}")
+    content = templatefile("${path.module}/fail2ban/${each.value}", {
+      MY_IP = data.infisical_secrets.hetzner.secrets["MY_IP"].value
+    })
   }
 
   host        = hcloud_server.pangolin.ipv4_address
@@ -12,7 +14,9 @@ resource "ssh_resource" "fail2ban_config" {
   pre_commands = ["mkdir -p /opt/fail2ban/${dirname(each.value)}"]
 
   file {
-    content     = file("${path.module}/fail2ban/${each.value}")
+    content = templatefile("${path.module}/fail2ban/${each.value}", {
+      MY_IP = data.infisical_secrets.hetzner.secrets["MY_IP"].value
+    })
     destination = "/opt/fail2ban/${each.value}"
     permissions = "0644"
   }

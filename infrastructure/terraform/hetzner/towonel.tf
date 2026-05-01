@@ -16,11 +16,11 @@ resource "docker_container" "towonel" {
     docker_network.edge
   ]
 
-  name    = "towonel-node"
-  image   = docker_image.towonel.name
-  restart = "unless-stopped"
-  user    = "10001:10001"
-
+  name        = "towonel-node"
+  image       = docker_image.towonel.name
+  restart     = "unless-stopped"
+  user        = "10001:10001"
+  memory_swap = 1024
   env = [
     "RUST_LOG=info",
     "TOWONEL_IDENTITY_KEY_PATH=/data/node.key",
