@@ -31,15 +31,11 @@ spec:
       enabled: true
       secretRef:
         name: *secret
-        key: &key RENOVATE_TOKEN
+        key: &key OPERATOR_WEBHOOK_KEY
     forgejo:
       sync:
         enabled: true
         webhookURL: https://renovate-webhook.plexuz.xyz/webhook/v1/forgejo
-        topic: renovate-default
         tokenSecretRef:
           name: *secret
-          key: *key
-        authTokenSecretRef:
-          name: *secret
-          key: *key
+          key: RENOVATE_TOKEN
