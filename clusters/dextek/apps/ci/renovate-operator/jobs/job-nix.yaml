@@ -5,7 +5,7 @@ kind: RenovateJob
 metadata:
   name: nix
 spec:
-  image: ghcr.io/krezh/renovate-nix:43.160.4@sha256:2c11ba6f283b1b101b48f506c5b76aef6f8e9f5e46eb922ab780f762a53600f5
+  image: ghcr.io/krezh/renovate-nix:43.160.4@sha256:24251039373be2e11a20d3b77893cd21b2eb1db750a76f1a58de9a4970fbcf79
   discoverTopics:
     - renovate-nix
   discoveryFilters:
