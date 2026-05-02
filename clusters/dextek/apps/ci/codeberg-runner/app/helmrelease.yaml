@@ -36,6 +36,8 @@ spec:
                 - docker:k8spod:/config/podspec-dind.yaml
               timeout: 3h
           podspec-default.yaml: |-
+            securityContext:
+              hostUsers: false
             containers:
               - env:
                   - name: DEBIAN_FRONTEND
