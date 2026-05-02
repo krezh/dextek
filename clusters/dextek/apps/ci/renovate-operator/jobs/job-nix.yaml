@@ -40,7 +40,7 @@ spec:
       enabled: true
       secretRef:
         name: *secret
-        key: &key RENOVATE_TOKEN
+        key: OPERATOR_WEBHOOK_KEY
     forgejo:
       sync:
         enabled: true
@@ -48,7 +48,7 @@ spec:
         topic: renovate-nix
         tokenSecretRef:
           name: *secret
-          key: *key
+          key: RENOVATE_TOKEN
         authTokenSecretRef:
           name: *secret
-          key: *key
+          key: OPERATOR_WEBHOOK_KEY
