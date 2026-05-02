@@ -28,7 +28,7 @@ spec:
   schedule: 0 * * * *
   provider:
     name: forgejo
-    endpoint: https://codeberg.org/api/v1
+    endpoint: https://codeberg.org
   resources:
     requests:
       cpu: 100m
