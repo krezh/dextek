@@ -34,7 +34,7 @@ spec:
         key: OPERATOR_WEBHOOK_KEY
     forgejo:
       sync:
-        enabled: true
+        enabled: false
         webhookURL: https://renovate-webhook.plexuz.xyz/webhook/v1/forgejo
         tokenSecretRef:
           name: *secret
