@@ -15,6 +15,10 @@ spec:
       value: debug
     - name: RENOVATE_GIT_AUTHOR
       value: dextek-bot <dextek-bot@noreply.codeberg.org>
+    - name: RENOVATE_PLATFORM_COMMIT
+      value: "true"
+    - name: RENOVATE_REDIS_URL
+      value: "redis://dragonfly.databases.svc:6379/3"
   parallelism: 10
   schedule: 0 * * * *
   provider:
