@@ -67,8 +67,6 @@ spec:
               envFrom:
                 - secretRef:
                     name: grafana-secret
-                - secretRef:
-                    name: grafana-postgres-secret
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
