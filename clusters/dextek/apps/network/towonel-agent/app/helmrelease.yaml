@@ -86,3 +86,8 @@ spec:
         ports:
           http:
             port: 9090
+    serviceMonitor:
+      app:
+        endpoints:
+          - port: http
+            interval: 1m
