@@ -50,10 +50,6 @@ spec:
       parentRefs:
         - name: gateway-internal
           namespace: network
-      rules:
-        - backendRefs:
-            - name: grafana-service
-              port: 3000
   deployment:
     spec:
       strategy:
@@ -84,7 +80,15 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
           volumes:
-            - name: tmpfs
-              emptyDir:
-                medium: Memory
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-pvc
+  persistentVolumeClaim:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: ceph-block
   disableDefaultSecurityContext: All
