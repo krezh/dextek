@@ -34,8 +34,48 @@ spec:
                 - ubuntu-24.04:k8spod:/config/podspec-default.yaml
                 - default:k8spod:/config/podspec-default.yaml
                 - docker:k8spod:/config/podspec-dind.yaml
+                - nix:k8spod:/config/podspec-nix.yaml
               timeout: 3h
           podspec-default.yaml: |-
+            containers:
+              - env:
+                  - name: DEBIAN_FRONTEND
+                    value: noninteractive
+                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04
+                imagePullPolicy: IfNotPresent
+                name: main
+                resources:
+                  limits:
+                    memory: 16G
+                  requests:
+                    cpu: 100m
+                    memory: 4G
+                volumeMounts:
+                  - name: workspace
+                    mountPath: /workspace
+                  - name: nix
+                    mountPath: /nix
+            volumes:
+              - name: workspace
+                ephemeral:
+                  volumeClaimTemplate:
+                    spec:
+                      accessModes: ["ReadWriteOnce"]
+                      storageClassName: ceph-block
+                      resources:
+                        requests:
+                          storage: 100Gi
+              - name: nix
+                ephemeral:
+                  volumeClaimTemplate:
+                    spec:
+                      accessModes: ["ReadWriteOnce"]
+                      storageClassName: ceph-block
+                      resources:
+                        requests:
+                          storage: 100Gi
+            restartPolicy: Never
+          podspec-nix.yaml: |-
             hostUsers: false
             containers:
               - env:
@@ -45,15 +85,7 @@ spec:
                 imagePullPolicy: IfNotPresent
                 name: main
                 securityContext:
-                  capabilities:
-                    add:
-                      - SYS_ADMIN
-                      - SETUID
-                      - SETGID
-                      - CHOWN
-                      - FOWNER
-                    drop:
-                      - ALL
+                  privileged: true
                 resources:
                   limits:
                     memory: 16G
