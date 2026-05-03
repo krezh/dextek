@@ -36,8 +36,6 @@ spec:
                 - docker:k8spod:/config/podspec-dind.yaml
               timeout: 3h
           podspec-default.yaml: |-
-            securityContext:
-              hostUsers: false
             containers:
               - env:
                   - name: DEBIAN_FRONTEND
@@ -45,6 +43,8 @@ spec:
                 image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04
                 imagePullPolicy: IfNotPresent
                 name: main
+                securityContext:
+                  hostUsers: false
                 resources:
                   limits:
                     memory: 16G
