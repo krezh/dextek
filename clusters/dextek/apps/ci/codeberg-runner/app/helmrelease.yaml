@@ -45,7 +45,13 @@ spec:
                 imagePullPolicy: IfNotPresent
                 name: main
                 securityContext:
-                  privileged: true
+                  capabilities:
+                    add:
+                      - SYS_ADMIN
+                      - SETUID
+                      - SETGID
+                    drop:
+                      - ALL
                 resources:
                   limits:
                     memory: 16G
