@@ -87,5 +87,15 @@ module "oauth_apps" {
       redirect_uri_paths = ["/oauth2/oidc/callback"]
       meta_description   = "Self-hosted RSS"
     }
+    termix = {
+      app_group = "Infrastructure"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = module.app_secrets.secrets["termix"].secrets["TERMIX_OAUTH_CLIENT_ID"].value
+      client_secret      = module.app_secrets.secrets["termix"].secrets["TERMIX_OAUTH_CLIENT_SECRET"].value
+      redirect_uri_paths = ["/users/oidc/callback"]
+      meta_description   = "Server management platform"
+    }
   }
 }

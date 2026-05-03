@@ -27,6 +27,16 @@ spec:
               tag: release-2.1.0
             env:
               PORT: &port 8080
+              OIDC_IDENTIFIER_PATH: "sub"
+              OIDC_NAME_PATH: "name"
+              OIDC_SCOPES: "openid profile email"
+              OIDC_ISSUER_URL: "https://sso.plexuz.xyz/application/o/termix/"
+              OIDC_AUTHORIZATION_URL: "https://sso.plexuz.xyz/application/o/authorize/"
+              OIDC_TOKEN_URL: "https://sso.plexuz.xyz/application/o/token/"
+              OIDC_USERINFO_URL: "https://sso.plexuz.xyz/application/o/userinfo/"
+            envFrom:
+              - secretRef:
+                  name: termix-secret
             resources:
               requests:
                 cpu: 100m
