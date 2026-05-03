@@ -14,7 +14,7 @@ spec:
       feedback_links_enabled: "false"
       reporting_enabled: "false"
     auth:
-      disable_login_form: "true"
+      disable_login_form: "false"
       signout_redirect_url: https://sso.plexuz.xyz/application/o/grafana/end-session/
       oauth_auto_login: "true"
       oauth_allow_insecure_email_lookup: "true"
@@ -40,6 +40,8 @@ spec:
       plugin_admin_enabled: "false"
     security:
       angular_support_enabled: "true"
+    metrics:
+      enabled: "true"
     server:
       enable_gzip: "true"
       root_url: https://grafana.talos.plexuz.xyz
@@ -58,12 +60,6 @@ spec:
         spec:
           containers:
             - name: grafana
-              env:
-                - name: GF_SECURITY_ADMIN_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: grafana-secret
-                      key: GF_SECURITY_ADMIN_PASSWORD
               envFrom:
                 - secretRef:
                     name: grafana-secret
