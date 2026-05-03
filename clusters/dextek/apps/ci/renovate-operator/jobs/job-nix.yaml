@@ -18,7 +18,7 @@ spec:
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
     - name: RENOVATE_REDIS_URL
-      value: "redis://dragonfly.databases.svc:6379/3"
+      value: "redis://dragonfly.databases.svc:6379/4"
     - name: RENOVATE_ALLOWED_COMMANDS
       value: |-
         [
