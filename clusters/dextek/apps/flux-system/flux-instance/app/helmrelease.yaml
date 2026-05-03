@@ -21,7 +21,7 @@ spec:
         - helm-controller
         - notification-controller
       sync:
-        interval: 30m
+        interval: 1h
         kind: GitRepository
         url: ssh://git@codeberg.org/dextek/dextek
         ref: refs/heads/main
