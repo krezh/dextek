@@ -23,6 +23,9 @@ spec:
       route:
         enabled: true
         hostnames: ["renovate-webhook.plexuz.xyz"]
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 401"]
         parentRefs:
           - name: gateway-external
             namespace: network
