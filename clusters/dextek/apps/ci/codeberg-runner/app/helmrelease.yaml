@@ -45,9 +45,7 @@ spec:
                 imagePullPolicy: IfNotPresent
                 name: main
                 securityContext:
-                  capabilities:
-                    add:
-                      - SYS_ADMIN
+                  privileged: true
                 resources:
                   limits:
                     memory: 16G
