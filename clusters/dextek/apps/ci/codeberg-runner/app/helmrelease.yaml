@@ -29,7 +29,7 @@ spec:
             log:
               level: info
             runner:
-              capacity: 4
+              capacity: 10
               file: /persistent/.runner
               labels:
                 - ubuntu-latest:k8spod:/config/podspec-default.yaml

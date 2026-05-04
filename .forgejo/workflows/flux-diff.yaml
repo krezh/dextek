@@ -138,19 +138,3 @@ jobs:
               "${{ github.api_url }}/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
               -d "${BODY_JSON}"
           fi
-
-  success:
-    if: ${{ !cancelled() }}
-    needs: ["test", "diff"]
-    name: Flux Local - Success
-    runs-on: ubuntu-latest
-    steps:
-      - name: Any jobs failed?
-        if: ${{ contains(needs.*.result, 'failure') }}
-        run: exit 1
-
-      - name: All jobs passed or skipped?
-        if: ${{ !(contains(needs.*.result, 'failure')) }}
-        env:
-          RESULTS: ${{ toJSON(needs.*.result) }}
-        run: echo "All jobs passed or skipped" && echo "$RESULTS"
