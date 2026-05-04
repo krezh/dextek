@@ -5,7 +5,7 @@ kind: RenovateJob
 metadata:
   name: default
 spec:
-  image: ghcr.io/renovatebot/renovate:43.161.0
+  image: ghcr.io/renovatebot/renovate:43.162.0
   discoverTopics:
     - renovate-default
   discoveryFilters:
