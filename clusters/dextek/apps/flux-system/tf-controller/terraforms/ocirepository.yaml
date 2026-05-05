@@ -8,4 +8,4 @@ spec:
   interval: 1m
   ref:
     tag: main
-  url: oci://codeberg.org/dextek/dextek/manifests/infrastructure
+  url: oci://github.com/krezh/manifests/infrastructure
