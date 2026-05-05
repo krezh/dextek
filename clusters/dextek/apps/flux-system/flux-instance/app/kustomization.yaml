@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./webhook
-  - ./codeberg
+  - ./github
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
   - ./podmonitor.yaml
