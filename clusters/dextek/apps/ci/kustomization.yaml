@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
-  - ./codeberg-runner
   - ./renovate-operator
 transformers:
   - |-
