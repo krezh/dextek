@@ -9,13 +9,7 @@ spec:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
       name: attic-external
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: attic-internal
-  # Disable compression - NARs are already compressed by Attic with zstd
   compressor: []
   timeout:
     http:
-      # Increase timeout for large NAR uploads/downloads
       requestTimeout: 0s
-      connectionIdleTimeout: 300s
