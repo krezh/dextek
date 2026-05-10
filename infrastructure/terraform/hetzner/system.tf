@@ -1,5 +1,5 @@
 resource "ssh_resource" "docker_install" {
-  host        = hcloud_server.pangolin.ipv4_address
+  host        = hcloud_server.towonel.ipv4_address
   user        = var.ssh_user
   private_key = local.ssh_key
 

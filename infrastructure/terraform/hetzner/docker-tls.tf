@@ -26,7 +26,7 @@ resource "tls_cert_request" "docker_server" {
     common_name = "Docker Server"
   }
 
-  ip_addresses = [hcloud_server.pangolin.ipv4_address]
+  ip_addresses = [hcloud_server.towonel.ipv4_address]
 }
 
 resource "tls_locally_signed_cert" "docker_server" {
@@ -70,7 +70,7 @@ resource "ssh_resource" "docker_tls_setup" {
     server_key  = tls_private_key.docker_server.private_key_pem
   }
 
-  host        = hcloud_server.pangolin.ipv4_address
+  host        = hcloud_server.towonel.ipv4_address
   user        = var.ssh_user
   private_key = local.ssh_key
 

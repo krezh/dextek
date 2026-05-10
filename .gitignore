@@ -3,6 +3,7 @@
 .AppleDouble
 .LSOverride
 .direnv
+.devenv
 
 # Icon must end with two \r
 Icon

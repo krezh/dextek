@@ -1,6 +1,6 @@
 data "hcloud_ssh_keys" "all" {}
 
-resource "hcloud_server" "pangolin" {
+resource "hcloud_server" "towonel" {
   depends_on = [hcloud_network_subnet.default]
 
   name        = "Towonel"

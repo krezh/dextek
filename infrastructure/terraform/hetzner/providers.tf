@@ -39,7 +39,7 @@ provider "hcloud" {
 }
 
 provider "docker" {
-  host          = "tcp://${hcloud_server.pangolin.ipv4_address}:2376"
+  host          = "tcp://${hcloud_server.towonel.ipv4_address}:2376"
   ca_material   = tls_self_signed_cert.docker_ca.cert_pem
   cert_material = tls_locally_signed_cert.docker_client.cert_pem
   key_material  = tls_private_key.docker_client.private_key_pem
