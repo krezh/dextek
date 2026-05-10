@@ -1,3 +1,37 @@
+resource "random_bytes" "crowdsec_bouncer_key" {
+  length = 32
+}
+
+resource "ssh_resource" "crowdsec_bouncer_config" {
+  triggers = {
+    bouncer_key = random_bytes.crowdsec_bouncer_key.hex
+  }
+
+  host        = hcloud_server.towonel.ipv4_address
+  user        = var.ssh_user
+  private_key = local.ssh_key
+
+  pre_commands = ["mkdir -p /opt/crowdsec-bouncer"]
+
+  file {
+    content     = <<-EOT
+      api_url: http://127.0.0.1:8088
+      api_key: ${random_bytes.crowdsec_bouncer_key.hex}
+
+      mode: nftables
+      update_frequency: 10s
+      daemonize: false
+
+      log_level: info
+      log_media: stdout
+      log_dir: /var/log
+      pid_dir: /var/run
+    EOT
+    destination = "/opt/crowdsec-bouncer/crowdsec-firewall-bouncer.yaml.template"
+    permissions = "0600"
+  }
+}
+
 resource "docker_volume" "crowdsec_db" {
   depends_on = [ssh_resource.docker_tls_setup]
   name       = "crowdsec_db"
@@ -60,6 +94,7 @@ resource "docker_container" "crowdsec" {
     "COLLECTIONS=crowdsecurity/linux crowdsecurity/sshd crowdsecurity/iptables",
     "PARSERS=crowdsecurity/geoip-enrich",
     "GID=1000",
+    "BOUNCER_KEY_firewall=${random_bytes.crowdsec_bouncer_key.hex}",
   ]
 
   volumes {
@@ -124,6 +159,46 @@ resource "docker_container" "crowdsec" {
 
   networks_advanced {
     name = docker_network.edge.name
+  }
+
+  log_driver = "json-file"
+  log_opts = {
+    max-size = "10m"
+    max-file = "3"
+  }
+}
+
+resource "docker_image" "cs_firewall_bouncer" {
+  depends_on = [ssh_resource.docker_tls_setup]
+  name       = "davidbcn86/crowdsec-firewall-bouncer-docker:v1.0.0-debian-12-bouncer-0.0.34-nftables"
+}
+
+resource "docker_container" "cs_firewall_bouncer" {
+  depends_on = [
+    docker_container.crowdsec,
+    ssh_resource.crowdsec_bouncer_config,
+    ssh_resource.docker_tls_setup,
+  ]
+
+  name         = "crowdsec-firewall-bouncer"
+  image        = docker_image.cs_firewall_bouncer.name
+  restart      = "unless-stopped"
+  network_mode = "host"
+  privileged   = true
+
+  capabilities {
+    add = ["NET_ADMIN", "NET_RAW", "SYS_ADMIN"]
+  }
+
+  env = [
+    "CROWDSEC_API_URL=http://127.0.0.1:8088",
+    "CROWDSEC_API_KEY=${random_bytes.crowdsec_bouncer_key.hex}",
+  ]
+
+  volumes {
+    host_path      = "/opt/crowdsec-bouncer"
+    container_path = "/tmp/crowdsec-config-source"
+    read_only      = true
   }
 
   log_driver = "json-file"
