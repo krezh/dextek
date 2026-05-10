@@ -10,6 +10,7 @@
     "local>krezh/dextek//.renovate/clusters.json5",
     "local>krezh/dextek//.renovate/grafanaDashboards.json5",
     "local>krezh/dextek//.renovate/overrides.json5",
+    "local>krezh/dextek//.renovate/talosFactory.json5",
   ],
   flux: {
     managerFilePatterns: ["/clusters/.+\\.ya?ml$/"],
