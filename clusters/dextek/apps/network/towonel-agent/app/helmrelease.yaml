@@ -22,7 +22,7 @@ spec:
     controllers:
       towonel-agent:
         type: deployment
-        replicas: 2
+        replicas: 3
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
