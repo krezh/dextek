@@ -70,14 +70,3 @@ spec:
           - backendRefs:
               - identifier: librespeed
                 port: *port
-      internal:
-        hostnames:
-          - speed.talos.plexuz.xyz
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: librespeed
-                port: *port

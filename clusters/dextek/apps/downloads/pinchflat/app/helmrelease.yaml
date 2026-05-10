@@ -67,10 +67,10 @@ spec:
             port: *port
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
         annotations:
           gatus.home-operations.com/endpoint: |-
-            url: https://{{ .Release.Name }}.talos.plexuz.xyz/healthcheck
+            url: https://{{ .Release.Name }}.plexuz.xyz/healthcheck
         parentRefs:
           - name: gateway-internal
             namespace: network

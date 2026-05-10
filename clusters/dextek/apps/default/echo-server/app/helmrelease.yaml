@@ -70,13 +70,3 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-      internal:
-        hostnames: ["{{ .Release.Name }}.talos.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port

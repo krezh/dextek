@@ -17,7 +17,7 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: "OnRootMismatch"
-        supplementalGroups: [ 44 ]
+        supplementalGroups: [44]
       resourceClaims:
         - name: gpu
           resourceClaimTemplateName: plex-gpu
@@ -73,29 +73,6 @@ spec:
         tls:
           - hosts:
               - *hostlocal
-    # route:
-    #   app:
-    #     hostnames:
-    #       - "{{ .Release.Name }}.talos.plexuz.xyz"
-    #     parentRefs:
-    #       - name: gateway-internal
-    #         namespace: network
-    #     rules:
-    #       - backendRefs:
-    #           - identifier: app
-    #             port: *port
-    #         filters:
-    #           - type: RequestHeaderModifier
-    #             requestHeaderModifier:
-    #               remove:
-    #                 - Range
-    #         matches:
-    #           - path:
-    #               type: PathPrefix
-    #               value: /library/streams
-    #       - backendRefs:
-    #           - identifier: app
-    #             port: *port
     persistence:
       config:
         enabled: true

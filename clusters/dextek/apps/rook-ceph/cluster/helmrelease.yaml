@@ -181,7 +181,7 @@ spec:
       dashboard:
         annotations:
         host:
-          name: rook.talos.plexuz.xyz
+          name: rook.plexuz.xyz
           path: /
           pathType: PathPrefix
         parentRefs:

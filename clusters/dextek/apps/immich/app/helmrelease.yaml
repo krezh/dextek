@@ -138,19 +138,6 @@ spec:
             timeouts:
               request: 0s
               backendRequest: 0s
-      internal:
-        hostnames: ["photos.talos.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: immich-server
-                port: *port
-            timeouts:
-              request: 0s
-              backendRequest: 0s
     persistence:
       library:
         type: nfs

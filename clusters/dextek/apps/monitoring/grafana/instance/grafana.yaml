@@ -44,11 +44,11 @@ spec:
       enabled: "true"
     server:
       enable_gzip: "true"
-      root_url: https://grafana.talos.plexuz.xyz
+      root_url: https://grafana.plexuz.xyz
   httpRoute:
     spec:
       hostnames:
-        - grafana.talos.plexuz.xyz
+        - grafana.plexuz.xyz
       parentRefs:
         - name: gateway-internal
           namespace: network

@@ -8,7 +8,7 @@ metadata:
   annotations:
 spec:
   hostnames:
-    - alloy.talos.plexuz.xyz
+    - alloy.plexuz.xyz
   parentRefs:
     - name: gateway-internal
       namespace: network
