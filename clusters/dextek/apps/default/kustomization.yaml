@@ -8,7 +8,6 @@ resources:
   - ./cyberchef
   - ./redbot
   - ./home-assistant
-  - ./ntfy
   - ./plex
   - ./tautulli
   - ./atuin
