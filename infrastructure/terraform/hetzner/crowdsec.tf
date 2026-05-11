@@ -75,7 +75,7 @@ resource "ssh_resource" "crowdsec_config_cleanup" {
 
 resource "docker_image" "crowdsec" {
   depends_on = [ssh_resource.docker_tls_setup]
-  name       = "crowdsecurity/crowdsec:v1.7.7"
+  name       = "crowdsecurity/crowdsec:v1.7.8"
 }
 
 resource "docker_container" "crowdsec" {
