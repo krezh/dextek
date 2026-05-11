@@ -13,8 +13,6 @@ spec:
   values:
     controllers:
       app:
-        replicas: 1
-        strategy: RollingUpdate
         pod:
           hostUsers: false
         containers:
