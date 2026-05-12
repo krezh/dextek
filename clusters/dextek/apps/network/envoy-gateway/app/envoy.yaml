@@ -59,7 +59,7 @@ spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: gateway-internal.talos.plexuz.xyz
+      external-dns.alpha.kubernetes.io/hostname: gateway-internal.plexuz.xyz
     parametersRef:
       group: gateway.envoyproxy.io
       kind: EnvoyProxy
@@ -158,10 +158,14 @@ kind: ClientTrafficPolicy
 metadata:
   name: envoy
 spec:
+  headers:
+    earlyRequestHeaders:
+      set:
+        - name: X-Real-Ip
+          value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
   clientIPDetection:
     xForwardedFor:
-      trustedCIDRs:
-        - 10.244.0.0/16
+      numTrustedHops: 1
   http2:
     onInvalidMessage: TerminateStream
     maxConcurrentStreams: 1000

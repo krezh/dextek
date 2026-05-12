@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: jellyfin
-  namespace: default
 spec:
   interval: 30m
   chartRef:
@@ -83,6 +82,8 @@ spec:
                 requestHeaderModifier:
                   set:
                     - name: X-Real-Ip
+                      value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
+                    - name: X-Forwarded-For
                       value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
     persistence:
       config:
