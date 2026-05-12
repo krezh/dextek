@@ -15,19 +15,24 @@ resource "ssh_resource" "crowdsec_bouncer_config" {
 
   file {
     content     = <<-EOT
-      api_url: http://127.0.0.1:8088
-      api_key: ${random_bytes.crowdsec_bouncer_key.hex}
-
       mode: nftables
       update_frequency: 10s
-      daemonize: false
 
+      log_mode: stdout
       log_level: info
-      log_media: stdout
-      log_dir: /var/log
-      pid_dir: /var/run
+      disable_ipv6: false
+      deny_action: DROP
+      deny_log: true
+      supported_decisions_types:
+        - ban
+      nftables:
+        enabled: true
+        ipv4_table: crowdsec
+        ipv6_table: crowdsec6
+        ipv4_chain: crowdsec-chain
+        ipv6_chain: crowdsec-chain
     EOT
-    destination = "/opt/crowdsec-bouncer/crowdsec-firewall-bouncer.yaml.template"
+    destination = "/opt/crowdsec-bouncer/crowdsec-firewall-bouncer.yaml"
     permissions = "0600"
   }
 }
@@ -73,11 +78,6 @@ resource "ssh_resource" "crowdsec_config_cleanup" {
   commands = ["rm -f /opt/crowdsec/${each.value}"]
 }
 
-resource "docker_image" "crowdsec" {
-  depends_on = [ssh_resource.docker_tls_setup]
-  name       = "crowdsecurity/crowdsec:v1.7.8"
-}
-
 resource "docker_container" "crowdsec" {
   depends_on = [
     ssh_resource.crowdsec_config,
@@ -85,10 +85,11 @@ resource "docker_container" "crowdsec" {
     docker_network.edge,
   ]
 
-  name    = "crowdsec"
-  image   = docker_image.crowdsec.name
-  restart = "unless-stopped"
-  memory  = 512
+  name        = "crowdsec"
+  image       = "crowdsecurity/crowdsec:v1.7.8"
+  restart     = "unless-stopped"
+  memory      = 512
+  memory_swap = 1024
 
   env = [
     "COLLECTIONS=crowdsecurity/linux crowdsecurity/sshd crowdsecurity/iptables",
@@ -121,7 +122,7 @@ resource "docker_container" "crowdsec" {
 
   volumes {
     host_path      = "/opt/crowdsec/acquis.d"
-    container_path = "/etc/crowdsec/acquis.d/custom"
+    container_path = "/etc/crowdsec/acquis.d"
     read_only      = true
   }
 
@@ -153,7 +154,7 @@ resource "docker_container" "crowdsec" {
     test         = ["CMD", "cscli", "lapi", "status"]
     interval     = "30s"
     timeout      = "5s"
-    start_period = "60s"
+    start_period = "1m0s"
     retries      = 3
   }
 
@@ -187,7 +188,7 @@ resource "docker_container" "cs_firewall_bouncer" {
   privileged   = true
 
   capabilities {
-    add = ["NET_ADMIN", "NET_RAW", "SYS_ADMIN"]
+    add = ["CAP_NET_ADMIN", "CAP_NET_RAW", "CAP_SYS_ADMIN"]
   }
 
   env = [
