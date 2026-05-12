@@ -77,14 +77,6 @@ spec:
             timeouts:
               request: 0s
               backendRequest: 0s
-            filters:
-              - type: RequestHeaderModifier
-                requestHeaderModifier:
-                  set:
-                    - name: X-Real-Ip
-                      value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
-                    - name: X-Forwarded-For
-                      value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
     persistence:
       config:
         existingClaim: jellyfin-config
