@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app kauth
+  name: kauth
 spec:
   interval: 1h
   chartRef:
@@ -24,12 +24,12 @@ spec:
       enabled: true
       annotations:
         gatus.home-operations.com/endpoint: |-
-          url: https://kauth.talos.plexuz.xyz/health
+          url: https://kauth.plexuz.xyz/health
       parentRefs:
         - name: gateway-internal
           namespace: network
           sectionName: https
-      hostnames: ["kauth.talos.plexuz.xyz"]
+      hostnames: ["kauth.plexuz.xyz"]
       rules:
         - matches:
             - path:
