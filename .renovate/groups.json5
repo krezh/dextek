@@ -128,7 +128,7 @@
     {
       description: ["Zipline Group"],
       groupName: "Zipline",
-      matchPackageNames: ["zipline"],
+      matchPackageNames: ["/zipline/"],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
