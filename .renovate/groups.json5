@@ -103,7 +103,7 @@
     {
       description: ["Authentik Group"],
       groupName: "Authentik",
-      matchPackageNames: ["authentik"],
+      matchPackageNames: ["/authentik/"],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
