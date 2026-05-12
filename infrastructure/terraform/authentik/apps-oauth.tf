@@ -85,6 +85,7 @@ module "oauth_apps" {
     }
     termix = {
       app_group = "Infrastructure"
+      app_domain = "termix.${var.domain["external"]}"
       access_groups = [
         data.authentik_group.superuser.id
       ]
