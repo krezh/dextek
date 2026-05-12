@@ -24,14 +24,12 @@ spec:
   components:
     - ../../../../../shared/components/gpu
     - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/anubis
     - ../../../../../shared/components/zeroscaler
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 300Gi
       VOLSYNC_CACHE_CAPACITY: 100Gi
-      ANUBIS_TARGET: http://jellyfin.default.svc.cluster.local:8096
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
