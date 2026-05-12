@@ -9,7 +9,8 @@ module "oauth_apps" {
 
   oauth_apps = {
     grafana = {
-      app_group = "Monitoring"
+      app_group  = "Monitoring"
+      app_domain = "grafana.${var.domain["external"]}"
       access_groups = [
         data.authentik_group.superuser.id,
         authentik_group.groups["Grafana Admins"].id
