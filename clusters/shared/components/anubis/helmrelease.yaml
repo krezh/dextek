@@ -19,6 +19,8 @@ spec:
             image:
               repository: ghcr.io/techarohq/anubis
               tag: v1.25.0
+            args:
+              - "--xff-strip-private=false"
             env:
               # https://anubis.techaro.lol/docs/admin/installation#environment-variables
               BIND: ":8080"
