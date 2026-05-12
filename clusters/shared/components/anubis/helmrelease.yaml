@@ -33,6 +33,8 @@ spec:
               POLICY_FNAME: "/etc/anubis/policy.yaml"
               SERVE_ROBOTS_TXT: "true"
               TARGET: "${ANUBIS_TARGET}"
+              OG_EXPIRY_TIME: "24h"
+              OG_PASSTHROUGH: "true"
               XFF_STRIP_PRIVATE: "false"
               # CUSTOM_REAL_IP_HEADER: Cf-Connecting-Ip
             probes:
