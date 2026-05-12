@@ -165,7 +165,7 @@ spec:
           value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
   clientIPDetection:
     xForwardedFor:
-      numTrustedHops: 1
+      numTrustedHops: 2
   http2:
     onInvalidMessage: TerminateStream
     maxConcurrentStreams: 1000
