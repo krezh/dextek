@@ -28,7 +28,7 @@
     {
       description: "Immich Images",
       groupName: "Immich",
-      matchPackageNames: ["immich"],
+      matchPackageNames: ["/immich/"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -138,7 +138,7 @@
     {
       description: ["Atuin Group"],
       groupName: "Atuin",
-      matchPackageNames: ["atuin"],
+      matchPackageNames: ["/atuin/"],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -148,7 +148,7 @@
     {
       description: ["Envoy Group"],
       groupName: "Envoy",
-      matchPackageNames: ["envoyproxy/envoy"],
+      matchPackageNames: ["/envoyproxy/envoy/"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
