@@ -112,14 +112,14 @@ module "fw-auth" {
     pinchflat = {
       app_name                = "Pinchflat"
       slug                    = "pinchflat"
-      app_domain              = "pinchflat.${var.domain["internal"]}"
+      app_domain              = "pinchflat.${var.domain["external"]}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
       authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
       invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
       meta_icon               = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/pinchflat.png"
-      outpost                 = "internal"
+      outpost                 = "external"
     }
     librespeed = {
       app_name                = "LibreSpeed"
