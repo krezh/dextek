@@ -5,7 +5,12 @@
       description: "Loose versioning for non-semver packages",
       matchDatasources: ["docker"],
       versioning: "loose",
-      matchPackagePatterns: ["changedetection", "plex", "qbittorrent", "mktxp"],
+      matchPackagePatterns: [
+        "changedetection",
+        "plex",
+        "qbittorrent",
+        "termix",
+      ],
     },
   ],
 }
