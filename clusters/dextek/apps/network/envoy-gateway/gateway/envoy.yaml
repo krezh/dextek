@@ -210,7 +210,7 @@ spec:
             scheme: https
             statusCode: 301
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/gateway.envoyproxy.io/envoyextensionpolicy_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.envoyproxy.io/envoyextensionpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyExtensionPolicy
 metadata:
