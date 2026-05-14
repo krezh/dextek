@@ -77,7 +77,7 @@ spec:
         dashboards:
           enabled: false
       relay:
-        enabled: true
+        enabled: false
         rollOutPods: true
         prometheus:
           serviceMonitor:
