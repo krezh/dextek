@@ -10,13 +10,6 @@ spec:
     kind: OCIRepository
     name: kauth
   values:
-    monitoring:
-      enabled: true
-      grafanaDashboard:
-        enabled: true
-        instanceSelector:
-          matchLabels:
-            dashboards: grafana
     replicaCount: 3
     podAnnotations:
       reloader.stakater.com/auto: "true"
@@ -31,5 +24,4 @@ spec:
       parentRefs:
         - name: gateway-internal
           namespace: network
-          sectionName: https
       hostnames: ["kauth.plexuz.xyz"]
