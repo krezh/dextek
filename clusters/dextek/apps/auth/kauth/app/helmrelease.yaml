@@ -14,6 +14,9 @@ spec:
       enabled: true
       grafanaDashboard:
         enabled: true
+        instanceSelector:
+          matchLabels:
+            dashboards: grafana
     replicaCount: 3
     podAnnotations:
       reloader.stakater.com/auto: "true"
@@ -30,8 +33,3 @@ spec:
           namespace: network
           sectionName: https
       hostnames: ["kauth.plexuz.xyz"]
-      rules:
-        - matches:
-            - path:
-                type: PathPrefix
-                value: /
