@@ -128,6 +128,10 @@ spec:
       databases: ["miniflux"]
       password:
         type: AlphaNumeric
+    - name: "gotify"
+      databases: ["gotify"]
+      password:
+        type: AlphaNumeric
   backups:
     pgbackrest:
       configuration: &backupConfig

@@ -79,11 +79,6 @@ spec:
                   - ALL
         serviceAccount:
           identifier: *app
-    serviceAccount:
-      talos-etcd-defrag:
-        enabled: true
-        labels: {}
-        annotations: {}
     persistence:
       talos-secrets:
         type: secret
@@ -95,6 +90,11 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /tmp
+    serviceAccount:
+      talos-etcd-defrag:
+        enabled: true
+        labels: {}
+        annotations: {}
     rbac:
       bindings:
         cluster-admin-binding:

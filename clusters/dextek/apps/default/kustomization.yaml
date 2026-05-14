@@ -24,6 +24,7 @@ resources:
   - ./notifier
   - ./miniflux
   - ./termix
+  - ./gotify
 transformers:
   - |-
     apiVersion: builtin
