@@ -83,7 +83,7 @@ spec:
           serviceMonitor:
             enabled: false
       ui:
-        enabled: true
+        enabled: false
         rollOutPods: true
     envoy:
       enabled: false
