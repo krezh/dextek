@@ -49,7 +49,7 @@ spec:
     type: LoadBalancer
     metadata:
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: cpgo.talos.plexuz.xyz
+        external-dns.alpha.kubernetes.io/hostname: cpgo.plexuz.xyz
   instances:
     - name: postgres
       metadata:
@@ -196,7 +196,7 @@ spec:
       service:
         metadata:
           annotations:
-            external-dns.alpha.kubernetes.io/hostname: pgbouncer.talos.plexuz.xyz
+            external-dns.alpha.kubernetes.io/hostname: pgbouncer.plexuz.xyz
         type: LoadBalancer
       port: 5432
       replicas: *replicas

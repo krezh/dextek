@@ -19,8 +19,6 @@ spec:
     fullnameOverride: nginx-internal
     controller:
       service:
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: ingress-internal.talos.plexuz.xyz
         externalTrafficPolicy: Local
       ingressClassResource:
         name: nginx-internal

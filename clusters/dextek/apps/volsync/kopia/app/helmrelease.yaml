@@ -64,7 +64,7 @@ spec:
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.talos.plexuz.xyz"
+          - "{{ .Release.Name }}.plexuz.xyz"
         parentRefs:
           - name: gateway-internal
             namespace: network

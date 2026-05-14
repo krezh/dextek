@@ -21,7 +21,7 @@ spec:
       enabled: true
       type: LoadBalancer
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: syslog.talos.plexuz.xyz
+        external-dns.alpha.kubernetes.io/hostname: syslog.plexuz.xyz
       externalTrafficPolicy: Local
     alloy:
       enableReporting: false

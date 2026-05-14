@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./envoy.yaml
+  - ./podmonitor.yaml
+  - ./certificate.yaml
+  - ./grafanadashboard.yaml
+configMapGenerator:
+  - name: gateway-external-extensions
+    files:
+      - resources/block-user-agents.lua
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

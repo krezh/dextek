@@ -7,11 +7,10 @@ metadata:
   annotations:
 spec:
   hostnames:
-    - flux.talos.plexuz.xyz
+    - flux.plexuz.xyz
   parentRefs:
     - name: gateway-internal
       namespace: network
-      sectionName: https
   rules:
     - backendRefs:
         - kind: Service

@@ -4,7 +4,3 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
-  - ./servicemonitor.yaml
-  - ./certificate.yaml
-  - ./grafanadashboard.yaml
-  - ./envoy.yaml

@@ -68,7 +68,7 @@ spec:
             scrapeTimeout: 10s
     route:
       app:
-        hostnames: ["sh.talos.plexuz.xyz"]
+        hostnames: ["sh.plexuz.xyz"]
         parentRefs:
           - name: gateway-internal
             namespace: network

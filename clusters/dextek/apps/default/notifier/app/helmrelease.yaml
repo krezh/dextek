@@ -60,7 +60,7 @@ spec:
     route:
       app:
         hostnames:
-          - notifier.talos.plexuz.xyz
+          - notifier.plexuz.xyz
         parentRefs:
           - name: gateway-internal
             namespace: network
