@@ -24,7 +24,7 @@ spec:
           termix:
             image:
               repository: ghcr.io/lukegus/termix
-              tag: release-2.1.0
+              tag: release-2.2.1
             env:
               PORT: &port 8080
               OIDC_IDENTIFIER_PATH: "sub"
