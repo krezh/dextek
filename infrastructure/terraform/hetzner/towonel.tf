@@ -37,7 +37,7 @@ resource "docker_container" "towonel" {
     "TOWONEL_EDGE_ENABLED=true",
     "TOWONEL_EDGE_LISTEN_ADDR=0.0.0.0:443",
     "TOWONEL_EDGE_HEALTH_LISTEN_ADDR=0.0.0.0:9092",
-    "TOWONEL_EDGE_PUBLIC_ADDRESSES=tunnel.plexuz.xyz:443",
+    "TOWONEL_EDGE_ADVERTISED_ADDRESSES=tunnel.plexuz.xyz:443",
     "TOWONEL_EDGE_TLS_CERT_DIR=/data/certs",
     "TOWONEL_EDGE_TLS_ACME_EMAIL=${data.infisical_secrets.towonel.secrets["TOWONEL_ACME_EMAIL"].value}",
     "TOWONEL_EDGE_TLS_HTTP_LISTEN_ADDR=0.0.0.0:80",
