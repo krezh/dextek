@@ -164,11 +164,8 @@
     {
       description: ["Towonel Group"],
       groupName: "Towonel",
-      matchPackagePatterns: [
-        "eleboucher/towonel-agent$",
-        "eleboucher/towonel-node$",
-      ],
-      matchDatasources: ["docker"],
+      matchPackageNames: ["/towonel-agent/", "/towonel-node/"],
+      matchDatasources: ["docker", "forgejo-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
