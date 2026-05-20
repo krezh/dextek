@@ -12,6 +12,12 @@
     "local>krezh/dextek//.renovate/overrides.json5",
     "local>krezh/dextek//.renovate/talosFactory.json5",
   ],
+  hostRules: [
+    {
+      hostType: "forgejo",
+      matchHost: "git.erwanleboucher.dev",
+    },
+  ],
   flux: {
     managerFilePatterns: ["/clusters/.+\\.ya?ml$/"],
   },
