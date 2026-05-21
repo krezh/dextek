@@ -9,7 +9,6 @@ resources:
   - ./cloudflare-dns
   - ./unifi-dns
   - ./envoy-gateway
-  - ./kguardian
   - ./multus
   - ./towonel-agent
 transformers:
