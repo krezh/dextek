@@ -1,9 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   packages = [
-    pkgs.pulumi-bin
-    pkgs.pulumiPackages.pulumi-go
     pkgs.infisical
-    pkgs.go
+    pkgs.opentofu
+    pkgs.opentofu-ls
   ];
 
   enterShell = ''
