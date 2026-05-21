@@ -7,6 +7,8 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: network
+  dependsOn:
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/network/cloudflare-dns/app
   prune: true
   sourceRef:

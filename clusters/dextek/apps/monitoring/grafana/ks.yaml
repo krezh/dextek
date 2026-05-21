@@ -26,6 +26,7 @@ spec:
   dependsOn:
     - name: grafana
     - name: crunchy-postgres-operator-cluster
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/monitoring/grafana/instance
   prune: true
   sourceRef:

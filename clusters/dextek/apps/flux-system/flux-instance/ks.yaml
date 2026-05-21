@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: flux-operator
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/flux-system/flux-instance/app
   prune: false # never should be deleted
   sourceRef:

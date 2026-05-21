@@ -9,6 +9,7 @@ spec:
   targetNamespace: default
   dependsOn:
     - name: crunchy-postgres-operator-cluster
+    - name: crunchy-postgres-stores
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/atuin/app
   prune: true

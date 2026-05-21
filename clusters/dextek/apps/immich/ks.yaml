@@ -9,7 +9,9 @@ spec:
   targetNamespace: immich
   dependsOn:
     - name: crunchy-postgres-operator-cluster
+    - name: crunchy-postgres-stores
     - name: dragonfly-cluster
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/immich/app
   prune: true
   sourceRef:

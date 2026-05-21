@@ -28,6 +28,7 @@ spec:
   targetNamespace: volsync
   dependsOn:
     - name: volsync
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/volsync/volsync/maintenance
   prune: true
   sourceRef:

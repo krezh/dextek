@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/mealie/app
   prune: true
   sourceRef:

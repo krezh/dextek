@@ -7,6 +7,8 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: volsync
+  dependsOn:
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/volsync/kopia/app
   prune: true
   sourceRef:

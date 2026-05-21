@@ -9,6 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/network/towonel-agent/app
   prune: true
   sourceRef:

@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: volsync
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/jellyfin/app
   prune: true
   sourceRef:
@@ -45,6 +46,7 @@ spec:
   dependsOn:
     - name: jellyfin
     - name: plex
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/jellyfin/tools
   prune: true
   sourceRef:

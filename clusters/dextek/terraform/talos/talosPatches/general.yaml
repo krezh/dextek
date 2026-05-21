@@ -137,6 +137,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   controllerManager:
     extraArgs:
+      feature-gates: HPAScaleToZero=true
       bind-address: 0.0.0.0
   network:
     cni:

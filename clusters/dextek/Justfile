@@ -21,6 +21,7 @@ all: && _cleanup
     just kubeconfig
     just readyCheck
     just helmfile
+    just wipe
     just k9s
 
 tofu:
@@ -83,22 +84,18 @@ helmfile: namespaces crds apps
 
 wipe:
     #!/usr/bin/env bash
-    NODES=$(talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1')
-    echo "Wiping disks on Nodes: $NODES"
-    for node in $NODES; do
-      echo "Waiting for Node to be ready: $node"
-      until talosctl health -n $node >/dev/null 2>&1; do sleep 3; done
-      echo "Wiping disks on: $node"
-      DISKS=$(talosctl get disks --output json -n $node | jq -r '. | select(.spec.dev_path | contains("nvme")) | .spec.dev_path' | sed 's|/dev/||g' | tr '\n' ' ' | awk '{$1=$1};1')
-      for disk in $DISKS; do
-        printf "Wiping: $disk"; sleep 1;
-        if talosctl wipe disk $disk -n $node >/dev/null 2>&1; then
-          echo " SUCCESS";
-        else
-          echo " FAILED (Probably OS Drive)";
-        fi
-      done;
+    set -euo pipefail
+    kubectl delete daemonset disk-wipe -n kube-system --ignore-not-found >/dev/null 2>&1
+    echo "Deploying disk wipe DaemonSet..."
+    kubectl apply -f {{ BOOTSTRAP_DIR }}/wipe-daemonset.yaml
+    echo "Waiting for wipe to complete on all nodes..."
+    kubectl rollout status daemonset/disk-wipe -n kube-system --timeout=10m
+    echo "Wipe results:"
+    for pod in $(kubectl get pods -n kube-system -l app=disk-wipe -o name); do
+      echo "--- $pod ---"
+      kubectl logs -n kube-system "$pod" -c wipe 2>/dev/null || true
     done
+    kubectl delete daemonset disk-wipe -n kube-system --ignore-not-found >/dev/null 2>&1
 
 k9s:
     k9s --all-namespaces --command pods

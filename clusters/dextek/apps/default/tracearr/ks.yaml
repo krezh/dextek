@@ -12,9 +12,11 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator-cluster
+    - name: crunchy-postgres-stores
     - name: dragonfly-cluster
     - name: plex
     - name: jellyfin
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/tracearr/app
   prune: true
   sourceRef:

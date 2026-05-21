@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: disk-wipe
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: disk-wipe
+  template:
+    metadata:
+      labels:
+        app: disk-wipe
+    spec:
+      tolerations:
+        - operator: Exists
+      initContainers:
+        - name: wipe
+          image: alpine:latest
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: dev
+              mountPath: /dev
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -u
+              apk add --no-cache util-linux gptfdisk parted >/dev/null 2>&1
+              # Detect disks hosting Talos system partitions
+              OS_DISKS=""
+              for label in STATE EPHEMERAL BOOT META; do
+                link="/dev/disk/by-partlabel/$label"
+                [ -L "$link" ] || continue
+                part=$(readlink -f "$link")
+                disk=$(echo "$part" | sed 's/p[0-9]*$//')
+                OS_DISKS="$OS_DISKS $disk"
+              done
+              for nvme in /dev/nvme*; do
+                [ -b "$nvme" ] || continue
+                # Skip partition devices (nvme0n1p1, etc.)
+                echo "$nvme" | grep -qE 'p[0-9]+$' && continue
+                # Skip OS disks
+                skip=false
+                for os_disk in $OS_DISKS; do
+                  [ "$nvme" = "$os_disk" ] && skip=true && break
+                done
+                if [ "$skip" = "true" ]; then
+                  echo "Skipping OS disk: $nvme"
+                  continue
+                fi
+                echo "Wiping: $nvme"
+                sgdisk --zap-all --clear "$nvme" || echo "ERROR: sgdisk failed on $nvme"
+                wipefs -af "$nvme" || echo "ERROR: wipefs failed on $nvme"
+                blkdiscard -f "$nvme" || echo "ERROR: blkdiscard failed on $nvme"
+                partprobe "$nvme" || echo "ERROR: partprobe failed on $nvme"
+                echo "Done: $nvme"
+              done
+      containers:
+        - name: pause
+          image: alpine:latest
+          command: ["sleep", "infinity"]
+      volumes:
+        - name: dev
+          hostPath:
+            path: /dev
+            type: Directory
