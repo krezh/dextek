@@ -7,7 +7,7 @@ resource "docker_network" "edge" {
 
 resource "docker_image" "towonel" {
   depends_on = [ssh_resource.docker_tls_setup]
-  name       = "git.erwanleboucher.dev/eleboucher/towonel-node:0.0.35"
+  name       = "git.erwanleboucher.dev/eleboucher/towonel-node:0.0.41"
 }
 
 resource "docker_container" "towonel" {
@@ -41,11 +41,17 @@ resource "docker_container" "towonel" {
     "TOWONEL_EDGE_TLS_CERT_DIR=/data/certs",
     "TOWONEL_EDGE_TLS_ACME_EMAIL=${data.infisical_secrets.towonel.secrets["TOWONEL_ACME_EMAIL"].value}",
     "TOWONEL_EDGE_TLS_HTTP_LISTEN_ADDR=0.0.0.0:80",
+    "TOWONEL_EDGE_IROH_PORT=51820",
   ]
 
   volumes {
     volume_name    = "towonel_data"
     container_path = "/data"
+  }
+
+  ports {
+    external = 80
+    internal = 80
   }
 
   ports {
@@ -59,8 +65,9 @@ resource "docker_container" "towonel" {
   }
 
   ports {
-    external = 80
-    internal = 80
+    external = 51820
+    internal = 51820
+    protocol = "udp"
   }
 
   networks_advanced {

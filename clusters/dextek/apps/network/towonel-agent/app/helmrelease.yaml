@@ -29,10 +29,11 @@ spec:
           app:
             image:
               repository: git.erwanleboucher.dev/eleboucher/towonel-agent
-              tag: 0.0.35
+              tag: 0.0.41
             env:
               RUST_LOG: info
               TOWONEL_AGENT_SERVICES: '[{ "hostname":"*.plexuz.xyz","origin":"gateway-external.network.svc.cluster.local:443" }]'
+              TOWONEL_AGENT_DIAL_EDGE: "true"
               TOWONEL_INVITE_TOKEN:
                 valueFrom:
                   secretKeyRef:
