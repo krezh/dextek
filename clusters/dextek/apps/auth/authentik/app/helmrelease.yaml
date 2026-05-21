@@ -34,3 +34,22 @@ spec:
         enabled: false
     worker:
       replicas: 2
+      lifecycle:
+        postStart:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - |
+                (
+                  until curl -sf -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
+                    http://authentik-server.auth.svc.cluster.local/api/v3/root/config/ > /dev/null; do
+                    sleep 5
+                  done
+                  curl -sf -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
+                    "http://authentik-server.auth.svc.cluster.local/api/v3/tasks/schedules/?actor_name=outpost_controller&page_size=100" \
+                    | grep -o '"id":"[^"]*"' | sed 's/"id":"//;s/"//' | while read -r id; do
+                      curl -sf -X POST -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
+                        "http://authentik-server.auth.svc.cluster.local/api/v3/tasks/schedules/$id/send/"
+                    done
+                ) &
