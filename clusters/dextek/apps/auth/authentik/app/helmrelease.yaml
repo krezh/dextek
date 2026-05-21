@@ -44,11 +44,15 @@ spec:
                 (
                   until curl -sf -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
                     http://authentik-server.auth.svc.cluster.local/api/v3/root/config/ > /dev/null; do
-                    sleep 5
+                    sleep 2
                   done
                   curl -sf -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
-                    "http://authentik-server.auth.svc.cluster.local/api/v3/tasks/schedules/?actor_name=outpost_controller&page_size=100" \
-                    | grep -o '"id":"[^"]*"' | sed 's/"id":"//;s/"//' | while read -r id; do
+                    "http://authentik-server.auth.svc.cluster.local/api/v3/tasks/schedules/?actor_name=authentik.outposts.tasks.outpost_controller&page_size=100" \
+                    | python3 -c "
+                import json, sys
+                for s in json.load(sys.stdin)['results']:
+                    print(s['id'])
+                " | while read -r id; do
                       curl -sf -X POST -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
                         "http://authentik-server.auth.svc.cluster.local/api/v3/tasks/schedules/$id/send/"
                     done
