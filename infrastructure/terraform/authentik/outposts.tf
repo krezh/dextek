@@ -52,7 +52,7 @@ resource "authentik_outpost" "external" {
     "object_naming_template"           = "ak-outpost-%(name)s"
     "kubernetes_service_type"          = "ClusterIP"
     "kubernetes_disabled_components"   = ["ingress", "traefik middleware"]
-    "kubernetes_httproute_annotations" = {}
+    "kubernetes_httproute_annotations" = { "gatus.home-operations.com/enabled" = "false" }
     "kubernetes_httproute_parent_refs" = [
       {
         name        = "gateway-external"
