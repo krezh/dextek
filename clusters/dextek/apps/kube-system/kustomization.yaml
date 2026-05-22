@@ -14,7 +14,7 @@ resources:
   - ./external-secrets
   - ./descheduler
   - ./k8tz
-  - ./spegel
+  # - ./spegel
   - ./irqbalance
   - ./talos-etcd-defrag
   - ./intel-gpu-resource-driver

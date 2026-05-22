@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://github.com/siderolabs/talos/raw/refs/tags/v1.11.5/website/content/v1.11/schemas/config.schema.json
+machine:
+  registries:
+    mirrors:
+      docker.io:
+        endpoints:
+          - https://zot.fast.plexuz.xyz/docker
+      ghcr.io:
+        endpoints:
+          - https://zot.fast.plexuz.xyz/ghcr
+      gcr.io:
+        endpoints:
+          - https://zot.fast.plexuz.xyz/gcr
+      quay.io:
+        endpoints:
+          - https://zot.fast.plexuz.xyz/quay
+      mcr.microsoft.com:
+        endpoints:
+          - https://zot.fast.plexuz.xyz/mcr
+      public.ecr.aws:
+        endpoints:
+          - https://zot.fast.plexuz.xyz/ecr
