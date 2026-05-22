@@ -5,19 +5,25 @@ machine:
     mirrors:
       docker.io:
         endpoints:
-          - https://zot.fast.plexuz.xyz/docker
+          - https://zot.fast.plexuz.xyz/v2/docker
+        overridePath: true
       ghcr.io:
         endpoints:
-          - https://zot.fast.plexuz.xyz/ghcr
+          - https://zot.fast.plexuz.xyz/v2/ghcr
+        overridePath: true
       gcr.io:
         endpoints:
-          - https://zot.fast.plexuz.xyz/gcr
+          - https://zot.fast.plexuz.xyz/v2/gcr
+        overridePath: true
       quay.io:
         endpoints:
-          - https://zot.fast.plexuz.xyz/quay
+          - https://zot.fast.plexuz.xyz/v2/quay
+        overridePath: true
       mcr.microsoft.com:
         endpoints:
-          - https://zot.fast.plexuz.xyz/mcr
+          - https://zot.fast.plexuz.xyz/v2/mcr
+        overridePath: true
       public.ecr.aws:
         endpoints:
-          - https://zot.fast.plexuz.xyz/ecr
+          - https://zot.fast.plexuz.xyz/v2/ecr
+        overridePath: true
