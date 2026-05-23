@@ -27,3 +27,11 @@ machine:
         endpoints:
           - https://zot.fast.plexuz.xyz/v2/ecr
         overridePath: true
+      registry.k8s.io:
+        endpoints:
+          - https://zot.fast.plexuz.xyz/v2/k8s
+        overridePath: true
+      mirror.gcr.io:
+        endpoints:
+          - https://zot.fast.plexuz.xyz/v2/mirror-gcr
+        overridePath: true
