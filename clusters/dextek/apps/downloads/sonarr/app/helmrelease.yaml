@@ -34,7 +34,7 @@ spec:
               RADARR__LOG__LEVEL: info
               SONARR__AUTH__METHOD: External
               SONARR__UPDATE__BRANCH: develop
-            envFrom: &envFrom
+            envFrom:
               - secretRef:
                   name: sonarr-secret
             probes:
@@ -57,7 +57,7 @@ spec:
                 cpu: 48m
                 memory: 657M
               limits:
-                memory: 1500M
+                memory: 2000M
     service:
       app:
         controller: app

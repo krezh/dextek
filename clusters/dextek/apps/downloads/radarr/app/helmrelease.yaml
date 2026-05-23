@@ -34,7 +34,7 @@ spec:
               RADARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
               RADARR__UPDATE__BRANCH: develop
-            envFrom: &envFrom
+            envFrom:
               - secretRef:
                   name: radarr-secret
             probes:
@@ -54,7 +54,7 @@ spec:
                 enabled: false
             resources:
               limits:
-                memory: 1549M
+                memory: 2000M
     service:
       app:
         controller: app
