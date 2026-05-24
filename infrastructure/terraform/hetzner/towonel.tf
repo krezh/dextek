@@ -7,7 +7,7 @@ resource "docker_network" "edge" {
 
 resource "docker_image" "towonel" {
   depends_on = [ssh_resource.docker_tls_setup]
-  name       = "git.erwanleboucher.dev/eleboucher/towonel-node:0.0.41"
+  name       = "git.erwanleboucher.dev/eleboucher/towonel-node:0.0.43"
 }
 
 resource "docker_container" "towonel" {
