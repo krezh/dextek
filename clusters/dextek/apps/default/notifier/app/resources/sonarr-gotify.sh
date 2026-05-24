@@ -37,6 +37,15 @@ function notify() {
                 "$(_jq '.applicationUrl')"
             GOTIFY_PRIORITY=8
             ;;
+        "Health")
+            local level
+            level=$(_jq '.level')
+            printf -v GOTIFY_TITLE "Sonarr Health Warning"
+            printf -v GOTIFY_MESSAGE "%s\n\n[More Info](%s)" \
+                "$(_jq '.message')" \
+                "$(_jq '.wikiUrl')"
+            [[ "${level}" == "error" ]] && GOTIFY_PRIORITY=8 || GOTIFY_PRIORITY=5
+            ;;
         "Test")
             printf -v GOTIFY_TITLE "Test Notification"
             printf -v GOTIFY_MESSAGE "Howdy this is a test notification"
