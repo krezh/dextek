@@ -40,8 +40,8 @@ function notify() {
     ')
     message="${message}"$'\n\n'"[View in Alertmanager](${external_url})"
 
-    apprise -vv --title "${title}" --body "${message}" --input-format markdown \
-        "${APPRISE_ALERTMANAGER_GOTIFY_URL}?priority=${priority}"
+    apprise -vv --title "${title}" --body "${message}" \
+        "${APPRISE_ALERTMANAGER_GOTIFY_URL}?format=markdown&priority=${priority}"
 }
 
 notify

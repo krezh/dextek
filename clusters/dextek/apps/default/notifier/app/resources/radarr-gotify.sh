@@ -48,8 +48,8 @@ function notify() {
             ;;
     esac
 
-    apprise -vv --title "${GOTIFY_TITLE}" --body "${GOTIFY_MESSAGE}" --input-format markdown \
-        "${APPRISE_RADARR_GOTIFY_URL}?priority=${GOTIFY_PRIORITY}"
+    apprise -vv --title "${GOTIFY_TITLE}" --body "${GOTIFY_MESSAGE}" \
+        "${APPRISE_RADARR_GOTIFY_URL}?format=markdown&priority=${GOTIFY_PRIORITY}"
 }
 
 notify
