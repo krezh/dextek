@@ -27,6 +27,9 @@ function notify() {
         priority=2
     fi
 
+    local external_url
+    external_url=$(_jq '.externalURL')
+
     message=$(_jq '
         [.alerts[] | (
             .annotations.description //
@@ -35,6 +38,7 @@ function notify() {
             "No description available"
         )] | join("\n")
     ')
+    message="${message}"$'\n\n'"[View in Alertmanager](${external_url})"
 
     apprise -vv --title "${title}" --body "${message}" --input-format markdown \
         "${APPRISE_ALERTMANAGER_GOTIFY_URL}?priority=${priority}"
