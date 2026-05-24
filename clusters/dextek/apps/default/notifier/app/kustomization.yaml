@@ -13,6 +13,10 @@ configMapGenerator:
       - seerr-pushover.sh=./resources/seerr-pushover.sh
       - radarr-pushover.sh=./resources/radarr-pushover.sh
       - sonarr-pushover.sh=./resources/sonarr-pushover.sh
+      - radarr-gotify.sh=./resources/radarr-gotify.sh
+      - seerr-gotify.sh=./resources/seerr-gotify.sh
+      - sonarr-gotify.sh=./resources/sonarr-gotify.sh
+      - alertmanager-gotify.sh=./resources/alertmanager-gotify.sh
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
