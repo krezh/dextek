@@ -169,7 +169,7 @@
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
-      sourceUrl: "https://codeberg.org/towonel/towonel",
+      sourceUrl: "https://git.erwanleboucher.dev/eleboucher/towonel",
     },
   ],
 }
