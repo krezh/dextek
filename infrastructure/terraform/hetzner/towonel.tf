@@ -26,12 +26,13 @@ resource "docker_container" "towonel" {
     "TOWONEL_INVITE_HASH_KEY=${data.infisical_secrets.towonel.secrets["TOWONEL_INVITE_HASH_KEY"].value}",
     "TOWONEL_HUB_ENABLED=true",
     "TOWONEL_HUB_ALLOW_PRIVILEGED_PORTS=true",
-    "TOWONEL_HUB_PUBLIC_URL=https://twnl.plexuz.xyz",
+    "TOWONEL_HUB_PUBLIC_URL=https://towonel.plexuz.xyz",
     "TOWONEL_EDGE_ENABLED=true",
     "TOWONEL_EDGE_HEALTH_LISTEN_ADDR=0.0.0.0:9092",
     "TOWONEL_EDGE_IROH_PORT=51820",
     "TOWONEL_EDGE_LISTEN_ADDR=0.0.0.0:443",
-    "TOWONEL_EDGE_PROXY_PROTOCOL=true"
+    "TOWONEL_EDGE_PROXY_PROTOCOL=true",
+    "TOWONEL_EDGE_TLS_ACME_EMAIL=${data.infisical_secrets.towonel.secrets["TOWONEL_ACME_EMAIL"].value}",
   ]
 
   volumes {
