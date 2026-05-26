@@ -32,6 +32,7 @@ resource "docker_container" "towonel" {
     "TOWONEL_EDGE_IROH_PORT=51820",
     "TOWONEL_EDGE_LISTEN_ADDR=0.0.0.0:443",
     "TOWONEL_EDGE_PROXY_PROTOCOL=true",
+    "TOWONEL_EDGE_TLS_HTTP_LISTEN_ADDR=0.0.0.0:80",
     "TOWONEL_EDGE_TLS_ACME_EMAIL=${data.infisical_secrets.towonel.secrets["TOWONEL_ACME_EMAIL"].value}",
   ]
 

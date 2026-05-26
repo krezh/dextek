@@ -9,7 +9,6 @@ spec:
   dnsNames:
     - "plexuz.xyz"
     - "*.plexuz.xyz"
-    - "*.talos.plexuz.xyz"
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

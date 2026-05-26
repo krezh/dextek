@@ -8,8 +8,6 @@ metadata:
 spec:
   secretName: plexuz-default-tls
   dnsNames:
-    - "plexuz.xyz"
-    - "*.plexuz.xyz"
     - "*.talos.plexuz.xyz"
   issuerRef:
     name: letsencrypt
