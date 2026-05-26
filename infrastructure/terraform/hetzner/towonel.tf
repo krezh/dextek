@@ -7,7 +7,7 @@ resource "docker_network" "edge" {
 
 resource "docker_image" "towonel" {
   depends_on = [ssh_resource.docker_tls_setup]
-  name       = "git.erwanleboucher.dev/eleboucher/towonel-node:0.0.43"
+  name       = "codeberg.org/towonel/towonel-node:0.1.8"
 }
 
 resource "docker_container" "towonel" {
@@ -22,26 +22,17 @@ resource "docker_container" "towonel" {
   user        = "10001:10001"
   memory_swap = 1024
   env = [
-    "RUST_LOG=info",
-    "TOWONEL_IDENTITY_KEY_PATH=/data/node.key",
-    "TOWONEL_INVITE_HASH_KEY=${data.infisical_secrets.towonel.secrets["TOWONEL_INVITE_HASH_KEY"].value}",
-    "TOWONEL_HUB_ENABLED=true",
-    "TOWONEL_HUB_ALLOW_PRIVILEGED_PORTS=true",
-    "TOWONEL_HUB_DB_DRIVER=sqlite",
-    "TOWONEL_HUB_DB_DSN=/data/hub.db",
-    "TOWONEL_HUB_LISTEN_ADDR=0.0.0.0:8443",
-    "TOWONEL_HUB_HEALTH_LISTEN_ADDR=0.0.0.0:9091",
-    "TOWONEL_HUB_PUBLIC_URL=https://twnl.plexuz.xyz",
-    "TOWONEL_HUB_OPERATOR_API_KEY_PATH=/data/operator.key",
-    "TOWONEL_HUB_URL=http://localhost:8443",
-    "TOWONEL_EDGE_ENABLED=true",
-    "TOWONEL_EDGE_LISTEN_ADDR=0.0.0.0:443",
-    "TOWONEL_EDGE_HEALTH_LISTEN_ADDR=0.0.0.0:9092",
-    "TOWONEL_EDGE_ADVERTISED_ADDRESSES=tunnel.plexuz.xyz:443",
-    "TOWONEL_EDGE_TLS_CERT_DIR=/data/certs",
-    "TOWONEL_EDGE_TLS_ACME_EMAIL=${data.infisical_secrets.towonel.secrets["TOWONEL_ACME_EMAIL"].value}",
-    "TOWONEL_EDGE_TLS_HTTP_LISTEN_ADDR=0.0.0.0:80",
-    "TOWONEL_EDGE_IROH_PORT=51820",
+
+    "RUST_LOG: info",
+    "TOWONEL_INVITE_HASH_KEY: ${data.infisical_secrets.towonel.secrets["TOWONEL_INVITE_HASH_KEY"].value}",
+    "TOWONEL_HUB_ENABLED: true",
+    "TOWONEL_HUB_ALLOW_PRIVILEGED_PORTS: true",
+    "TOWONEL_HUB_PUBLIC_URL: https://twnl.plexuz.xyz",
+    "TOWONEL_EDGE_ENABLED: true",
+    "TOWONEL_EDGE_HEALTH_LISTEN_ADDR: 0.0.0.0:9092",
+    "TOWONEL_EDGE_IROH_PORT: 51820",
+    "TOWONEL_EDGE_LISTEN_ADDR: 0.0.0.0:443",
+    "TOWONEL_EDGE_PROXY_PROTOCOL: true"
   ]
 
   volumes {

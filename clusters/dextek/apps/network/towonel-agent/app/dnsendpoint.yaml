@@ -14,7 +14,3 @@ spec:
       recordType: CNAME
       targets:
         - ingress-ext.plexuz.xyz
-    - dnsName: tunnel.plexuz.xyz
-      recordType: CNAME
-      targets:
-        - ingress-ext.plexuz.xyz
