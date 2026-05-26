@@ -38,10 +38,10 @@ resource "hcloud_firewall" "towonel" {
   }
 
   rule {
-    description = "Edge TCP"
+    description = "Hub"
     direction   = "in"
     protocol    = "tcp"
-    port        = "4443"
+    port        = "8443"
     source_ips  = ["0.0.0.0/0", "::/0"]
   }
 
