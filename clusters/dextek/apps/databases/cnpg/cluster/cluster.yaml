@@ -1,0 +1,162 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: enabled
+spec:
+  instances: 2
+
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.4-standard-trixie@sha256:58c9a9e29a23b814f8f335ce178727d83bc40d96ed7fe8977192d2d8cdcb3927
+
+  certificates:
+    serverTLSSecret: postgres-server-cert
+    serverCASecret: postgres-server-cert
+    clientCASecret: postgres-server-ca
+    replicationTLSSecret: postgres-replication-cert
+
+  storage:
+    size: 50Gi
+    storageClass: ceph-block
+
+  # Switch to bootstrap.recovery (source: garage-source) after first barman backup completes
+  bootstrap:
+    pg_basebackup:
+      source: crunchy-postgres
+
+  plugins:
+    - name: &plugin barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: garage-store
+
+  externalClusters:
+    - name: crunchy-postgres
+      connectionParameters:
+        host: postgres-primary.databases.svc.cluster.local
+        user: postgres
+        sslmode: require
+      password:
+        name: postgres-pguser-postgres
+        key: password
+    - name: garage-source
+      plugin:
+        name: *plugin
+        parameters:
+          barmanObjectName: garage-store
+          serverName: postgres
+
+  monitoring:
+    enablePodMonitor: true
+
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          cnpg.io/cluster: postgres
+
+  postgresql:
+    pg_hba:
+      - hostssl all all all cert clientcert=verify-full map=pooler-map
+      - host all all all scram-sha-256
+    pg_ident:
+      - pooler-map pooler-rw all
+    shared_preload_libraries:
+      - "vchord"
+      - "timescaledb"
+    parameters:
+      max_connections: "500"
+      shared_buffers: "512MB"
+      max_locks_per_transaction: "4096"
+      timescaledb.telemetry_level: "off"
+      timescaledb.max_tuples_decompressed_per_dml_transaction: "0"
+      search_path: '"$user", public, vchord'
+
+    extensions:
+      - name: vchord
+        image:
+          reference: ghcr.io/tensorchord/vchord-scratch:pg18-v1.1.1@sha256:bdea43bed2a414e21bbf71767bf6f0739747ac480b267b51772dc214ac28dcb3
+        dynamic_library_path:
+          - /usr/lib/postgresql/18/lib/
+        extension_control_path:
+          - /usr/share/postgresql/18/
+      - name: timescaledb
+        image:
+          reference: ghcr.io/shusaan/timescaledb-testing:2.24.0-18-trixie@sha256:dae25c2dde06455214ac5553b51d3ef2d48fe84795c2cfa48c51c6e15877044e
+
+  managed:
+    roles:
+      - name: atuin
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: attic
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: authentik
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: bazarr
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: gotify
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: grafana
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: immich
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: jellystat
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: miniflux
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: prowlarr
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: tracearr
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: wakapi
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: zipline
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+      - name: pooler-rw
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: true
