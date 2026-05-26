@@ -7,7 +7,7 @@ resource "docker_network" "edge" {
 
 resource "docker_image" "towonel" {
   depends_on = [ssh_resource.docker_tls_setup]
-  name       = "codeberg.org/towonel/towonel-node:0.1.8"
+  name       = "codeberg.org/towonel/towonel-node:0.1.10"
 }
 
 resource "docker_container" "towonel" {
@@ -22,17 +22,16 @@ resource "docker_container" "towonel" {
   user        = "10001:10001"
   memory_swap = 1024
   env = [
-
-    "RUST_LOG: info",
-    "TOWONEL_INVITE_HASH_KEY: ${data.infisical_secrets.towonel.secrets["TOWONEL_INVITE_HASH_KEY"].value}",
-    "TOWONEL_HUB_ENABLED: true",
-    "TOWONEL_HUB_ALLOW_PRIVILEGED_PORTS: true",
-    "TOWONEL_HUB_PUBLIC_URL: https://twnl.plexuz.xyz",
-    "TOWONEL_EDGE_ENABLED: true",
-    "TOWONEL_EDGE_HEALTH_LISTEN_ADDR: 0.0.0.0:9092",
-    "TOWONEL_EDGE_IROH_PORT: 51820",
-    "TOWONEL_EDGE_LISTEN_ADDR: 0.0.0.0:443",
-    "TOWONEL_EDGE_PROXY_PROTOCOL: true"
+    "RUST_LOG=info",
+    "TOWONEL_INVITE_HASH_KEY=${data.infisical_secrets.towonel.secrets["TOWONEL_INVITE_HASH_KEY"].value}",
+    "TOWONEL_HUB_ENABLED=true",
+    "TOWONEL_HUB_ALLOW_PRIVILEGED_PORTS=true",
+    "TOWONEL_HUB_PUBLIC_URL=https://twnl.plexuz.xyz",
+    "TOWONEL_EDGE_ENABLED=true",
+    "TOWONEL_EDGE_HEALTH_LISTEN_ADDR=0.0.0.0:9092",
+    "TOWONEL_EDGE_IROH_PORT=51820",
+    "TOWONEL_EDGE_LISTEN_ADDR=0.0.0.0:443",
+    "TOWONEL_EDGE_PROXY_PROTOCOL=true"
   ]
 
   volumes {
