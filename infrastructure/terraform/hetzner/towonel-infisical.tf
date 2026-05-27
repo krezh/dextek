@@ -7,13 +7,15 @@ resource "infisical_secret" "towonel_invite_hash_key" {
   value        = random_bytes.towonel_invite_hash_key.hex
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Towonel"
+  folder_path  = "/Kubernetes/DexTek/Towonel"
+
+  depends_on = [infisical_secret.towonel_invite_hash_key]
 }
 
 data "infisical_secrets" "towonel" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id
-  folder_path  = "/Terraform/Towonel"
+  folder_path  = "/Kubernetes/DexTek/Towonel"
 
   depends_on = [infisical_secret.towonel_invite_hash_key]
 }

@@ -48,10 +48,10 @@ resource "docker_volume" "crowdsec_config" {
 }
 
 resource "ssh_resource" "crowdsec_config" {
-  for_each = fileset("${path.module}/crowdsec", "**")
+  for_each = fileset("${path.module}/config/crowdsec", "**")
 
   triggers = {
-    content = file("${path.module}/crowdsec/${each.value}")
+    content = file("${path.module}/config/crowdsec/${each.value}")
   }
 
   host        = hcloud_server.towonel.ipv4_address
@@ -61,14 +61,14 @@ resource "ssh_resource" "crowdsec_config" {
   pre_commands = ["mkdir -p /opt/crowdsec/${dirname(each.value)}"]
 
   file {
-    content     = file("${path.module}/crowdsec/${each.value}")
+    content     = file("${path.module}/config/crowdsec/${each.value}")
     destination = "/opt/crowdsec/${each.value}"
     permissions = "0644"
   }
 }
 
 resource "ssh_resource" "crowdsec_config_cleanup" {
-  for_each = fileset("${path.module}/crowdsec", "**")
+  for_each = fileset("${path.module}/config/crowdsec", "**")
 
   when        = "destroy"
   host        = hcloud_server.towonel.ipv4_address
