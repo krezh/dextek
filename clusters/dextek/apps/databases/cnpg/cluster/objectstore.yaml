@@ -18,5 +18,5 @@ spec:
     wal:
       compression: zstd
     data:
-      compression: zstd
+      compression: bzip2
   retentionPolicy: "14d"
