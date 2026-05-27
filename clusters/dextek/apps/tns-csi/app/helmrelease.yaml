@@ -16,6 +16,9 @@ spec:
     truenas:
       existingSecret: tns-csi-secret
       skipTLSVerify: false
+    node:
+      iscsi:
+        enabled: false
     storageClasses:
       - name: tns-csi-nvmeof
         enabled: true
@@ -32,3 +35,13 @@ spec:
         allowVolumeExpansion: true
         markAdoptable: true
         adoptExisting: true
+    grafana:
+      dashboards:
+        enabled: true
+        labels:
+          dashboards: grafana
+    controller:
+      replicas: 1
+      metrics:
+        serviceMonitor:
+          enabled: true
