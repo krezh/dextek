@@ -1,5 +1,8 @@
 resource "talos_machine_secrets" "talos" {
   talos_version = var.talos_version
+  lifecycle {
+    ignore_changes = [talos_version]
+  }
 }
 
 resource "talos_image_factory_schematic" "machine" {

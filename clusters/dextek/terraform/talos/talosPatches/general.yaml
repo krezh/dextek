@@ -38,6 +38,7 @@ machine:
   kernel:
     modules:
       - name: nbd
+      - name: nvme-tcp
   kubelet:
     disableManifestsDirectory: true
     defaultRuntimeSeccompProfileEnabled: true
