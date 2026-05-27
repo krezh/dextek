@@ -40,7 +40,7 @@ spec:
           serverName: postgres
 
   monitoring:
-    enablePodMonitor: true
+    enablePodMonitor: false
 
   topologySpreadConstraints:
     - maxSkew: 1
