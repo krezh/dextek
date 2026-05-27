@@ -34,7 +34,7 @@
     {
       description: "Rook-Ceph charts and image",
       groupName: "Rook-Ceph",
-      matchPackageNames: ["rook.ceph"],
+      matchPackageNames: ["/rook-ceph/", "/rook-ceph-cluster/"],
       matchDatasources: ["helm", "docker"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",

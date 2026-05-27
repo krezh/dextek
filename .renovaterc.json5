@@ -15,7 +15,7 @@
   hostRules: [
     {
       hostType: "forgejo",
-      matchHost: "git.erwanleboucher.dev",
+      matchHost: "codeberg.org",
     },
   ],
   flux: {
