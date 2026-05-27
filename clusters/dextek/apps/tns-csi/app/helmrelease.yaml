@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tns-csi
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: tns-csi
+  driftDetection:
+    mode: enabled
+  values:
+    namespace: tns-csi
+    truenas:
+      existingSecret: tns-csi-secret
+      skipTLSVerify: false
+    storageClasses:
+      - name: tns-csi-nvmeof
+        enabled: true
+        protocol: nvmeof
+        isDefault: false
+        pool: tank
+        parentDataset: tank/k8s
+        server: jotunheim.fast.internal
+        transport: tcp
+        port: 4420
+        fsType: ext4
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+        allowVolumeExpansion: true
+        markAdoptable: true
+        adoptExisting: true
