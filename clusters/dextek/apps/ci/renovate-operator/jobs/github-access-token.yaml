@@ -6,7 +6,7 @@ metadata:
   name: github-auth-token
 spec:
   appID: "246747"
-  installID: "28595968"
+  installID: "30141337"
   auth:
     privateKey:
       secretRef:
