@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
+apiVersion: renovate-operator.mogenius.com/v1alpha1
+kind: RenovateJob
+metadata:
+  name: default
+spec:
+  image: ghcr.io/renovatebot/renovate:43.163.0
+  discoverTopics:
+    - renovate-default
+  discoveryFilters:
+    - krezh/*
+  extraEnv:
+    - name: LOG_LEVEL
+      value: debug
+    - name: RENOVATE_REDIS_URL
+      value: "redis://dragonfly.databases.svc:6379/3"
+  parallelism: 10
+  schedule: 0 * * * *
+  provider:
+    name: github
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  secretRef: &secret renovate-secret
+  webhook:
+    enabled: true
+    authentication:
+      enabled: true
+      secretRef:
+        name: *secret
+        key: OPERATOR_WEBHOOK_KEY
