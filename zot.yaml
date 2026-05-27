@@ -10,9 +10,6 @@ services:
     configs:
       - source: zot-config
         target: /etc/zot/config.yaml
-    dns:
-      - 127.0.0.11
-      - 1.1.1.1
     networks:
       - apps-internal
       - default
@@ -31,7 +28,8 @@ configs:
       storage:
         rootDirectory: /var/lib/registry
         gc: true
-        dedupe: true
+        gcDelay: 1h
+        dedupe: false
       http:
         address: 0.0.0.0
         port: 5000
@@ -59,8 +57,7 @@ configs:
               onDemand: true
               tlsVerify: true
               maxRetries: 3
-              retryDelay: "5m"
-              syncTimeout: "10m"
+              retryDelay: "30s"
               content:
                 - prefix: "**"
                   destination: "/docker"
@@ -69,8 +66,7 @@ configs:
               onDemand: true
               tlsVerify: true
               maxRetries: 3
-              retryDelay: "5m"
-              syncTimeout: "10m"
+              retryDelay: "30s"
               content:
                 - prefix: "**"
                   destination: "/ghcr"
@@ -79,8 +75,7 @@ configs:
               onDemand: true
               tlsVerify: true
               maxRetries: 3
-              retryDelay: "5m"
-              syncTimeout: "10m"
+              retryDelay: "30s"
               content:
                 - prefix: "**"
                   destination: "/gcr"
@@ -89,8 +84,7 @@ configs:
               onDemand: true
               tlsVerify: true
               maxRetries: 3
-              retryDelay: "5m"
-              syncTimeout: "10m"
+              retryDelay: "30s"
               content:
                 - prefix: "**"
                   destination: "/quay"
@@ -99,8 +93,7 @@ configs:
               onDemand: true
               tlsVerify: true
               maxRetries: 3
-              retryDelay: "5m"
-              syncTimeout: "10m"
+              retryDelay: "30s"
               content:
                 - prefix: "**"
                   destination: "/mcr"
@@ -109,8 +102,7 @@ configs:
               onDemand: true
               tlsVerify: true
               maxRetries: 3
-              retryDelay: "5m"
-              syncTimeout: "10m"
+              retryDelay: "30s"
               content:
                 - prefix: "**"
                   destination: "/ecr"
@@ -119,8 +111,7 @@ configs:
               onDemand: true
               tlsVerify: true
               maxRetries: 3
-              retryDelay: "5m"
-              syncTimeout: "10m"
+              retryDelay: "30s"
               content:
                 - prefix: "**"
                   destination: "/k8s"
@@ -129,8 +120,7 @@ configs:
               onDemand: true
               tlsVerify: true
               maxRetries: 3
-              retryDelay: "5m"
-              syncTimeout: "10m"
+              retryDelay: "30s"
               content:
                 - prefix: "**"
                   destination: "/mirror-gcr"

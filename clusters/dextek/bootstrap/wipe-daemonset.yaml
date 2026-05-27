@@ -16,7 +16,7 @@ spec:
         - operator: Exists
       initContainers:
         - name: wipe
-          image: alpine:latest
+          image: nixery.dev/shell/util-linux/gptfdisk/parted/gnugrep/gnused
           securityContext:
             privileged: true
           volumeMounts:
@@ -26,7 +26,6 @@ spec:
           args:
             - |
               set -u
-              apk add --no-cache util-linux gptfdisk parted >/dev/null 2>&1
               # Detect disks hosting Talos system partitions
               OS_DISKS=""
               for label in STATE EPHEMERAL BOOT META; do
