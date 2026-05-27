@@ -6,99 +6,126 @@ set lazy
 
 CLUSTER_DIR := "."
 BOOTSTRAP_DIR := CLUSTER_DIR + "/bootstrap"
-KUBECONFIG := "$(pwd)/kubeconfig"
 TALOS_CONTROLLER := "$(talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1)"
 CLUSTER_NAME := "dextek"
 
 _default:
     just --list
 
+[private]
+step desc command:
+    #!/usr/bin/env bash
+    STEP_CMD={{ quote(command) }}
+    gum spin --show-error --spinner dot --title "{{ desc }}" -- bash -c "$STEP_CMD" || exit 1
+    printf '\r\e[2K\e[32m✓\e[0m %s\n' "{{ desc }}"
+
 # Bootstrap all resources
-all: && _cleanup
+all:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    gum confirm "Bootstrap cluster {{ CLUSTER_NAME }}?" || exit 0
+    printf '%.0s─' $(seq 1 24); echo
     just tofu
     just talosconfig
     just talos
     just kubeconfig
     just readyCheck
-    just helmfile
+    just namespaces
+    just crds
+    just apps
+    just flux-secrets
     just wipe
     just k9s
 
 tofu:
     #!/usr/bin/env bash
-    set -euo pipefail
-    cd "{{ CLUSTER_DIR }}/terraform/talos"
-    echo "Running Tofu..."
-    tofu init --upgrade
-    tofu apply --auto-approve --var talosconfig=true
+    init='cd "{{ CLUSTER_DIR }}/terraform/talos" && tofu init --upgrade'
+    apply='cd "{{ CLUSTER_DIR }}/terraform/talos" && tofu apply --auto-approve --var talosconfig=true'
+    just step "Initialising Tofu" "${init}"
+    just step "Applying Tofu" "${apply}"
     mkdir -p ~/.talos/configs
-    cp talosconfig ~/.talos/configs/{{ CLUSTER_NAME }}
+    cp "{{ CLUSTER_DIR }}/terraform/talos/talosconfig" ~/.talos/configs/{{ CLUSTER_NAME }}
 
 talosconfig:
     #!/usr/bin/env bash
-    set -euo pipefail
-    talswitcher ctx {{ CLUSTER_NAME }}
+    cmd="talswitcher ctx {{ CLUSTER_NAME }}"
+    just step "Switching talos context" "${cmd}"
 
 talos:
     #!/usr/bin/env bash
-    TALOS_CONTROLLER="{{ TALOS_CONTROLLER }}"
-    printf "Bootstrapping Node: $TALOS_CONTROLLER..."
-    until talosctl --nodes $TALOS_CONTROLLER bootstrap > /dev/null 2>&1; do sleep 5; done
-    echo " Done"
+    CTRL="{{ TALOS_CONTROLLER }}"
+    cmd="until talosctl --nodes $CTRL bootstrap; do sleep 5; done"
+    just step "Bootstrapping $CTRL" "${cmd}"
 
 kubeconfig:
-    printf "Getting kubeconfig..."
-    until talosctl kubeconfig -n {{ TALOS_CONTROLLER }} --force > /dev/null 2>&1; do sleep 3; done
-    kubectl config set-cluster {{ CLUSTER_NAME }} --server "https://{{ TALOS_CONTROLLER }}:6443" > /dev/null 2>&1
-    echo " Done"
+    #!/usr/bin/env bash
+    CTRL="{{ TALOS_CONTROLLER }}"
+    cmd="until talosctl kubeconfig -n $CTRL --force; do sleep 3; done && kubectl config set-cluster {{ CLUSTER_NAME }} --server https://$CTRL:6443"
+    just step "Getting kubeconfig" "${cmd}"
 
 readyCheck:
-    echo "Waiting for Nodes to be ready..."
-    until kubectl wait nodes --for=condition=Ready=False --all --timeout=10m > /dev/null 2>&1; do sleep 5; done
+    #!/usr/bin/env bash
+    cmd="until kubectl wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done"
+    just step "Waiting for nodes" "${cmd}"
 
 namespaces:
     #!/usr/bin/env bash
-    set -euo pipefail
-    echo "Applying namespaces..."
-    find apps -mindepth 1 -maxdepth 1 -type d | while IFS= read -r dir; do
-        if ! kustomize build "$dir" | yq ea -e 'select(.kind == "Namespace")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f - 2>/dev/null; then
-            echo "No namespace found in $(basename "$dir") or already applied"
-        fi
-    done
-    echo " Done"
+    cmd='find apps -mindepth 1 -maxdepth 1 -type d | while IFS= read -r dir; do kustomize build "$dir" | yq ea -e '\''select(.kind == "Namespace")'\'' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f - 2>/dev/null || true; done'
+    just step "Applying namespaces" "${cmd}"
+
+flux-secrets:
+    #!/usr/bin/env bash
+    cmd="infisical export --template={{ BOOTSTRAP_DIR }}/resources.yaml.tmpl | kubectl apply -f -"
+    just step "Applying Flux secrets" "${cmd}"
 
 crds:
-    printf "Applying CRDs..."
-    until helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/00-crds.yaml template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f - > /dev/null 2>&1; do sleep 3; done
-    echo " Done"
+    #!/usr/bin/env bash
+    cmd='until helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/00-crds.yaml template -q | yq ea -e "select(.kind == \"CustomResourceDefinition\")" | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; do sleep 3; done'
+    just step "Applying CRDs" "${cmd}"
 
 apps:
-    printf "Deploying apps via helmfile..."
-    until helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/01-apps.yaml sync --hide-notes; do sleep 3; done
-    echo " Done"
+    #!/usr/bin/env bash
+    cmd='until helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/01-apps.yaml sync --hide-notes; do sleep 3; done'
+    just step "Deploying apps" "${cmd}"
 
-helmfile: namespaces crds apps
-    printf "Applying Flux secrets..."
-    infisical export --template={{ BOOTSTRAP_DIR }}/resources.yaml.tmpl | kubectl apply -f -
-    echo " Done"
+helmfile: crds apps
 
 wipe:
     #!/usr/bin/env bash
-    set -euo pipefail
     kubectl delete daemonset disk-wipe -n kube-system --ignore-not-found >/dev/null 2>&1
-    echo "Deploying disk wipe DaemonSet..."
-    kubectl apply -f {{ BOOTSTRAP_DIR }}/wipe-daemonset.yaml
-    echo "Waiting for wipe to complete on all nodes..."
-    kubectl rollout status daemonset/disk-wipe -n kube-system --timeout=10m
-    echo "Wipe results:"
-    for pod in $(kubectl get pods -n kube-system -l app=disk-wipe -o name); do
-      echo "--- $pod ---"
-      kubectl logs -n kube-system "$pod" -c wipe 2>/dev/null || true
-    done
+    apply="kubectl apply -f {{ BOOTSTRAP_DIR }}/wipe-daemonset.yaml"
+    rollout="kubectl rollout status daemonset/disk-wipe -n kube-system --timeout=10m"
+    just step "Applying wipe DaemonSet" "${apply}"
+    just step "Wiping disks" "${rollout}"
     kubectl delete daemonset disk-wipe -n kube-system --ignore-not-found >/dev/null 2>&1
 
 k9s:
-    k9s --all-namespaces --command pods
-
-_cleanup:
-    rm -f {{ KUBECONFIG }}
+    #!/usr/bin/env bash
+    LAYOUT=$(cat << 'EOF'
+    layout {
+        pane split_direction="vertical" {
+            pane split_direction="horizontal" {
+                pane {
+                    command "k9s"
+                    args "--all-namespaces" "--command" "kustomizations"
+                }
+                pane {
+                    command "k9s"
+                    args "--all-namespaces" "--command" "pods"
+                }
+            }
+            pane split_direction="horizontal" {
+                pane {
+                    command "k9s"
+                    args "--all-namespaces" "--command" "helmreleases"
+                }
+                pane {
+                    command "k9s"
+                    args "--all-namespaces" "--command" "events"
+                }
+            }
+        }
+    }
+    EOF
+    )
+    nix run nixpkgs#zellij -- --layout-string "$LAYOUT"

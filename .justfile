@@ -23,9 +23,7 @@ mod talos '.just/talos.just'
 mod crunchy '.just/crunchy.just'
 
 # Bootstrap Cluster
-bootstrap cluster recipe="all":
-  echo "Bootstrapping cluster: {{cluster}}..."
-  just ./clusters/{{cluster}}/{{recipe}}
+mod dextek 'clusters/dextek/Justfile'
 
 [private]
 log lvl msg:
