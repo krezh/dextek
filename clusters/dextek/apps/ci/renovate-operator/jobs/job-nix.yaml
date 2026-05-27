@@ -24,7 +24,7 @@ spec:
           "^nix run github:Mic92/nix-update",
           "^nix run github:nix-community/gomod2nix",
           "^nix run github:purpleclay/go-overlay#govendor",
-          "^bash .forgejo/scripts/update-hash.sh",
+          "^bash .github/scripts/update-hash.sh",
         ]
   parallelism: 10
   schedule: 0 * * * *
