@@ -27,7 +27,7 @@ resource "docker_container" "towonel" {
     "TOWONEL_HUB_ENABLED=true",
     "TOWONEL_HUB_ALLOW_PRIVILEGED_PORTS=true",
     "TOWONEL_HUB_LISTEN_ADDR=0.0.0.0:8443",
-    "TOWONEL_HUB_PUBLIC_URL=https://twnl.plexuz.xyz:8443",
+    "TOWONEL_HUB_PUBLIC_URL=https://tunnel.plexuz.xyz:8443",
     "TOWONEL_HUB_TLS_ACME_EMAIL=${data.infisical_secrets.towonel.secrets["TOWONEL_ACME_EMAIL"].value}",
     "TOWONEL_EDGE_ENABLED=true",
     "TOWONEL_EDGE_HEALTH_LISTEN_ADDR=0.0.0.0:9092",
