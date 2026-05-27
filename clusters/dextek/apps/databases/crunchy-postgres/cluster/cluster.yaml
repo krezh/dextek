@@ -44,6 +44,7 @@ spec:
           search_path: '"$user", public, vchord'
         pg_hba:
           - hostnossl all all 10.244.0.0/16 md5 # Needed because dbman does not support SSL yet
+          - hostssl replication postgres 10.244.0.0/16 md5 # Allow CNPG pg_basebackup bootstrap
           - hostssl all all all md5
   service:
     type: LoadBalancer
