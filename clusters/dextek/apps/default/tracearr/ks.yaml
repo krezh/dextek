@@ -11,8 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
-    - name: crunchy-postgres-stores
+    - name: cnpg-cluster
     - name: dragonfly-cluster
     - name: plex
     - name: jellyfin
@@ -26,6 +25,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 15m
+  components:
+    - ../../../../../shared/components/cnpg/cert
   postBuild:
     substitute:
       APP: *app

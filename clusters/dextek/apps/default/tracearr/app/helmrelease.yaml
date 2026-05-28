@@ -21,11 +21,14 @@ spec:
               tag: 1.4.28@sha256:ca93988326c26597e0d9c91d69c0f97e7ed23c517cf327c22bc7f188002af998
             env:
               NODE_ENV: production
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: tracearr-postgres
+                    key: url
             envFrom:
               - secretRef:
                   name: tracearr-secret
-              - secretRef:
-                  name: tracearr-postgres-secret
             resources:
               requests:
                 cpu: 10m
