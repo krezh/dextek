@@ -33,6 +33,8 @@ spec:
         - postgres-rw
         - postgres-ro
         - postgres-r
+        - postgres-primary
+        - _crunchyrepl
       uriDomains: *domains
   duration: 87660h # 10 years
   privateKey:
