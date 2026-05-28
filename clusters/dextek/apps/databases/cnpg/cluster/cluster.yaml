@@ -50,6 +50,10 @@ spec:
         matchLabels:
           cnpg.io/cluster: postgres
 
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
+
   postgresql:
     pg_hba:
       - hostssl all all all cert clientcert=verify-full map=pooler-map
