@@ -23,7 +23,7 @@ spec:
       sync:
         interval: 10m
         kind: OCIRepository
-        url: oci://ghcr.io/krezh/manifests/cluster:main
+        url: oci://ghcr.io/krezh/manifests/cluster
         ref: main
         path: clusters/dextek/flux
         pullSecret: deploy-key
