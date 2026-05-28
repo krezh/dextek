@@ -164,6 +164,8 @@ spec:
         login: true
         superuser: false
         disablePassword: false
+        passwordSecret:
+          name: zipline-postgres
       - name: pooler-rw
         ensure: present
         login: true
