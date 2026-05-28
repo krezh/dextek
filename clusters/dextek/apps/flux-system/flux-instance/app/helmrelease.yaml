@@ -21,15 +21,12 @@ spec:
         - helm-controller
         - notification-controller
       sync:
-        interval: 1h
-        kind: GitRepository
-        url: ssh://git@github.com/krezh/dextek
-        ref: refs/heads/main
-        path: clusters/dextek/flux/config
+        interval: 10m
+        kind: OCIRepository
+        url: oci://ghcr.io/krezh/manifests/cluster:main
+        ref: main
+        path: clusters/dextek/flux
         pullSecret: deploy-key
-      commonMetadata:
-        labels:
-          app.kubernetes.io/name: flux
       kustomize:
         patches:
           # Increase the number of workers and limits

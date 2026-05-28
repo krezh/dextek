@@ -10,7 +10,7 @@ spec:
   path: ./clusters/dextek/apps/cnpg-system/cloudnative-pg/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 1h
@@ -29,7 +29,7 @@ spec:
   path: ./clusters/dextek/apps/cnpg-system/cloudnative-pg/plugin-barman-cloud
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 1h

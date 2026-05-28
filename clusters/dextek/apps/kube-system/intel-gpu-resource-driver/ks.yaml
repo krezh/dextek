@@ -13,6 +13,6 @@ spec:
   path: ./clusters/dextek/apps/kube-system/intel-gpu-resource-driver/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   interval: 1h

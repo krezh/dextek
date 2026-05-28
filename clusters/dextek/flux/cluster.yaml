@@ -11,7 +11,7 @@ spec:
   prune: true
   wait: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -27,7 +27,7 @@ spec:
   path: ./clusters/dextek/apps
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   patches:
     - # Add Kustomization defaults for all child Kustomizations

@@ -10,7 +10,7 @@ spec:
   path: ./clusters/dextek/apps/kube-system/descheduler/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 30m
