@@ -11,3 +11,4 @@ spec:
   cluster:
     name: postgres
   ensure: present
+  extensions: ${EXTENSIONS:=${emptyArray}}

@@ -3,21 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ${APP}-cnpg-client
+  name: postgres-${APP}-cert
 spec:
-  commonName: ${DB_OWNER:=${APP}}
+  secretName: postgres-${APP}-cert
   usages:
     - client auth
-  duration: 720h # 1 month
-  privateKey:
-    algorithm: ECDSA
-    size: 384
-    rotationPolicy: Always
-  secretTemplate:
-    labels:
-      cnpg.io/reload: ""
+  commonName: ${DATABASE_OWNER:=${APP}}
   issuerRef:
     name: postgres-client-ca
     kind: ClusterIssuer
     group: cert-manager.io
-  secretName: ${APP}-cnpg-client-cert

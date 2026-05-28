@@ -13,6 +13,7 @@ spec:
     secretTargets:
       enabled: true
       authorizedSecrets:
+        - root-ca
         - postgres-client-ca
     app:
       trust:
