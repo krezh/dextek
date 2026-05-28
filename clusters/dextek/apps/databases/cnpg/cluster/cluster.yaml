@@ -21,9 +21,9 @@ spec:
     size: 50Gi
     storageClass: ceph-block
 
-  bootstrap:
-    recovery:
-      source: &src source
+  # bootstrap:
+  #   recovery:
+  #     source: &src source
 
   plugins:
     - name: &plugin barman-cloud.cloudnative-pg.io
@@ -31,13 +31,13 @@ spec:
       parameters:
         barmanObjectName: &store garage-store
 
-  externalClusters:
-    - name: *src
-      plugin:
-        name: *plugin
-        parameters:
-          barmanObjectName: *store
-          serverName: postgres
+  # externalClusters:
+  #   - name: *src
+  #     plugin:
+  #       name: *plugin
+  #       parameters:
+  #         barmanObjectName: *store
+  #         serverName: postgres
 
   monitoring:
     enablePodMonitor: false
