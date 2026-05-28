@@ -5,7 +5,7 @@ kind: RenovateJob
 metadata:
   name: default
 spec:
-  image: ghcr.io/krezh/renovate-nix:43.198.0@sha256:a0369da16fb879cf10433249cc86d095541baa42a674ec4c0818aa1b1b7f9fc1
+  image: ghcr.io/krezh/renovate-nix:43.201.1@sha256:b3a32e37f401e4d38c3521c36246bd7efbc7e127f4b9fac3bc2ace204a7a9c76
   discoverTopics:
     - renovate
   discoveryFilters:
