@@ -10,7 +10,7 @@ spec:
   path: ./clusters/dextek/apps/kube-system/tuppr/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: true
   interval: 1h
@@ -28,7 +28,7 @@ spec:
   path: ./clusters/dextek/apps/kube-system/tuppr/upgrades
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 1h

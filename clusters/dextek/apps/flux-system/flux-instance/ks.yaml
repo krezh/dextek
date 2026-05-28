@@ -16,7 +16,7 @@ spec:
   path: ./clusters/dextek/apps/flux-system/flux-instance/app
   prune: false # never should be deleted
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 30m

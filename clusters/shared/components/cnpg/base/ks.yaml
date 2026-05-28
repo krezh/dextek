@@ -13,7 +13,7 @@ spec:
   path: ./clusters/shared/components/cnpg/base/database
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
     namespace: flux-system
   wait: false

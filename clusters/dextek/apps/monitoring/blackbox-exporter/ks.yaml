@@ -10,7 +10,7 @@ spec:
   path: ./clusters/dextek/apps/monitoring/blackbox-exporter/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: true
   interval: 30m
@@ -28,7 +28,7 @@ spec:
   path: ./clusters/dextek/apps/monitoring/blackbox-exporter/probes
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 30m

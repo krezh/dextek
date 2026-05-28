@@ -13,7 +13,7 @@ spec:
   path: ./clusters/dextek/apps/databases/crunchy-postgres/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: true
   interval: 30m
@@ -37,7 +37,7 @@ spec:
   path: ./clusters/dextek/apps/databases/crunchy-postgres/cluster
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: true
   interval: 30m
@@ -59,7 +59,7 @@ spec:
   path: ./clusters/dextek/apps/databases/crunchy-postgres/userinit-controller
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: true
   interval: 30m
@@ -81,7 +81,7 @@ spec:
   path: ./clusters/dextek/apps/databases/crunchy-postgres/clustersecretstore
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: true
   interval: 30m

@@ -17,7 +17,7 @@ spec:
   path: ./clusters/dextek/apps/default/attic/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 30m

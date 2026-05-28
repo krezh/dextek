@@ -16,7 +16,7 @@ spec:
   path: ./clusters/dextek/apps/default/gotify/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 1h
@@ -46,7 +46,7 @@ spec:
   path: ./clusters/dextek/apps/default/gotify/icons
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 1h

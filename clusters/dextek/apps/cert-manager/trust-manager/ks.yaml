@@ -12,7 +12,7 @@ spec:
   path: ./clusters/dextek/apps/cert-manager/trust-manager/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: true
   interval: 1h
@@ -33,7 +33,7 @@ spec:
   path: ./clusters/dextek/apps/cert-manager/trust-manager/config
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   interval: 1h
   retryInterval: 1m

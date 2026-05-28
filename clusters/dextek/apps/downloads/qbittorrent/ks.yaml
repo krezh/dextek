@@ -16,7 +16,7 @@ spec:
   path: ./clusters/dextek/apps/downloads/qbittorrent/app
   prune: true
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: true
   interval: 30m

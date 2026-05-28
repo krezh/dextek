@@ -13,7 +13,7 @@ spec:
   path: ./clusters/dextek/apps/kube-system/coredns/app
   prune: false
   sourceRef:
-    kind: GitRepository
+    kind: OCIRepository
     name: flux-system
   wait: false
   interval: 30m
