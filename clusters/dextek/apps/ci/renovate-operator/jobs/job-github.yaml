@@ -3,7 +3,7 @@
 apiVersion: renovate-operator.mogenius.com/v1alpha1
 kind: RenovateJob
 metadata:
-  name: default
+  name: github
 spec:
   image: ghcr.io/krezh/renovate-nix:43.201.1@sha256:b3a32e37f401e4d38c3521c36246bd7efbc7e127f4b9fac3bc2ace204a7a9c76
   discoverTopics:
