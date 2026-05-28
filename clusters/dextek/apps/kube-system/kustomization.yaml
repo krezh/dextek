@@ -14,12 +14,12 @@ resources:
   - ./external-secrets
   - ./descheduler
   - ./k8tz
-  # - ./spegel
   - ./irqbalance
   - ./talos-etcd-defrag
   - ./intel-gpu-resource-driver
   - ./tuppr
   - ./ksgate
+  - ./reflector
 transformers:
   - |-
     apiVersion: builtin

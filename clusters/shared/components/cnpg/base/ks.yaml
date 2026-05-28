@@ -6,16 +6,20 @@ metadata:
   name: ${APP}-db
   namespace: &namespace databases
 spec:
+  targetNamespace: *namespace
   dependsOn:
     - name: cloudnative-pg
       namespace: flux-system
-  healthChecks:
-    - apiVersion: postgresql.cnpg.io/v1
-      kind: Database
-      name: ${APP}
-      namespace: *namespace
-  interval: 1h
   path: ./clusters/shared/components/cnpg/base/database
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false
+  interval: 1h
+  retryInterval: 2m
+  timeout: 5m
   postBuild:
     substitute:
       APP: ${APP}
@@ -24,12 +28,8 @@ spec:
       DATABASE_SUPERUSER: ${q:='}${DATABASE_SUPERUSER:=false}${q:='}
       DISABLE_PASSWORD: ${q:='}${DISABLE_PASSWORD:=true}${q:='}
       emptyArray: "[]"
-  prune: true
-  retryInterval: 2m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
-  wait: false
+  healthChecks:
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Database
+      name: ${APP}
+      namespace: *namespace
