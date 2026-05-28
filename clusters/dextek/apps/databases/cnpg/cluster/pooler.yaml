@@ -23,7 +23,7 @@ spec:
     serverTLSSecret:
       name: pooler-client-cert
     clientCASecret:
-      name: pooler-client-cert
+      name: postgres-client-ca
     clientTLSSecret:
       name: pooler-server-cert
     parameters:

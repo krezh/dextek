@@ -9,7 +9,7 @@ spec:
   commonName: postgres-ca
   subject:
     countries:
-      - FR
+      - SE
     organizations:
       - homelab
     organizationalUnits:
@@ -33,7 +33,7 @@ spec:
     encoding: PKCS8
     rotationPolicy: Always
   issuerRef:
-    name: cluster-selfsigned
+    name: cluster-ca
     kind: ClusterIssuer
     group: cert-manager.io
   secretName: *name

@@ -12,7 +12,7 @@ spec:
     - postgres-primary
     - postgres-primary.databases.svc
   issuerRef:
-    name: cluster-selfsigned
+    name: cluster-ca
     kind: ClusterIssuer
     group: cert-manager.io
   privateKey:
@@ -42,7 +42,7 @@ spec:
   dnsNames:
     - _crunchyrepl
   issuerRef:
-    name: cluster-selfsigned
+    name: cluster-ca
     kind: ClusterIssuer
     group: cert-manager.io
   privateKey:

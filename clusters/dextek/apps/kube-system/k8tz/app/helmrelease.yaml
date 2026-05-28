@@ -19,7 +19,7 @@ spec:
       certManager:
         enabled: true
         issuerRef:
-          name: cluster-selfsigned
+          name: cluster-ca
           kind: ClusterIssuer
     affinity:
       podAntiAffinity:
