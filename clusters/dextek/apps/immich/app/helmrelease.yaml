@@ -47,10 +47,13 @@ spec:
                   name: immich-configmap
               - secretRef:
                   name: immich-secret
-              - secretRef:
-                  name: immich-postgres-secret
             env:
               IMMICH_WORKERS_INCLUDE: api
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-postgres
+                    key: url
             resources:
               requests:
                 cpu: 100m
@@ -77,6 +80,12 @@ spec:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v2.7.5
             envFrom: *envFrom
+            env:
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-postgres
+                    key: url
             resources:
               claims:
                 - name: gpu
@@ -106,6 +115,11 @@ spec:
             envFrom: *envFrom
             env:
               IMMICH_WORKERS_EXCLUDE: api
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-postgres
+                    key: url
             resources:
               claims:
                 - name: gpu

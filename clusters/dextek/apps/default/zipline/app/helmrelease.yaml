@@ -9,6 +9,13 @@ spec:
     kind: OCIRepository
     name: zipline
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       zipline:
         annotations:
@@ -19,6 +26,11 @@ spec:
               repository: ghcr.io/diced/zipline
               tag: 4.6.1
             env:
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: zipline-postgres
+                    key: url
               DATASOURCE_TYPE: local
               DATASOURCE_LOCAL_DIRECTORY: &uploads /uploads
               CORE_HOSTNAME: 0.0.0.0
@@ -26,8 +38,6 @@ spec:
             envFrom:
               - secretRef:
                   name: zipline-secret
-              - secretRef:
-                  name: zipline-postgres-secret
             resources:
               requests:
                 memory: 366M

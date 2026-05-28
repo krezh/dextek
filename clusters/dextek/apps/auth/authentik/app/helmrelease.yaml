@@ -18,6 +18,30 @@ spec:
       env:
         - name: AUTHENTIK_LISTEN__TRUSTED_PROXY_CIDRS
           value: 10.244.0.0/16
+        - name: AUTHENTIK_POSTGRESQL__USE_PGBOUNCER
+          value: "false"
+        - name: AUTHENTIK_POSTGRESQL__SSLMODE
+          value: disable
+        - name: AUTHENTIK_POSTGRESQL__HOST
+          valueFrom:
+            secretKeyRef:
+              name: authentik-postgres
+              key: host
+        - name: AUTHENTIK_POSTGRESQL__USER
+          valueFrom:
+            secretKeyRef:
+              name: authentik-postgres
+              key: username
+        - name: AUTHENTIK_POSTGRESQL__PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authentik-postgres
+              key: password
+        - name: AUTHENTIK_POSTGRESQL__NAME
+          valueFrom:
+            secretKeyRef:
+              name: authentik-postgres
+              key: database
       envFrom:
         - secretRef:
             name: authentik-secret

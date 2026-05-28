@@ -56,7 +56,8 @@ spec:
 
   postgresql:
     pg_hba:
-      - hostssl all all all cert clientcert=verify-full map=pooler-map
+      - hostssl all pooler-rw all cert clientcert=verify-full map=pooler-map
+      - hostssl all all all scram-sha-256
       - host all all all scram-sha-256
     pg_ident:
       - pooler-map pooler-rw all
@@ -108,6 +109,8 @@ spec:
         login: true
         superuser: false
         disablePassword: false
+        passwordSecret:
+          name: authentik-postgres
       - name: bazarr
         ensure: present
         login: true
@@ -123,6 +126,8 @@ spec:
         login: true
         superuser: false
         disablePassword: false
+        passwordSecret:
+          name: grafana-postgres
       - name: immich
         ensure: present
         login: true
@@ -143,6 +148,8 @@ spec:
         login: true
         superuser: false
         disablePassword: false
+        passwordSecret:
+          name: prowlarr-postgres
       - name: tracearr
         ensure: present
         login: true

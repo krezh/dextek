@@ -25,7 +25,7 @@ spec:
   targetNamespace: monitoring
   dependsOn:
     - name: grafana
-    - name: crunchy-postgres-operator-cluster
+    - name: cnpg-cluster
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/monitoring/grafana/instance
   prune: true
@@ -34,3 +34,8 @@ spec:
     name: flux-system
   wait: false
   interval: 30m
+  components:
+    - ../../../../../shared/components/cnpg/pass
+  postBuild:
+    substitute:
+      APP: grafana

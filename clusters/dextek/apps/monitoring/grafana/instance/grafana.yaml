@@ -63,6 +63,31 @@ spec:
               envFrom:
                 - secretRef:
                     name: grafana-secret
+              env:
+                - name: GF_DATABASE_TYPE
+                  value: postgres
+                - name: GF_DATABASE_SSL_MODE
+                  value: disable
+                - name: GF_DATABASE_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: host
+                - name: GF_DATABASE_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: database
+                - name: GF_DATABASE_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: username
+                - name: GF_DATABASE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: password
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true

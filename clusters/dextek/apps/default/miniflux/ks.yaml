@@ -11,8 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
-    - name: crunchy-postgres-stores
+    - name: cnpg-cluster
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/miniflux/app
   prune: true
@@ -23,6 +22,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 15m
+  components:
+    - ../../../../../shared/components/cnpg/cert
   postBuild:
     substitute:
       APP: *app

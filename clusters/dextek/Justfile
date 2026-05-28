@@ -35,7 +35,7 @@ all:
     just apps
     just flux-secrets
     just wipe
-    just k9s
+    just status
 
 tofu:
     #!/usr/bin/env bash
@@ -99,29 +99,29 @@ wipe:
     just step "Wiping disks" "${rollout}"
     kubectl delete daemonset disk-wipe -n kube-system --ignore-not-found >/dev/null 2>&1
 
-k9s:
+status:
     #!/usr/bin/env bash
     LAYOUT=$(cat << 'EOF'
     layout {
         pane split_direction="vertical" {
             pane split_direction="horizontal" {
                 pane {
-                    command "k9s"
-                    args "--all-namespaces" "--command" "kustomizations"
+                    command "kubectl"
+                    args "klock" "-A" "ks"
                 }
                 pane {
-                    command "k9s"
-                    args "--all-namespaces" "--command" "pods"
+                    command "kubectl"
+                    args "klock" "-A" "pods" "--field-selector=status.phase!=Running,status.phase!=Succeeded"
                 }
             }
             pane split_direction="horizontal" {
                 pane {
-                    command "k9s"
-                    args "--all-namespaces" "--command" "helmreleases"
+                    command "kubectl"
+                    args "klock" "-A" "hr"
                 }
                 pane {
-                    command "k9s"
-                    args "--all-namespaces" "--command" "events"
+                    command "kubectl"
+                    args "klock" "-A" "events"
                 }
             }
         }

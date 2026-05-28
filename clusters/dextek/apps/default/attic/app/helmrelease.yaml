@@ -29,6 +29,12 @@ spec:
               tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
               pullPolicy: IfNotPresent
             args: ["-f", "/config/server.toml", "--mode", "db-migrations"]
+            env: &dbEnv
+              ATTIC_SERVER_DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: attic-postgres
+                    key: url
             envFrom: &envFrom
               - secretRef:
                   name: attic-secret
@@ -38,6 +44,7 @@ spec:
               tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
               pullPolicy: IfNotPresent
             args: ["-f", "/config/server.toml", "--mode", "check-config"]
+            env: *dbEnv
             envFrom: *envFrom
         containers:
           app:
@@ -45,6 +52,7 @@ spec:
               repository: ghcr.io/zhaofengli/attic
               tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
             args: ["-f", "/config/server.toml", "--mode", "api-server"]
+            env: *dbEnv
             envFrom: *envFrom
             probes:
               liveness: &probes
@@ -72,6 +80,7 @@ spec:
               repository: ghcr.io/zhaofengli/attic
               tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
             args: ["-f", "/config/server.toml", "--mode", "garbage-collector"]
+            env: *dbEnv
             envFrom: *envFrom
             resources:
               requests:

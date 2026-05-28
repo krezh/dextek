@@ -8,8 +8,7 @@ metadata:
 spec:
   targetNamespace: immich
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
-    - name: crunchy-postgres-stores
+    - name: cnpg-cluster
     - name: dragonfly-cluster
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/immich/app
@@ -22,6 +21,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
+    - ../../../../shared/components/cnpg/cert
     - ../../../../shared/components/gpu
   postBuild:
     substitute:

@@ -8,8 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
-    - name: crunchy-postgres-stores
+    - name: cnpg-cluster
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/atuin/app
   prune: true
@@ -20,3 +19,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  components:
+    - ../../../../../shared/components/cnpg/cert
+  postBuild:
+    substitute:
+      APP: atuin

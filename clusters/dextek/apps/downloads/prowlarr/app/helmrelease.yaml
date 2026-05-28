@@ -35,6 +35,27 @@ spec:
               PROWLARR__LOG__LEVEL: info
               PROWLARR__SERVER__PORT: &port 9696
               PROWLARR__UPDATE__BRANCH: develop
+              PROWLARR__POSTGRES__PORT: "5432"
+              PROWLARR__POSTGRES__HOST:
+                valueFrom:
+                  secretKeyRef:
+                    name: prowlarr-postgres
+                    key: host
+              PROWLARR__POSTGRES__USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: prowlarr-postgres
+                    key: username
+              PROWLARR__POSTGRES__PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: prowlarr-postgres
+                    key: password
+              PROWLARR__POSTGRES__MAINDB:
+                valueFrom:
+                  secretKeyRef:
+                    name: prowlarr-postgres
+                    key: database
             envFrom: &envFrom
               - secretRef:
                   name: prowlarr-secret
