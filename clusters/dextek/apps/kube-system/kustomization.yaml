@@ -19,7 +19,6 @@ resources:
   - ./intel-gpu-resource-driver
   - ./tuppr
   - ./ksgate
-  - ./reflector
 transformers:
   - |-
     apiVersion: builtin
