@@ -18,7 +18,7 @@ jobs:
     name: Flate - Filter
     runs-on: ubuntu-latest
     outputs:
-      changed-clusters: ${{ steps.changed-clusters.outputs.changed-clusters }}
+      changed-clusters: ${{ steps.changed-clusters.outputs.changed_files }}
     steps:
       - name: Get Changed Clusters
         id: changed-clusters
@@ -68,8 +68,8 @@ jobs:
           CLUSTER: ${{ matrix.cluster }}
         run: |
           flate diff "$RESOURCE" \
-            --path ./pull/clusters/"${CLUSTER}" \
-            --path-orig ./default/clusters/"${CLUSTER}" \
+            --path ./pull/"${CLUSTER}" \
+            --path-orig ./default/"${CLUSTER}" \
             > diff.patch
 
       - name: Generate Diff
