@@ -7,7 +7,7 @@ metadata:
   namespace: databases
 spec:
   name: ${APP}
-  owner: ${DB_OWNER:=${APP}}
+  owner: ${OWNER}
   cluster:
     name: postgres
   ensure: present
