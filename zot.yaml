@@ -38,6 +38,10 @@ configs:
       extensions:
         ui:
           enable: true
+        metrics:
+          enable: true
+          prometheus:
+            path: "/metrics"
         search:
           enable: true
         scrub:
