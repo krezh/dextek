@@ -8,14 +8,14 @@ metadata:
 spec:
   dependsOn:
     - name: cloudnative-pg
-      namespace: cnpg-system
+      namespace: flux-system
   healthChecks:
     - apiVersion: postgresql.cnpg.io/v1
       kind: Database
-      name: postgres-${APP}
+      name: ${APP}
       namespace: *namespace
   interval: 1h
-  path: ./kubernetes/components/postgres/base/database
+  path: ./clusters/shared/components/cnpg/base/database
   postBuild:
     substitute:
       APP: ${APP}

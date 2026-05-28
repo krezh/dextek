@@ -35,7 +35,7 @@ patches:
                 {
                   "apiVersion": "postgresql.cnpg.io/v1",
                   "kind": "Database",
-                  "name": "postgres-${APP}",
+                  "name": "${APP}",
                   "namespace": "databases",
                   "expression": "resource.status.applied"
                 }
