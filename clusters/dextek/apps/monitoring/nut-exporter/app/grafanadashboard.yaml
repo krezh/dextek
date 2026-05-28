@@ -9,6 +9,9 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
   configMapRef:
     name: nut-exporter
     key: nut-exporter-dashboard.json
