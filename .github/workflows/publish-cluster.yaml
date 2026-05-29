@@ -89,7 +89,7 @@ jobs:
     steps:
       - env:
           WEBHOOK_TOKEN: ${{ secrets.FLUX_WEBHOOK_TOKEN }}
-          WEBHOOK_URL: https://fluxhook.plexuz.xyz
+          WEBHOOK_URL: ${{ secrets.FLUX_WEBHOOK_URL }}
         run: |-
           SIGNATURE=$(printf '{}' | openssl dgst -sha256 -r -hmac "${WEBHOOK_TOKEN}" | awk '{print $1}')
           HTTP_STATUS=$(curl -s -o /dev/null -w '%{http_code}' -X POST "${WEBHOOK_URL}" -H 'Content-Type: application/json' -H "X-Signature: sha256=${SIGNATURE}" -d '{}')
