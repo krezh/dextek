@@ -19,6 +19,7 @@ spec:
     copyMethod: Snapshot
     parallelism: 20
     moverSecurityContext:
+      fsGroupChangePolicy: OnRootMismatch
       runAsUser: ${VOLSYNC_PUID:-568}
       runAsGroup: ${VOLSYNC_PGID:-568}
       fsGroup: ${VOLSYNC_PGID:-568}

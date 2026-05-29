@@ -4,6 +4,8 @@ set quiet
 set ignore-comments
 set lazy
 
+export MINIJINJA_CONFIG_FILE := justfile_directory() / ".minijinja.toml"
+
 _default:
   just --list
 
@@ -21,6 +23,9 @@ mod talos '.just/talos.just'
 
 # Crunchy Recipes
 mod crunchy '.just/crunchy.just'
+
+# VolSync Recipes
+mod volsync '.just/volsync.just'
 
 # Bootstrap Cluster
 mod dextek 'clusters/dextek/Justfile'
