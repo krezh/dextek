@@ -5,7 +5,7 @@ kind: Receiver
 metadata:
   name: dextek
 spec:
-  type: github
+  type: generic-hmac
   events:
     - ping
     - push

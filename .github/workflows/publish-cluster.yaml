@@ -12,14 +12,17 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   publish:
     name: Publish Cluster
     runs-on: ubuntu-latest
     environment: prod
     permissions:
-      packages: write
-      id-token: write
+      packages: write # push OCI artifact to GHCR
+      id-token: write # needed for cosign keyless signing
     outputs:
       digest-url: ${{ steps.publish.outputs.digest-url }}
     steps:
@@ -41,8 +44,10 @@ jobs:
       - name: Publish manifests
         id: publish
         shell: bash
+        env:
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
         run: |
-          tag="ghcr.io/${{ github.repository_owner }}/manifests/cluster:$(git rev-parse --short HEAD)"
+          tag="ghcr.io/${REPOSITORY_OWNER}/manifests/cluster:$(git rev-parse --short HEAD)"
           digest_url=$(flux push artifact "oci://${tag}" \
               --path="." \
               --source="$(git config --get remote.origin.url)" \
@@ -75,3 +80,18 @@ jobs:
         env:
           DIGEST_URL: ${{ needs.publish.outputs.digest-url }}
         run: cosign sign --yes "${DIGEST_URL}"
+
+  flux:
+    name: Trigger Flux reconciliation
+    runs-on: ubuntu-latest
+    needs: sign
+    environment: prod
+    steps:
+      - env:
+          WEBHOOK_TOKEN: ${{ secrets.FLUX_WEBHOOK_TOKEN }}
+          WEBHOOK_URL: https://fluxhook.plexuz.xyz
+        run: |-
+          SIGNATURE=$(printf '{}' | openssl dgst -sha256 -r -hmac "${WEBHOOK_TOKEN}" | awk '{print $1}')
+          HTTP_STATUS=$(curl -s -o /dev/null -w '%{http_code}' -X POST "${WEBHOOK_URL}" -H 'Content-Type: application/json' -H "X-Signature: sha256=${SIGNATURE}" -d '{}')
+          echo "Flux webhook response: HTTP ${HTTP_STATUS}"
+          test "${HTTP_STATUS}" = "200"
