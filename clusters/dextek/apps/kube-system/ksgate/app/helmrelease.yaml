@@ -10,6 +10,7 @@ spec:
     kind: OCIRepository
     name: ksgate
   values:
+    replicaCount: 2
     extraArgs:
       - --zap-log-level
       - info
