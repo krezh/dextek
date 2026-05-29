@@ -6,12 +6,13 @@ metadata:
   name: rook-ceph-cluster
   namespace: rook-ceph
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: rook-ceph-cluster
   driftDetection:
     mode: enabled
+  timeout: 30m
   values:
     cephImage:
       repository: quay.io/ceph/ceph
