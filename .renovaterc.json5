@@ -5,18 +5,8 @@
     "local>krezh/dextek//.renovate/autoMerge.json5",
     "local>krezh/dextek//.renovate/allowedVersions.json5",
     "local>krezh/dextek//.renovate/groups.json5",
-    "local>krezh/dextek//.renovate/customManagers.json5",
     "local>krezh/dextek//.renovate/packageRules.json5",
     "local>krezh/dextek//.renovate/clusters.json5",
-    "local>krezh/dextek//.renovate/grafanaDashboards.json5",
-    "local>krezh/dextek//.renovate/overrides.json5",
-    "local>krezh/dextek//.renovate/talosFactory.json5",
-  ],
-  hostRules: [
-    {
-      hostType: "forgejo",
-      matchHost: "codeberg.org",
-    },
   ],
   flux: {
     managerFilePatterns: ["/clusters/.+\\.ya?ml$/"],
