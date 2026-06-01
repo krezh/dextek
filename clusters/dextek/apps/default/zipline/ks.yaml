@@ -28,3 +28,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      # Prisma's node-postgres adapter verifies the server cert on sslmode=require (unlike
+      # libpq); use no-verify to encrypt without trusting our private CA. See cnpg/pass.
+      DATABASE_SSLMODE: no-verify
