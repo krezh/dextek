@@ -17,11 +17,6 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [44]
-      automountServiceAccountToken: false
-      resourceClaims:
-        - name: gpu
-          resourceClaimTemplateName: immich-gpu
     controllers:
       server:
         type: deployment

@@ -17,11 +17,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [44]
         seccompProfile: { type: RuntimeDefault }
-      resourceClaims:
-        - name: gpu
-          resourceClaimTemplateName: pinchflat-gpu
     controllers:
       pinchflat:
         annotations:
