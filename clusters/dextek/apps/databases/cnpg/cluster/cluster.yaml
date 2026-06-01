@@ -56,7 +56,13 @@ spec:
 
   postgresql:
     pg_hba:
+      # Password apps (members of scram_users) authenticate via scram over TLS.
+      - hostssl all +scram_users all scram-sha-256
+      # Default: everything else over TLS is the cert/pooler path — cert apps and the
+      # pooler's own pooler-rw identity, all mapped from the pooler cert. Nothing to
+      # enumerate here, so the pooler can never break by omitting a role.
       - hostssl all all all cert clientcert=verify-full map=pooler-map
+      # plaintext (no TLS) fallback
       - host all all all scram-sha-256
     pg_ident:
       - pooler-map pooler-rw all
@@ -93,6 +99,11 @@ spec:
 
   managed:
     roles:
+      # group role: members authenticate with a password (scram) instead of going through
+      # the cert/pooler path (see pg_hba). Tag password apps with inRoles: [scram_users].
+      - name: scram_users
+        ensure: present
+        login: false
       - name: atuin
         ensure: present
         login: true
@@ -110,6 +121,8 @@ spec:
         disablePassword: false
         passwordSecret:
           name: authentik-postgres
+        inRoles:
+          - scram_users
       - name: bazarr
         ensure: present
         login: true
@@ -127,6 +140,8 @@ spec:
         disablePassword: false
         passwordSecret:
           name: grafana-postgres
+        inRoles:
+          - scram_users
       - name: immich
         ensure: present
         login: true
@@ -149,6 +164,8 @@ spec:
         disablePassword: false
         passwordSecret:
           name: prowlarr-postgres
+        inRoles:
+          - scram_users
       - name: tracearr
         ensure: present
         login: true
@@ -166,6 +183,8 @@ spec:
         disablePassword: false
         passwordSecret:
           name: zipline-postgres
+        inRoles:
+          - scram_users
       - name: pooler-rw
         ensure: present
         login: true

@@ -21,7 +21,10 @@ spec:
         - name: AUTHENTIK_POSTGRESQL__USE_PGBOUNCER
           value: "false"
         - name: AUTHENTIK_POSTGRESQL__SSLMODE
-          value: disable
+          valueFrom:
+            secretKeyRef:
+              name: authentik-postgres
+              key: sslmode
         - name: AUTHENTIK_POSTGRESQL__HOST
           valueFrom:
             secretKeyRef:

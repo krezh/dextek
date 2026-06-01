@@ -67,7 +67,10 @@ spec:
                 - name: GF_DATABASE_TYPE
                   value: postgres
                 - name: GF_DATABASE_SSL_MODE
-                  value: disable
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: sslmode
                 - name: GF_DATABASE_HOST
                   valueFrom:
                     secretKeyRef:
