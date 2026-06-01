@@ -65,6 +65,14 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
+        additionalScrapeConfigs:
+          - job_name: zot
+            scheme: https
+            metrics_path: /metrics
+            static_configs:
+              - targets: ["zot.int.plexuz.xyz:443"]
+                labels:
+                  instance: zot.int.plexuz.xyz
         retention: 14d
         retentionSize: 50GB
         resources:
