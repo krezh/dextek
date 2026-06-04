@@ -78,11 +78,6 @@ spec:
       search_path: '"$user", public, vchord'
 
     extensions:
-      - name: postgis
-        ld_library_path:
-          - system
-        image:
-          reference: ghcr.io/cloudnative-pg/postgis-extension:3.6.3-18-trixie@sha256:60c0406c87e086a950ae6bce182c28c9fb3e56c2c329805badbf39de5828849f
       - name: vchord
         image:
           reference: ghcr.io/tensorchord/vchord-scratch:pg18-v1.1.1@sha256:bdea43bed2a414e21bbf71767bf6f0739747ac480b267b51772dc214ac28dcb3
