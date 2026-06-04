@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    authentik = {
-      source  = "goauthentik/authentik"
-      version = "2026.2.0"
-    }
-  }
-}
-
 locals {
   app_domains = {
     for k, app in var.oauth_apps :
@@ -67,29 +58,29 @@ variable "property_mappings" {
 variable "oauth_apps" {
   description = "Map of OIDC apps and their configuration"
   type = map(object({
-    name                   = optional(string, null)           # Display name; defaults to title-cased map key
-    slug                   = optional(string, null)           # URL slug; defaults to map key
-    external               = optional(bool, false)            # Use external domain instead of internal
-    app_domain             = optional(string, null)           # Override derived domain
-    app_group              = optional(string, null)           # Authentik app group label
-    access_groups          = optional(set(string), null)      # Groups allowed to access the app
-    policy_engine_mode     = optional(string, "any")          # Policy evaluation mode: any or all
-    authorization_flow_id  = optional(string, null)           # Overrides root authorization_flow_id
-    authentication_flow_id = optional(string, null)           # Overrides root authentication_flow_id
-    invalidation_flow_id   = optional(string, null)           # Overrides root invalidation_flow_id
+    name                   = optional(string, null)              # Display name; defaults to title-cased map key
+    slug                   = optional(string, null)              # URL slug; defaults to map key
+    external               = optional(bool, false)               # Use external domain instead of internal
+    app_domain             = optional(string, null)              # Override derived domain
+    app_group              = optional(string, null)              # Authentik app group label
+    access_groups          = optional(set(string), null)         # Groups allowed to access the app
+    policy_engine_mode     = optional(string, "any")             # Policy evaluation mode: any or all
+    authorization_flow_id  = optional(string, null)              # Overrides root authorization_flow_id
+    authentication_flow_id = optional(string, null)              # Overrides root authentication_flow_id
+    invalidation_flow_id   = optional(string, null)              # Overrides root invalidation_flow_id
     meta_icon              = optional(string, "dashboard-icons") # Icon URL or "dashboard-icons" to auto-resolve
-    meta_description       = optional(string, null)           # Short app description shown in the portal
-    meta_launch_url        = optional(string, null)           # Override launch URL; defaults to app domain
-    open_in_new_tab        = optional(bool, false)            # Open app in a new browser tab
-    access_token_validity  = optional(string, "hours=4")      # Access token lifetime
-    refresh_token_validity = optional(string, "weeks=52")     # Refresh token lifetime
-    client_id              = string                           # OAuth2 client ID
-    client_secret          = string                           # OAuth2 client secret
-    signing_key_id         = optional(string, null)           # Signing key; defaults to self-signed cert
-    client_type            = optional(string, "confidential") # confidential or public
-    redirect_uri_paths     = optional(list(string), [])       # Paths appended to app domain as redirect URIs
-    redirect_uris          = optional(list(string), [])       # Explicit redirect URIs (merged with paths)
-    property_mappings      = optional(list(string), null)     # Overrides root property_mappings
+    meta_description       = optional(string, null)              # Short app description shown in the portal
+    meta_launch_url        = optional(string, null)              # Override launch URL; defaults to app domain
+    open_in_new_tab        = optional(bool, false)               # Open app in a new browser tab
+    access_token_validity  = optional(string, "hours=4")         # Access token lifetime
+    refresh_token_validity = optional(string, "weeks=52")        # Refresh token lifetime
+    client_id              = string                              # OAuth2 client ID
+    client_secret          = string                              # OAuth2 client secret
+    signing_key_id         = optional(string, null)              # Signing key; defaults to self-signed cert
+    client_type            = optional(string, "confidential")    # confidential or public
+    redirect_uri_paths     = optional(list(string), [])          # Paths appended to app domain as redirect URIs
+    redirect_uris          = optional(list(string), [])          # Explicit redirect URIs (merged with paths)
+    property_mappings      = optional(list(string), null)        # Overrides root property_mappings
   }))
 }
 
