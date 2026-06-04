@@ -28,7 +28,7 @@ resource "ssh_resource" "caddy_config" {
 
 resource "docker_image" "caddy_l4" {
   depends_on = [ssh_resource.docker_tls_setup]
-  name       = "ghcr.io/bjw-s-labs/caddy-l4:2.11.2"
+  name       = "ghcr.io/bjw-s-labs/caddy-l4:2.11.4"
 }
 
 resource "docker_volume" "caddy_data" {
