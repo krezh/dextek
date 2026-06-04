@@ -46,9 +46,9 @@ machine:
       maxPods: 150
       serializeImagePulls: false
       # Make image cleanup more aggressive
-      imageMaximumGCAge: 24h # One day
-      imageGCHighThresholdPercent: 60 # Default is 85%
-      imageGCLowThresholdPercent: 30 # Default is 80%
+      # imageMaximumGCAge: 24h # One day
+      # imageGCHighThresholdPercent: 60 # Default is 85%
+      # imageGCLowThresholdPercent: 30 # Default is 80%
     nodeIP:
       validSubnets:
         - ${cluster_subnet}
@@ -177,7 +177,7 @@ cluster:
               args:
                 defaultingType: List
                 defaultConstraints:
-                  - maxSkew: "1"
+                  - maxSkew: 1
                     topologyKey: kubernetes.io/hostname
                     whenUnsatisfiable: ScheduleAnyway
 ---

@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    authentik = {
-      source  = "goauthentik/authentik"
-      version = "2026.2.0"
-    }
-  }
-}
-
 variable "forward_auth_apps" {
   description = "Map of forward auth apps and their configuration"
   type = map(object({

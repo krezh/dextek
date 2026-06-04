@@ -79,7 +79,7 @@ resource "authentik_outpost" "ldap" {
         op   = "add"
         path = "/metadata/annotations"
         value = {
-          "external-dns.alpha.kubernetes.io/hostname" = "ldap-lb.talos.plexuz.xyz"
+          "external-dns.alpha.kubernetes.io/hostname" = "ldap-lb.plexuz.xyz"
         }
       }]
     }
