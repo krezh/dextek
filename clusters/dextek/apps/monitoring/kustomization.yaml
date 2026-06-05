@@ -17,6 +17,7 @@ resources:
   - ./gatus
   - ./vpa
   - ./prometheus-adapter
+  - ./victoria-logs
 transformers:
   - |-
     apiVersion: builtin

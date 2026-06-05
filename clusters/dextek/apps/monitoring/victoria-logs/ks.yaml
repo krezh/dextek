@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: victoria-logs
+  namespace: flux-system
+spec:
+  targetNamespace: monitoring
+  dependsOn:
+    - name: rook-ceph-cluster
+  path: ./clusters/dextek/apps/monitoring/victoria-logs/app
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+  wait: false
+  interval: 1h
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: victoria-logs-collector
+  namespace: flux-system
+spec:
+  targetNamespace: monitoring
+  dependsOn:
+    - name: victoria-logs
+  path: ./clusters/dextek/apps/monitoring/victoria-logs/collector
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+  wait: false
+  interval: 1h
