@@ -19,7 +19,6 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       jellyfin:
-        strategy: RollingUpdate
         containers:
           app:
             image:
