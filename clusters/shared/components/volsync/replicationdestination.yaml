@@ -35,7 +35,5 @@ spec:
     repository: ${APP}-volsync-secret
     sourceIdentity:
       sourceName: ${APP}
-    additionalArgs:
-      - --parallel=20
     storageClassName: ${VOLSYNC_STORAGECLASS:=ceph-block}
     volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}
