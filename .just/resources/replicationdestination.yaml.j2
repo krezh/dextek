@@ -35,7 +35,5 @@ spec:
     repository: {{ ENV.APP }}-volsync-secret
     sourceIdentity:
       sourceName: {{ ENV.APP }}
-    additionalArgs:
-      - --parallel=20
     storageClassName: {{ ENV.STORAGE_CLASS_NAME }}
     volumeSnapshotClassName: {{ ENV.SNAPSHOT_CLASS_NAME }}
