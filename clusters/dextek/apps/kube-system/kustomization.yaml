@@ -19,6 +19,7 @@ resources:
   - ./intel-gpu-resource-driver
   - ./tuppr
   - ./ksgate
+  - ./roder
 transformers:
   - |-
     apiVersion: builtin
