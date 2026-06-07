@@ -67,6 +67,7 @@ module "oauth_apps" {
       property_mappings = local.oauth2_scopes_offline_access
       redirect_uris = [
         "https://kauth.plexuz.xyz/callback",
+        "https://roder.plexuz.xyz/auth/callback",
         "http://localhost:8080/callback"
       ]
       meta_launch_url = "blank://blank"
@@ -84,7 +85,7 @@ module "oauth_apps" {
       meta_description   = "Self-hosted RSS"
     }
     termix = {
-      app_group = "Infrastructure"
+      app_group  = "Infrastructure"
       app_domain = "termix.${var.domain["external"]}"
       access_groups = [
         data.authentik_group.superuser.id
