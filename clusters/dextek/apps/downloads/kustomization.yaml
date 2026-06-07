@@ -18,6 +18,7 @@ resources:
   - ./jellyseerr
   - ./jellyseerr-jf
   - ./pinchflat
+  - ./profilarr
 transformers:
   - |-
     apiVersion: builtin
