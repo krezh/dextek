@@ -25,3 +25,9 @@ spec:
         - name: gateway-internal
           namespace: network
       hostnames: ["roder.plexuz.xyz"]
+    resources:
+      limits:
+        memory: 400Mi
+      requests:
+        cpu: 50m
+        memory: 400Mi
