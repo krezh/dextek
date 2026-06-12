@@ -10,9 +10,8 @@ spec:
   endpoints:
     - dnsName: ingress-ext.plexuz.xyz
       recordType: A
-      targets:
+      targets: &ip
         - 62.238.2.224
     - dnsName: twnl.plexuz.xyz
-      recordType: CNAME
-      targets:
-        - ingress-ext.plexuz.xyz
+      recordType: A
+      targets: *ip
