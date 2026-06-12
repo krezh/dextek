@@ -16,6 +16,8 @@ spec:
         secretKeyRef:
           name: renovate-secret
           key: RENOVATE_GITHUB_COM_TOKEN
+    - name: NIX_CONFIG
+      value: "access-tokens = github.com=$(GITHUB_TOKEN)"
     - name: LOG_LEVEL
       value: debug
     - name: RENOVATE_ONBOARDING_CONFIG_FILE_NAME
