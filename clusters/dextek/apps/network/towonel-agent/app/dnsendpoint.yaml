@@ -4,6 +4,8 @@ apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: towonel
+  annotations:
+    external-dns.alpha.kubernetes.io/provider: cloudflare
 spec:
   endpoints:
     - dnsName: ingress-ext.plexuz.xyz

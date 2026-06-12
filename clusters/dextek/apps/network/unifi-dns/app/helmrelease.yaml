@@ -48,11 +48,7 @@ spec:
       - --managed-record-types=CNAME
       - --managed-record-types=TXT
     policy: sync
-    sources:
-      - crd
-      - gateway-httproute
-      - ingress
-      - service
+    sources: [crd, gateway-httproute, ingress, service]
     txtOwnerId: main
     txtPrefix: k8s.main.%{record_type}-
     domainFilters:
