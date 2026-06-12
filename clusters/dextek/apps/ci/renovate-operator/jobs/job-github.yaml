@@ -15,7 +15,7 @@ spec:
       valueFrom:
         secretKeyRef:
           name: renovate-secret
-          key: GITHUB_TOKEN
+          key: RENOVATE_GITHUB_COM_TOKEN
     - name: LOG_LEVEL
       value: debug
     - name: RENOVATE_ONBOARDING_CONFIG_FILE_NAME
