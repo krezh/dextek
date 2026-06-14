@@ -38,6 +38,11 @@ spec:
               VIEWER_ALLOWED_HOSTS: agentmemory.plexuz.xyz,agentmemory-api.plexuz.xyz
               VIEWER_ALLOWED_ORIGINS: https://agentmemory.plexuz.xyz,https://agentmemory-api.plexuz.xyz
               AGENTMEMORY_DROP_STALE_INDEX: true
+              MAX_TOKENS: "4096"
+              AGENTMEMORY_AUTO_COMPRESS: "true"
+              GRAPH_EXTRACTION_ENABLED: "true"
+              CONSOLIDATION_ENABLED: "true"
+              AGENTMEMORY_INJECT_CONTEXT: "true"
             envFrom:
               - secretRef:
                   name: agentmemory-secret

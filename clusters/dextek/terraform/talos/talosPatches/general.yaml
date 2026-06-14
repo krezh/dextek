@@ -134,9 +134,12 @@ cluster:
       - ${cluster_subnet}
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
+      auto-compaction-mode: periodic
+      auto-compaction-retention: "5m"
+      quota-backend-bytes: "4294967296" # 4 GiB
   controllerManager:
     extraArgs:
-      feature-gates: HPAScaleToZero=true
+      feature-gates: PersistentVolumeClaimUnusedSinceTime=true,HPAScaleToZero=true
       bind-address: 0.0.0.0
   network:
     cni:
@@ -155,7 +158,10 @@ cluster:
         - level: Metadata
     extraArgs:
       enable-aggregator-routing: "true"
-      feature-gates: HPAScaleToZero=true
+      feature-gates: PersistentVolumeClaimUnusedSinceTime=true,HPAScaleToZero=true
+      # Faster pod eviction from unreachable nodes (default: 300s)
+      default-not-ready-toleration-seconds: "60"
+      default-unreachable-toleration-seconds: "60"
       oidc-client-id: kubernetes
       oidc-groups-claim: groups
       oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
