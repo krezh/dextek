@@ -31,7 +31,8 @@ spec:
             env:
               AGENTMEMORY_TOOLS: all
               EMBEDDING_PROVIDER: local
-              III_REST_PORT: "3111"
+              III_REST_PORT: 3111
+              AGENTMEMORY_DROP_STALE_INDEX: true
             envFrom:
               - secretRef:
                   name: agentmemory-secret
