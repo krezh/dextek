@@ -1,0 +1,66 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: toolhive-operator-crds
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: toolhive-operator-crds
+  path: ./clusters/dextek/apps/ai/toolhive/crds
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+  interval: 1h
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: toolhive-operator
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: toolhive-operator
+  dependsOn:
+    - name: toolhive-operator-crds
+      namespace: ai
+  path: ./clusters/dextek/apps/ai/toolhive/app
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+  interval: 1h
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: toolhive-operator-config
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: toolhive-operator-config
+  dependsOn:
+    - name: toolhive-operator-crds
+    - name: dragonfly-operator
+  path: ./clusters/dextek/apps/ai/toolhive/config
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+  interval: 1h
+  timeout: 5m
+  postBuild:
+    substitute:
+      APP: toolhive

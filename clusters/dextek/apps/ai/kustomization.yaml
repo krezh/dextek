@@ -5,7 +5,10 @@ kind: Kustomization
 resources:
   - ../../../shared/templates/flux
   - ./namespace.yaml
+  - ./toolhive
   - ./agentmemory
+  - ./nixos-mcp
+  - ./context7-mcp
   - ./text-embeddings-inference
 transformers:
   - |-
