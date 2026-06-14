@@ -30,8 +30,13 @@ spec:
               tag: v0.9.12-1@sha256:ab4cfa40e5be9c96bc80fdd44f6460e0ac20625ec3f2e5def2493ad42ef6f5c9
             env:
               AGENTMEMORY_TOOLS: all
-              EMBEDDING_PROVIDER: local
+              EMBEDDING_PROVIDER: openai
+              OPENAI_EMBEDDING_API_KEY: dummy
+              OPENAI_EMBEDDING_DIMENSIONS: "1024"
+              OPENAI_BASE_URL: http://text-embeddings-inference:8080/v1
               III_REST_PORT: 3111
+              VIEWER_ALLOWED_HOSTS: agentmemory.plexuz.xyz,agentmemory-api.plexuz.xyz
+              VIEWER_ALLOWED_ORIGINS: https://agentmemory.plexuz.xyz,https://agentmemory-api.plexuz.xyz
               AGENTMEMORY_DROP_STALE_INDEX: true
             envFrom:
               - secretRef:
@@ -74,35 +79,36 @@ spec:
               limits:
                 memory: 1Gi
     service:
-      main:
+      app:
         controller: main
         ports:
-          api:
+          http:
             port: 3111
+          streams:
+            port: 3112
           viewer:
             port: 3113
     route:
-      api:
-        hostnames:
-          - "agentmemory-api.plexuz.xyz"
-        parentRefs:
-          - name: gateway-internal
-            namespace: network
-        rules:
-          - backendRefs:
-              - identifier: main
-                port: 3111
       viewer:
         hostnames:
-          - "agentmemory.plexuz.xyz"
+          - "{{ .Release.Name }}.plexuz.xyz"
         parentRefs:
           - name: gateway-internal
             namespace: network
-            sectionName: https
         rules:
           - backendRefs:
-              - identifier: main
+              - name: agentmemory
                 port: 3113
+      api:
+        hostnames:
+          - "{{ .Release.Name }}-api.plexuz.xyz"
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: agentmemory
+                port: 3111
     persistence:
       data:
         existingClaim: "{{ .Release.Name }}"

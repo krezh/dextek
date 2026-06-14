@@ -68,7 +68,8 @@ module "oauth_apps" {
       redirect_uris = [
         "https://kauth.plexuz.xyz/callback",
         "https://roder.plexuz.xyz/auth/callback",
-        "http://localhost:8080/callback"
+        "http://localhost:8080/callback",
+        "http://localhost:8080/auth/callback"
       ]
       meta_launch_url = "blank://blank"
     }
