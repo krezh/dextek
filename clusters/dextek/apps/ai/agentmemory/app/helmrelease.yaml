@@ -26,9 +26,9 @@ spec:
         containers:
           main:
             image:
-              repository: registry.vzkn.eu/containers/agentmemory
+              repository: ghcr.io/krezh/agentmemory
               tag: 0.9.27
-              digest: sha256:9579cac538fc5c4aed8dfb1e4951e8ac4d9ebd351225a1dcddec3d2af68042f0
+              digest: sha256:36dabee9f894be4b1613a1036f4b6fd80c479284865918e8868f7343fc4b1d73
             env:
               AGENTMEMORY_TOOLS: all
               EMBEDDING_PROVIDER: openai
