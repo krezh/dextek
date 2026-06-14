@@ -27,8 +27,7 @@ spec:
           main:
             image:
               repository: ghcr.io/krezh/agentmemory
-              tag: 0.9.27
-              digest: sha256:0e5f02c3d5e5937c6c1d7e8dbb6aef01478ce42765de2e6dd2dcd2ac75554c1b
+              tag: 0.9.27@sha256:0e708688b87eabc1131894a65c2cbb56dc65f35dd7510d8a85a8ff7405302a44
             env:
               AGENTMEMORY_TOOLS: all
               EMBEDDING_PROVIDER: openai
