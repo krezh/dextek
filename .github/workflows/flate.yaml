@@ -71,7 +71,7 @@ jobs:
           flate diff "$RESOURCE" \
             --path ./pull/"${CLUSTER}" \
             --path-orig ./default/"${CLUSTER}" \
-            -o github
+            -o github \
             > diff.patch
 
       - name: Generate Diff
