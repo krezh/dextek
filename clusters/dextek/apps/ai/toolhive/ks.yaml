@@ -31,7 +31,6 @@ spec:
       app.kubernetes.io/name: toolhive-operator
   dependsOn:
     - name: toolhive-operator-crds
-      namespace: ai
   path: ./clusters/dextek/apps/ai/toolhive/app
   prune: true
   sourceRef:
