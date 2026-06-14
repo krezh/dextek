@@ -27,7 +27,8 @@ spec:
           main:
             image:
               repository: forge.wynning.tech/james/agentmemory
-              tag: v0.9.12-1@sha256:ab4cfa40e5be9c96bc80fdd44f6460e0ac20625ec3f2e5def2493ad42ef6f5c9
+              tag: 0.9.27
+              digest: sha256:9579cac538fc5c4aed8dfb1e4951e8ac4d9ebd351225a1dcddec3d2af68042f0
             env:
               AGENTMEMORY_TOOLS: all
               EMBEDDING_PROVIDER: openai
