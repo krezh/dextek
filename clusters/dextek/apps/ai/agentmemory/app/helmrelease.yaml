@@ -112,7 +112,7 @@ spec:
       tmpfs:
         type: emptyDir
         sizeLimit: 1Gi
-        medium: memory
+        medium: Memory
         globalMounts:
           - path: /tmp
             subPath: tmp
