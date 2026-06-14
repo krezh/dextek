@@ -90,7 +90,7 @@ spec:
     persistence:
       data:
         type: persistentVolumeClaim
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
         size: 10Gi
         globalMounts:
           - path: /data
