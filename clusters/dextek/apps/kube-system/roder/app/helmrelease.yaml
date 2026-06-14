@@ -15,6 +15,12 @@ spec:
     envFrom:
       - secretRef:
           name: roder-secret
+    resources:
+      requests:
+        cpu: 50m
+        memory: 300Mi
+      limits:
+        memory: 300Mi
     httpRoute:
       enabled: true
       annotations:
