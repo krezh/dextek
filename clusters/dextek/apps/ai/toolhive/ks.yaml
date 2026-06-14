@@ -52,7 +52,7 @@ spec:
       app.kubernetes.io/name: toolhive-operator-config
   dependsOn:
     - name: toolhive-operator-crds
-    - name: dragonfly-operator
+    - name: dragonfly-cluster
   path: ./clusters/dextek/apps/ai/toolhive/config
   prune: true
   sourceRef:
