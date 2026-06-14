@@ -26,7 +26,7 @@ spec:
         containers:
           main:
             image:
-              repository: forge.wynning.tech/james/agentmemory
+              repository: registry.vzkn.eu/containers/agentmemory
               tag: 0.9.27
               digest: sha256:9579cac538fc5c4aed8dfb1e4951e8ac4d9ebd351225a1dcddec3d2af68042f0
             env:
