@@ -59,6 +59,7 @@ jobs:
         with:
           client-id: "${{ secrets.BOT_APP_ID }}"
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+          permission-actions: write
 
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@b3018382ca039b53d238908238bd35d1fb14f8ee # v2.1.0

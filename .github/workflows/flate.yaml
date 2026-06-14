@@ -88,6 +88,7 @@ jobs:
         with:
           client-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+          permission-pull-requests: write
 
       - if: ${{ steps.diff.outputs.diff != '' }}
         name: Add Comment
