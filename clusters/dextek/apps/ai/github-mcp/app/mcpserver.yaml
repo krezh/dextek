@@ -3,17 +3,16 @@
 apiVersion: toolhive.stacklok.dev/v1beta1
 kind: MCPServer
 metadata:
-  name: context7
+  name: github-mcp
 spec:
-  image: ghcr.io/stacklok/dockyard/npx/context7:2.2.4
+  image: ghcr.io/github/github-mcp-server:latest
   transport: stdio
-  proxyPort: 8080
   groupRef:
     name: mcp-tools
   permissionProfile:
     type: builtin
     name: network
   secrets:
-    - name: context7-secret
-      key: CONTEXT7_API_KEY
-      targetEnvName: CONTEXT7_API_KEY
+    - name: github-mcp-secret
+      key: GITHUB_PERSONAL_ACCESS_TOKEN
+      targetEnvName: GITHUB_PERSONAL_ACCESS_TOKEN

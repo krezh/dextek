@@ -142,11 +142,6 @@ spec:
         login: true
         superuser: false
         disablePassword: false
-      - name: jellystat
-        ensure: present
-        login: true
-        superuser: false
-        disablePassword: false
       - name: miniflux
         ensure: present
         login: true

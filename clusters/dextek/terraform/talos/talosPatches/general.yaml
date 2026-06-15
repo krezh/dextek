@@ -121,8 +121,8 @@ machine:
       forwardKubeDNSToHost: false # Requires Cilium socketLB features
     kubernetesTalosAPIAccess:
       enabled: true
-      allowedRoles: ["os:admin"]
-      allowedKubernetesNamespaces: ["kube-system"]
+      allowedRoles: ["os:admin", "os:reader"]
+      allowedKubernetesNamespaces: ["kube-system", "ai"]
 
 cluster:
   allowSchedulingOnControlPlanes: true

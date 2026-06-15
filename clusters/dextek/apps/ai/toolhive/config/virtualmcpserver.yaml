@@ -18,3 +18,7 @@ spec:
     type: anonymous
   outgoingAuth:
     source: discovered
+  sessionStorage:
+    provider: redis
+    address: dragonfly.databases:6379
+    keyPrefix: "mcp-gateway-internal:"

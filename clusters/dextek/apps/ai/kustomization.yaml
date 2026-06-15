@@ -5,11 +5,13 @@ kind: Kustomization
 resources:
   - ../../../shared/templates/flux
   - ./namespace.yaml
-  - ./toolhive
-  - ./memini
-  - ./nixos-mcp
-  - ./context7-mcp
-  - ./text-embeddings-inference
+  - ./toolhive/ks.yaml
+  - ./memini/ks.yaml
+  - ./context7-mcp/ks.yaml
+  - ./github-mcp/ks.yaml
+  - ./grafana-mcp/ks.yaml
+  - ./sidero-mcp/ks.yaml
+  - ./talos-mcp/ks.yaml
 transformers:
   - |-
     apiVersion: builtin
