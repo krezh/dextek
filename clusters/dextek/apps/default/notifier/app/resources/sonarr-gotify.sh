@@ -48,7 +48,7 @@ function notify() {
             ;;
         "Test")
             printf -v GOTIFY_TITLE "Test Notification"
-            printf -v GOTIFY_MESSAGE "Howdy this is a test notification"
+            printf -v GOTIFY_MESSAGE "Howdy this is a test notification %s" "$(_jq '.applicationUrl')"
             GOTIFY_PRIORITY=2
             ;;
         *)
