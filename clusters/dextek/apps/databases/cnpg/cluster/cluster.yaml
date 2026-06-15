@@ -166,11 +166,6 @@ spec:
         login: true
         superuser: false
         disablePassword: false
-      - name: wakapi
-        ensure: present
-        login: true
-        superuser: false
-        disablePassword: false
       - name: zipline
         ensure: present
         login: true
@@ -178,6 +173,15 @@ spec:
         disablePassword: false
         passwordSecret:
           name: zipline-postgres
+        inRoles:
+          - scram_users
+      - name: memini
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+        passwordSecret:
+          name: memini-postgres
         inRoles:
           - scram_users
       - name: pooler-rw

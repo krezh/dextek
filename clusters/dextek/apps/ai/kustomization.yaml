@@ -6,7 +6,7 @@ resources:
   - ../../../shared/templates/flux
   - ./namespace.yaml
   - ./toolhive
-  - ./agentmemory
+  - ./memini
   - ./nixos-mcp
   - ./context7-mcp
   - ./text-embeddings-inference

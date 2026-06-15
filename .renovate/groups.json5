@@ -14,7 +14,7 @@
     {
       description: "Tofu-Controller Images and tags",
       groupName: "Tofu-Controller",
-      matchPackageNames: ["tofu-controller"],
+      matchPackageNames: ["/tofu-controller/"],
       matchDatasources: ["docker", "github-tags"],
       versioning: "semver",
       group: {
@@ -69,7 +69,7 @@
     {
       description: "Maintainerr Images",
       groupName: "Maintainerr",
-      matchPackageNames: ["maintainerr"],
+      matchPackageNames: ["/maintainerr/"],
       matchDatasources: ["docker", "github-releases"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
@@ -77,21 +77,10 @@
       sourceUrl: "https://github.com/jorenn92/Maintainerr",
     },
     {
-      description: "Radarr Images",
-      groupName: "Radarr",
-      matchPackageNames: ["radarr"],
-      matchDatasources: ["docker", "github-releases"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      sourceUrl: "https://github.com/radarr/radarr",
-    },
-    {
       description: ["Volsync Group"],
       groupName: "Volsync",
-      matchPackageNames: ["volsync"],
+      matchPackageNames: ["/volsync/"],
       matchDatasources: ["docker", "helm"],
-      matchUpdateTypes: ["minor", "patch"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
@@ -112,8 +101,8 @@
       description: ["Dragonfly Operator Group"],
       groupName: "Dragonfly Operator",
       matchPackageNames: [
-        "dragonflydb/operator",
-        "dragonflydb/dragonfly-operator",
+        "/dragonflydb/operator/",
+        "/dragonflydb/dragonfly-operator/",
       ],
       matchDatasources: ["docker", "helm", "github-releases"],
       group: {

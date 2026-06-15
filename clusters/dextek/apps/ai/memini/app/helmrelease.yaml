@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name memini
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: memini
+  values:
+    global:
+      fullnameOverride: *name
+    defaultPodOptions:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+    controllers:
+      main:
+        type: deployment
+        replicas: 1
+        containers:
+          main:
+            resources:
+              requests:
+                cpu: 25m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
+            env:
+              MEMINI_BACKEND: postgres
+              MEMINI_LOG_FORMAT: json
+              MEMINI_WRITE_DEDUP_MIN_SCORE: "0.95"
+              MEMINI_DEMOTE_AFTER: 1440h
+              MEMINI_TOMBSTONE_TTL: 720h
+              MEMINI_EMBED_BASE_URL: http://text-embeddings-inference.ai.svc.cluster.local:8080/v1
+              MEMINI_EMBED_MODEL: all-MiniLM-L6-v2
+              MEMINI_EMBED_DIMS: "384"
+              # MEMINI_RERANK: http://llama-cpp-reranker.ai.svc.cluster.local:8080/v1
+              # MEMINI_RERANK_MODEL: qwen3-reranker-0.6b
+              # MEMINI_RERANK_TOP_N: "20"
+              # MEMINI_RERANK_MAX_DOC_CHARS: "4000"
+              MEMINI_POSTGRES_DSN:
+                valueFrom:
+                  secretKeyRef:
+                    name: memini-postgres
+                    key: url
+              MEMINI_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: memini-secret
+                    key: MEMINI_API_KEY
+    route:
+      internal:
+        enabled: true
+        kind: HTTPRoute
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+        hostnames:
+          - memini.plexuz.xyz
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: http
+    persistence:
+      data:
+        enabled: false
