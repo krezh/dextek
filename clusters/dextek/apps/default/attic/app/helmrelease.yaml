@@ -22,38 +22,21 @@ spec:
         replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          migrations:
-            image:
-              repository: ghcr.io/zhaofengli/attic
-              tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
-              pullPolicy: IfNotPresent
-            args: ["-f", "/config/server.toml", "--mode", "db-migrations"]
-            env: &dbEnv
-              ATTIC_SERVER_DATABASE_URL:
-                valueFrom:
-                  secretKeyRef:
-                    name: attic-postgres
-                    key: url
-            envFrom: &envFrom
-              - secretRef:
-                  name: attic-secret
-          check-config:
-            image:
-              repository: ghcr.io/zhaofengli/attic
-              tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
-              pullPolicy: IfNotPresent
-            args: ["-f", "/config/server.toml", "--mode", "check-config"]
-            env: *dbEnv
-            envFrom: *envFrom
         containers:
           app:
             image:
               repository: ghcr.io/zhaofengli/attic
               tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
-            args: ["-f", "/config/server.toml", "--mode", "api-server"]
-            env: *dbEnv
-            envFrom: *envFrom
+            args: ["-f", "/config/server.toml", "--mode", "monolithic"]
+            env:
+              ATTIC_SERVER_DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: attic-postgres
+                    key: url
+            envFrom:
+              - secretRef:
+                  name: attic-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -72,20 +55,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 250M
+                memory: 1000M
               limits:
                 memory: 2691M
-          gc:
-            image:
-              repository: ghcr.io/zhaofengli/attic
-              tag: latest@sha256:317924e10e70416e69d401880bb71b3aae69b413ecafcfc54018f61929464526
-            args: ["-f", "/config/server.toml", "--mode", "garbage-collector"]
-            env: *dbEnv
-            envFrom: *envFrom
-            resources:
-              requests:
-                cpu: 10m
-                memory: 53M
     service:
       app:
         controller: app

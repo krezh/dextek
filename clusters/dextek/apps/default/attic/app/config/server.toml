@@ -127,10 +127,10 @@ type = "zstd"
 #
 # If zero, automatic garbage collection is disabled, but
 # it can still be run manually with `atticd --mode garbage-collector-once`.
-interval = "7 days"
+interval = "2 days"
 
 # Default retention period
 #
 # Zero (default) means time-based garbage-collection is
 # disabled by default. You can enable it on a per-cache basis.
-default-retention-period = "3 months"
+default-retention-period = "1 month"
