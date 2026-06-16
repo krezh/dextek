@@ -12,6 +12,7 @@ resources:
   - ./grafana-mcp/ks.yaml
   - ./sidero-mcp/ks.yaml
   - ./talos-mcp/ks.yaml
+  - ./nixos-mcp/ks.yaml
 transformers:
   - |-
     apiVersion: builtin
