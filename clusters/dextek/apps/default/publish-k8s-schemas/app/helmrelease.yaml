@@ -27,7 +27,7 @@ spec:
         emptyDir: {}
     extraContainers:
       - name: git-push
-        image: alpine/git:2.49.1
+        image: alpine/git:v2.54.0
         command: ["/bin/sh", "-c"]
         args:
           - |
