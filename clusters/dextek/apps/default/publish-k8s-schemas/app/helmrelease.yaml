@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -10,134 +9,97 @@ spec:
     kind: OCIRepository
     name: publish-k8s-schemas
   values:
-    controllers:
-      publish-k8s-schemas:
-        type: cronjob
-        cronjob:
-          backoffLimit: 4
-          concurrencyPolicy: Forbid
-          failedJobsHistory: 1
-          schedule: "0 */4 * * *"
-          successfulJobsHistory: 1
-        pod:
-          automountServiceAccountToken: true
-          restartPolicy: OnFailure
-          securityContext:
-            runAsGroup: 65534
-            runAsNonRoot: true
-            runAsUser: 65534
-        initContainers:
-          generate-schemas:
-            image:
-              repository: ghcr.io/bjw-s-labs/k8s-crd-extractor
-              tag: 2026.3.11@sha256:a26844ff81905a8fac4dba61b416bed087a1944e20e38634acba5a7f65eeac93
-            resources:
-              requests:
-                cpu: 10m
-                memory: 128M
-              limits:
-                memory: 2Gi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-        containers:
-          app:
-            image:
-              repository: alpine/git
-              tag: v2.54.0
-            env:
-              GIT_TOKEN:
-                valueFrom:
-                  secretKeyRef:
-                    name: publish-k8s-schemas-secret
-                    key: GIT_TOKEN
-              GIT_REPO: github.com/krezh/k8s-schemas.git
-              GIT_AUTHOR_NAME:
-                value: &git_author k8s-schemas-bot
-              GIT_AUTHOR_EMAIL:
-                value: &git_author_email k8s-schemas-bot@plexuz.xyz
-              GIT_COMMITTER_NAME:
-                value: *git_author
-              GIT_COMMITTER_EMAIL:
-                value: *git_author_email
-            command:
-              - /bin/sh
-              - -c
-              - |
-                set -eu
-                export HOME=/tmp
-                git clone --depth=1 \
-                  "https://x-access-token:${GIT_TOKEN}@${GIT_REPO}" \
-                  /tmp/repo
-                mkdir -p /tmp/repo/schemas
-                cp -r /data/crdSchemas/. /tmp/repo/schemas/
-                cd /tmp/repo
-                git add .
-                if git diff --cached --quiet; then
-                  echo "No changes to commit"
-                  exit 0
-                fi
-                git commit -m "chore: update CRD schemas ($(date -u '+%Y-%m-%dT%H:%M:%SZ'))"
-                git push
-            resources:
-              requests:
-                cpu: 10m
-                memory: 105M
-              limits:
-                memory: 105M
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-    persistence:
-      tmpfs:
-        type: emptyDir
-        advancedMounts:
-          publish-k8s-schemas:
-            generate-schemas:
-              - path: /config/.datree
-                subPath: data
-              - path: /tmp
-                subPath: tmp
-            app:
-              - path: /data
-                subPath: data
-              - path: /tmp
-                subPath: tmp
-    serviceAccount:
-      publish-k8s-schemas: {}
-    rbac:
-      roles:
-        publish-k8s-schemas:
-          type: ClusterRole
-          rules:
-            - apiGroups:
-                - apiextensions.k8s.io
-              resources:
-                - customresourcedefinitions
-                - customresourcedefinitions/status
-              verbs:
-                - get
-                - list
-                - watch
-            - apiGroups:
-                - apiregistration.k8s.io
-              resources:
-                - apiservices
-                - apiservices/status
-              verbs:
-                - get
-                - list
-                - watch
-      bindings:
-        publish-k8s-schemas:
-          type: ClusterRoleBinding
-          roleRef:
-            identifier: publish-k8s-schemas
-          subjects:
-            - identifier: publish-k8s-schemas
+    mode: cronjob
+
+    cronjob:
+      schedule: "0 */4 * * *"
+      concurrencyPolicy: Forbid
+      successfulJobsHistoryLimit: 1
+      failedJobsHistoryLimit: 3
+
+    config:
+      basePath: "/k8s-schemas"
+
+    extraVolumes:
+      - name: git-workspace
+        emptyDir: {}
+      - name: git-home
+        emptyDir: {}
+      - name: git-tmp
+        emptyDir: {}
+
+    extraContainers:
+      - name: git-push
+        image: alpine/git:2.49.1
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            while [ ! -f /data/current/index.html ]; do sleep 5; done
+
+            git config --global user.name "crd-schema-publisher"
+            git config --global user.email "crd-schema-publisher@users.noreply.github.com"
+            git config --global --add safe.directory /repo
+
+            if [ -z "$(ls -A /repo)" ]; then
+              git clone --branch "${GIT_BRANCH}" --single-branch \
+                "https://x-access-token:${GITHUB_TOKEN}@github.com/${GIT_REPO}.git" /repo || {
+                git init /repo
+                cd /repo
+                git checkout -b "${GIT_BRANCH}"
+                git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GIT_REPO}.git"
+              }
+            fi
+
+            cd /repo
+            rm -rf /tmp/site-sync
+            mkdir -p /tmp/site-sync
+            cp -r /data/current/. /tmp/site-sync/
+            rm -rf /tmp/site-sync/_meta
+            rm -rf /repo/schemas
+            mkdir -p /repo/schemas
+            cp -r /tmp/site-sync/. /repo/schemas/
+            git add -A
+            if git diff --cached --quiet; then
+              echo "No changes to commit"
+            else
+              git commit -m "chore: update CRD schemas ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+              git push origin "${GIT_BRANCH}"
+            fi
+        env:
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: publish-k8s-schemas-git-push
+                key: github-token
+          - name: GIT_REPO
+            valueFrom:
+              secretKeyRef:
+                name: publish-k8s-schemas-git-push
+                key: github-repo
+          - name: GIT_BRANCH
+            value: "main"
+          - name: HOME
+            value: "/home/git"
+        volumeMounts:
+          - name: output
+            mountPath: /data
+            readOnly: true
+          - name: git-workspace
+            mountPath: /repo
+          - name: git-home
+            mountPath: /home/git
+          - name: git-tmp
+            mountPath: /tmp
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
+        securityContext:
+          runAsUser: 1000
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
