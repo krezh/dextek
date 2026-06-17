@@ -14,6 +14,7 @@ resources:
   - ./talos-mcp/ks.yaml
   - ./nixos-mcp/ks.yaml
   - ./llama-cpp-reranker/ks.yaml
+  - ./llmkube/ks.yaml
 transformers:
   - |-
     apiVersion: builtin
