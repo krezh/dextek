@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -10,16 +11,13 @@ spec:
     name: publish-k8s-schemas
   values:
     mode: cronjob
-
     cronjob:
       schedule: "0 */4 * * *"
       concurrencyPolicy: Forbid
       successfulJobsHistoryLimit: 1
       failedJobsHistoryLimit: 3
-
     config:
       basePath: "/k8s-schemas"
-
     extraVolumes:
       - name: git-workspace
         emptyDir: {}
@@ -27,7 +25,6 @@ spec:
         emptyDir: {}
       - name: git-tmp
         emptyDir: {}
-
     extraContainers:
       - name: git-push
         image: alpine/git:2.49.1
