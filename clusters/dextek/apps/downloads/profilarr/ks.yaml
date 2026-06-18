@@ -19,7 +19,6 @@ spec:
   interval: 1h
   timeout: 5m
   components:
-    - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/volsync
   postBuild:
     substitute:
