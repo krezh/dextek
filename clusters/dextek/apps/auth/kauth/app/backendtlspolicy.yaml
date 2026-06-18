@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.networking.k8s.io/backendtlspolicy_v1alpha3.json
+apiVersion: gateway.networking.k8s.io/v1alpha3
+kind: BackendTLSPolicy
+metadata:
+  name: kauth
+spec:
+  # kauth now serves HTTPS on :8080 (single listener), so the gateway must speak
+  # TLS to the backend instead of plain HTTP.
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: kauth
+      sectionName: http
+  validation:
+    hostname: kauth.auth.svc # must be a SAN on the kauth serving cert
+    # cluster-ca CA that signed the kauth serving cert. The cert-manager secret
+    # kauth-webhook-tls includes ca.crt.
+    # TODO: confirm Envoy Gateway's supported caCertificateRefs kind/version here
+    # (ConfigMap vs Secret); may need trust-manager to publish the CA to a ConfigMap.
+    caCertificateRefs:
+      - group: ""
+        kind: Secret
+        name: kauth-webhook-tls

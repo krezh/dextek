@@ -9,19 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: kauth
-  # Pin the Service clusterIP so the API server webhook config (Talos
-  # controlplane.yaml) has a stable, git-knowable target — *.svc DNS does not
-  # resolve from the host-netns API server, so it dials this IP via Cilium socketLB.
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: Service
-              name: kauth
-            patch: |
-              - op: add
-                path: /spec/clusterIP
-                value: __KAUTH_CLUSTERIP__ # TODO: free IP in the service CIDR (Talos default 10.96.0.0/12)
   values:
     replicaCount: 3
     podAnnotations:
@@ -29,9 +16,27 @@ spec:
     envFrom:
       - secretRef:
           name: kauth-secret
-    # TODO: once the kauth chart supports TLS serving for /webhook/token-review,
-    # mount the kauth-webhook-tls secret and enable HTTPS on :8443. Requires the
-    # kauth app/chart to actually serve TLS (kauth-side change, not yet released).
+    service:
+      # Pin the clusterIP so the API server webhook config (Talos controlplane.yaml)
+      # has a stable, git-knowable target — *.svc DNS does not resolve from the
+      # host-netns API server, so it dials this IP via Cilium socketLB.
+      clusterIP: __KAUTH_CLUSTERIP__ # TODO: free IP in the service CIDR (Talos default 10.96.0.0/12)
+    # Serve HTTPS from the pod (single listener on :8080) so the apiserver reaches
+    # /webhook/token-review over TLS. Cert from cert-manager (certificate.yaml).
+    tls:
+      enabled: true
+      secretName: kauth-webhook-tls
+    # Probes must speak HTTPS once TLS is enabled (kubelet skips cert verification).
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: http
+        scheme: HTTPS
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: http
+        scheme: HTTPS
     httpRoute:
       enabled: true
       annotations:
