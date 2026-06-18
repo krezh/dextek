@@ -16,7 +16,7 @@ spec:
     - kauth.auth.svc
     - kauth.auth.svc.cluster.local
   ipAddresses:
-    - __KAUTH_CLUSTERIP__ # TODO: same pinned clusterIP as the helmrelease postRenderer
+    - __KAUTH_CLUSTERIP__ # TODO: same pinned clusterIP as helmrelease service.clusterIP
   issuerRef:
     name: cluster-ca
     kind: ClusterIssuer
