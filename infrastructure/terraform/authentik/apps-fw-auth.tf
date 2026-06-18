@@ -133,17 +133,5 @@ module "fw-auth" {
       meta_icon               = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/librespeed.png"
       outpost                 = "external"
     }
-    profilarr = {
-      app_name                = "Profilarr"
-      slug                    = "profilarr"
-      app_domain              = "profilarr.${var.domain}"
-      app_group               = "Downloads"
-      access_groups           = [data.authentik_group.superuser.id]
-      policy_engine_mode      = "any"
-      authorization_flow_uuid = data.authentik_flow.default-provider-authorization-implicit-consent.id
-      invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
-      meta_icon               = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/profilarr.png"
-      outpost                 = "external"
-    }
   }
 }
