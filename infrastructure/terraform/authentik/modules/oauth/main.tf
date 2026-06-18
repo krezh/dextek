@@ -17,11 +17,13 @@ locals {
     for k, app in var.oauth_apps : k => concat(
       [for path in app.redirect_uri_paths : {
         matching_mode = "strict"
+        redirect_uri_type = "authorization"
         url           = "https://${local.app_domains[k]}${path}"
       }],
       [for uri in app.redirect_uris : {
-        matching_mode = "strict"
-        url           = uri
+        matching_mode     = "strict"
+        redirect_uri_type = "authorization"
+        url               = uri
       }]
     )
   }
