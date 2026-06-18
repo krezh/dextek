@@ -2,3 +2,44 @@ cluster:
   apiServer:
     admissionControl:
       $patch: delete
+    # kauth webhook token authenticator — lets the API server validate kauth
+    # compound tokens (kauth_<sessionID>.<oidcIDToken>) against kauth so session
+    # revocation takes effect within the cache TTL. Runs *alongside* the existing
+    # oidc-* flags (general.yaml) during rollout: both are token authenticators
+    # tried as a union, so a misconfigured/unreachable webhook falls through to
+    # OIDC and does NOT lock the cluster out. Remove the oidc-* flags only once
+    # everyone is on compound tokens (see PR description).
+    extraArgs:
+      authentication-token-webhook-config-file: /etc/kubernetes/webhook-auth/kauth.yaml
+      authentication-token-webhook-cache-ttl: 30s # max revocation window
+    extraVolumes:
+      - hostPath: /etc/kubernetes/webhook-auth
+        mountPath: /etc/kubernetes/webhook-auth
+        readonly: true
+machine:
+  files:
+    - op: create
+      path: /etc/kubernetes/webhook-auth/kauth.yaml
+      permissions: 0o600
+      content: |
+        apiVersion: v1
+        kind: Config
+        clusters:
+          - name: kauth
+            cluster:
+              # TODO: pin to the kauth Service clusterIP (see helmrelease postRenderer).
+              # The API server (host netns) reaches this via Cilium socketLB
+              # (hostNamespaceOnly: true); *.svc DNS does not resolve from there.
+              server: https://__KAUTH_CLUSTERIP__:8443/webhook/token-review
+              # TODO: base64 of the cluster-ca CA cert (root-ca secret / cluster-ca
+              # ClusterIssuer) that signs kauth's serving cert.
+              certificate-authority-data: __CLUSTER_CA_B64__
+        users:
+          - name: apiserver
+            user: {}
+        contexts:
+          - name: kauth
+            context:
+              cluster: kauth
+              user: apiserver
+        current-context: kauth
