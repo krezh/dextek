@@ -55,11 +55,15 @@ variable "property_mappings" {
 variable "oauth_apps" {
   description = "Map of OIDC apps and their configuration"
   type = map(object({
-    name                   = optional(string, null)              # Display name; defaults to title-cased map key
-    slug                   = optional(string, null)              # URL slug; defaults to map key
-    app_domain             = optional(string, null)              # Override derived domain
-    app_group              = optional(string, null)              # Authentik app group label
-    access_groups          = optional(set(string), null)         # Groups allowed to access the app
+    name          = optional(string, null)      # Display name; defaults to title-cased map key
+    slug          = optional(string, null)      # URL slug; defaults to map key
+    app_domain    = optional(string, null)      # Override derived domain
+    app_group     = optional(string, null)      # Authentik app group label
+    access_groups = optional(set(string), null) # Groups allowed to access the app
+    grant_types = optional(list(string), [      # Grant types allowed for the provider
+      "refresh_token", "implicit", "authorization_code", "hybrid", "client_credentials", "password",
+      "urn:ietf:params:oauth:grant-type:device_code"
+    ])
     policy_engine_mode     = optional(string, "any")             # Policy evaluation mode: any or all
     authorization_flow_id  = optional(string, null)              # Overrides root authorization_flow_id
     authentication_flow_id = optional(string, null)              # Overrides root authentication_flow_id
@@ -90,6 +94,7 @@ resource "authentik_provider_oauth2" "main" {
   client_id              = each.value.client_id
   client_type            = each.value.client_type
   client_secret          = each.value.client_secret
+  grant_types            = each.value.grant_types
   authorization_flow     = coalesce(each.value.authorization_flow_id, var.authorization_flow_id)
   authentication_flow    = coalesce(each.value.authentication_flow_id, var.authentication_flow_id)
   invalidation_flow      = coalesce(each.value.invalidation_flow_id, var.invalidation_flow_id)
