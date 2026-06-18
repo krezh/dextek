@@ -6,7 +6,7 @@
 #   config = jsonencode({
 #     "log_level"                        = "info"
 #     "authentik_host"                   = "http://authentik-server.auth.svc.cluster.local"
-#     "authentik_host_browser"           = "https://sso.${var.domain["external"]}/"
+#     "authentik_host_browser"           = "https://sso.${var.domain}/"
 #     "authentik_host_insecure"          = false
 #     "refresh_interval"                 = "minutes=5"
 #     "kubernetes_replicas"              = 1
@@ -44,7 +44,7 @@ resource "authentik_outpost" "external" {
   config = jsonencode({
     "log_level"                      = "info"
     "authentik_host"                 = "http://authentik-server.auth.svc.cluster.local"
-    "authentik_host_browser"         = "https://sso.${var.domain["external"]}/"
+    "authentik_host_browser"         = "https://sso.${var.domain}/"
     "authentik_host_insecure"        = false
     "refresh_interval"               = "minutes=5"
     "kubernetes_replicas"            = 1

@@ -4,7 +4,7 @@ module "fw-auth" {
     echo_server = {
       app_name                = "Echo Server"
       slug                    = "echo_server"
-      app_domain              = "echo-server.${var.domain["external"]}"
+      app_domain              = "echo-server.${var.domain}"
       app_group               = "Infrastructure"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -16,7 +16,7 @@ module "fw-auth" {
     sonarr = {
       app_name                = "Sonarr"
       slug                    = "sonarr"
-      app_domain              = "sonarr.${var.domain["external"]}"
+      app_domain              = "sonarr.${var.domain}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -28,7 +28,7 @@ module "fw-auth" {
     radarr = {
       app_name                = "Radarr"
       slug                    = "radarr"
-      app_domain              = "radarr.${var.domain["external"]}"
+      app_domain              = "radarr.${var.domain}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -40,7 +40,7 @@ module "fw-auth" {
     prowlarr = {
       app_name                = "Prowlarr"
       slug                    = "prowlarr"
-      app_domain              = "prowlarr.${var.domain["external"]}"
+      app_domain              = "prowlarr.${var.domain}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -52,7 +52,7 @@ module "fw-auth" {
     bazarr = {
       app_name                = "Bazarr"
       slug                    = "bazarr"
-      app_domain              = "bazarr.${var.domain["external"]}"
+      app_domain              = "bazarr.${var.domain}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -64,7 +64,7 @@ module "fw-auth" {
     maintainerr = {
       app_name                = "Maintainerr"
       slug                    = "maintainerr"
-      app_domain              = "maintainerr.${var.domain["external"]}"
+      app_domain              = "maintainerr.${var.domain}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -76,7 +76,7 @@ module "fw-auth" {
     sabnzbd = {
       app_name                = "SABnzbd"
       slug                    = "sabnzbd"
-      app_domain              = "sab.${var.domain["external"]}"
+      app_domain              = "sab.${var.domain}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -88,7 +88,7 @@ module "fw-auth" {
     changedetection = {
       app_name                = "Changedetection"
       slug                    = "changedetection"
-      app_domain              = "changedetection.${var.domain["external"]}"
+      app_domain              = "changedetection.${var.domain}"
       app_group               = "Tools"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -100,7 +100,7 @@ module "fw-auth" {
     homeassistant = {
       app_name                = "Home Assistant"
       slug                    = "homeassistant"
-      app_domain              = "hass.${var.domain["external"]}"
+      app_domain              = "hass.${var.domain}"
       app_group               = "Home"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -112,7 +112,7 @@ module "fw-auth" {
     pinchflat = {
       app_name                = "Pinchflat"
       slug                    = "pinchflat"
-      app_domain              = "pinchflat.${var.domain["external"]}"
+      app_domain              = "pinchflat.${var.domain}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"
@@ -124,7 +124,7 @@ module "fw-auth" {
     librespeed = {
       app_name                = "LibreSpeed"
       slug                    = "librespeed"
-      app_domain              = "speed.${var.domain["external"]}"
+      app_domain              = "speed.${var.domain}"
       app_group               = "Tools"
       access_groups           = [data.authentik_group.superuser.id, authentik_group.groups["users"].id]
       policy_engine_mode      = "any"
@@ -136,7 +136,7 @@ module "fw-auth" {
     profilarr = {
       app_name                = "Profilarr"
       slug                    = "profilarr"
-      app_domain              = "profilarr.${var.domain["external"]}"
+      app_domain              = "profilarr.${var.domain}"
       app_group               = "Downloads"
       access_groups           = [data.authentik_group.superuser.id]
       policy_engine_mode      = "any"

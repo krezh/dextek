@@ -1,9 +1,6 @@
 variable "domain" {
-  type = object({
-    internal = string
-    external = string
-  })
-  description = "Internal and external domain names"
+  type        = string
+  description = "Base domain for apps"
 }
 
 variable "bind_flow_id" {
@@ -41,7 +38,7 @@ locals {
   # LDAP apps are always internal
   app_launch_urls = {
     for k, app in var.ldap_apps :
-    k => coalesce(app.meta_launch_url, "https://${k}.${var.domain.external}")
+    k => coalesce(app.meta_launch_url, "https://${k}.${var.domain}")
   }
 }
 
@@ -53,7 +50,7 @@ resource "authentik_provider_ldap" "ldap" {
   unbind_flow     = var.unbind_flow_id
   mfa_support     = false
   certificate     = var.certificate_id
-  tls_server_name = "ldap-lb.${var.domain.internal}"
+  tls_server_name = "ldap-lb.${var.domain}"
   search_mode     = "direct"
   bind_mode       = "direct"
 }
@@ -68,7 +65,7 @@ resource "authentik_outpost" "ldap" {
   config = jsonencode({
     log_level               = "info"
     authentik_host          = "http://authentik-server.auth.svc.cluster.local"
-    authentik_host_browser  = "https://sso.${var.domain.external}/"
+    authentik_host_browser  = "https://sso.${var.domain}/"
     refresh_interval        = "minutes=5"
     kubernetes_replicas     = 1
     kubernetes_namespace    = "auth"

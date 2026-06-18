@@ -3,7 +3,7 @@ data "authentik_certificate_key_pair" "generated" {
 }
 
 resource "authentik_brand" "plexuz" {
-  domain           = var.domain["external"]
+  domain           = var.domain
   branding_title   = "Plexuz"
   branding_logo    = "/static/dist/assets/icons/icon_left_brand.svg"
   branding_favicon = "/static/dist/assets/icons/icon.png"

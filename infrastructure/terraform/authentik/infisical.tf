@@ -12,19 +12,50 @@ ephemeral "infisical_secret" "authentik_token" {
   folder_path  = "/Terraform/Authentik/Authentik"
 }
 
-module "app_secrets" {
-  source = "./modules/infisical-app"
-
-  workspace_id = local.infisical_project_id
+data "infisical_secrets" "grafana" {
   env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Grafana"
+}
 
-  app_secrets = {
-    grafana    = "/Kubernetes/DexTek/Grafana"
-    mealie     = "/Kubernetes/DexTek/Mealie"
-    immich     = "/Kubernetes/DexTek/Immich"
-    zipline    = "/Kubernetes/DexTek/Zipline"
-    kubernetes = "/Kubernetes/DexTek/Kubernetes"
-    miniflux   = "/Kubernetes/DexTek/Miniflux"
-    termix     = "/Kubernetes/DexTek/Termix"
-  }
+data "infisical_secrets" "mealie" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Mealie"
+}
+
+data "infisical_secrets" "immich" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Immich"
+}
+
+data "infisical_secrets" "zipline" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Zipline"
+}
+
+data "infisical_secrets" "kubernetes" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Kubernetes"
+}
+
+data "infisical_secrets" "miniflux" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Miniflux"
+}
+
+data "infisical_secrets" "termix" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Termix"
+}
+
+data "infisical_secrets" "profilarr" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Profilarr"
 }

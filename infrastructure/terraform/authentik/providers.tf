@@ -23,6 +23,6 @@ provider "infisical" {
 }
 
 provider "authentik" {
-  url   = "https://sso.${var.domain["external"]}"
+  url   = "https://sso.${var.domain}"
   token = ephemeral.infisical_secret.authentik_token.value
 }

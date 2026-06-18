@@ -1,7 +1,7 @@
 locals {
   app_domains = {
     for k, app in var.oauth_apps :
-    k => coalesce(app.app_domain, "${k}.${app.external ? var.domain.external : var.domain.internal}")
+    k => coalesce(app.app_domain, "${k}.${var.domain}")
   }
   meta_icon = {
     for k, app in var.oauth_apps :
@@ -28,11 +28,8 @@ locals {
 }
 
 variable "domain" {
-  description = "Internal and external domain names"
-  type = object({
-    internal = string
-    external = string
-  })
+  description = "Base domain for apps"
+  type        = string
 }
 
 variable "authorization_flow_id" {
@@ -60,7 +57,6 @@ variable "oauth_apps" {
   type = map(object({
     name                   = optional(string, null)              # Display name; defaults to title-cased map key
     slug                   = optional(string, null)              # URL slug; defaults to map key
-    external               = optional(bool, false)               # Use external domain instead of internal
     app_domain             = optional(string, null)              # Override derived domain
     app_group              = optional(string, null)              # Authentik app group label
     access_groups          = optional(set(string), null)         # Groups allowed to access the app

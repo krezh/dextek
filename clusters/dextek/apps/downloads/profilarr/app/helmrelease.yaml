@@ -31,7 +31,8 @@ spec:
               tag: 2.0.8
             env:
               ORIGIN: https://profilarr.plexuz.xyz
-              AUTH: off
+              AUTH: oidc
+              OIDC_DISCOVERY_URL: https://sso.plexuz.xyz/application/o/profilarr/.well-known/openid-configuration
             probes:
               startup:
                 enabled: true
