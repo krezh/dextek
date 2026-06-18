@@ -16,6 +16,8 @@ spec:
       prComments: true
       publicUrl: https://{{ .Release.Name }}.plexuz.xyz
       mcp: true
+      prFilterExpr: pr.labels.exists(l, l.name == "cluster/dextek")
+      clusterPath: clusters/dextek
     secret:
       existingSecret: konflate-secret
     httpRoute:
