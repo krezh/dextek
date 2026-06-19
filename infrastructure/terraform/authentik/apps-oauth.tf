@@ -81,7 +81,7 @@ module "oauth_apps" {
       meta_description   = "Self-hosted RSS"
     }
     termix = {
-      app_group  = "Infrastructure"
+      app_group = "Infrastructure"
       access_groups = [
         data.authentik_group.superuser.id
       ]
@@ -91,7 +91,7 @@ module "oauth_apps" {
       meta_description   = "Server management platform"
     }
     profilarr = {
-      app_group  = "Downloads"
+      app_group = "Downloads"
       access_groups = [
         data.authentik_group.superuser.id
       ]

@@ -9,7 +9,7 @@ terraform {
   required_providers {
     hcloud = {
       source  = "hetznercloud/hcloud"
-      version = "1.65.0"
+      version = "1.66.0"
     }
     infisical = {
       source  = "Infisical/infisical"
@@ -17,7 +17,7 @@ terraform {
     }
     docker = {
       source  = "kreuzwerker/docker"
-      version = "4.4.0"
+      version = "4.5.0"
     }
     ssh = {
       source  = "loafoe/ssh"
