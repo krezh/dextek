@@ -16,12 +16,12 @@ spec:
     envFrom:
       - secretRef:
           name: kauth-secret
-    # Dedicated TLS listener for /webhook/token-review on :8443. The client-facing
-    # API stays plain HTTP behind gateway-internal (which terminates TLS); only the
-    # apiserver->kauth webhook hop uses this. Cert from cert-manager (certificate.yaml).
+    # Dedicated HTTP listener for /webhook/token-review on :8081. Served separately
+    # from the main API so it bypasses the rate limiter. In-cluster HTTP is safe
+    # because the token itself is AES-GCM encrypted with a server-side key.
     webhook:
       enabled: true
-      secretName: kauth-webhook-tls
+      port: 8081
     httpRoute:
       enabled: true
       annotations:
