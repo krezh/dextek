@@ -10,13 +10,13 @@ cluster:
       authentication-token-webhook-config-file: /etc/kubernetes/webhook-auth/kauth.yaml
       authentication-token-webhook-cache-ttl: 30s # max revocation window
     extraVolumes:
-      - hostPath: /etc/kubernetes/webhook-auth
+      - hostPath: /var/kubernetes/webhook-auth
         mountPath: /etc/kubernetes/webhook-auth
         readonly: true
 machine:
   files:
     - op: create
-      path: /etc/kubernetes/webhook-auth/kauth.yaml
+      path: /var/kubernetes/webhook-auth/kauth.yaml
       permissions: 0o600
       content: |
         apiVersion: v1
