@@ -16,6 +16,9 @@ spec:
     envFrom:
       - secretRef:
           name: kauth-secret
+    webhook:
+      enabled: true
+      port: 8081
     httpRoute:
       enabled: true
       annotations:
