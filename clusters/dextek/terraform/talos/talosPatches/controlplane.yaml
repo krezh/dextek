@@ -28,8 +28,7 @@ machine:
           - name: kauth
             cluster:
               server: https://kauth.auth.svc.cluster.local:8443/webhook/token-review
-              # TODO: base64 of the cluster-ca CA cert (root-ca secret / cluster-ca ClusterIssuer)
-              certificate-authority-data: __CLUSTER_CA_B64__
+              insecure-skip-tls-verify: true
         users:
           - name: apiserver
             user: {}
