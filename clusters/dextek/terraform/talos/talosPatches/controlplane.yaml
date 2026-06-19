@@ -17,7 +17,7 @@ machine:
   files:
     - op: create
       path: /var/kubernetes/webhook-auth/kauth.yaml
-      permissions: 0o600
+      permissions: 0o644
       content: |
         apiVersion: v1
         kind: Config
