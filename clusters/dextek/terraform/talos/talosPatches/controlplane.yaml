@@ -24,7 +24,7 @@ machine:
         clusters:
           - name: kauth
             cluster:
-              server: http://kauth.auth.svc.cluster.local:8081/webhook/token-review
+              server: http://kauth-server.auth.svc.cluster.local:8081/webhook/token-review
         users:
           - name: apiserver
             user: {}
