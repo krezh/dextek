@@ -5,8 +5,8 @@ module "talos" {
   cluster_vip            = "192.168.25.20"
   cluster_endpoint       = "192.168.25.20"
   cluster_subnet         = "10.10.0.0/27"
-  talos_version          = "v1.13.2" # renovate: datasource=custom.talos-factory depName=siderolabs/talos
-  kubernetes_version     = "v1.36.1" # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+  talos_version          = "v1.13.4" # renovate: datasource=custom.talos-factory depName=siderolabs/talos
+  kubernetes_version     = "v1.36.2" # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
   factory_schematic_file = "schematic.yaml"
   matchbox = {
     url         = "http://matchbox.int.plexuz.xyz:8080"
