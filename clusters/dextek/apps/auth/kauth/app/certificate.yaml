@@ -6,17 +6,9 @@ metadata:
   name: kauth-webhook-tls
 spec:
   secretName: kauth-webhook-tls
-  # Serving cert for the /webhook/token-review endpoint. The API server connects
-  # by clusterIP, so the clusterIP MUST be an IP SAN here (TLS verifies the host
-  # in the webhook kubeconfig's server URL).
-  # NOTE: cluster-ca has critical nameConstraints permitting only .svc/.cluster.local
-  # (no iPAddress subtree) — verify it issues a cert with an IP SAN, or switch to a
-  # dedicated/unconstrained issuer for this cert.
   dnsNames:
     - kauth.auth.svc
     - kauth.auth.svc.cluster.local
-  ipAddresses:
-    - __KAUTH_CLUSTERIP__ # TODO: same pinned clusterIP as helmrelease service.clusterIP
   issuerRef:
     name: cluster-ca
     kind: ClusterIssuer

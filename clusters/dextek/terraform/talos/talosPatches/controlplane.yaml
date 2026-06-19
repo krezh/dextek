@@ -27,12 +27,8 @@ machine:
         clusters:
           - name: kauth
             cluster:
-              # TODO: pin to the kauth Service clusterIP (see helmrelease postRenderer).
-              # The API server (host netns) reaches this via Cilium socketLB
-              # (hostNamespaceOnly: true); *.svc DNS does not resolve from there.
-              server: https://__KAUTH_CLUSTERIP__:8443/webhook/token-review
-              # TODO: base64 of the cluster-ca CA cert (root-ca secret / cluster-ca
-              # ClusterIssuer) that signs kauth's serving cert.
+              server: https://kauth.auth.svc.cluster.local:8443/webhook/token-review
+              # TODO: base64 of the cluster-ca CA cert (root-ca secret / cluster-ca ClusterIssuer)
               certificate-authority-data: __CLUSTER_CA_B64__
         users:
           - name: apiserver
