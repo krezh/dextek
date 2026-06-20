@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./authentik
-  - ./kauth
+  - ./kauth/ks.yaml
   - ../../../shared/templates/flux
 transformers:
   - |-
