@@ -20,6 +20,7 @@ resources:
   - ./tuppr
   - ./ksgate
   - ./roder
+  - ./drm-exporter/ks.yaml
 transformers:
   - |-
     apiVersion: builtin
