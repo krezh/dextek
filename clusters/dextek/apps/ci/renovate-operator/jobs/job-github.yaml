@@ -11,8 +11,6 @@ spec:
   discoveryFilters:
     - krezh/*
   extraEnv:
-    - name: NIX_CONFIG
-      value: "access-tokens = github.com=$(RENOVATE_TOKEN)"
     - name: LOG_LEVEL
       value: debug
     - name: RENOVATE_ONBOARDING_CONFIG_FILE_NAME
