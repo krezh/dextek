@@ -2,10 +2,6 @@ cluster:
   apiServer:
     admissionControl:
       $patch: delete
-    # kauth webhook token authenticator — lets the API server validate kauth
-    # session credentials against the session CRD so revocation takes effect
-    # within the cache TTL. The token is an AES-GCM encrypted session ID;
-    # in-cluster HTTP is safe because the application layer handles encryption.
     extraArgs:
       authentication-token-webhook-config-file: /etc/kubernetes/webhook-auth/kauth.yaml
       authentication-token-webhook-cache-ttl: 30s # max revocation window
@@ -24,7 +20,7 @@ machine:
         clusters:
           - name: kauth
             cluster:
-              server: http://kauth-server.auth.svc.cluster.local:8081/webhook/token-review
+              server: http://10.96.0.11:8081/webhook/token-review
         users:
           - name: apiserver
             user: {}

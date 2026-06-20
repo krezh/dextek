@@ -19,6 +19,8 @@ spec:
     webhook:
       enabled: true
       port: 8081
+    service:
+      clusterIP: 10.96.0.11
     httpRoute:
       enabled: true
       annotations:
