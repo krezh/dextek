@@ -6,6 +6,10 @@ metadata:
   name: kauth
 spec:
   interval: 1h
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   chartRef:
     kind: OCIRepository
     name: kauth
