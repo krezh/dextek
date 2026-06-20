@@ -13,7 +13,7 @@ terraform {
     }
     infisical = {
       source  = "Infisical/infisical"
-      version = "0.16.30"
+      version = "0.16.32"
     }
     docker = {
       source  = "kreuzwerker/docker"
