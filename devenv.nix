@@ -4,9 +4,12 @@
     pkgs.infisical
     pkgs.opentofu
     pkgs.tofu-ls
+    pkgs.pulumi
+    pkgs.pulumiPackages.pulumi-go
   ];
 
   enterShell = ''
+    export GITHUB_TOKEN=$(gh auth token)
     INFISICAL_OUTPUT=$(timeout 5 infisical export --format=dotenv-export --silent --path=/Kubernetes/DexTek/TFController --env=default 2>/dev/null)
     if [ $? -eq 0 ] && [ -n "$INFISICAL_OUTPUT" ]; then
       eval "$INFISICAL_OUTPUT"

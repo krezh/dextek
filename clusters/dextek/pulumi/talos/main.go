@@ -3,9 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
-	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -17,6 +15,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumiverse/pulumi-matchbox/sdk/go/matchbox"
 	talosclient "github.com/pulumiverse/pulumi-talos/sdk/go/talos/client"
+	talosimgfactory "github.com/pulumiverse/pulumi-talos/sdk/go/talos/imagefactory"
 	talosmachine "github.com/pulumiverse/pulumi-talos/sdk/go/talos/machine"
 	"gopkg.in/yaml.v3"
 )
@@ -37,9 +36,11 @@ type Cluster struct {
 
 // Node is discovered from the node/ directory tree, not from cluster.yaml.
 type Node struct {
-	Host string
-	Role string // "controlplane" or "worker" (Talos native value)
-	MACs []string
+	Host     string
+	Role     string // "controlplane" or "worker" (Talos native value)
+	MACs     []string
+	Platform string // talos.platform from patch YAML, defaults to "metal"
+	IP       string // first static IP found in addresses fields, used for bootstrap
 }
 
 // machineSecrets holds either raw values from Infisical or a reference to the
@@ -63,7 +64,8 @@ type machineSecrets struct {
 	clientKey                 string
 
 	// Set when freshly generated
-	resource *talosmachine.Secrets
+	resource      *talosmachine.Secrets
+	infisicalDone *pulumi.StringOutput // non-nil only when secrets were just generated
 }
 
 func main() {
@@ -73,10 +75,17 @@ func main() {
 			return fmt.Errorf("load cluster.yaml: %w", err)
 		}
 
-		schematicID, err := resolveSchematicID("schematic.yaml")
+		schematicContent, err := os.ReadFile("schematic.yaml")
 		if err != nil {
-			return fmt.Errorf("resolve schematic: %w", err)
+			return fmt.Errorf("read schematic.yaml: %w", err)
 		}
+		schematic, err := talosimgfactory.NewSchematic(ctx, "schematic", &talosimgfactory.SchematicArgs{
+			Schematic: pulumi.StringPtr(string(schematicContent)),
+		})
+		if err != nil {
+			return fmt.Errorf("create schematic: %w", err)
+		}
+		schematicID := schematic.ID().ToStringOutput()
 
 		ic, err := newInfisicalClient()
 		if err != nil {
@@ -102,7 +111,7 @@ func main() {
 
 		writeMachineConfigs := os.Getenv("WRITE_MACHINE_CONFIGS") != ""
 		writeTalosconfig := os.Getenv("WRITE_TALOSCONFIG") != ""
-		if writeMachineConfigs || writeTalosconfig {
+		if writeMachineConfigs {
 			if err := os.MkdirAll("machineConfigs", 0700); err != nil {
 				return fmt.Errorf("create machineConfigs dir: %w", err)
 			}
@@ -118,30 +127,35 @@ func main() {
 			return err
 		}
 
-		hashShort := schematicID[:10]
-		kernelURL := fmt.Sprintf("%s/assets/talos/factory/%s/%s/kernel-amd64", matchboxURL, hashShort, cluster.TalosVersion)
-		initrdURL := fmt.Sprintf("%s/assets/talos/factory/%s/%s/initramfs-amd64.xz", matchboxURL, hashShort, cluster.TalosVersion)
+		// Truncated to 10 chars to keep matchbox asset paths short.
+		kernelURL := schematicID.ApplyT(func(id string) string {
+			return fmt.Sprintf("%s/assets/talos/factory/%s/%s/kernel-amd64", matchboxURL, id[:10], cluster.TalosVersion)
+		}).(pulumi.StringOutput)
+		initrdURL := schematicID.ApplyT(func(id string) string {
+			return fmt.Sprintf("%s/assets/talos/factory/%s/%s/initramfs-amd64.xz", matchboxURL, id[:10], cluster.TalosVersion)
+		}).(pulumi.StringOutput)
 
-		assetDir := fmt.Sprintf("/var/lib/matchbox/assets/talos/factory/%s/%s", hashShort, cluster.TalosVersion)
-		downloadCmd := fmt.Sprintf(
-			`set -e; if [ ! -f "%s/kernel-amd64" ] || [ ! -f "%s/initramfs-amd64.xz" ]; then `+
-				`mkdir -p "%s"; `+
-				`curl --fail -Lo "%s/kernel-amd64" "https://factory.talos.dev/image/%s/%s/kernel-amd64"; `+
-				`curl --fail -Lo "%s/initramfs-amd64.xz" "https://factory.talos.dev/image/%s/%s/initramfs-amd64.xz"; `+
-				`fi`,
-			assetDir, assetDir, assetDir,
-			assetDir, schematicID, cluster.TalosVersion,
-			assetDir, schematicID, cluster.TalosVersion,
-		)
-		_, err = remote.NewCommand(ctx, "get-talos", &remote.CommandArgs{
+		downloadCmd := schematicID.ApplyT(func(id string) string {
+			assetDir := fmt.Sprintf("/var/lib/matchbox/assets/talos/factory/%s/%s", id[:10], cluster.TalosVersion)
+			return fmt.Sprintf(`set -e
+mkdir -p "%s"
+curl --fail -Lo "%s/kernel-amd64"       "https://factory.talos.dev/image/%s/%s/kernel-amd64"
+curl --fail -Lo "%s/initramfs-amd64.xz" "https://factory.talos.dev/image/%s/%s/initramfs-amd64.xz"`,
+				assetDir,
+				assetDir, id, cluster.TalosVersion,
+				assetDir, id, cluster.TalosVersion,
+			)
+		}).(pulumi.StringOutput)
+
+		getTalosCmd, err := remote.NewCommand(ctx, "get-talos", &remote.CommandArgs{
 			Connection: remote.ConnectionArgs{
 				Host:       pulumi.String("matchbox.int.plexuz.xyz"),
 				User:       pulumi.StringPtr("matchbox"),
 				PrivateKey: pulumi.StringPtr(matchboxSecrets["SSHKEY"]),
 			},
-			Create: pulumi.StringPtr(downloadCmd),
+			Create: downloadCmd.ApplyT(func(s string) *string { return &s }).(pulumi.StringPtrOutput),
 			Triggers: pulumi.Array{
-				pulumi.String(schematicID),
+				schematic.ID(),
 				pulumi.String(cluster.TalosVersion),
 			},
 		})
@@ -150,49 +164,53 @@ func main() {
 		}
 
 		for _, node := range nodes {
-			tplCtx := TemplateContext{
-				ClusterName:       cluster.ClusterName,
-				ClusterEndpoint:   cluster.ClusterEndpoint,
-				TalosVersion:      cluster.TalosVersion,
-				KubernetesVersion: cluster.KubernetesVersion,
-				SchematicID:       schematicID,
-				Data: map[string]any{
-					"factoryRepoUrl": "factory.talos.dev",
-				},
-				Node: NodeContext{
-					Host: node.Host,
-					Role: node.Role,
-				},
-			}
+			nodeCopy := node
 
-			patches, err := nodePatches(node, tplCtx, sf)
-			if err != nil {
-				return fmt.Errorf("patches for %s: %w", node.Host, err)
-			}
+			patchesOutput := schematicID.ApplyT(func(id string) ([]string, error) {
+				tplCtx := TemplateContext{
+					ClusterName:       cluster.ClusterName,
+					ClusterEndpoint:   cluster.ClusterEndpoint,
+					TalosVersion:      cluster.TalosVersion,
+					KubernetesVersion: cluster.KubernetesVersion,
+					SchematicID:       id,
+					Data: map[string]any{
+						"factoryRepoUrl": "factory.talos.dev",
+					},
+					Node: NodeContext{
+						Host: nodeCopy.Host,
+						Role: nodeCopy.Role,
+					},
+				}
+				return nodePatches(nodeCopy, tplCtx, sf)
+			}).(pulumi.StringArrayOutput)
 
 			machineCfg := talosmachine.GetConfigurationOutput(ctx, talosmachine.GetConfigurationOutputArgs{
 				ClusterName:       pulumi.String(cluster.ClusterName),
 				ClusterEndpoint:   pulumi.String("https://" + cluster.ClusterEndpoint + ":6443"),
 				MachineType:       pulumi.String(node.Role), // already "controlplane"/"worker" (Talos native)
 				MachineSecrets:    ms.toInput(),
-				ConfigPatches:     pulumi.ToStringArray(patches),
+				ConfigPatches:     patchesOutput,
 				TalosVersion:      pulumi.StringPtr(cluster.TalosVersion),
 				KubernetesVersion: pulumi.StringPtr(cluster.KubernetesVersion),
 				Docs:              pulumi.BoolPtr(false),
 				Examples:          pulumi.BoolPtr(false),
 			}, nil)
 
+			cfgOutput := machineCfg.MachineConfiguration()
 			if writeMachineConfigs {
 				host := node.Host
-				machineCfg.MachineConfiguration().ApplyT(func(cfg string) (string, error) {
-					return "", os.WriteFile(filepath.Join("machineConfigs", host+".yaml"), []byte(cfg), 0600)
-				})
+				cfgOutput = cfgOutput.ApplyT(func(cfg string) (string, error) {
+					if err := os.WriteFile(filepath.Join("machineConfigs", host+".yaml"), []byte(cfg), 0600); err != nil {
+						return "", fmt.Errorf("write machine config for %s: %v", host, err)
+					}
+					return cfg, nil
+				}).(pulumi.StringOutput)
 			}
 
 			profile, err := matchbox.NewProfile(ctx, "profile-"+node.Host, &matchbox.ProfileArgs{
 				Name:    pulumi.String(node.Role + "-" + node.Host),
-				Kernel:  pulumi.StringPtr(kernelURL),
-				Initrds: pulumi.StringArray{pulumi.String(initrdURL)},
+				Kernel:  kernelURL.ApplyT(func(s string) *string { return &s }).(pulumi.StringPtrOutput),
+				Initrds: initrdURL.ApplyT(func(s string) []string { return []string{s} }).(pulumi.StringArrayOutput),
 				Args: pulumi.StringArray{
 					pulumi.String("initrd=initramfs-amd64.xz"),
 					pulumi.String("init_on_alloc=1"),
@@ -200,11 +218,11 @@ func main() {
 					pulumi.String("pti=on"),
 					pulumi.String("printk.devkmsg=on"),
 					pulumi.String("panic=60"),
-					pulumi.String("talos.platform=metal"),
+					pulumi.String("talos.platform=" + node.Platform),
 					pulumi.String(fmt.Sprintf("talos.config=%s/ignition?mac=${mac:hexhyp}", matchboxURL)),
 				},
-				RawIgnition: machineCfg.MachineConfiguration().ApplyT(func(s string) *string { return &s }).(pulumi.StringPtrOutput),
-			}, pulumi.Provider(mbProvider))
+				RawIgnition: cfgOutput.ApplyT(func(s string) *string { return &s }).(pulumi.StringPtrOutput),
+			}, pulumi.Provider(mbProvider), pulumi.DependsOn([]pulumi.Resource{getTalosCmd}))
 			if err != nil {
 				return err
 			}
@@ -234,12 +252,44 @@ func main() {
 			Nodes:               pulumi.ToStringArray(allHosts),
 		}, nil)
 
-		ctx.Export("talosconfig", pulumi.ToSecret(talosconfig.TalosConfig()))
-
+		// Build talosconfig output, gated on Infisical write when secrets are freshly generated.
+		var tcOutput pulumi.StringOutput
+		if ms.infisicalDone != nil {
+			tcOutput = pulumi.All(*ms.infisicalDone, talosconfig.TalosConfig()).ApplyT(
+				func(args []any) (string, error) { return args[1].(string), nil },
+			).(pulumi.StringOutput)
+		} else {
+			tcOutput = talosconfig.TalosConfig()
+		}
 		if writeTalosconfig {
-			talosconfig.TalosConfig().ApplyT(func(cfg string) (string, error) {
-				return "", os.WriteFile(filepath.Join("machineConfigs", "talosconfig"), []byte(cfg), 0600)
+			written := tcOutput.ApplyT(func(cfg string) (bool, error) {
+				if err := os.MkdirAll("machineConfigs", 0700); err != nil {
+					return false, err
+				}
+				return true, os.WriteFile("machineConfigs/talosconfig", []byte(cfg), 0600)
+			}).(pulumi.BoolOutput)
+			ctx.Export("talosconfig-written", written)
+		}
+		ctx.Export("schematicId", schematic.ID())
+
+		if os.Getenv("BOOTSTRAP") != "" {
+			cpNodes := filterNodes(nodes, "controlplane")
+			if len(cpNodes) == 0 {
+				return fmt.Errorf("bootstrap requested but no controlplane nodes found")
+			}
+			cp := cpNodes[0]
+			endpoint := cp.IP
+			if endpoint == "" {
+				endpoint = cp.Host
+			}
+			_, err = talosmachine.NewBootstrap(ctx, "bootstrap", &talosmachine.BootstrapArgs{
+				ClientConfiguration: ms.bootstrapClientConfig(),
+				Node:                pulumi.String(endpoint),
+				Endpoint:            pulumi.StringPtr(endpoint),
 			})
+			if err != nil {
+				return err
+			}
 		}
 
 		return nil
@@ -308,6 +358,28 @@ func discoverNodes() ([]Node, error) {
 					}
 				}
 
+				if talos, ok := doc["talos"].(map[string]any); ok {
+					if p, ok := talos["platform"].(string); ok && p != "" {
+						node.Platform = p
+					}
+				}
+
+				if addrs, ok := doc["addresses"].([]any); ok && node.IP == "" {
+					for _, a := range addrs {
+						var cidr string
+						switch v := a.(type) {
+						case string:
+							cidr = v
+						case map[string]any:
+							cidr, _ = v["address"].(string)
+						}
+						if ip, _, found := strings.Cut(cidr, "/"); found && ip != "" {
+							node.IP = ip
+							break
+						}
+					}
+				}
+
 				if kind, _ := doc["kind"].(string); kind == "LinkAliasConfig" {
 					if sel, ok := doc["selector"].(map[string]any); ok {
 						if match, ok := sel["match"].(string); ok {
@@ -320,30 +392,21 @@ func discoverNodes() ([]Node, error) {
 			}
 		}
 
+		if node.Role == "" {
+			return nil, fmt.Errorf("node %s: no machine.type found in any patch file", host)
+		}
+		if len(node.MACs) == 0 {
+			return nil, fmt.Errorf("node %s: no MAC addresses found in any patch file", host)
+		}
+		if node.Platform == "" {
+			node.Platform = "metal"
+		}
+
 		nodes = append(nodes, node)
 	}
 
 	sort.Slice(nodes, func(i, j int) bool { return nodes[i].Host < nodes[j].Host })
 	return nodes, nil
-}
-
-func resolveSchematicID(schematicFile string) (string, error) {
-	content, err := os.ReadFile(schematicFile)
-	if err != nil {
-		return "", err
-	}
-	resp, err := http.Post("https://factory.talos.dev/schematics", "application/yaml", bytes.NewReader(content))
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusCreated && resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("factory API returned %d", resp.StatusCode)
-	}
-	var result struct {
-		ID string `json:"id"`
-	}
-	return result.ID, json.NewDecoder(resp.Body).Decode(&result)
 }
 
 func newInfisicalClient() (infisical.InfisicalClientInterface, error) {
@@ -359,7 +422,7 @@ func newInfisicalClient() (infisical.InfisicalClientInterface, error) {
 }
 
 func readFolder(client infisical.InfisicalClientInterface, path string) (map[string]string, error) {
-	secrets, err := client.Secrets().List(infisical.ListSecretsOptions{
+	result, err := client.Secrets().ListSecrets(infisical.ListSecretsOptions{
 		ProjectID:   infisicalProjectID,
 		Environment: infisicalEnv,
 		SecretPath:  path,
@@ -367,8 +430,8 @@ func readFolder(client infisical.InfisicalClientInterface, path string) (map[str
 	if err != nil {
 		return nil, err
 	}
-	out := make(map[string]string, len(secrets))
-	for _, s := range secrets {
+	out := make(map[string]string, len(result.Secrets))
+	for _, s := range result.Secrets {
 		out[s.SecretKey] = s.SecretValue
 	}
 	return out, nil
@@ -410,16 +473,13 @@ func getOrCreateMachineSecrets(ctx *pulumi.Context, client infisical.InfisicalCl
 		return nil, err
 	}
 
-	// Write to Infisical once outputs are known. The result is exported so Pulumi
-	// guarantees this ApplyT executes rather than treating it as unreferenced.
-	infisicalDone := pulumi.All(generated.MachineSecrets, generated.ClientConfiguration).ApplyT(func(args []any) (string, error) {
+	done := pulumi.All(generated.MachineSecrets, generated.ClientConfiguration).ApplyT(func(args []any) (string, error) {
 		ms := args[0].(talosmachine.MachineSecrets)
 		cc := args[1].(talosmachine.ClientConfiguration)
 		return "", writeMachineSecretsToInfisical(client, ms, cc)
 	}).(pulumi.StringOutput)
-	ctx.Export("_infisicalReady", pulumi.ToSecret(infisicalDone))
 
-	return &machineSecrets{resource: generated}, nil
+	return &machineSecrets{resource: generated, infisicalDone: &done}, nil
 }
 
 func writeMachineSecretsToInfisical(client infisical.InfisicalClientInterface, ms talosmachine.MachineSecrets, cc talosmachine.ClientConfiguration) error {
@@ -460,6 +520,7 @@ func writeMachineSecretsToInfisical(client infisical.InfisicalClientInterface, m
 			SecretValue: p.value,
 		})
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "warn: infisical create %s failed (%v), attempting update\n", p.key, err)
 			_, err = client.Secrets().Update(infisical.UpdateSecretOptions{
 				ProjectID:      infisicalProjectID,
 				Environment:    infisicalEnv,
@@ -505,6 +566,22 @@ func (ms *machineSecrets) toInput() talosmachine.MachineSecretsInput {
 	}
 }
 
+func (ms *machineSecrets) bootstrapClientConfig() talosmachine.ClientConfigurationPtrInput {
+	if ms.resource != nil {
+		cc := ms.resource.ClientConfiguration
+		return talosmachine.ClientConfigurationArgs{
+			CaCertificate:     cc.CaCertificate(),
+			ClientCertificate: cc.ClientCertificate(),
+			ClientKey:         cc.ClientKey(),
+		}
+	}
+	return talosmachine.ClientConfigurationArgs{
+		CaCertificate:     pulumi.String(ms.clientCACert),
+		ClientCertificate: pulumi.String(ms.clientCert),
+		ClientKey:         pulumi.String(ms.clientKey),
+	}
+}
+
 func (ms *machineSecrets) clientConfigArgs() talosclient.GetConfigurationClientConfigurationArgs {
 	if ms.resource != nil {
 		cc := ms.resource.ClientConfiguration
@@ -519,6 +596,16 @@ func (ms *machineSecrets) clientConfigArgs() talosclient.GetConfigurationClientC
 		ClientCertificate: pulumi.String(ms.clientCert),
 		ClientKey:         pulumi.String(ms.clientKey),
 	}
+}
+
+func filterNodes(nodes []Node, role string) []Node {
+	var out []Node
+	for _, n := range nodes {
+		if n.Role == role {
+			out = append(out, n)
+		}
+	}
+	return out
 }
 
 func filterHosts(nodes []Node, role string) []string {
