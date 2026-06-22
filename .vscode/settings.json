@@ -1,0 +1,8 @@
+{
+  "[gotmpl]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "yaml.schemas": {
+    "https://www.schemastore.org/yamlfmt.json": "file:///home/krezh/repos/dextek/clusters/dextek/pulumi/talos/talos-cluster.yaml"
+  }
+}

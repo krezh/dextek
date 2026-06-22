@@ -1,6 +1,6 @@
 module "talos" {
-  # source = "github.com/krezh/dextek//infrastructure/terraform/modules/talos?ref=main"
-  source                 = "../../../../infrastructure/terraform/modules/talos"
+  source = "github.com/krezh/dextek//infrastructure/terraform/modules/talos?ref=main"
+  # source                 = "../../../../infrastructure/terraform/modules/talos"
   factory_schematic_file = "schematic.yaml"
   matchbox = {
     url         = "http://matchbox.int.plexuz.xyz:8080"

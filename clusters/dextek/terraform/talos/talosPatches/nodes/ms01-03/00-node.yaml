@@ -1,7 +1,5 @@
 machine:
   type: controlplane
-  network:
-    hostname: ms01-03.k8s.plexuz.xyz
   install:
     disk: /dev/sda
     wipe: false

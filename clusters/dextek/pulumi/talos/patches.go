@@ -8,8 +8,6 @@ import (
 	"sort"
 	"strings"
 	"text/template"
-
-	infisical "github.com/infisical/go-sdk"
 )
 
 type TemplateContext struct {
@@ -25,31 +23,6 @@ type TemplateContext struct {
 type NodeContext struct {
 	Host string
 	Role string
-}
-
-// secretFetcher fetches secrets from Infisical with a per-path cache.
-type secretFetcher struct {
-	client infisical.InfisicalClientInterface
-	cache  map[string]map[string]string
-}
-
-func newSecretFetcher(client infisical.InfisicalClientInterface) *secretFetcher {
-	return &secretFetcher{client: client, cache: make(map[string]map[string]string)}
-}
-
-func (sf *secretFetcher) get(path, key string) (string, error) {
-	if _, ok := sf.cache[path]; !ok {
-		secrets, err := readFolder(sf.client, path)
-		if err != nil {
-			return "", fmt.Errorf("secret %s: %w", path, err)
-		}
-		sf.cache[path] = secrets
-	}
-	v, ok := sf.cache[path][key]
-	if !ok {
-		return "", fmt.Errorf("secret %s/%s not found", path, key)
-	}
-	return v, nil
 }
 
 // roleDir maps Talos machine type ("controlplane") to the patch directory name ("control-plane").
@@ -88,7 +61,7 @@ func loadDir(dir string, ctx TemplateContext, sf *secretFetcher) ([]string, erro
 			continue
 		}
 		name := e.Name()
-		if strings.HasSuffix(name, ".yaml") || strings.HasSuffix(name, ".yaml.tpl") {
+		if strings.HasSuffix(name, ".yaml") || strings.HasSuffix(name, ".yaml.tmpl") {
 			names = append(names, name)
 		}
 	}
@@ -101,7 +74,7 @@ func loadDir(dir string, ctx TemplateContext, sf *secretFetcher) ([]string, erro
 			return nil, err
 		}
 		var content string
-		if strings.HasSuffix(name, ".tpl") {
+		if strings.HasSuffix(name, ".tmpl") {
 			content, err = renderTemplate(string(raw), ctx, sf)
 			if err != nil {
 				return nil, fmt.Errorf("%s: %w", name, err)

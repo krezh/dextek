@@ -2,7 +2,7 @@
 apiVersion: v1alpha1
 kind: HostnameConfig
 auto: off
-hostname: ms01-01
+hostname: ms01-01.k8s.plexuz.xyz
 ---
 apiVersion: v1alpha1
 kind: LinkAliasConfig

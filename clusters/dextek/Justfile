@@ -46,6 +46,15 @@ tofu:
     mkdir -p ~/.talos/configs
     cp "{{ CLUSTER_DIR }}/terraform/talos/talosconfig" ~/.talos/configs/{{ CLUSTER_NAME }}
 
+pulumi:
+    #!/usr/bin/env bash
+    init='cd "{{ CLUSTER_DIR }}/terraform/talos" && pulumi refresh --yes --non-interactive --skip-preview'
+    apply='cd "{{ CLUSTER_DIR }}/terraform/talos" && pulumi up --yes --skip-preview'
+    just step "Initialising Pulumi" "${init}"
+    just step "Applying Pulumi" "${apply}"
+    mkdir -p ~/.talos/configs
+    cp "{{ CLUSTER_DIR }}/pulumi/talos/machineConfigs/talosconfig" ~/.talos/configs/{{ CLUSTER_NAME }}
+
 talosconfig:
     #!/usr/bin/env bash
     cmd="talswitcher ctx {{ CLUSTER_NAME }}"
