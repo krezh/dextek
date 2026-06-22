@@ -147,6 +147,11 @@ spec:
         login: true
         superuser: false
         disablePassword: false
+      - name: niks3
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
       - name: prowlarr
         ensure: present
         login: true

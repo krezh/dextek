@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app niks3
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: niks3
+  values:
+    controllers:
+      app:
+        type: deployment
+        replicas: 1
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mic92/niks3
+              tag: v1.6.1@sha256:d3168c2ecd6eb82292f87b2c015c896e86f19dfc160f88022b556f5b5bfcc30a
+            env:
+              NIKS3_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: niks3-postgres
+                    key: url
+              NIKS3_HTTP_ADDR: ":5751"
+              NIKS3_CACHE_URL: "https://niks.plexuz.xyz"
+              NIKS3_S3_BUCKET: "niks3"
+              NIKS3_S3_REGION: "garage"
+              NIKS3_ENABLE_READ_PROXY: "true"
+            envFrom:
+              - secretRef:
+                  name: niks3-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 5751
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64M
+              limits:
+                memory: 1000M
+        pod:
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            runAsNonRoot: true
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: *port
+    route:
+      external:
+        hostnames: ["niks.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
