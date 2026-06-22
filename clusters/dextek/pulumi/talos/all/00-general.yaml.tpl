@@ -1,12 +1,7 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/config.schema.json
 machine:
   install:
-    image: ${factory_repo_url}/metal-installer/${talos_factory_hash}:${talos_version}
-    disk: /dev/sda
-    wipe: false
-    diskSelector:
-      model: ${disk_model}
+    image: {{ .Data.factoryRepoUrl }}/metal-installer/{{ .SchematicID }}:{{ .TalosVersion }}
   sysctls:
     fs.inotify.max_user_watches: "1048576" # Watchdog
     fs.inotify.max_user_instances: "8192" # Watchdog
@@ -45,51 +40,14 @@ machine:
     extraConfig:
       maxPods: 150
       serializeImagePulls: false
-      # Make image cleanup more aggressive
-      # imageMaximumGCAge: 24h # One day
-      # imageGCHighThresholdPercent: 60 # Default is 85%
-      # imageGCLowThresholdPercent: 30 # Default is 80%
     nodeIP:
       validSubnets:
-        - ${cluster_subnet}
+        - 10.10.0.0/27
   certSANs: &sans
-    - ${cluster_endpoint}
-    - ${cluster_vip}
-    - ${cluster_name}.plexuz.xyz
+    - 192.168.25.20
+    - dextek.plexuz.xyz
     - 127.0.0.1
     - localhost
-  network:
-    nameservers: [192.168.20.1]
-    disableSearchDomain: true
-    interfaces:
-      - interface: bond0
-        dhcp: true
-        mtu: 1500
-        bond:
-          mode: active-backup
-          deviceSelectors:
-            - driver: ${driver}
-              hardwareAddr: ${mac_addr}
-            - driver: ${driver}
-              hardwareAddr: ${mac_addr2}
-        vlans:
-          - vlanId: 100 # IoT
-            dhcp: false
-            mtu: 1500
-          - vlanId: 10 # SRV
-            dhcp: false
-            mtu: 1500
-      - interface: bond1
-        routes:
-          - network: 10.10.0.0/27
-        addresses:
-          - ${static_ip_10g}
-        mtu: 1500
-        bond:
-          mode: active-backup
-          deviceSelectors:
-            - driver: ${driver_10g}
-              hardwareAddr: ${mac_addr_10g}
   files:
     - op: overwrite
       path: /etc/nfsmount.conf
@@ -126,12 +84,12 @@ machine:
 
 cluster:
   allowSchedulingOnControlPlanes: true
-  clusterName: ${cluster_name}
+  clusterName: {{ .ClusterName }}
   controlPlane:
-    endpoint: https://${cluster_endpoint}:6443
+    endpoint: https://{{ .ClusterEndpoint }}:6443
   etcd:
     advertisedSubnets:
-      - ${cluster_subnet}
+      - 10.10.0.0/27
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
       auto-compaction-mode: periodic
@@ -150,7 +108,6 @@ cluster:
     disabled: true
   apiServer:
     certSANs: *sans
-    disablePodSecurityPolicy: true
     auditPolicy:
       apiVersion: audit.k8s.io/v1
       kind: Policy
@@ -159,7 +116,6 @@ cluster:
     extraArgs:
       enable-aggregator-routing: "true"
       feature-gates: PersistentVolumeClaimUnusedSinceTime=true,HPAScaleToZero=true
-      # Faster pod eviction from unreachable nodes (default: 300s)
       default-not-ready-toleration-seconds: "60"
       default-unreachable-toleration-seconds: "60"
       oidc-client-id: kubernetes
@@ -188,6 +144,46 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
 ---
 apiVersion: v1alpha1
-kind: HostnameConfig
-auto: off
-hostname: ${hostname}
+kind: ResolverConfig
+nameservers:
+  - address: 192.168.20.1
+searchDomains:
+  disableDefault: true
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m
+---
+cluster:
+  apiServer:
+    admissionControl:
+      $patch: delete
+    extraArgs:
+      authentication-token-webhook-config-file: /etc/kubernetes/webhook-auth/kauth.yaml
+      authentication-token-webhook-cache-ttl: 30s # max revocation window
+    extraVolumes:
+      - hostPath: /var/kubernetes/webhook-auth
+        mountPath: /etc/kubernetes/webhook-auth
+        readonly: true
+machine:
+  files:
+    - op: create
+      path: /var/kubernetes/webhook-auth/kauth.yaml
+      permissions: 0o644
+      content: |
+        apiVersion: v1
+        kind: Config
+        clusters:
+          - name: kauth
+            cluster:
+              server: http://10.96.0.11:8081/webhook/token-review
+        users:
+          - name: apiserver
+            user: {}
+        contexts:
+          - name: kauth
+            context:
+              cluster: kauth
+              user: apiserver
+        current-context: kauth

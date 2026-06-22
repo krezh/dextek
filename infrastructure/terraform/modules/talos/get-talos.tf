@@ -16,7 +16,7 @@ resource "ssh_resource" "get_talos" {
   }
 
   commands = [
-    "cd /var/lib/matchbox/assets/ && ./get-factory-talos.sh -v ${var.talos_version} -h ${local.talos_factory_id}"
+    "cd /var/lib/matchbox/assets/ && ./get-factory-talos.sh -v ${local.cluster.talos_version} -h ${local.talos_factory_id}"
   ]
 }
 

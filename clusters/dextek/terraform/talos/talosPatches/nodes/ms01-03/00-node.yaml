@@ -1,0 +1,12 @@
+machine:
+  type: controlplane
+  network:
+    hostname: ms01-03.k8s.plexuz.xyz
+  install:
+    disk: /dev/sda
+    wipe: false
+    diskSelector:
+      model: "Samsung SSD*"
+  nodeLabels:
+    node.kubernetes.io/gpu: "true"
+    topology.kubernetes.io/region: main

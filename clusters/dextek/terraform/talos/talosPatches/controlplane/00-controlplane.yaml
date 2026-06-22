@@ -1,0 +1,32 @@
+cluster:
+  apiServer:
+    admissionControl:
+      $patch: delete
+    extraArgs:
+      authentication-token-webhook-config-file: /etc/kubernetes/webhook-auth/kauth.yaml
+      authentication-token-webhook-cache-ttl: 30s # max revocation window
+    extraVolumes:
+      - hostPath: /var/kubernetes/webhook-auth
+        mountPath: /etc/kubernetes/webhook-auth
+        readonly: true
+machine:
+  files:
+    - op: create
+      path: /var/kubernetes/webhook-auth/kauth.yaml
+      permissions: 0o644
+      content: |
+        apiVersion: v1
+        kind: Config
+        clusters:
+          - name: kauth
+            cluster:
+              server: http://10.96.0.11:8081/webhook/token-review
+        users:
+          - name: apiserver
+            user: {}
+        contexts:
+          - name: kauth
+            context:
+              cluster: kauth
+              user: apiserver
+        current-context: kauth
