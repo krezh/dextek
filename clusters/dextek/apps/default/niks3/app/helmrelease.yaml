@@ -39,6 +39,7 @@ spec:
               NIKS3_S3_REGION: garage
               NIKS3_S3_ENDPOINT: s3.fast.plexuz.xyz
               NIKS3_ENABLE_READ_PROXY: "true"
+              NIKS3_SIGN_KEY_PATHS: /etc/niks3/signing.key
             envFrom:
               - secretRef:
                   name: niks3-secret
@@ -67,6 +68,14 @@ spec:
                 memory: 64M
               limits:
                 memory: 1000M
+    persistence:
+      signing-key:
+        type: secret
+        name: niks3-secret
+        globalMounts:
+          - path: /etc/niks3/signing.key
+            subPath: signing.key
+            readOnly: true
     service:
       app:
         controller: app
