@@ -5,27 +5,27 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
-  - ./cyberchef
-  - ./redbot
-  - ./home-assistant
-  - ./plex
-  - ./tautulli
-  - ./atuin
-  - ./echo-server
-  - ./mealie
-  - ./it-tools
-  - ./changedetection
-  - ./zipline
-  - ./jellyfin
-  - ./publish-k8s-schemas
-  - ./tracearr
-  - ./attic
-  - ./niks3
-  - ./librespeed
-  - ./notifier
-  - ./miniflux
-  - ./termix
-  - ./gotify
+  - ./cyberchef/ks.yaml
+  - ./redbot/ks.yaml
+  - ./home-assistant/ks.yaml
+  - ./plex/ks.yaml
+  - ./tautulli/ks.yaml
+  - ./atuin/ks.yaml
+  - ./echo-server/ks.yaml
+  - ./mealie/ks.yaml
+  - ./it-tools/ks.yaml
+  - ./changedetection/ks.yaml
+  - ./zipline/ks.yaml
+  - ./jellyfin/ks.yaml
+  - ./publish-k8s-schemas/ks.yaml
+  - ./tracearr/ks.yaml
+  - ./attic/ks.yaml
+  - ./niks3/ks.yaml
+  - ./librespeed/ks.yaml
+  - ./notifier/ks.yaml
+  - ./miniflux/ks.yaml
+  - ./termix/ks.yaml
+  - ./gotify/ks.yaml
 transformers:
   - |-
     apiVersion: builtin

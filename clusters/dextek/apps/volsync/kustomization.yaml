@@ -5,8 +5,8 @@ kind: Kustomization
 resources:
   - ../../../shared/templates/flux
   - ./namespace.yaml
-  - ./volsync
-  - ./kopia
+  - ./volsync/ks.yaml
+  - ./kopia/ks.yaml
 transformers:
   - |-
     apiVersion: builtin

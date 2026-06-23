@@ -5,12 +5,12 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
-  - ./ingress-nginx
-  - ./cloudflare-dns
-  - ./unifi-dns
-  - ./envoy-gateway
-  - ./multus
-  - ./towonel-agent
+  - ./ingress-nginx/ks.yaml
+  - ./cloudflare-dns/ks.yaml
+  - ./unifi-dns/ks.yaml
+  - ./envoy-gateway/ks.yaml
+  - ./multus/ks.yaml
+  - ./towonel-agent/ks.yaml
 transformers:
   - |-
     apiVersion: builtin

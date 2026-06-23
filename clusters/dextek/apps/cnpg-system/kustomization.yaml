@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
-  - ./cloudnative-pg
+  - ./cloudnative-pg/ks.yaml
 transformers:
   - |-
     apiVersion: builtin

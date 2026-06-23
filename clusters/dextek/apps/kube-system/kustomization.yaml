@@ -6,20 +6,20 @@ resources:
   - ./namespace.yaml
   - ./mutatingadmissionpolicy.yaml
   - ../../../shared/templates/flux
-  - ./cilium
-  - ./coredns
-  - ./metrics-server
-  - ./reloader
-  - ./snapshot-controller
-  - ./external-secrets
-  - ./descheduler
-  - ./k8tz
-  - ./irqbalance
-  - ./talos-etcd-defrag
-  - ./intel-gpu-resource-driver
-  - ./tuppr
-  - ./ksgate
-  - ./roder
+  - ./cilium/ks.yaml
+  - ./coredns/ks.yaml
+  - ./metrics-server/ks.yaml
+  - ./reloader/ks.yaml
+  - ./snapshot-controller/ks.yaml
+  - ./external-secrets/ks.yaml
+  - ./descheduler/ks.yaml
+  - ./k8tz/ks.yaml
+  - ./irqbalance/ks.yaml
+  - ./talos-etcd-defrag/ks.yaml
+  - ./intel-gpu-resource-driver/ks.yaml
+  - ./tuppr/ks.yaml
+  - ./ksgate/ks.yaml
+  - ./roder/ks.yaml
   - ./drm-exporter/ks.yaml
 transformers:
   - |-

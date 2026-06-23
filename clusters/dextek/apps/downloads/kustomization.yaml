@@ -6,19 +6,19 @@ resources:
   - ./namespace.yaml
   - ./downloads-pvc.yaml
   - ../../../shared/templates/flux
-  - ./sabnzbd
-  - ./qbittorrent
-  - ./recyclarr
-  - ./sonarr
-  - ./radarr
-  - ./prowlarr
-  - ./flaresolverr
-  - ./bazarr
-  - ./maintainerr
-  - ./jellyseerr
-  - ./jellyseerr-jf
-  - ./pinchflat
-  - ./profilarr
+  - ./sabnzbd/ks.yaml
+  - ./qbittorrent/ks.yaml
+  - ./recyclarr/ks.yaml
+  - ./sonarr/ks.yaml
+  - ./radarr/ks.yaml
+  - ./prowlarr/ks.yaml
+  - ./flaresolverr/ks.yaml
+  - ./bazarr/ks.yaml
+  - ./maintainerr/ks.yaml
+  - ./jellyseerr/ks.yaml
+  - ./jellyseerr-jf/ks.yaml
+  - ./pinchflat/ks.yaml
+  - ./profilarr/ks.yaml
 transformers:
   - |-
     apiVersion: builtin

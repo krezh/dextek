@@ -5,18 +5,18 @@ kind: Kustomization
 resources:
   - ../../../shared/templates/flux
   - ./namespace.yaml
-  - ./grafana
-  - ./kube-prometheus-stack
-  - ./loki
-  - ./nut-exporter
-  - ./smartctl-exporter
-  - ./blackbox-exporter
-  - ./kromgo
-  - ./alloy
-  - ./silence-operator
-  - ./gatus
-  - ./vpa
-  - ./prometheus-adapter
+  - ./grafana/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+  - ./loki/ks.yaml
+  - ./nut-exporter/ks.yaml
+  - ./smartctl-exporter/ks.yaml
+  - ./blackbox-exporter/ks.yaml
+  - ./kromgo/ks.yaml
+  - ./alloy/ks.yaml
+  - ./silence-operator/ks.yaml
+  - ./gatus/ks.yaml
+  - ./vpa/ks.yaml
+  - ./prometheus-adapter/ks.yaml
 transformers:
   - |-
     apiVersion: builtin
