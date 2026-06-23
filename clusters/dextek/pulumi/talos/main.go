@@ -25,7 +25,7 @@ func main() {
 		if err != nil {
 			return fmt.Errorf("read schematic.yaml: %w", err)
 		}
-		fmt.Fprintln(os.Stderr, "connecting to factory.talos.dev...")
+		_ = ctx.Log.Info("connecting to factory.talos.dev...", nil)
 		schematic, err := talosimgfactory.NewSchematic(ctx, "schematic", &talosimgfactory.SchematicArgs{
 			Schematic: pulumi.StringPtr(string(schematicContent)),
 		})
@@ -34,7 +34,7 @@ func main() {
 		}
 		schematicID := schematic.ID().ToStringOutput()
 
-		fmt.Fprintln(os.Stderr, "connecting to eu.infisical.com...")
+		_ = ctx.Log.Info("connecting to eu.infisical.com...", nil)
 		ic, err := newInfisicalClient()
 		if err != nil {
 			return fmt.Errorf("infisical client: %w", err)
@@ -65,7 +65,7 @@ func main() {
 			}
 		}
 
-		fmt.Fprintf(os.Stderr, "connecting to matchbox (%s)...\n", matchboxAPIAddr)
+		_ = ctx.Log.Info(fmt.Sprintf("connecting to matchbox (%s)...", matchboxAPIAddr), nil)
 		mbProvider, err := matchbox.NewProvider(ctx, "matchbox", &matchbox.ProviderArgs{
 			Endpoint:   pulumi.String(matchboxAPIAddr),
 			ClientCert: pulumi.String(matchboxSecrets["CLIENT_CRT"]),
@@ -102,7 +102,7 @@ curl --fail -Lo "%s/initramfs-amd64.xz" "https://factory.talos.dev/image/%s/%s/i
 				User:       pulumi.StringPtr("matchbox"),
 				PrivateKey: pulumi.StringPtr(matchboxSecrets["SSHKEY"]),
 			},
-			Create: downloadCmd.ApplyT(func(s string) *string { return &s }).(pulumi.StringPtrOutput),
+			Create: downloadCmd.ToStringPtrOutput(),
 			Triggers: pulumi.Array{
 				schematic.ID(),
 				pulumi.String(cluster.TalosVersion),
@@ -113,8 +113,6 @@ curl --fail -Lo "%s/initramfs-amd64.xz" "https://factory.talos.dev/image/%s/%s/i
 		}
 
 		for _, node := range nodes {
-			nodeCopy := node
-
 			patchesOutput := schematicID.ApplyT(func(id string) ([]string, error) {
 				tplCtx := TemplateContext{
 					ClusterName:       cluster.ClusterName,
@@ -126,11 +124,11 @@ curl --fail -Lo "%s/initramfs-amd64.xz" "https://factory.talos.dev/image/%s/%s/i
 						"factoryRepoUrl": "factory.talos.dev",
 					},
 					Node: NodeContext{
-						Host: nodeCopy.Host,
-						Role: nodeCopy.Role,
+						Host: node.Host,
+						Role: node.Role,
 					},
 				}
-				return nodePatches(nodeCopy, tplCtx, sf)
+				return nodePatches(node, tplCtx, sf)
 			}).(pulumi.StringArrayOutput)
 
 			machineCfg := talosmachine.GetConfigurationOutput(ctx, talosmachine.GetConfigurationOutputArgs{
@@ -158,7 +156,7 @@ curl --fail -Lo "%s/initramfs-amd64.xz" "https://factory.talos.dev/image/%s/%s/i
 
 			profile, err := matchbox.NewProfile(ctx, "profile-"+node.Host, &matchbox.ProfileArgs{
 				Name:    pulumi.String(node.Role + "-" + node.Host),
-				Kernel:  kernelURL.ApplyT(func(s string) *string { return &s }).(pulumi.StringPtrOutput),
+				Kernel:  kernelURL.ToStringPtrOutput(),
 				Initrds: initrdURL.ApplyT(func(s string) []string { return []string{s} }).(pulumi.StringArrayOutput),
 				Args: pulumi.StringArray{
 					pulumi.String("initrd=initramfs-amd64.xz"),
@@ -170,7 +168,7 @@ curl --fail -Lo "%s/initramfs-amd64.xz" "https://factory.talos.dev/image/%s/%s/i
 					pulumi.String("talos.platform=" + node.Platform),
 					pulumi.String(fmt.Sprintf("talos.config=%s/ignition?mac=${mac:hexhyp}", matchboxURL)),
 				},
-				RawIgnition: cfgOutput.ApplyT(func(s string) *string { return &s }).(pulumi.StringPtrOutput),
+				RawIgnition: cfgOutput.ToStringPtrOutput(),
 			}, pulumi.Provider(mbProvider), pulumi.DependsOn([]pulumi.Resource{getTalosCmd}))
 			if err != nil {
 				return fmt.Errorf("matchbox profile for node %s: %w", node.Host, err)

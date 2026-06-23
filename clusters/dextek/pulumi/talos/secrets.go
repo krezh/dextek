@@ -65,9 +65,12 @@ func getOrCreateMachineSecrets(ctx *pulumi.Context, client infisical.InfisicalCl
 		}, nil
 	}
 
+	// RetainOnDelete: on subsequent runs secrets come from Infisical and this
+	// resource is dropped from the program — retain prevents the provider from
+	// attempting to "delete" generated crypto material.
 	generated, err := talosmachine.NewSecrets(ctx, "machine-secrets", &talosmachine.SecretsArgs{
 		TalosVersion: pulumi.StringPtr(talosVersion),
-	})
+	}, pulumi.RetainOnDelete(true))
 	if err != nil {
 		return nil, err
 	}

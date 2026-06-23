@@ -6,6 +6,7 @@ resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
   - ./renovate-operator/ks.yaml
+  - ./pulumi-operator/ks.yaml
 transformers:
   - |-
     apiVersion: builtin

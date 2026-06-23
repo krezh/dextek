@@ -21,13 +21,13 @@ type Node struct {
 	IP       string // first static IP found in addresses fields, used for bootstrap
 }
 
+var macRe = regexp.MustCompile(`(?i)([0-9a-f]{2}(?::[0-9a-f]{2}){5})`)
+
 func discoverNodes() ([]Node, error) {
 	entries, err := os.ReadDir("node")
 	if err != nil {
 		return nil, err
 	}
-
-	macRe := regexp.MustCompile(`(?i)([0-9a-f]{2}(?::[0-9a-f]{2}){5})`)
 
 	var nodes []Node
 	for _, e := range entries {

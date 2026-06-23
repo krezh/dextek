@@ -1,0 +1,13 @@
+{
+  "providers": {
+    "github": {
+      "issuer": "https://token.actions.githubusercontent.com",
+      "audience": "https://niks.plexuz.xyz",
+      "bound_claims": {
+        "repository_owner": [
+          "krezh"
+        ]
+      }
+    }
+  }
+}

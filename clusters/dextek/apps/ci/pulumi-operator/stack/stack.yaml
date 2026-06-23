@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/pulumi.com/stack_v1.json
+apiVersion: pulumi.com/v1
+kind: Stack
+metadata:
+  name: talos-dextek
+spec:
+  stack: dextek
+  fluxSource:
+    sourceRef:
+      apiVersion: source.toolkit.fluxcd.io/v1
+      kind: OCIRepository
+      name: flux-system
+    dir: clusters/dextek/pulumi/talos
+  envRefs:
+    PULUMI_ACCESS_TOKEN:
+      type: Secret
+      secret:
+        name: pulumi-talos-secret
+        key: PULUMI_ACCESS_TOKEN
+    INFISICAL_UNIVERSAL_AUTH_CLIENT_ID:
+      type: Secret
+      secret:
+        name: pulumi-talos-secret
+        key: INFISICAL_UNIVERSAL_AUTH_CLIENT_ID
+    INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET:
+      type: Secret
+      secret:
+        name: pulumi-talos-secret
+        key: INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET
+  resyncFrequencySeconds: 3600

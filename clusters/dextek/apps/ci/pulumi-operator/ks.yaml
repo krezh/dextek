@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app pulumi-operator
+  namespace: flux-system
+spec:
+  targetNamespace: ci
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./clusters/dextek/apps/ci/pulumi-operator/app
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: pulumi-operator-stack
+  namespace: flux-system
+spec:
+  targetNamespace: ci
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: pulumi-operator
+  dependsOn:
+    - name: pulumi-operator
+  path: ./clusters/dextek/apps/ci/pulumi-operator/stack
+  prune: true
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

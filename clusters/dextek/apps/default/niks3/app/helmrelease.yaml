@@ -40,6 +40,7 @@ spec:
               NIKS3_S3_ENDPOINT: s3.fast.plexuz.xyz
               NIKS3_ENABLE_READ_PROXY: "true"
               NIKS3_SIGN_KEY_PATHS: /etc/niks3/signing.key
+              NIKS3_OIDC_CONFIG: /etc/niks3/oidc.json
             envFrom:
               - secretRef:
                   name: niks3-secret
@@ -68,14 +69,6 @@ spec:
                 memory: 64M
               limits:
                 memory: 1000M
-    persistence:
-      signing-key:
-        type: secret
-        name: niks3-secret
-        globalMounts:
-          - path: /etc/niks3/signing.key
-            subPath: signing.key
-            readOnly: true
     service:
       app:
         controller: app
@@ -92,3 +85,18 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+    persistence:
+      signing-key:
+        type: secret
+        name: niks3-secret
+        globalMounts:
+          - path: /etc/niks3/signing.key
+            subPath: signing.key
+            readOnly: true
+      oidc-config:
+        type: configMap
+        name: niks3-oidc
+        globalMounts:
+          - path: /etc/niks3/oidc.json
+            subPath: oidc.json
+            readOnly: true
