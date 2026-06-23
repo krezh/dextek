@@ -30,8 +30,6 @@ spec:
             envFrom:
               - secretRef:
                   name: jellyfin-config-secret
-            env:
-              JELLYFIN_BASEURL: http://jellyfin.default.svc.cluster.local:8096
             resources:
               requests:
                 cpu: 10m
