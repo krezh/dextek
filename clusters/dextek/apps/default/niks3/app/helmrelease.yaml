@@ -33,10 +33,11 @@ spec:
                   secretKeyRef:
                     name: niks3-postgres
                     key: url
-              NIKS3_HTTP_ADDR: ":5751"
-              NIKS3_CACHE_URL: "https://niks.plexuz.xyz"
-              NIKS3_S3_BUCKET: "niks3"
-              NIKS3_S3_REGION: "garage"
+              NIKS3_HTTP_ADDR: :5751
+              NIKS3_CACHE_URL: https://niks.plexuz.xyz
+              NIKS3_S3_BUCKET: niks3
+              NIKS3_S3_REGION: garage
+              NIKS3_S3_ENDPOINT: s3.fast.plexuz.xyz
               NIKS3_ENABLE_READ_PROXY: "true"
             envFrom:
               - secretRef:
