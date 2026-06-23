@@ -1,5 +1,5 @@
 locals {
-  cluster = yamldecode(file("cluster.yaml"))
+  cluster = yamldecode(file("talos-cluster.yaml"))
 
   _nodes_raw = {
     for d in [for f in fileset("talosPatches/nodes", "*/00-node.yaml") : dirname(f)] : d => {
@@ -10,7 +10,7 @@ locals {
           for s in split("\n---", "\n${file("talosPatches/nodes/${d}/${f}")}") :
           try(
             regexall("(?i)[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}",
-              yamldecode(trimspace(s)).selector.match)[0],
+            yamldecode(trimspace(s)).selector.match)[0],
             null
           )
           if try(yamldecode(trimspace(s)).kind, "") == "LinkAliasConfig"
@@ -65,11 +65,11 @@ data "talos_machine_configuration" "machine" {
   machine_secrets = talos_machine_secrets.talos.machine_secrets
   config_patches = concat(
     [for f in sort(fileset("talosPatches/all", "*.yaml")) :
-      templatefile("talosPatches/all/${f}", local.patch_vars[each.key])],
+    templatefile("talosPatches/all/${f}", local.patch_vars[each.key])],
     [for f in sort(fileset("talosPatches/${each.value.role}", "*.yaml")) :
-      templatefile("talosPatches/${each.value.role}/${f}", local.patch_vars[each.key])],
+    templatefile("talosPatches/${each.value.role}/${f}", local.patch_vars[each.key])],
     [for f in sort(try(fileset("talosPatches/nodes/${each.value.hostname}", "*.yaml"), [])) :
-      templatefile("talosPatches/nodes/${each.value.hostname}/${f}", local.patch_vars[each.key])],
+    templatefile("talosPatches/nodes/${each.value.hostname}/${f}", local.patch_vars[each.key])],
   )
 }
 
