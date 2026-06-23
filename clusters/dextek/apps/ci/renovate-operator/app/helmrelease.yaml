@@ -35,9 +35,7 @@ spec:
         enabled: true
         hostnames: ["renovate-webhook.plexuz.xyz"]
         annotations:
-          gatus.home-operations.com/endpoint: |-
-            url: https://renovate-webhook.plexuz.xyz/webhook/v1/github
-            conditions: ["[STATUS] == 405"]
+          gatus.home-operations.com/enabled: "false"
         parentRefs:
           - name: gateway-external
             namespace: network
