@@ -14,6 +14,8 @@ spec:
     cluster:
       name: dextek
       id: 1
+    image:
+      useDigest: false # digest broken??
     cni:
       exclusive: false
     endpointRoutes:
