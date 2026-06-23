@@ -21,6 +21,7 @@ resources:
   - ./ksgate/ks.yaml
   - ./roder/ks.yaml
   - ./drm-exporter/ks.yaml
+  - ./spegel/ks.yaml
 transformers:
   - |-
     apiVersion: builtin

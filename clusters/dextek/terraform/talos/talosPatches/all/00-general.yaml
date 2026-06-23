@@ -42,9 +42,9 @@ machine:
       maxPods: 150
       serializeImagePulls: false
       # Make image cleanup more aggressive
-      # imageMaximumGCAge: 24h # One day
-      # imageGCHighThresholdPercent: 60 # Default is 85%
-      # imageGCLowThresholdPercent: 30 # Default is 80%
+      imageMaximumGCAge: 24h # One day
+      imageGCHighThresholdPercent: 70 # Default is 85%
+      imageGCLowThresholdPercent: 50 # Default is 80%
     nodeIP:
       validSubnets:
         - 10.10.0.0/27
@@ -73,6 +73,8 @@ machine:
           address = "0.0.0.0:11234"
         [plugins."io.containerd.cri.v1.runtime"]
           device_ownership_from_security_context = true
+        [plugins."io.containerd.cri.v1.images"]
+          discard_unpacked_layers = false
   features:
     diskQuotaSupport: true
     kubePrism:
