@@ -10,7 +10,7 @@ spec:
     sourceRef:
       apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository
-      name: flux-system
+      name: dextek-repo
     dir: clusters/dextek/pulumi/talos
   envRefs:
     PULUMI_ACCESS_TOKEN:
