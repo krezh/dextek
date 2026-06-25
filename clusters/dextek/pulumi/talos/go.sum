@@ -270,6 +270,8 @@ github.com/pulumi/pulumi/sdk/v3 v3.233.0 h1:r2Z1GtGZUM7olY+vF5Av2nqH1iAvSMKx5DJZ
 github.com/pulumi/pulumi/sdk/v3 v3.233.0/go.mod h1:Eu9QVad1cSPymhTboINPqK6WZMaW7I0NHQcWOmxLYek=
 github.com/pulumi/pulumi/sdk/v3 v3.247.0 h1:AlQeVeyzc7kotvOIUBEjajESN7717sy15KC1asG4ZWI=
 github.com/pulumi/pulumi/sdk/v3 v3.247.0/go.mod h1:67RnWlA0uRHJKjbOkk1Hqz8BNefYv8csNLgln1EmmII=
+github.com/pulumi/pulumi/sdk/v3 v3.248.0 h1:TwY9uuToQO8xIey4a7awRzNX7iJ/doDmZkl1MzxULCE=
+github.com/pulumi/pulumi/sdk/v3 v3.248.0/go.mod h1:67RnWlA0uRHJKjbOkk1Hqz8BNefYv8csNLgln1EmmII=
 github.com/pulumiverse/pulumi-matchbox/sdk v0.2.0 h1:f5Yo9HRwMhe2STqmIUXHcWAS768zc7AxvvPEXa1PuRg=
 github.com/pulumiverse/pulumi-matchbox/sdk v0.2.0/go.mod h1:ayvZ4nwHQ2kf/NB2S5q1nI7NLyCqN/U8I8gyHH/4tu8=
 github.com/pulumiverse/pulumi-talos/sdk v0.8.0 h1:gMZFDbDk4QNVjRGfi1yzsx19dyq5lP0PfcSL2Sj/Taw=
