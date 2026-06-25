@@ -28,4 +28,5 @@ spec:
       secret:
         name: pulumi-talos-secret
         key: INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET
+  serviceAccountName: pulumi-kubernetes-operator
   resyncFrequencySeconds: 3600
