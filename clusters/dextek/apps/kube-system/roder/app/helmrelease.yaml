@@ -17,7 +17,7 @@ spec:
           name: roder-secret
     env:
       - name: RODER_ALERTMANAGER_URL
-        value: http://alertmanager-operated.svc.monitoring.cluster.local:9093
+        value: http://alertmanager-operated.monitoring.svc.cluster.local:9093
     resources:
       requests:
         cpu: 50m
