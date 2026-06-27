@@ -20,7 +20,7 @@ spec:
           app:
             image:
               repository: ghcr.io/miniflux/miniflux
-              tag: 2.3.1
+              tag: 2.3.2
             env:
               DATABASE_URL:
                 valueFrom:
