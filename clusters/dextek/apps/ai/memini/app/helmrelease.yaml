@@ -37,6 +37,7 @@ spec:
               MEMINI_EMBED_BASE_URL: http://mcp-tools-embedding:8080/v1
               MEMINI_EMBED_MODEL: qwen3-embedding-0.6b
               MEMINI_EMBED_DIMS: "1024"
+              MEMINI_RECALL_MIN_SEMANTIC_SCORE: "0.46"
               MEMINI_EMBED_QUERY_PREFIX: "Instruct: Given a user message, retrieve relevant past memories\nQuery: "
               MEMINI_RERANK: http://qwen3-reranker-0-6b:8080/v1
               MEMINI_RERANK_MODEL: qwen3-reranker-0.6b
