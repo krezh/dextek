@@ -133,4 +133,4 @@ interval = "2 days"
 #
 # Zero (default) means time-based garbage-collection is
 # disabled by default. You can enable it on a per-cache basis.
-default-retention-period = "1 month"
+default-retention-period = "2 weeks"
