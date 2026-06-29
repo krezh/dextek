@@ -34,11 +34,8 @@ spec:
                     name: niks3-postgres
                     key: url
               NIKS3_HTTP_ADDR: :5751
-              NIKS3_CACHE_URL: https://niks.plexuz.xyz
               NIKS3_S3_BUCKET: niks3
-              NIKS3_S3_REGION: garage
-              NIKS3_S3_ENDPOINT: s3.fast.plexuz.xyz
-              NIKS3_ENABLE_READ_PROXY: "true"
+              NIKS3_S3_REGION: auto
               NIKS3_SIGN_KEY_PATHS: /etc/niks3/signing.key
               NIKS3_OIDC_CONFIG: /etc/niks3/oidc.json
             envFrom:
