@@ -20,7 +20,6 @@ resources:
   - ./publish-k8s-schemas/ks.yaml
   - ./tracearr/ks.yaml
   - ./attic/ks.yaml
-  - ./niks3/ks.yaml
   - ./librespeed/ks.yaml
   - ./notifier/ks.yaml
   - ./miniflux/ks.yaml
