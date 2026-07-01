@@ -28,7 +28,6 @@ spec:
       APP: *app
       DATABASE_EXTENSIONS: |
         [
-          { name: vector },
           { name: vchord },
           { name: cube },
           { name: earthdistance }

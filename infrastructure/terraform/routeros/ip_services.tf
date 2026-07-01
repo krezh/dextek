@@ -4,7 +4,6 @@ locals {
     "www-ssl" = 443
   }
   disable_service = {
-    "api"    = 8728
     "ftp"    = 21
     "telnet" = 23
   }
@@ -12,6 +11,7 @@ locals {
     "ssh"    = 22
     "winbox" = 8291
     "www"    = 80
+    "api"    = 8728
   }
 }
 
@@ -19,7 +19,6 @@ resource "routeros_ip_service" "tls" {
   for_each    = local.tls_service
   numbers     = each.key
   port        = each.value
-  certificate = routeros_system_certificate.https_cert.name
   tls_version = "only-1.2"
   disabled    = false
 }
