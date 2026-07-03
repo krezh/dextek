@@ -3,17 +3,16 @@
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
-  name: hetzner
-  namespace: flux-system
+  name: routeros
 spec:
   suspend: false
   approvePlan: auto
   interval: 12h
-  path: ./hetzner
+  parallelism: 1
+  path: ./routeros
   sourceRef:
     kind: OCIRepository
     name: infrastructure
-    namespace: flux-system
   backendConfig:
     disable: true
   tfstate:

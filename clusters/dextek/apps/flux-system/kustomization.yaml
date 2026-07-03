@@ -6,8 +6,6 @@ resources:
   - ./namespace.yaml
   - ./flux-operator/ks.yaml
   - ./flux-instance/ks.yaml
-  - ./tf-controller/ks.yaml
-  - ./konflate/ks.yaml
   - ../../../shared/templates/flux
 transformers:
   - |-

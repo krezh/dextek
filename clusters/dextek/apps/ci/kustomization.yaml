@@ -6,6 +6,9 @@ resources:
   - ./namespace.yaml
   - ../../../shared/templates/flux
   - ./renovate-operator/ks.yaml
+  - ./publish-k8s-schemas/ks.yaml
+  - ./konflate/ks.yaml
+  - ./tf-controller/ks.yaml
   #- ./pulumi-operator/ks.yaml
 transformers:
   - |-

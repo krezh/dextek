@@ -17,7 +17,6 @@ resources:
   - ./changedetection/ks.yaml
   - ./zipline/ks.yaml
   - ./jellyfin/ks.yaml
-  - ./publish-k8s-schemas/ks.yaml
   - ./tracearr/ks.yaml
   - ./attic/ks.yaml
   - ./librespeed/ks.yaml

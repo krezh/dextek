@@ -3,17 +3,15 @@
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
-  name: talos-dextek
-  namespace: flux-system
+  name: hetzner
 spec:
   suspend: false
   approvePlan: auto
   interval: 12h
-  path: ./dextek/talos
+  path: ./hetzner
   sourceRef:
     kind: OCIRepository
     name: infrastructure
-    namespace: flux-system
   backendConfig:
     disable: true
   tfstate:

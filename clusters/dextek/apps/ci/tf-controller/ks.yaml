@@ -6,11 +6,11 @@ metadata:
   name: tf-controller
   namespace: flux-system
 spec:
-  targetNamespace: flux-system
+  targetNamespace: ci
   dependsOn:
     - name: flux-instance
     - name: external-secrets-stores
-  path: ./clusters/dextek/apps/flux-system/tf-controller/app
+  path: ./clusters/dextek/apps/ci/tf-controller/app
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -27,10 +27,10 @@ metadata:
   name: tf-controller-terraforms
   namespace: flux-system
 spec:
-  targetNamespace: flux-system
+  targetNamespace: ci
   dependsOn:
     - name: tf-controller
-  path: ./clusters/dextek/apps/flux-system/tf-controller/terraforms
+  path: ./clusters/dextek/apps/ci/tf-controller/terraforms
   prune: true
   sourceRef:
     kind: OCIRepository

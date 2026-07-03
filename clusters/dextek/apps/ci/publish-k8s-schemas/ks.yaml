@@ -3,14 +3,21 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: konflate
+  name: &app publish-k8s-schemas
   namespace: flux-system
 spec:
-  targetNamespace: flux-system
-  path: ./clusters/dextek/apps/flux-system/konflate/app
+  targetNamespace: ci
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+  path: ./clusters/dextek/apps/ci/publish-k8s-schemas/app
   prune: true
   sourceRef:
     kind: OCIRepository
     name: flux-system
-  wait: false
-  interval: 1h
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
