@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/papra-hq/papra
-              tag: 26.6.1
+              tag: 26.6.1-rootless
             env:
               APP_BASE_URL: https://{{ .Release.Name }}.plexuz.xyz
               AUTH_IS_REGISTRATION_ENABLED: false
