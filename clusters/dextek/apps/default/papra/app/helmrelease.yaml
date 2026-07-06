@@ -1,0 +1,78 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app papra
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: papra
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+    controllers:
+      papra:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/papra-hq/papra
+              tag: 26.6.1
+            env:
+              APP_BASE_URL: https://{{ .Release.Name }}.plexuz.xyz
+              AUTH_IS_REGISTRATION_ENABLED: false
+              AUTH_FIRST_USER_AS_ADMIN: true
+            envFrom:
+              - secretRef:
+                  name: papra-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256M
+              limits:
+                memory: 1G
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: &port 1221
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+    service:
+      app:
+        controller: papra
+        ports:
+          http:
+            port: 8080
+            targetPort: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.plexuz.xyz"
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 8080
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: tns-csi-nvmeof
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        globalMounts:
+          - path: /app/app-data
