@@ -280,6 +280,8 @@ github.com/pulumi/pulumi/sdk/v3 v3.251.0 h1:H1D42Jra2jvnEij0M0dZcNGz3Q9DyANsvzQq
 github.com/pulumi/pulumi/sdk/v3 v3.251.0/go.mod h1:ZXd0WRd89VLX2juP+HEXMZ+J2AFPfcJTXhdmmv9cMgY=
 github.com/pulumiverse/pulumi-matchbox/sdk v0.2.0 h1:f5Yo9HRwMhe2STqmIUXHcWAS768zc7AxvvPEXa1PuRg=
 github.com/pulumiverse/pulumi-matchbox/sdk v0.2.0/go.mod h1:ayvZ4nwHQ2kf/NB2S5q1nI7NLyCqN/U8I8gyHH/4tu8=
+github.com/pulumiverse/pulumi-matchbox/sdk v0.3.0 h1:oUHG7bT1BmWQvmPh66tjbLhezQNtrCJBpGsteFvH2Pg=
+github.com/pulumiverse/pulumi-matchbox/sdk v0.3.0/go.mod h1:kL/xHEx9jC9EhmewSNnfAzmKfwsfkZfEG0X3dXV8Pjo=
 github.com/pulumiverse/pulumi-talos/sdk v0.8.0 h1:gMZFDbDk4QNVjRGfi1yzsx19dyq5lP0PfcSL2Sj/Taw=
 github.com/pulumiverse/pulumi-talos/sdk v0.8.0/go.mod h1:W2F+VsmzflAeE1wFhrhEDYjaRT1hNjyA2OF894kbUFY=
 github.com/rivo/uniseg v0.4.7 h1:WUdvkW8uEhrYfLC4ZzdpI2ztxP1I582+49Oc5Mq64VQ=
