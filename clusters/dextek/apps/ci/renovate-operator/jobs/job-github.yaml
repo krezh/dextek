@@ -44,3 +44,5 @@ spec:
       secretRef:
         name: *secret
         key: OPERATOR_WEBHOOK_KEY
+    sync:
+      enabled: true
