@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app flaresolverr
+  name: &app trawl
   namespace: flux-system
 spec:
   targetNamespace: downloads
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./clusters/dextek/apps/downloads/flaresolverr/app
+  path: ./clusters/dextek/apps/downloads/trawl/app
   prune: true
   sourceRef:
     kind: OCIRepository

@@ -12,7 +12,7 @@ resources:
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
   - ./prowlarr/ks.yaml
-  - ./flaresolverr/ks.yaml
+  - ./trawl/ks.yaml
   - ./bazarr/ks.yaml
   - ./maintainerr/ks.yaml
   - ./jellyseerr/ks.yaml

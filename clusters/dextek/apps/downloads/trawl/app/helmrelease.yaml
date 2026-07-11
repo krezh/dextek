@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app trawl
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: trawl
+  values:
+    controllers:
+      trawl:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/germondai/trawl
+              tag: 1.0.0@sha256:f282af7cf88072dd777698f7fbc554e0ccc39830c3d6e7670aa84cb347495303
+            env:
+              BROWSER_POOL_SIZE: 3
+              REDIS_URL: redis://dragonfly.databases.svc.cluster.local:6379/2
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 8191
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 3
+              readiness: *probe
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 10
+                  failureThreshold: 12
+            resources:
+              requests:
+                cpu: 10m
+                memory: 410M
+              limits:
+                memory: 3Gi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    persistence:
+      shm:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 1Gi
+        globalMounts:
+          - path: /dev/shm
