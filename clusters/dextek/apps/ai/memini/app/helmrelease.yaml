@@ -31,7 +31,6 @@ spec:
             env:
               MEMINI_BACKEND: postgres
               MEMINI_LOG_FORMAT: json
-              MEMINI_WRITE_DEDUP_MIN_SCORE: "0.95"
               MEMINI_DEMOTE_AFTER: 1440h
               MEMINI_TOMBSTONE_TTL: 720h
               MEMINI_EMBED_BASE_URL: http://mcp-tools-embedding:8080/v1
@@ -39,7 +38,6 @@ spec:
               MEMINI_EMBED_DIMS: "384"
               MEMINI_RERANK: http://qwen3-reranker-0-6b:8080/v1
               MEMINI_RERANK_MODEL: qwen3-reranker-0.6b
-              MEMINI_RERANK_MAX_DOC_CHARS: "4000"
               MEMINI_POSTGRES_DSN:
                 valueFrom:
                   secretKeyRef:
@@ -53,16 +51,18 @@ spec:
     route:
       internal:
         enabled: true
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            path: /healthz
         kind: HTTPRoute
         parentRefs:
           - name: gateway-internal
             namespace: network
         hostnames:
           - memini.plexuz.xyz
-        rules:
-          - backendRefs:
-              - identifier: main
-                port: http
+    serviceMonitor:
+      main:
+        enabled: true
     persistence:
       data:
         enabled: false
