@@ -20,8 +20,23 @@ spec:
       main:
         type: deployment
         replicas: 1
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
         containers:
           main:
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
             resources:
               requests:
                 cpu: 25m
@@ -64,6 +79,8 @@ spec:
     serviceMonitor:
       main:
         enabled: true
+    grafanaDashboards:
+      enabled: true
     persistence:
       data:
         enabled: false
