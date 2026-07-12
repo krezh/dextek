@@ -131,17 +131,6 @@ spec:
           http:
             port: 80
             targetPort: *port
-    route:
-      app:
-        hostnames: ["qbit.plexuz.xyz"]
-        parentRefs:
-          - name: gateway-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: 80
     persistence:
       config:
         enabled: true
