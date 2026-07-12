@@ -110,5 +110,15 @@ module "oauth_apps" {
       client_secret      = data.infisical_secrets.papra.secrets["PAPRA_OAUTH_CLIENT_SECRET"].value
       redirect_uri_paths = ["/api/auth/oauth2/callback/authentik"]
     }
+    qui = {
+      app_group = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = data.infisical_secrets.qui.secrets["QUI_OAUTH_CLIENT_ID"].value
+      client_secret      = data.infisical_secrets.qui.secrets["QUI_OAUTH_CLIENT_SECRET"].value
+      redirect_uri_paths = ["/api/auth/oidc/callback"]
+      meta_description   = "qBittorrent management UI"
+    }
   }
 }

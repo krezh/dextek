@@ -65,3 +65,9 @@ data "infisical_secrets" "papra" {
   workspace_id = local.infisical_project_id
   folder_path  = "/Kubernetes/DexTek/Papra"
 }
+
+data "infisical_secrets" "qui" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Qui"
+}

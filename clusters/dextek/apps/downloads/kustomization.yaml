@@ -19,6 +19,7 @@ resources:
   - ./jellyseerr-jf/ks.yaml
   - ./pinchflat/ks.yaml
   - ./profilarr/ks.yaml
+  - ./qui/ks.yaml
 transformers:
   - |-
     apiVersion: builtin
