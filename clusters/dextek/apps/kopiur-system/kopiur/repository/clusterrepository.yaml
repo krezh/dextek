@@ -27,7 +27,10 @@ spec:
   maintenance:
     enabled: false
   # Re-scan during the migration window so snapshots volsync keeps writing appear.
+  # fallbackNamespace: where foreign (volsync / other-machine) discovered Snapshot
+  # CRs are materialized, since they have no namespace mapping.
   catalog:
+    fallbackNamespace: kopiur-system
     periodicRefresh: true
     refreshInterval: 1h
     retain:
