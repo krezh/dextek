@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: disk-wipe
-  namespace: kube-system
+  namespace: rook-ceph
 spec:
   selector:
     matchLabels:
@@ -17,16 +17,48 @@ spec:
         - operator: Exists
       initContainers:
         - name: wipe
-          image: nixery.dev/shell/util-linux/gptfdisk/parted/gnugrep/gnused
+          image: nixery.dev/shell/util-linux/gptfdisk/parted/gnugrep/gnused/lvm2
           securityContext:
             privileged: true
           volumeMounts:
             - name: dev
               mountPath: /dev
+            - name: host-var-lib
+              mountPath: /host-var-lib
           command: ["/bin/sh", "-c"]
           args:
             - |
               set -u
+              # dmsetup waits on a udev uevent that never arrives inside this
+              # (udev-less) container, so removal hangs forever. Disable the
+              # udev sync so dmsetup/lvm complete immediately.
+              export DM_UDEV_DISABLE_LIBRARY_FALLBACK=1
+              # Tear down any leftover Rook/Ceph OSD device-mapper mappings and LVM
+              # from previous clusters. Without this the underlying nvme disk stays
+              # held open and the later wipefs/sgdisk calls silently fail to clear it.
+              echo "Cleaning up stale Ceph device-mapper / LVM devices"
+              for dm in $(dmsetup ls --target linear 2>/dev/null | cut -f1 | grep -E 'ceph-|osd--block' || true); do
+                echo "Removing dm device: $dm"
+                dmsetup remove --deferred "$dm" 2>/dev/null || dmsetup remove "$dm" || echo "ERROR: dmsetup remove failed on $dm"
+              done
+              # Remove any remaining ceph-* device-mapper mappings by name.
+              ls /dev/mapper/ceph-* 2>/dev/null | xargs -I% -- dmsetup remove "%" 2>/dev/null || true
+              # ceph-volume can leave ceph-<UUID> clutter under /dev and /dev/mapper.
+              rm -rf /dev/ceph-* /dev/mapper/ceph--* 2>/dev/null || true
+              for vg in $(vgs --noheadings -o vg_name 2>/dev/null | grep -i ceph || true); do
+                echo "Deactivating/removing VG: $vg"
+                vgchange -an "$vg" 2>/dev/null || true
+                vgremove -ff "$vg" 2>/dev/null || true
+              done
+              for pv in $(pvs --noheadings -o pv_name 2>/dev/null | grep -iE 'nvme|sd' || true); do
+                echo "Removing PV: $pv"
+                pvremove -ff "$pv" 2>/dev/null || true
+              done
+              # Remove Rook's on-host data dir (dataDirHostPath, default /var/lib/rook)
+              # so a fresh cluster doesn't start from a stale/inconsistent state.
+              echo "Removing Rook host data dir: /var/lib/rook"
+              rm -rf /host-var-lib/rook 2>/dev/null || true
+
               # Detect disks hosting Talos system partitions
               OS_DISKS=""
               for label in STATE EPHEMERAL BOOT META; do
@@ -51,6 +83,15 @@ spec:
                 fi
                 echo "Wiping: $nvme"
                 sgdisk --zap-all --clear "$nvme" || echo "ERROR: sgdisk failed on $nvme"
+                # Explicitly zero the primary GPT, the end-of-disk backup GPT, and
+                # the protective MBR. sgdisk alone can leave the backup GPT copy
+                # (and PMBR) in place on some disks, which then reappear as a gpt
+                # signature and trip up OSD provisioning.
+                SZ=$(blockdev --getsz "$nvme" 2>/dev/null || echo 0)
+                if [ "$SZ" -gt 34 ] 2>/dev/null; then
+                  dd if=/dev/zero of="$nvme" bs=512 count=34 2>/dev/null || true
+                  dd if=/dev/zero of="$nvme" bs=512 count=34 seek=$((SZ - 34)) 2>/dev/null || true
+                fi
                 wipefs -af "$nvme" || echo "ERROR: wipefs failed on $nvme"
                 blkdiscard -f "$nvme" || echo "ERROR: blkdiscard failed on $nvme"
                 partprobe "$nvme" || echo "ERROR: partprobe failed on $nvme"
@@ -64,4 +105,8 @@ spec:
         - name: dev
           hostPath:
             path: /dev
+            type: Directory
+        - name: host-var-lib
+          hostPath:
+            path: /var/lib
             type: Directory

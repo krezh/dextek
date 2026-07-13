@@ -31,9 +31,9 @@ all:
     just kubeconfig
     just readyCheck
     just namespaces
+    just flux-secrets
     just crds
     just apps
-    just flux-secrets
     just wipe
     just status
 
@@ -101,12 +101,12 @@ helmfile: crds apps
 
 wipe:
     #!/usr/bin/env bash
-    kubectl delete daemonset disk-wipe -n kube-system --ignore-not-found >/dev/null 2>&1
+    kubectl delete daemonset disk-wipe -n rook-ceph --ignore-not-found >/dev/null 2>&1
     apply="kubectl apply -f {{ BOOTSTRAP_DIR }}/wipe-daemonset.yaml"
-    rollout="kubectl rollout status daemonset/disk-wipe -n kube-system --timeout=10m"
+    rollout="kubectl rollout status daemonset/disk-wipe -n rook-ceph --timeout=10m"
     just step "Applying wipe DaemonSet" "${apply}"
     just step "Wiping disks" "${rollout}"
-    kubectl delete daemonset disk-wipe -n kube-system --ignore-not-found >/dev/null 2>&1
+    kubectl delete daemonset disk-wipe -n rook-ceph --ignore-not-found >/dev/null 2>&1
 
 status:
     #!/usr/bin/env bash
