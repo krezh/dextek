@@ -33,3 +33,5 @@ spec:
     retain:
       perIdentity: 100
       maxAgeDays: 90
+  scheduleDefaults:
+    timezone: Europe/Stockholm
