@@ -13,15 +13,6 @@ spec:
   driftDetection:
     mode: enabled
   values:
-    operatorConfig:
-      namespace: rook-ceph
-      driverSpecDefaults:
-        imageSet:
-          name: rook-csi-operator-image-set-configmap
-        nodePlugin:
-          priorityClassName: system-node-critical
-        controllerPlugin:
-          priorityClassName: system-cluster-critical
     drivers:
       rbd:
         enabled: true
