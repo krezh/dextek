@@ -14,9 +14,6 @@ spec:
       storageClassName: ceph-block
     inheritSecurityContextFrom:
       pvcConsumer: {}
-    podSecurityContext:
-      runAsUser: ${KOPIUR_PUID:=1000}
-      runAsGroup: ${KOPIUR_PGID:=1000}
   repository:
     kind: ClusterRepository
     name: tank
