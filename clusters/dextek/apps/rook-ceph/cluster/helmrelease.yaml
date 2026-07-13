@@ -16,7 +16,7 @@ spec:
   values:
     cephImage:
       repository: quay.io/ceph/ceph
-      tag: v19.2.3@sha256:af0c5903e901e329adabe219dfc8d0c3efc1f05102a753902f33ee16c26b6cee
+      tag: v19.2.4@sha256:4940f3e4da8077b68e577c2dcbf313c7c2f9c3b61654c52fcb28884a6ef96a7b
       imagePullPolicy: IfNotPresent
     cephBlockPools:
       - name: ceph-blockpool
