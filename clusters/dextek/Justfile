@@ -89,12 +89,12 @@ flux-secrets:
 
 crds:
     #!/usr/bin/env bash
-    cmd='until helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/00-crds.yaml template -q | yq ea -e "select(.kind == \"CustomResourceDefinition\")" | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; do sleep 3; done'
+    cmd='attempt=0; until out=$(helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/00-crds.yaml template -q 2>&1 | yq ea -e "select(.kind == \"CustomResourceDefinition\")" 2>&1 | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f - 2>&1); do attempt=$((attempt+1)); echo "✗ CRD apply failed (attempt ${attempt}):"; echo "${out}"; sleep 3; done; echo "${out}"'
     just step "Applying CRDs" "${cmd}"
 
 apps:
     #!/usr/bin/env bash
-    cmd='until helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/01-apps.yaml sync --hide-notes; do sleep 3; done'
+    cmd='attempt=0; until out=$(helmfile -f {{ BOOTSTRAP_DIR }}/helmfile.d/01-apps.yaml sync --hide-notes 2>&1); do attempt=$((attempt+1)); echo "✗ apps sync failed (attempt ${attempt}):"; echo "${out}"; sleep 3; done; echo "${out}"'
     just step "Deploying apps" "${cmd}"
 
 helmfile: crds apps
