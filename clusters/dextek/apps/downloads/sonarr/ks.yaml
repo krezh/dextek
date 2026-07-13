@@ -25,11 +25,14 @@ spec:
   components:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
     - ../../../../../shared/components/zeroscaler
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
+      KOPIUR_CLAIM: sonarr-config
+      KOPIUR_CAPACITY: 10Gi
       EXT_AUTH_OUTPOST: external
       EXT_AUTH_TARGET: sonarr-app

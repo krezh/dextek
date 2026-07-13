@@ -26,8 +26,11 @@ spec:
   components:
     - ../../../../../shared/components/cnpg/cert
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 150Gi
       VOLSYNC_CACHE_CAPACITY: 50Gi
+      KOPIUR_CLAIM: attic-config
+      KOPIUR_CAPACITY: 150Gi

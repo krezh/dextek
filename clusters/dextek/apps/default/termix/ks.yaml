@@ -24,7 +24,10 @@ spec:
   timeout: 3m
   components:
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
+      KOPIUR_CLAIM: termix-config
+      KOPIUR_CAPACITY: 10Gi

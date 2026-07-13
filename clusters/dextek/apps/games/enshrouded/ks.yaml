@@ -24,8 +24,11 @@ spec:
   timeout: 3m
   components:
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 50Gi
       VOLSYNC_CACHE_CAPACITY: 10Gi
+      KOPIUR_CLAIM: enshrouded-config
+      KOPIUR_CAPACITY: 50Gi

@@ -26,10 +26,12 @@ spec:
   components:
     - ../../../../../shared/components/cnpg/cert
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
+      KOPIUR_CAPACITY: 10Gi
       VOLSYNC_CLAIM: *app
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1

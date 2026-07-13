@@ -13,3 +13,5 @@ transformers:
 resources:
   - ../../../shared/templates/flux
   - ./namespace.yaml
+components:
+  - ../../../shared/components/kopiur/secret

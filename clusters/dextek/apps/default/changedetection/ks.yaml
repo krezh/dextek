@@ -24,11 +24,14 @@ spec:
   components:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
+      KOPIUR_CLAIM: changedetection-config
+      KOPIUR_CAPACITY: 10Gi
       VOLSYNC_CLAIM: changedetection-config
       EXT_AUTH_OUTPOST: external
       EXT_AUTH_TARGET: *app

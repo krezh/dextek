@@ -26,8 +26,11 @@ spec:
   timeout: 5m
   components:
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 10Gi
+      KOPIUR_CLAIM: recyclarr-config
+      KOPIUR_CAPACITY: 10Gi

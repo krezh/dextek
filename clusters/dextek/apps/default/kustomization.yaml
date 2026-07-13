@@ -25,6 +25,8 @@ resources:
   - ./termix/ks.yaml
   - ./papra/ks.yaml
   - ./gotify/ks.yaml
+components:
+  - ../../../shared/components/kopiur/secret
 transformers:
   - |-
     apiVersion: builtin

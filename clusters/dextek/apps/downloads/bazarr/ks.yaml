@@ -24,11 +24,14 @@ spec:
   components:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
     - ../../../../../shared/components/zeroscaler
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_CACHE_CAPACITY: 5Gi
+      KOPIUR_CLAIM: bazarr-config
+      KOPIUR_CAPACITY: 5Gi
       EXT_AUTH_OUTPOST: external
       EXT_AUTH_TARGET: bazarr-app
