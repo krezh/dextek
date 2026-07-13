@@ -53,19 +53,12 @@ releases:
     needs:
       - kube-system/coredns
 
-  - name: cert-manager
-    namespace: cert-manager
-    chart: oci://quay.io/jetstack/charts/cert-manager
-    version: v1.21.0
-    needs:
-      - kube-system/spegel
-
   - name: external-secrets
     namespace: kube-system
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
     version: 2.7.0
     needs:
-      - cert-manager/cert-manager
+      - kube-system/spegel
 
   - name: flux-operator
     namespace: flux-system
@@ -74,7 +67,7 @@ releases:
     values:
       - templates/values.yaml.gotmpl
     needs:
-      - kube-system/spegel
+      - kube-system/external-secrets
 
   - name: flux-instance
     namespace: flux-system
