@@ -23,9 +23,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
-    - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
