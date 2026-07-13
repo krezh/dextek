@@ -15,7 +15,6 @@ resources:
   - ./alloy/ks.yaml
   - ./silence-operator/ks.yaml
   - ./gatus/ks.yaml
-  - ./vpa/ks.yaml
   - ./prometheus-adapter/ks.yaml
 transformers:
   - |-
