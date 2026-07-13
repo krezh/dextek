@@ -78,8 +78,6 @@ spec:
         modules:
           - name: pg_autoscaler
             enabled: true
-          - name: rook
-            enabled: false
       mon:
         count: 3
       network:
