@@ -28,7 +28,6 @@ spec:
   components:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app

@@ -25,7 +25,6 @@ spec:
   components:
     - ../../../../../shared/components/gpu
     - ../../../../../shared/components/volsync
-    - ../../../../../shared/components/kopiur/backup
     - ../../../../../shared/components/zeroscaler
   postBuild:
     substitute:
