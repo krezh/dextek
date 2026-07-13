@@ -19,7 +19,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     controllers:
-      qui:
+      app:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -29,11 +29,14 @@ spec:
               tag: v1.22.0
             env:
               QUI__HOST: 0.0.0.0
-              QUI__PORT: &port 8080
+              QUI__PORT: &port 80
               QUI__OIDC_ENABLED: "true"
               QUI__OIDC_ISSUER: https://sso.plexuz.xyz/application/o/qui/
               QUI__OIDC_REDIRECT_URL: https://qui.plexuz.xyz/api/auth/oidc/callback
               QUI__OIDC_DISABLE_BUILT_IN_LOGIN: "true"
+              QUI__METRICS_ENABLED: true
+              QUI__METRICS_HOST: 0.0.0.0
+              QUI__METRICS_PORT: &metricsPort 8080
             envFrom:
               - secretRef:
                   name: qui-secret
@@ -72,11 +75,16 @@ spec:
                   - ALL
     service:
       app:
-        controller: qui
+        controller: app
         ports:
           http:
-            port: 80
-            targetPort: *port
+            port: *port
+          metrics:
+            port: *metricsPort
+    serviceMonitor:
+      app:
+        endpoints:
+          - port: metrics
     route:
       app:
         hostnames: ["qui.plexuz.xyz"]
@@ -85,11 +93,10 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - name: *app
-                port: 80
+              - identifier: app
+                port: *port
     persistence:
       config:
-        enabled: true
         existingClaim: qui-config
         globalMounts:
           - path: /config
@@ -100,5 +107,4 @@ spec:
         globalMounts:
           - path: /media
       downloads:
-        enabled: true
         existingClaim: downloads
