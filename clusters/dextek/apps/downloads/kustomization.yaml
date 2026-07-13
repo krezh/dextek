@@ -20,6 +20,8 @@ resources:
   - ./pinchflat/ks.yaml
   - ./profilarr/ks.yaml
   - ./qui/ks.yaml
+components:
+  - ../../../shared/components/kopiur/secret
 transformers:
   - |-
     apiVersion: builtin
