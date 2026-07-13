@@ -26,12 +26,5 @@ spec:
   # takes over the lease deliberately (avoid two writers running kopia maintenance).
   maintenance:
     enabled: false
-  # Re-scan during the migration window so snapshots volsync keeps writing appear.
-  catalog:
-    periodicRefresh: true
-    refreshInterval: 1h
-    retain:
-      perIdentity: 100
-      maxAgeDays: 90
   scheduleDefaults:
     timezone: Europe/Stockholm
