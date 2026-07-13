@@ -19,5 +19,17 @@ spec:
       name: kopiur-repository-secret
       namespace: kopiur-system
       key: KOPIA_PASSWORD
+  # Adopt the existing kopia repo created by volsync — connect, never re-initialize.
   create:
-    enabled: true
+    enabled: false
+  # Disable default-managed maintenance so the standalone Maintenance CR below
+  # takes over the lease deliberately (avoid two writers running kopia maintenance).
+  maintenance:
+    enabled: false
+  # Re-scan during the migration window so snapshots volsync keeps writing appear.
+  catalog:
+    periodicRefresh: true
+    refreshInterval: 1h
+    retain:
+      perIdentity: 100
+      maxAgeDays: 90
