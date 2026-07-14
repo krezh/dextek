@@ -139,29 +139,6 @@ spec:
       name: csi-ceph-filesystem
       isDefault: false
       deletionPolicy: Delete
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          dataPool:
-            erasureCoded:
-              codingChunks: 1
-              dataChunks: 2
-            failureDomain: host
-          gateway:
-            instances: 2
-            port: 80
-            priorityClassName: system-cluster-critical
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          preservePoolsOnDelete: true
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          parameters:
-            region: eu-north-1
-          reclaimPolicy: Delete
     monitoring:
       createPrometheusRules: true
       enabled: true
