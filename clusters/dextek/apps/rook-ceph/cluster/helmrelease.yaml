@@ -69,12 +69,9 @@ spec:
         ssl: false
         prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
       mgr:
-        count: 3
         modules:
           - name: pg_autoscaler
             enabled: true
-      mon:
-        count: 3
       network:
         provider: host
         connections:
