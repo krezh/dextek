@@ -5,6 +5,8 @@ kind: Restore
 metadata:
   name: ${APP}
 spec:
+  options:
+    parallel: 20
   policy:
     onMissingSnapshot: Continue
   source:

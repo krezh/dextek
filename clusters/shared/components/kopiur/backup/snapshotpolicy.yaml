@@ -22,6 +22,8 @@ spec:
     keepHourly: 24
     keepDaily: 7
     keepWeekly: 4
+  upload:
+    maxParallelFileReads: 20
   sources:
     - pvc:
         name: ${KOPIUR_CLAIM:=${APP}}
