@@ -12,7 +12,8 @@ spec:
       capacity: ${KOPIUR_CAPACITY:=5Gi}
       mode: Persistent
       storageClassName: ceph-block
-    privilegedMode: true
+    inheritSecurityContextFrom:
+      pvcConsumer: {}
   repository:
     kind: ClusterRepository
     name: tank

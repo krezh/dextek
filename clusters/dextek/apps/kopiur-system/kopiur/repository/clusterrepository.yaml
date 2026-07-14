@@ -22,9 +22,16 @@ spec:
   # Adopt the existing kopia repo created by volsync — connect, never re-initialize.
   create:
     enabled: false
-  # Disable default-managed maintenance so the standalone Maintenance CR below
-  # takes over the lease deliberately (avoid two writers running kopia maintenance).
   maintenance:
-    enabled: false
+    enabled: true
+    namespace: kopiur-system
+    schedule:
+      quick:
+        cron: "0 */6 * * *"
+        jitter: 30m
+      full:
+        cron: "0 3 * * 0"
+        jitter: 1h
+      timezone: UTC
   scheduleDefaults:
     timezone: Europe/Stockholm
