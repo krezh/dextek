@@ -26,6 +26,7 @@ spec:
   components:
     - ../../../../../shared/components/cnpg/cert
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app

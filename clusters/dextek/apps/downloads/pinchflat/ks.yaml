@@ -24,6 +24,7 @@ spec:
     - ../../../../../shared/components/ext-auth
     - ../../../../../shared/components/gpu
     - ../../../../../shared/components/volsync
+    - ../../../../../shared/components/kopiur/backup
     - ../../../../../shared/components/zeroscaler
   postBuild:
     substitute:
