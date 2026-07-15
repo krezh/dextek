@@ -23,6 +23,9 @@ spec:
       actions:
         enabled: true
         operatorGroups: ["superuser"]
+      config:
+        enabled: true
+        readerGroups: ["superuser"]
     resources:
       requests:
         cpu: 50m
