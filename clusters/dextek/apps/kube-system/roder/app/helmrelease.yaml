@@ -18,6 +18,14 @@ spec:
     env:
       - name: RODER_ALERTMANAGER_URL
         value: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+    talos:
+      enabled: true
+      actions:
+        enabled: true
+        operatorGroups: ["superuser"]
+      config:
+        enabled: true
+        readerGroups: ["superuser"]
     resources:
       requests:
         cpu: 50m
