@@ -20,6 +20,8 @@ spec:
         value: http://alertmanager-operated.monitoring.svc.cluster.local:9093
     talos:
       enabled: true
+      roles:
+        - os:admin
       actions:
         enabled: true
         operatorGroups: ["superuser"]
