@@ -15,6 +15,13 @@ spec:
     securityContext:
       runAsUser: 0
       runAsNonRoot: false
+      capabilities:
+        add:
+          - DAC_OVERRIDE
+          - CHOWN
+          - FOWNER
+        drop:
+          - ALL
     privilegedMode: true
   repository:
     kind: ClusterRepository
