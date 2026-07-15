@@ -5,6 +5,18 @@ kind: Restore
 metadata:
   name: ${APP}
 spec:
+  mover:
+    securityContext:
+      runAsUser: 0
+      runAsNonRoot: false
+      capabilities:
+        add:
+          - DAC_OVERRIDE
+          - CHOWN
+          - FOWNER
+        drop:
+          - ALL
+    privilegedMode: true # preserves original UID/GID ownership on restore
   options:
     parallel: 20
   policy:
