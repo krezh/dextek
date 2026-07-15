@@ -12,6 +12,9 @@ spec:
       capacity: ${KOPIUR_CAPACITY:=5Gi}
       mode: Persistent
       storageClassName: ceph-block
+    securityContext:
+      runAsUser: 0
+      runAsNonRoot: false
     privilegedMode: true
   repository:
     kind: ClusterRepository
