@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: ${APP}
+spec:
+  oidc:
+    provider:
+      issuer: https://sso.plexuz.xyz/application/o/${OIDC_SLUG:-${APP}}/
+    clientID: ${OIDC_CLIENT_ID}
+    clientSecret:
+      name: ${OIDC_CLIENT_SECRET_NAME:-${APP}-oidc-secret}
+    redirectURL: https://${OIDC_HOST}/oauth2/callback
+    logoutPath: /oauth2/logout
+    scopes:
+      - openid
+      - email
+      - profile
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: ${OIDC_TARGET:-${APP}}
