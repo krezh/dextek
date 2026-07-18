@@ -128,6 +128,11 @@ spec:
         login: true
         superuser: false
         disablePassword: false
+      - name: xilo
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
       - name: grafana
         ensure: present
         login: true
