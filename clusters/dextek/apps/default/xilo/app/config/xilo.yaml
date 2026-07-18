@@ -3,29 +3,65 @@ listen: ":8080"
 base_url: "https://xilo.plexuz.xyz"
 data_dir: "/data"
 
-# XILO_DATABASE_URL (from the xilo-postgres secret) supplies database.url.
 database:
-  url: ""
-  # XILO_SALT (xilo-secret) supplies this. Never change it once set.
-  salt: ""
+  url: "" # XILO_DATABASE_URL (xilo-postgres secret) supplies this.
+  salt: "" # XILO_SALT (xilo-secret) supplies this. Never change it once set.
+
+smtp:
+  host: "" # empty disables outbound mail entirely
+  port: 0
+  username: ""
+  password: ""
+  from: ""
 
 multi_tenant: false
 
+admin:
+  password: "" # XILO_ADMIN_PASSWORD (xilo-secret) supplies this.
+
 storage:
   backend: s3
+  local:
+    root: ""
   s3:
     endpoint: "s3.fast.plexuz.xyz"
     bucket: "xilo"
     region: "garage"
-    # XILO_S3_ACCESS_KEY / XILO_S3_SECRET_KEY (xilo-secret) supply credentials.
+    access_key: "" # XILO_S3_ACCESS_KEY (xilo-secret) supplies this.
+    secret_key: "" # XILO_S3_SECRET_KEY (xilo-secret) supplies this.
+    insecure: false
+
+storages: {}
+default_storage: ""
+
+chunking:
+  min_size: 65536
+  avg_size: 262144
+  max_size: 1048576
+  nar_threshold: 65536
+
+compression:
+  level: default
+
+gc:
+  interval: "12h"
+  retention: ""
+  grace: "1h"
+  audit_retention: ""
+
+parallelism: 0
 
 # Skip re-caching paths already signed by upstream nixpkgs.
 upstream_keys: ["cache.nixos.org-1"]
 
-gc:
-  interval: "12h"
-  grace: "1h"
+trusted_proxy_hops: 0
 
 security:
   skip_upload_verify: false
   allow_open_bootstrap: false
+
+limits:
+  total: ""
+
+logging: full
+durability: normal
