@@ -1,0 +1,88 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app xilo
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: xilo
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      app:
+        type: deployment
+        replicas: 1
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/stubbedev/xilo
+              tag: 1.0.9@sha256:bebb0c340534914dce309377843225af47bd784edb0270d7ee24ba8e38e0567b
+            env:
+              XILO_DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: xilo-postgres
+                    key: url
+            envFrom:
+              - secretRef:
+                  name: xilo-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64M
+              limits:
+                memory: 256M
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 8080
+            targetPort: *port
+    route:
+      external:
+        hostnames: ["xilo.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /data
+      server-config:
+        type: configMap
+        name: xilo-configmap
+        globalMounts:
+          - path: /xilo.yaml
+            subPath: xilo.yaml
+            readOnly: true

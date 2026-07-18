@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/stubbedev/xilo/master/schemas/xilo.schema.json
+listen: ":8080"
+base_url: "https://xilo.plexuz.xyz"
+data_dir: "/data"
+
+# XILO_DATABASE_URL (from the xilo-postgres secret) supplies database.url.
+database:
+  url: ""
+  # XILO_SALT (xilo-secret) supplies this. Never change it once set.
+  salt: ""
+
+multi_tenant: false
+
+storage:
+  backend: s3
+  s3:
+    endpoint: "s3.fast.plexuz.xyz"
+    bucket: "xilo"
+    region: "garage"
+    # XILO_S3_ACCESS_KEY / XILO_S3_SECRET_KEY (xilo-secret) supply credentials.
+
+# Skip re-caching paths already signed by upstream nixpkgs.
+upstream_keys: ["cache.nixos.org-1"]
+
+gc:
+  interval: "12h"
+  grace: "1h"
+
+security:
+  skip_upload_verify: false
+  allow_open_bootstrap: false
