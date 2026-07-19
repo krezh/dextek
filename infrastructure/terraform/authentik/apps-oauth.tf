@@ -120,5 +120,17 @@ module "oauth_apps" {
       redirect_uri_paths = ["/api/auth/oidc/callback"]
       meta_description   = "qBittorrent management UI"
     }
+    gotify = {
+      app_group = "Tools"
+      access_groups = [
+        data.authentik_group.superuser.id,
+        authentik_group.groups["users"].id
+      ]
+      client_id          = data.infisical_secrets.gotify.secrets["GOTIFY_OAUTH_CLIENT_ID"].value
+      client_secret      = data.infisical_secrets.gotify.secrets["GOTIFY_OAUTH_CLIENT_SECRET"].value
+      redirect_uri_paths = ["/auth/oidc/callback"]
+      redirect_uris      = ["gotify://oidc/callback"]
+      meta_description   = "Notification server"
+    }
   }
 }
