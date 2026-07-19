@@ -71,3 +71,9 @@ data "infisical_secrets" "qui" {
   workspace_id = local.infisical_project_id
   folder_path  = "/Kubernetes/DexTek/Qui"
 }
+
+data "infisical_secrets" "gotify" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Gotify"
+}

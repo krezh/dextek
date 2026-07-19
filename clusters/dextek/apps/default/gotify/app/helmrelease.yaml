@@ -33,7 +33,12 @@ spec:
                     name: gotify-postgres
                     key: url
               GOTIFY_DATABASE_DIALECT: postgres
+              GOTIFY_OIDC_ENABLED: true
+              GOTIFY_OIDC_ISSUER: https://sso.plexuz.xyz/application/o/gotify/
+              GOTIFY_OIDC_LINK_BY_USERNAME: true
+              GOTIFY_OIDC_REDIRECTURL: https://gotify.plexuz.xyz/auth/oidc/callback
               GOTIFY_SERVER_PORT: &port 8080
+              GOTIFY_SERVER_SECURECOOKIE: true
             envFrom:
               - secretRef:
                   name: gotify-secret
