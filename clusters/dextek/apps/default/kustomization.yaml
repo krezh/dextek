@@ -18,7 +18,6 @@ resources:
   - ./zipline/ks.yaml
   - ./jellyfin/ks.yaml
   - ./tracearr/ks.yaml
-  - ./attic/ks.yaml
   - ./librespeed/ks.yaml
   - ./notifier/ks.yaml
   - ./miniflux/ks.yaml
