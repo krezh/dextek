@@ -24,7 +24,7 @@ function notify() {
         [[ "${severity}" == "critical" ]] && priority=8 || priority=5
     else
         printf -v title "[RESOLVED] %s" "${alertname}"
-        priority=2
+        priority=4
     fi
 
     local external_url
