@@ -10,6 +10,7 @@ spec:
     kind: OCIRepository
     name: roder
   values:
+    replicaCount: 2
     podAnnotations:
       reloader.stakater.com/auto: "true"
     envFrom:
