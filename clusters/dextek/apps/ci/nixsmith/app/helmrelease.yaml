@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nixsmith
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: nixsmith
+  values:
+    gateway:
+      enabled: false
+    existingSecret: nixsmith-secret
+    env:
+      - name: NIXSMITH_DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            name: nixsmith-postgres
+            key: url
+      - name: NIXSMITH_SIGNING_KEY_NAME
+        value: nixsmith
+      - name: NIXSMITH_OIDC_ISSUER_URL
+        value: "https://sso.plexuz.xyz/application/o/nixsmith/"
+      - name: NIXSMITH_OIDC_REDIRECT_URL
+        value: "https://nixsmith.plexuz.xyz/auth/callback"
+      - name: NIXSMITH_PUBLIC_WEB_BASE_URL
+        value: "https://nixsmith.plexuz.xyz"
+    store:
+      persistence:
+        size: 100Gi
+        storageClassName: ceph-block
+    web:
+      httpRoute:
+        enabled: true
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+        hostnames:
+          - nixsmith.plexuz.xyz
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /

@@ -48,6 +48,12 @@ data "infisical_secrets" "miniflux" {
   folder_path  = "/Kubernetes/DexTek/Miniflux"
 }
 
+data "infisical_secrets" "nixsmith" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Nixsmith"
+}
+
 data "infisical_secrets" "termix" {
   env_slug     = local.infisical_env
   workspace_id = local.infisical_project_id

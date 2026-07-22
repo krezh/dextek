@@ -120,6 +120,16 @@ module "oauth_apps" {
       redirect_uri_paths = ["/api/auth/oidc/callback"]
       meta_description   = "qBittorrent management UI"
     }
+    nixsmith = {
+      app_group = "Infrastructure"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = data.infisical_secrets.nixsmith.secrets["NIXSMITH_OAUTH_CLIENT_ID"].value
+      client_secret      = data.infisical_secrets.nixsmith.secrets["NIXSMITH_OAUTH_CLIENT_SECRET"].value
+      redirect_uri_paths = ["/auth/callback"]
+      meta_description   = "Distributed Nix build system"
+    }
     gotify = {
       app_group = "Tools"
       access_groups = [

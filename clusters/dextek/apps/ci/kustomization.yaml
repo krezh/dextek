@@ -9,6 +9,7 @@ resources:
   - ./publish-k8s-schemas/ks.yaml
   - ./konflate/ks.yaml
   - ./tf-controller/ks.yaml
+  - ./nixsmith/ks.yaml
   #- ./pulumi-operator/ks.yaml
 transformers:
   - |-
