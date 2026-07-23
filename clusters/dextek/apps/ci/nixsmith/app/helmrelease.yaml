@@ -10,8 +10,6 @@ spec:
     kind: OCIRepository
     name: nixsmith
   values:
-    gateway:
-      enabled: false
     existingSecret: nixsmith-secret
     env:
       - name: NIXSMITH_DATABASE_URL

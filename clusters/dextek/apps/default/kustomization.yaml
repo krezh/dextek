@@ -20,6 +20,7 @@ resources:
   - ./tracearr/ks.yaml
   - ./librespeed/ks.yaml
   - ./notifier/ks.yaml
+  - ./chaski/ks.yaml
   - ./miniflux/ks.yaml
   - ./termix/ks.yaml
   - ./papra/ks.yaml

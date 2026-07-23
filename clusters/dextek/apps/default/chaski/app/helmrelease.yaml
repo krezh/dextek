@@ -1,0 +1,170 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: chaski
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: chaski
+  interval: 1h
+  values:
+    replicaCount: 2
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+    envFrom:
+      - secretRef:
+          name: chaski-secret
+    config:
+      targets:
+        radarr-pushover:
+          apprise:
+            url: 'pover://{{ env "PUSHOVER_USER_KEY" }}@{{ env "RADARR_PUSHOVER_TOKEN" }}'
+        seerr-pushover:
+          apprise:
+            url: 'pover://{{ env "PUSHOVER_USER_KEY" }}@{{ env "SEERR_PUSHOVER_TOKEN" }}'
+        sonarr-pushover:
+          apprise:
+            url: 'pover://{{ env "PUSHOVER_USER_KEY" }}@{{ env "SONARR_PUSHOVER_TOKEN" }}'
+        radarr-gotify:
+          apprise:
+            url: 'gotifys://gotify.plexuz.xyz/{{ env "RADARR_GOTIFY_TOKEN" }}'
+        seerr-gotify:
+          apprise:
+            url: 'gotifys://gotify.plexuz.xyz/{{ env "SEERR_GOTIFY_TOKEN" }}'
+        sonarr-gotify:
+          apprise:
+            url: 'gotifys://gotify.plexuz.xyz/{{ env "SONARR_GOTIFY_TOKEN" }}'
+        alertmanager-gotify:
+          apprise:
+            url: 'gotifys://gotify.plexuz.xyz/{{ env "ALERTMANAGER_GOTIFY_TOKEN" }}'
+      routes:
+        radarr-pushover:
+          target: radarr-pushover
+          whenExpr: 'payload.eventType in ["Download", "ManualInteractionRequired", "Test"]'
+          title: '{{ if eq .payload.eventType "Download" }}Movie {{ if .payload.isUpgrade }}Upgraded{{ else }}Added{{ end }}{{ else if eq .payload.eventType "ManualInteractionRequired" }}Movie Requires Manual Interaction{{ else }}Test Notification{{ end }}'
+          message: |-
+            {{- if eq .payload.eventType "Download" -}}
+            <b>{{ .payload.movie.title }} ({{ .payload.movie.year }})</b><small>
+            {{ .payload.movie.overview }}</small><small>
+
+            <b>Client:</b> {{ .payload.downloadClient }}</small>
+            {{- else if eq .payload.eventType "ManualInteractionRequired" -}}
+            <b>{{ .payload.movie.title }} ({{ .payload.movie.year }})</b><small>
+            <b>Client:</b> {{ .payload.downloadClient }}</small>
+            {{- else -}}
+            Howdy this is a test notification
+            {{- end -}}
+          params:
+            format: html
+            priority: '{{ if eq .payload.eventType "ManualInteractionRequired" }}high{{ else }}low{{ end }}'
+            url: '{{ if eq .payload.eventType "Download" }}{{ .payload.applicationUrl }}/movie/{{ .payload.movie.tmdbId }}{{ else }}{{ .payload.applicationUrl }}{{ if eq .payload.eventType "ManualInteractionRequired" }}/activity/queue{{ end }}{{ end }}'
+            url_title: '{{ if eq .payload.eventType "Download" }}View Movie{{ else if eq .payload.eventType "ManualInteractionRequired" }}View Queue{{ else }}View Movies{{ end }}'
+        seerr-pushover:
+          target: seerr-pushover
+          whenExpr: 'payload.notification_type == "TEST_NOTIFICATION"'
+          title: Test Notification
+          message: Howdy this is a test notification from <b>Seerr</b>
+          params:
+            format: html
+            priority: low
+            url: https://requests.plexuz.xyz
+            url_title: Open Seerr
+        sonarr-pushover:
+          target: sonarr-pushover
+          whenExpr: 'payload.eventType in ["Download", "ManualInteractionRequired", "Test"]'
+          title: '{{ if eq .payload.eventType "Download" }}Episode {{ if .payload.isUpgrade }}Upgraded{{ else }}Added{{ end }}{{ else if eq .payload.eventType "ManualInteractionRequired" }}Episode Requires Manual Interaction{{ else }}Test Notification{{ end }}'
+          message: |-
+            {{- if eq .payload.eventType "Download" -}}
+            <b>{{ .payload.series.title }} ({{ printf "S%02dE%02d" (toInt (index .payload.episodes 0).seasonNumber) (toInt (index .payload.episodes 0).episodeNumber) }})</b><small>
+            {{ (index .payload.episodes 0).title }}</small><small>
+
+            <b>Client:</b> {{ .payload.downloadClient }}</small>
+            {{- else if eq .payload.eventType "ManualInteractionRequired" -}}
+            <b>{{ .payload.series.title }}</b><small>
+            <b>Client:</b> {{ .payload.downloadClient }}</small>
+            {{- else -}}
+            Howdy this is a test notification
+            {{- end -}}
+          params:
+            format: html
+            priority: '{{ if eq .payload.eventType "ManualInteractionRequired" }}high{{ else }}low{{ end }}'
+            url: '{{ if eq .payload.eventType "Download" }}{{ .payload.applicationUrl }}/series/{{ .payload.series.titleSlug }}{{ else }}{{ .payload.applicationUrl }}{{ if eq .payload.eventType "ManualInteractionRequired" }}/activity/queue{{ end }}{{ end }}'
+            url_title: '{{ if eq .payload.eventType "Download" }}View Series{{ else if eq .payload.eventType "ManualInteractionRequired" }}View Queue{{ else }}View Series{{ end }}'
+        radarr-gotify:
+          target: radarr-gotify
+          whenExpr: 'payload.eventType in ["Download", "ManualInteractionRequired", "Health", "Test"]'
+          title: '{{ if eq .payload.eventType "Download" }}Movie {{ if .payload.isUpgrade }}Upgraded{{ else }}Added{{ end }}{{ else if eq .payload.eventType "ManualInteractionRequired" }}Movie Requires Manual Interaction{{ else if eq .payload.eventType "Health" }}Radarr Health Warning{{ else }}Test Notification{{ end }}'
+          message: |-
+            {{- if eq .payload.eventType "Download" -}}
+            **{{ .payload.movie.title }} ({{ .payload.movie.year }})**
+            {{ .payload.movie.overview }}
+
+            **Client:** {{ .payload.downloadClient }}
+            [View Movie]({{ .payload.applicationUrl }}/movie/{{ .payload.movie.tmdbId }})
+            {{- else if eq .payload.eventType "ManualInteractionRequired" -}}
+            **{{ .payload.movie.title }} ({{ .payload.movie.year }})**
+            **Client:** {{ .payload.downloadClient }}
+            [View Queue]({{ .payload.applicationUrl }}/activity/queue)
+            {{- else if eq .payload.eventType "Health" -}}
+            {{ .payload.message }}
+
+            [More Info]({{ .payload.wikiUrl }})
+            {{- else -}}
+            Howdy this is a test notification
+            {{- end -}}
+          params:
+            format: markdown
+            priority: '{{ if eq .payload.eventType "ManualInteractionRequired" }}8{{ else if eq .payload.eventType "Health" }}{{ if eq .payload.level "error" }}8{{ else }}5{{ end }}{{ else }}2{{ end }}'
+        seerr-gotify:
+          target: seerr-gotify
+          whenExpr: 'payload.notification_type == "TEST_NOTIFICATION"'
+          title: Test Notification
+          message: Howdy this is a test notification from **Seerr**
+          params:
+            format: markdown
+            priority: "2"
+        sonarr-gotify:
+          target: sonarr-gotify
+          whenExpr: 'payload.eventType in ["Download", "ManualInteractionRequired", "Health", "Test"]'
+          title: '{{ if eq .payload.eventType "Download" }}Episode {{ if .payload.isUpgrade }}Upgraded{{ else }}Added{{ end }}{{ else if eq .payload.eventType "ManualInteractionRequired" }}Episode Requires Manual Interaction{{ else if eq .payload.eventType "Health" }}Sonarr Health Warning{{ else }}Test Notification{{ end }}'
+          message: |-
+            {{- if eq .payload.eventType "Download" -}}
+            **{{ .payload.series.title }} ({{ printf "S%02dE%02d" (toInt (index .payload.episodes 0).seasonNumber) (toInt (index .payload.episodes 0).episodeNumber) }})**
+            {{ (index .payload.episodes 0).title }}
+
+            **Client:** {{ .payload.downloadClient }}
+            [View Series]({{ .payload.applicationUrl }}/series/{{ .payload.series.titleSlug }})
+            {{- else if eq .payload.eventType "ManualInteractionRequired" -}}
+            **{{ .payload.series.title }}**
+            **Client:** {{ .payload.downloadClient }}
+            [View Queue]({{ .payload.applicationUrl }}/activity/queue)
+            {{- else if eq .payload.eventType "Health" -}}
+            {{ .payload.message }}
+
+            [More Info]({{ .payload.wikiUrl }})
+            {{- else -}}
+            Howdy this is a test notification {{ .payload.applicationUrl }}
+            {{- end -}}
+          params:
+            format: markdown
+            priority: '{{ if eq .payload.eventType "ManualInteractionRequired" }}8{{ else if eq .payload.eventType "Health" }}{{ if eq .payload.level "error" }}8{{ else }}5{{ end }}{{ else }}2{{ end }}'
+        alertmanager-gotify:
+          target: alertmanager-gotify
+          title: '{{ if eq .payload.status "firing" }}[FIRING:{{ len .payload.alerts }}]{{ else }}[RESOLVED]{{ end }} {{ .payload.commonLabels.alertname | default "Unknown" }}'
+          message: |-
+            {{ range .payload.alerts }}{{ .annotations.description | default .annotations.summary | default .annotations.message | default "No description available" }}
+            {{ end }}
+            [View in Alertmanager]({{ .payload.externalURL }})
+          params:
+            format: markdown
+            priority: '{{ if ne .payload.status "firing" }}4{{ else if eq .payload.commonLabels.severity "critical" }}8{{ else }}5{{ end }}'
+    monitoring:
+      serviceMonitor:
+        enabled: true
+    resources:
+      requests:
+        cpu: 10m
+      limits:
+        memory: 128Mi
