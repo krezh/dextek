@@ -7,7 +7,7 @@ metadata:
 spec:
   flakeRef: github:krezh/dotnix
   attrPaths:
-    - nixosConfigurations.thor-wsl
+    - ci.hosts.thor-wsl
   pools:
     - amd64-pool
   webhookSecretRef:
