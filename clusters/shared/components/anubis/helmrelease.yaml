@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/techarohq/anubis
-              tag: v1.25.0
+              tag: v1.26.0
             env:
               # https://anubis.techaro.lol/docs/admin/installation#environment-variables
               BIND: ":8080"
