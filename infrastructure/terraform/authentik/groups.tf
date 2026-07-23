@@ -4,17 +4,14 @@ data "authentik_group" "superuser" {
 
 locals {
   groups = toset([
-    "Downloads",
-    "Grafana Admins",
-    "Home",
-    "Infrastructure",
-    "Monitoring",
+    "grafana-admins",
     "users",
     "mealie_users",
     "mealie_admins",
     "jellyfin-users",
     "jellyfin-admins",
     "ldap-admins",
+    "kube-admins"
   ])
 }
 
