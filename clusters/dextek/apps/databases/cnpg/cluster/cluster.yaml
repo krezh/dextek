@@ -162,6 +162,8 @@ spec:
         login: true
         superuser: false
         disablePassword: false
+        inRoles:
+          - scram_users
       - name: prowlarr
         ensure: present
         login: true
