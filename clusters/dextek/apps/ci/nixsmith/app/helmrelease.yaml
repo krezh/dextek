@@ -25,6 +25,8 @@ spec:
         value: "https://nixsmith.plexuz.xyz/auth/callback"
       - name: NIXSMITH_PUBLIC_WEB_BASE_URL
         value: "https://nixsmith.plexuz.xyz"
+      - name: NIXSMITH_ADMIN_ALLOWED_GROUPS
+        value: "superuser"
     store:
       persistence:
         size: 100Gi
