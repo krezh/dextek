@@ -6,8 +6,9 @@ metadata:
   name: dotnix
 spec:
   flakeRef: github:krezh/dotnix
+  forceRecurse: true
   attrPaths:
-    - ci.hosts.thor-wsl
+    - ci
   pools:
     - amd64-pool
   webhookSecretRef:
