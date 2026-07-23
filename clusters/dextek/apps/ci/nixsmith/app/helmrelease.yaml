@@ -31,6 +31,13 @@ spec:
       persistence:
         size: 100Gi
         storageClassName: ceph-block
+    evaluator:
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 1Gi
+        limits:
+          memory: 4Gi
     web:
       httpRoute:
         enabled: true
