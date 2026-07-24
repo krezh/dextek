@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/downloads/qui/app
   prune: true
@@ -23,12 +22,9 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
-    - ../../../../../shared/components/volsync
     - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
       KOPIUR_CLAIM: qui-config
       KOPIUR_CAPACITY: 5Gi

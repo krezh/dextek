@@ -77,15 +77,6 @@
       sourceUrl: "https://github.com/jorenn92/Maintainerr",
     },
     {
-      description: ["Volsync Group"],
-      groupName: "Volsync",
-      matchPackageNames: ["/volsync/"],
-      matchDatasources: ["docker", "helm"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-    },
-    {
       description: ["Authentik Group"],
       groupName: "Authentik",
       matchPackageNames: ["/authentik/"],

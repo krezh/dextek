@@ -10,8 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: volsync
   path: ./clusters/dextek/apps/default/tautulli/app
   prune: true
   sourceRef:
@@ -22,12 +20,9 @@ spec:
   retryInterval: 1m
   timeout: 3m
   components:
-    - ../../../../../shared/components/volsync
     - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
       KOPIUR_CLAIM: tautulli-config
       KOPIUR_CAPACITY: 10Gi

@@ -6,5 +6,4 @@ metadata:
     resource.kubernetes.io/admin-access: "true"
     goldilocks.fairwinds.com/enabled: "true"
   annotations:
-    volsync.backube/privileged-movers: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled

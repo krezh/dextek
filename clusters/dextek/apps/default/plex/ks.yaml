@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/plex/app
   prune: true
@@ -24,13 +23,10 @@ spec:
   timeout: 15m
   components:
     - ../../../../../shared/components/gpu
-    - ../../../../../shared/components/volsync
     - ../../../../../shared/components/kopiur/backup
     - ../../../../../shared/components/zeroscaler
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 300Gi
-      VOLSYNC_CACHE_CAPACITY: 100Gi
       KOPIUR_CLAIM: plex-config
       KOPIUR_CAPACITY: 300Gi

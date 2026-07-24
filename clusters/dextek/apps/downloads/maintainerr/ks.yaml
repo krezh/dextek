@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
     - name: plex
     - name: sonarr
     - name: radarr
@@ -27,15 +26,11 @@ spec:
   timeout: 5m
   components:
     - ../../../../../shared/components/ext-auth
-    - ../../../../../shared/components/volsync
     - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
       KOPIUR_CLAIM: maintainerr-config
       KOPIUR_CAPACITY: 10Gi
-      VOLSYNC_CLAIM: maintainerr-config
       EXT_AUTH_OUTPOST: external
       EXT_AUTH_TARGET: *app
