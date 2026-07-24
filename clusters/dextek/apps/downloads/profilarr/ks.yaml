@@ -19,7 +19,6 @@ spec:
   interval: 1h
   timeout: 5m
   components:
-    - ../../../../../shared/components/volsync
     - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:

@@ -24,7 +24,6 @@ spec:
   timeout: 5m
   components:
     - ../../../../../shared/components/ext-auth
-    - ../../../../../shared/components/volsync
     - ../../../../../shared/components/kopiur/backup
     - ../../../../../shared/components/zeroscaler
   postBuild:
