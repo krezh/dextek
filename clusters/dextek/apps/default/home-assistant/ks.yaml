@@ -10,8 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: volsync
   path: ./clusters/dextek/apps/default/home-assistant/app
   prune: true
   sourceRef:
@@ -27,8 +25,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
       KOPIUR_CLAIM: home-assistant-config
       KOPIUR_CAPACITY: 10Gi
       EXT_AUTH_OUTPOST: external

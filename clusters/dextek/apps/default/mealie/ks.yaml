@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/mealie/app
   prune: true
@@ -27,8 +26,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
       KOPIUR_CLAIM: mealie-config
       KOPIUR_CAPACITY: 10Gi
-      VOLSYNC_CLAIM: mealie-config

@@ -53,6 +53,6 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: "${KOPIUR_CLAIM}"
         globalMounts:
           - path: /opt/data

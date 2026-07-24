@@ -10,8 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: volsync
   path: ./clusters/dextek/apps/downloads/bazarr/app
   prune: true
   sourceRef:
@@ -28,8 +26,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
       KOPIUR_CLAIM: bazarr-config
       KOPIUR_CAPACITY: 5Gi
       EXT_AUTH_OUTPOST: external

@@ -8,7 +8,6 @@ metadata:
 spec:
   targetNamespace: downloads
   dependsOn:
-    - name: volsync
     - name: envoy-gateway
   path: ./clusters/dextek/apps/downloads/profilarr/app
   prune: true
@@ -23,9 +22,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_CACHE_CAPACITY: 5Gi
       KOPIUR_CAPACITY: 10Gi
-      VOLSYNC_CLAIM: *app
       EXT_AUTH_OUTPOST: external
       EXT_AUTH_TARGET: *app

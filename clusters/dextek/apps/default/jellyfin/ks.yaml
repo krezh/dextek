@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
     - name: external-secrets-stores
   path: ./clusters/dextek/apps/default/jellyfin/app
   prune: true
@@ -29,8 +28,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 300Gi
-      VOLSYNC_CACHE_CAPACITY: 100Gi
       KOPIUR_CLAIM: jellyfin-config
       KOPIUR_CAPACITY: 300Gi
 ---

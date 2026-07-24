@@ -13,7 +13,6 @@ spec:
   dependsOn:
     - name: cnpg-cluster
     - name: external-secrets-stores
-    - name: volsync
   path: ./clusters/dextek/apps/default/gotify/app
   prune: true
   sourceRef:
@@ -29,9 +28,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
       KOPIUR_CAPACITY: 10Gi
-      VOLSYNC_CLAIM: *app
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
