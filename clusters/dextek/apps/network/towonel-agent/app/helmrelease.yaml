@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: codeberg.org/towonel/towonel-agent
-              tag: 1.2.0
+              tag: 1.4.1
             env:
               RUST_LOG: info
               NODE_NAME:
