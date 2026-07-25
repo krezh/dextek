@@ -20,6 +20,10 @@ spec:
             env:
               BROWSER_POOL_SIZE: 3
               REDIS_URL: redis://dragonfly.databases.svc.cluster.local:6379/2
+              MITM_PROXY_ENABLED: true
+              MITM_PROXY_PORT: 8192
+              MITM_PROXY_CA_DIR: /data/proxy-ca # persist the CA (mount a volume)
+              MITM_PROXY_MAX_TIER: 4 # cap escalation (e.g. 3 to stay off residential)
             probes:
               liveness: &probe
                 enabled: true
@@ -61,3 +65,7 @@ spec:
         sizeLimit: 1Gi
         globalMounts:
           - path: /dev/shm
+      data:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 100Mi
