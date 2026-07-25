@@ -16,8 +16,6 @@ spec:
       concurrencyPolicy: Forbid
       successfulJobsHistoryLimit: 1
       failedJobsHistoryLimit: 3
-    config:
-      basePath: "/k8s-schemas"
     extraVolumes:
       - name: git-workspace
         emptyDir: {}
