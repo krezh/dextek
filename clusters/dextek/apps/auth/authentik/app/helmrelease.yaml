@@ -68,19 +68,32 @@ spec:
               - /bin/sh
               - -c
               - |
-                (
-                  until curl -sf -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
-                    http://authentik-server.auth.svc.cluster.local/api/v3/root/config/ > /dev/null; do
-                    sleep 2
-                  done
-                  curl -sf -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
-                    "http://authentik-server.auth.svc.cluster.local/api/v3/tasks/schedules/?actor_name=authentik.outposts.tasks.outpost_controller&page_size=100" \
-                    | python3 -c "
-                import json, sys
-                for s in json.load(sys.stdin)['results']:
-                    print(s['id'])
-                " | while read -r id; do
-                      curl -sf -X POST -H "Authorization: Bearer $AUTHENTIK_BOOTSTRAP_TOKEN" \
-                        "http://authentik-server.auth.svc.cluster.local/api/v3/tasks/schedules/$id/send/"
-                    done
-                ) &
+                python3 - <<'PY' &
+                import json
+                import os
+                import time
+                from urllib.error import URLError
+                from urllib.request import Request, urlopen
+                base_url = "http://authentik-server.auth.svc.cluster.local/api/v3"
+                headers = {"Authorization": f"Bearer {os.environ['AUTHENTIK_BOOTSTRAP_TOKEN']}"}
+                while True:
+                    try:
+                        with urlopen(Request(f"{base_url}/root/config/", headers=headers), timeout=5):
+                            break
+                    except (URLError, TimeoutError):
+                        time.sleep(2)
+                url = (
+                    f"{base_url}/tasks/schedules/"
+                    "?actor_name=authentik.outposts.tasks.outpost_controller&page_size=100"
+                )
+                with urlopen(Request(url, headers=headers), timeout=5) as response:
+                    schedules = json.load(response)["results"]
+                for schedule in schedules:
+                    request = Request(
+                        f"{base_url}/tasks/schedules/{schedule['id']}/send/",
+                        headers=headers,
+                        method="POST",
+                    )
+                    with urlopen(request, timeout=5):
+                        pass
+                PY
