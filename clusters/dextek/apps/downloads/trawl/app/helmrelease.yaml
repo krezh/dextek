@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/germondai/trawl
-              tag: v1.1.0@sha256:745903d3cb09da4e355a8c09ad7e014e84ac6219609417d66d9616c4707d501d
+              tag: 1.2.0@sha256:728216a6a5e9654e3235bfa614c71e3847fe5826d3032fa2bca8083719ab355e
             env:
               BROWSER_POOL_SIZE: 3
               REDIS_URL: redis://dragonfly.databases.svc.cluster.local:6379/2
