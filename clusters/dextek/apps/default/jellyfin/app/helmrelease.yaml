@@ -52,7 +52,7 @@ spec:
               requests:
                 cpu: 100m
               limits:
-                memory: 4000M
+                memory: 8Gi
     service:
       app:
         controller: jellyfin
