@@ -171,5 +171,15 @@
       },
       sourceUrl: "https://github.com/timescale/timescaledb",
     },
+    {
+      description: "TimescaleDB-toolkit group",
+      groupName: "TimescaleDB-toolkit",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/timescaledb-toolkit/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      sourceUrl: "https://github.com/timescale/timescaledb-toolkit",
+    },
   ],
 }
