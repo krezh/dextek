@@ -165,7 +165,7 @@
       description: "TimescaleDB group",
       groupName: "TimescaleDB",
       matchDatasources: ["docker"],
-      matchPackageNames: ["/Timescaledb/"],
+      matchPackageNames: ["/timescaledb/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
