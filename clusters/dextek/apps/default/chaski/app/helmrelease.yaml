@@ -33,6 +33,9 @@ spec:
         profilarr-gotify:
           apprise:
             url: 'gotify://gotify.default.svc.cluster.local:8080/{{ env "PROFILARR_GOTIFY_TOKEN" }}'
+        prowlarr-gotify:
+          apprise:
+            url: 'gotify://gotify.default.svc.cluster.local:8080/{{ env "PROWLARR_GOTIFY_TOKEN" }}'
       routes:
         radarr-gotify:
           target: radarr-gotify
@@ -109,6 +112,21 @@ spec:
           params:
             format: markdown
             priority: '{{ if eq .payload.severity "error" }}8{{ else if eq .payload.severity "warning" }}5{{ else }}2{{ end }}'
+        prowlarr-gotify:
+          target: prowlarr-gotify
+          whenExpr: 'payload.eventType in ["Health", "Test"]'
+          title: '{{ if eq .payload.eventType "Health" }}Prowlarr Health Warning{{ else }}Test Notification{{ end }}'
+          message: |-
+            {{- if eq .payload.eventType "Health" -}}
+            {{ .payload.message }}
+
+            [More Info]({{ .payload.wikiUrl }})
+            {{- else -}}
+            Howdy this is a test notification
+            {{- end -}}
+          params:
+            format: markdown
+            priority: '{{ if eq .payload.eventType "Health" }}{{ if eq .payload.level "error" }}8{{ else }}5{{ end }}{{ else }}2{{ end }}'
     monitoring:
       serviceMonitor:
         enabled: true
