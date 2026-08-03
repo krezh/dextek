@@ -9,3 +9,14 @@ resources:
   - ./referencegrant.yaml
   - ./httproute.yaml
   - ./grafanadashboard.yaml
+patches:
+  - target:
+      group: grafana.integreatly.org
+      version: v1beta1
+      kind: GrafanaDashboard
+      name: authentik
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          kustomize.toolkit.fluxcd.io/substitute: disabled
