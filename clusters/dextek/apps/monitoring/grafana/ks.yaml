@@ -49,8 +49,8 @@ spec:
   dependsOn:
     - name: grafana
     - name: grafana-image-renderer
+    - name: cnpg-cluster
     - name: external-secrets-stores
-    - name: rook-ceph-cluster
   path: ./clusters/dextek/apps/monitoring/grafana/instance
   prune: true
   sourceRef:
@@ -58,3 +58,8 @@ spec:
     name: flux-system
   wait: false
   interval: 30m
+  components:
+    - ../../../../../shared/components/cnpg/pass
+  postBuild:
+    substitute:
+      APP: grafana

@@ -78,7 +78,32 @@ spec:
                       name: grafana-secret
                       key: GF_SECURITY_ADMIN_PASSWORD
                 - name: GF_DATABASE_TYPE
-                  value: sqlite3
+                  value: postgres
+                - name: GF_DATABASE_SSL_MODE
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: sslmode
+                - name: GF_DATABASE_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: host
+                - name: GF_DATABASE_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: database
+                - name: GF_DATABASE_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: username
+                - name: GF_DATABASE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-postgres
+                      key: password
                 - name: GF_RENDERING_RENDERER_TOKEN
                   valueFrom:
                     secretKeyRef:
@@ -94,16 +119,4 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
-          volumes:
-            - name: grafana-data
-              persistentVolumeClaim:
-                claimName: grafana-pvc
-  persistentVolumeClaim:
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
-      storageClassName: ceph-block
   disableDefaultSecurityContext: All
