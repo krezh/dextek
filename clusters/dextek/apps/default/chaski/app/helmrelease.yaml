@@ -20,16 +20,19 @@ spec:
       targets:
         radarr-gotify:
           apprise:
-            url: 'gotifys://gotify.plexuz.xyz/{{ env "RADARR_GOTIFY_TOKEN" }}'
+            url: 'gotify://gotify.default.svc.cluster.local:8080/{{ env "RADARR_GOTIFY_TOKEN" }}'
         seerr-gotify:
           apprise:
-            url: 'gotifys://gotify.plexuz.xyz/{{ env "SEERR_GOTIFY_TOKEN" }}'
+            url: 'gotify://gotify.default.svc.cluster.local:8080/{{ env "SEERR_GOTIFY_TOKEN" }}'
         sonarr-gotify:
           apprise:
-            url: 'gotifys://gotify.plexuz.xyz/{{ env "SONARR_GOTIFY_TOKEN" }}'
+            url: 'gotify://gotify.default.svc.cluster.local:8080/{{ env "SONARR_GOTIFY_TOKEN" }}'
         alertmanager-gotify:
           apprise:
-            url: 'gotifys://gotify.plexuz.xyz/{{ env "ALERTMANAGER_GOTIFY_TOKEN" }}'
+            url: 'gotify://gotify.default.svc.cluster.local:8080/{{ env "ALERTMANAGER_GOTIFY_TOKEN" }}'
+        profilarr-gotify:
+          apprise:
+            url: 'gotify://gotify.default.svc.cluster.local:8080/{{ env "PROFILARR_GOTIFY_TOKEN" }}'
       routes:
         radarr-gotify:
           target: radarr-gotify
@@ -99,6 +102,13 @@ spec:
           params:
             format: markdown
             priority: '{{ if ne .payload.status "firing" }}4{{ else if eq .payload.commonLabels.severity "critical" }}8{{ else }}5{{ end }}'
+        profilarr-gotify:
+          target: profilarr-gotify
+          title: 'Profilarr: {{ .payload.title }}'
+          message: '{{ .payload.message }}'
+          params:
+            format: markdown
+            priority: '{{ if eq .payload.severity "error" }}8{{ else if eq .payload.severity "warning" }}5{{ else }}2{{ end }}'
     monitoring:
       serviceMonitor:
         enabled: true

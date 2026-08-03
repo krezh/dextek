@@ -37,7 +37,5 @@ spec:
     - name: "null"
     - name: gotify
       webhookConfigs:
-        - url: http://notifier.default.svc.cluster.local/hooks/alertmanager-gotify
-          sendResolved: true
         - url: http://chaski.default.svc.cluster.local:8080/hooks/alertmanager-gotify
           sendResolved: true

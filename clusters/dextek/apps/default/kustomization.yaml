@@ -19,7 +19,6 @@ resources:
   - ./jellyfin/ks.yaml
   - ./tracearr/ks.yaml
   - ./librespeed/ks.yaml
-  - ./notifier/ks.yaml
   - ./chaski/ks.yaml
   - ./miniflux/ks.yaml
   - ./termix/ks.yaml
