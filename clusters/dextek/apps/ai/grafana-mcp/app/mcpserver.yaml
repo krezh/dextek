@@ -14,7 +14,7 @@ spec:
     - --address
     - 0.0.0.0:8000
     - --allowed-hosts
-    - localhost:8000,127.0.0.1:8000,localhost:8080,127.0.0.1:8080,mcp-grafana:8000,mcp-grafana.ai.svc.cluster.local:8000,mcp-grafana-headless:8000,mcp-grafana-headless.ai.svc.cluster.local:8000
+    - "*"
   groupRef:
     name: mcp-tools
   permissionProfile:
