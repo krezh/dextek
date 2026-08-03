@@ -38,6 +38,9 @@ spec:
       news_feed_enabled: "false"
     plugins:
       plugin_admin_enabled: "false"
+    rendering:
+      callback_url: http://grafana-service.monitoring.svc.cluster.local:3000/
+      server_url: http://grafana-image-renderer.monitoring.svc.cluster.local:8081/render
     security:
       angular_support_enabled: "true"
     metrics:
@@ -91,6 +94,11 @@ spec:
                     secretKeyRef:
                       name: grafana-postgres
                       key: password
+                - name: GF_RENDERING_RENDERER_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-image-renderer
+                      key: token
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
