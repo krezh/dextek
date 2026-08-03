@@ -23,11 +23,11 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: monitoring
-  dependsOn:
-    - name: external-secrets-stores
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/monitoring/grafana/renderer
   prune: true
   sourceRef:
@@ -49,8 +49,8 @@ spec:
   dependsOn:
     - name: grafana
     - name: grafana-image-renderer
-    - name: cnpg-cluster
     - name: external-secrets-stores
+    - name: rook-ceph-cluster
   path: ./clusters/dextek/apps/monitoring/grafana/instance
   prune: true
   sourceRef:
@@ -58,8 +58,3 @@ spec:
     name: flux-system
   wait: false
   interval: 30m
-  components:
-    - ../../../../../shared/components/cnpg/pass
-  postBuild:
-    substitute:
-      APP: grafana

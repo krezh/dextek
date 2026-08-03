@@ -31,13 +31,13 @@ metadata:
   name: kopiur-repository
   namespace: flux-system
 spec:
+  targetNamespace: kopiur-system
   dependsOn:
     - name: kopiur
-  interval: 30m
   path: ./clusters/dextek/apps/kopiur-system/kopiur/repository
   prune: true
   sourceRef:
     kind: OCIRepository
     name: flux-system
-  targetNamespace: kopiur-system
   wait: false
+  interval: 30m
