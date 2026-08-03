@@ -161,5 +161,15 @@
       },
       minimumGroupSize: 2,
     },
+    {
+      description: "TimescaleDB group",
+      groupName: "TimescaleDB",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/Timescaledb/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      sourceUrl: "https://github.com/timescale/timescaledb",
+    },
   ],
 }
