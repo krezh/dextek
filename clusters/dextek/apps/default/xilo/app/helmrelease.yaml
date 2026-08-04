@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/stubbedev/xilo
-              tag: 1.0.12@sha256:fb50780559701c694ec022eaed5c0148963c475ea729988ec3deb4262246532f
+              tag: 1.0.13@sha256:03dfe2b066ecf1689ffafeebe676c27e1b040cca763e9f2b54501bbf180d8fa5
             env:
               XILO_DATABASE_URL:
                 valueFrom:
