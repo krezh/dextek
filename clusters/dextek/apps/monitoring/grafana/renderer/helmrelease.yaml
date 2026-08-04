@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: docker.io/grafana/grafana-image-renderer
-              tag: v5.10.3@sha256:7f776ebb20f82b9cd5940238da596da8caf26baf9025c2e0a991d23dd803a0e6
+              tag: v5.11.1@sha256:37e6ed8d55426f80d8d00a839df2cc02568b5877ffa2964f3ec09fa9a295c0a9
             env:
               AUTH_TOKEN:
                 valueFrom:
