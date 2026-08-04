@@ -118,6 +118,15 @@ spec:
           name: authentik-postgres
         inRoles:
           - scram_users
+      - name: kauth
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+        passwordSecret:
+          name: kauth-postgres
+        inRoles:
+          - scram_users
       - name: bazarr
         ensure: present
         login: true

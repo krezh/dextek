@@ -16,16 +16,17 @@ spec:
     envFrom:
       - secretRef:
           name: kauth-secret
-    webhook:
-      enabled: true
-      port: 8081
-    service:
-      clusterIP: 10.96.0.11
+    env:
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            name: kauth-postgres
+            key: url
     httpRoute:
       enabled: true
       annotations:
         gatus.home-operations.com/endpoint: |-
-          url: https://kauth.plexuz.xyz/health
+          url: https://kauth.plexuz.xyz/api/health
       parentRefs:
         - name: gateway-internal
           namespace: network
