@@ -89,7 +89,7 @@ module "oauth_apps" {
       client_id          = data.infisical_secrets.termix.secrets["TERMIX_OAUTH_CLIENT_ID"].value
       client_secret      = data.infisical_secrets.termix.secrets["TERMIX_OAUTH_CLIENT_SECRET"].value
       redirect_uri_paths = ["/users/oidc/callback"]
-      redirect_uris      = ["termix://oidc-callback"]
+      redirect_uris      = ["termix-mobile://oidc-callback"]
       meta_description   = "Server management platform"
     }
     profilarr = {
