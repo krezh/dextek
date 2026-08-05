@@ -5,7 +5,7 @@ kind: MCPServer
 metadata:
   name: mcp-nixos
 spec:
-  image: ghcr.io/krezh/mcp-nixos:2.4.3
+  image: ghcr.io/krezh/mcp-nixos:3.0.0
   transport: stdio
   proxyPort: 8080
   groupRef:
