@@ -61,6 +61,12 @@ spec:
               - name: *app
                 port: *port
     persistence:
+      backup:
+        size: 10Gi
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: /data/backup
       tmpfs:
         type: emptyDir
         advancedMounts:
