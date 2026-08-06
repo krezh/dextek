@@ -22,12 +22,13 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
-    - ../../../../../shared/components/ext-auth
+    - ../../../../../shared/components/oidc-auth
     - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
       KOPIUR_CLAIM: sabnzbd-config
       KOPIUR_CAPACITY: 10Gi
-      EXT_AUTH_OUTPOST: external
-      EXT_AUTH_TARGET: sabnzbd-app
+      OIDC_HOST: sab.plexuz.xyz
+      OIDC_INFISICAL_FOLDER: SABnzbd
+      OIDC_TARGET: sabnzbd-app

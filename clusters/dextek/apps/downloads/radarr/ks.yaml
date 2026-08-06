@@ -22,7 +22,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
-    - ../../../../../shared/components/ext-auth
+    - ../../../../../shared/components/oidc-auth
     - ../../../../../shared/components/kopiur/backup
     - ../../../../../shared/components/zeroscaler
   postBuild:
@@ -30,5 +30,5 @@ spec:
       APP: *app
       KOPIUR_CLAIM: radarr-config
       KOPIUR_CAPACITY: 10Gi
-      EXT_AUTH_OUTPOST: external
-      EXT_AUTH_TARGET: radarr-app
+      OIDC_INFISICAL_FOLDER: Radarr
+      OIDC_TARGET: radarr-app

@@ -144,5 +144,89 @@ module "oauth_apps" {
       redirect_uris      = ["gotify://oidc/callback"]
       meta_description   = "Notification server"
     }
+    radarr = {
+      app_group = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "radarr"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    sonarr = {
+      app_group = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "sonarr"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    prowlarr = {
+      app_group = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "prowlarr"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    bazarr = {
+      app_group = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "bazarr"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    sabnzbd = {
+      app_domain = "sab.${var.domain}"
+      app_group  = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "sabnzbd"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    maintainerr = {
+      app_group = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "maintainerr"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    pinchflat = {
+      app_group = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "pinchflat"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    changedetection = {
+      app_group = "Tools"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "changedetection"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    "home-assistant" = {
+      app_domain = "hass.${var.domain}"
+      app_group  = "Home"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "home-assistant"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
+    librespeed = {
+      app_domain = "speed.${var.domain}"
+      app_group  = "Tools"
+      access_groups = [
+        data.authentik_group.superuser.id,
+        authentik_group.groups["users"].id
+      ]
+      client_id          = "librespeed"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
   }
 }

@@ -76,8 +76,8 @@ variable "oauth_apps" {
     open_in_new_tab        = optional(bool, false)               # Open app in a new browser tab
     access_token_validity  = optional(string, "hours=4")         # Access token lifetime
     refresh_token_validity = optional(string, "weeks=52")        # Refresh token lifetime
-    client_id              = string                              # OAuth2 client ID
-    client_secret          = string                              # OAuth2 client secret
+    client_id              = string                                 # OAuth2 client ID
+    client_secret          = optional(string, null)                 # OAuth2 client secret; omit to let Authentik generate one
     signing_key_id         = optional(string, null)              # Signing key; defaults to self-signed cert
     client_type            = optional(string, "confidential")    # confidential or public
     redirect_uri_paths     = optional(list(string), [])          # Paths appended to app domain as redirect URIs
@@ -152,4 +152,10 @@ output "oauth2_provider_ids" {
 output "app_keys" {
   value       = keys(var.oauth_apps)
   description = "List of OAuth app keys"
+}
+
+output "oauth2_client_secrets" {
+  value       = { for k, provider in authentik_provider_oauth2.main : k => provider.client_secret }
+  sensitive   = true
+  description = "Per-app client_secret: the explicit value if one was set, otherwise the value Authentik generated"
 }

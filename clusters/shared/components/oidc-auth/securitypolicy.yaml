@@ -8,10 +8,10 @@ spec:
   oidc:
     provider:
       issuer: https://sso.plexuz.xyz/application/o/${OIDC_SLUG:-${APP}}/
-    clientID: ${OIDC_CLIENT_ID}
+    clientID: ${OIDC_CLIENT_ID:-${APP}}
     clientSecret:
       name: ${OIDC_CLIENT_SECRET_NAME:-${APP}-oidc-secret}
-    redirectURL: https://${OIDC_HOST}/oauth2/callback
+    redirectURL: https://${OIDC_HOST:-${APP}.plexuz.xyz}/oauth2/callback
     logoutPath: /oauth2/logout
     scopes:
       - openid

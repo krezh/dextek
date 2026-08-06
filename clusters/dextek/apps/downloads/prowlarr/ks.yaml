@@ -24,9 +24,9 @@ spec:
   timeout: 5m
   components:
     - ../../../../../shared/components/cnpg/pass
-    - ../../../../../shared/components/ext-auth
+    - ../../../../../shared/components/oidc-auth
   postBuild:
     substitute:
       APP: *app
-      EXT_AUTH_OUTPOST: external
-      EXT_AUTH_TARGET: prowlarr-app
+      OIDC_INFISICAL_FOLDER: Prowlarr
+      OIDC_TARGET: prowlarr-app

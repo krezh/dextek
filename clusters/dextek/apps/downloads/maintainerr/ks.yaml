@@ -15,6 +15,7 @@ spec:
     - name: sonarr
     - name: radarr
     - name: jellyseerr
+    - name: external-secrets-stores
   path: ./clusters/dextek/apps/downloads/maintainerr/app
   prune: true
   sourceRef:
@@ -25,12 +26,11 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
-    - ../../../../../shared/components/ext-auth
+    - ../../../../../shared/components/oidc-auth
     - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
       KOPIUR_CLAIM: maintainerr-config
       KOPIUR_CAPACITY: 10Gi
-      EXT_AUTH_OUTPOST: external
-      EXT_AUTH_TARGET: *app
+      OIDC_INFISICAL_FOLDER: Maintainerr
