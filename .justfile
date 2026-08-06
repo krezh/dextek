@@ -21,9 +21,6 @@ mod rook '.just/rook.just'
 # Talos Recipes
 mod talos '.just/talos.just'
 
-# Crunchy Recipes
-mod crunchy '.just/crunchy.just'
-
 # Bootstrap Cluster
 mod dextek 'clusters/dextek/Justfile'
 
