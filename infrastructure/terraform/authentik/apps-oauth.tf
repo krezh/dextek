@@ -118,8 +118,8 @@ module "oauth_apps" {
         data.authentik_group.superuser.id,
         authentik_group.groups["users"].id
       ]
-      client_id          = data.infisical_secrets.kaneo.secrets["KANEO_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.kaneo.secrets["KANEO_OAUTH_CLIENT_SECRET"].value
+      client_id          = data.infisical_secrets.kaneo.secrets["OAUTH_CLIENT_ID"].value
+      client_secret      = data.infisical_secrets.kaneo.secrets["OAUTH_CLIENT_SECRET"].value
       redirect_uri_paths = ["/api/auth/oauth2/callback/custom"]
       meta_description   = "Self-hosted project management"
     }
