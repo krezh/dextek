@@ -207,6 +207,15 @@ spec:
           name: memini-postgres
         inRoles:
           - scram_users
+      - name: kaneo
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+        passwordSecret:
+          name: kaneo-postgres
+        inRoles:
+          - scram_users
       - name: pooler-rw
         ensure: present
         login: true

@@ -1,0 +1,84 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kaneo
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: kaneo
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      kaneo:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/usekaneo/kaneo
+              tag: 2.14.0
+            env:
+              KANEO_CLIENT_URL: https://{{ .Release.Name }}.plexuz.xyz
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: kaneo-postgres
+                    key: url
+            envFrom:
+              - secretRef:
+                  name: kaneo-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128M
+              limits:
+                memory: 512M
+            probes:
+              # Drizzle migrations run on boot before the server listens; give it room.
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: &port 5173
+                  periodSeconds: 5
+                  timeoutSeconds: 5
+                  failureThreshold: 24
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+    service:
+      app:
+        controller: kaneo
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.plexuz.xyz"
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
