@@ -86,3 +86,4 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /usr/share/nginx/html/assets
+          - path: /etc/nginx/conf.d
