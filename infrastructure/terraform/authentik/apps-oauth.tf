@@ -239,5 +239,14 @@ module "oauth_apps" {
       client_id          = "librespeed"
       redirect_uri_paths = ["/oauth2/callback"]
     }
+    tracearr = {
+      app_group = "Media"
+      access_groups = [
+        data.authentik_group.superuser.id,
+        authentik_group.groups["users"].id
+      ]
+      client_id          = "tracearr"
+      redirect_uri_paths = ["/api/v1/auth/oauth2/callback/oidc"]
+    }
   }
 }

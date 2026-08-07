@@ -89,3 +89,9 @@ data "infisical_secrets" "kaneo" {
   workspace_id = local.infisical_project_id
   folder_path  = "/Kubernetes/DexTek/Kaneo"
 }
+
+data "infisical_secrets" "tracearr" {
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
+  folder_path  = "/Kubernetes/DexTek/Tracearr"
+}

@@ -27,7 +27,9 @@ spec:
               repository: ghcr.io/connorgallopo/tracearr
               tag: 2.0.1@sha256:3d57d9b032b4a57919c48c919c16c3d6640b83f9116feb2c2cdf907747702ec8
             env:
-              NODE_ENV: production
+              TRUST_PROXY: true
+              CORS_ORIGIN: https://tracearr.plexuz.xyz
+              DNS_CACHE_MAX_TTL: 3600
               DATABASE_URL:
                 valueFrom:
                   secretKeyRef:
