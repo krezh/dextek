@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ocharted
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: ocharted
+  values:
+    replicaCount: 2
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 1
+    config:
+      upstreamAllowlist:
+        - "*.github.io"
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 384Mi
+    monitoring:
+      serviceMonitor:
+        enabled: true
+    httpRoute:
+      enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          path: /healthz
+      parentRefs:
+        - name: gateway-internal
+          namespace: network
+      hostnames:
+        - ocharted.plexuz.xyz

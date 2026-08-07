@@ -60,6 +60,15 @@ releases:
     needs:
       - kube-system/spegel
 
+  - name: ocharted
+    namespace: ci
+    chart: oci://ghcr.io/home-operations/charts/ocharted
+    version: 0.1.3
+    values:
+      - templates/values.yaml.gotmpl
+    needs:
+      - kube-system/coredns
+
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator

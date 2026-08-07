@@ -11,4 +11,4 @@ spec:
     operation: copy
   ref:
     tag: 1.11.1
-  url: oci://ghcr.io/home-operations/charts-mirror/alloy
+  url: oci://ocharted.plexuz.xyz/grafana.github.io/helm-charts/alloy

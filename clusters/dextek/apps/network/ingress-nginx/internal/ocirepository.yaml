@@ -3,12 +3,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: cloudflare-dns
+  name: ingress-nginx
 spec:
   interval: 15m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.21.1
-  url: oci://ocharted.plexuz.xyz/kubernetes-sigs.github.io/external-dns/external-dns
+    tag: 4.15.1
+  url: oci://ocharted.plexuz.xyz/kubernetes.github.io/ingress-nginx/ingress-nginx

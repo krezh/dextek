@@ -7,13 +7,9 @@ metadata:
   namespace: network
 spec:
   interval: 30m
-  chart:
-    spec:
-      version: 4.15.1
-      chart: ingress-nginx
-      sourceRef:
-        kind: HelmRepository
-        name: ingress-nginx
+  chartRef:
+    kind: OCIRepository
+    name: ingress-nginx
   timeout: 15m
   values:
     fullnameOverride: nginx-internal
