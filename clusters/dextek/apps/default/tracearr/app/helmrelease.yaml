@@ -71,10 +71,8 @@ spec:
           - path: /data/backup
       tmpfs:
         type: emptyDir
-        advancedMounts:
-          app:
-            app:
-              - path: /app/data/image-cache
-                subPath: cache
-              - path: /tmp
-                subPath: tmp
+        globalMounts:
+          - path: /app/data/image-cache
+            subPath: cache
+          - path: /tmp
+            subPath: tmp

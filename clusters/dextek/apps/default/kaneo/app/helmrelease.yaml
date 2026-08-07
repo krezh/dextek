@@ -43,7 +43,6 @@ spec:
               limits:
                 memory: 512M
             probes:
-              # Drizzle migrations run on boot before the server listens; give it room.
               startup:
                 enabled: true
                 custom: true
@@ -82,3 +81,8 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+    persistence:
+      assets:
+        type: emptyDir
+        globalMounts:
+          - path: /usr/share/nginx/html/assets
