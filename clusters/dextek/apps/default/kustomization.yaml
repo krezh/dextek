@@ -25,7 +25,6 @@ resources:
   - ./papra/ks.yaml
   - ./gotify/ks.yaml
   - ./xilo/ks.yaml
-  - ./kaneo/ks.yaml
 components:
   - ../../../shared/components/kopiur/secret
 transformers:
