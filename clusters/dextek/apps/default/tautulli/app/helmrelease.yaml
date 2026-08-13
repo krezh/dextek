@@ -27,6 +27,7 @@ spec:
             env:
               TAUTULLI_HTTP_BASE_URL: https://tautulli.plexuz.xyz
               TAUTULLI_HTTP_PORT: &port 8181
+              TAUTULLI_SYSTEM_ANALYTICS: 0
             probes:
               liveness: &probes
                 enabled: true
