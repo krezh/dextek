@@ -99,14 +99,52 @@ apps:
 
 helmfile: crds apps
 
+# Wipe the non-system disks on every node, then reboot to drop stale LVM mappings
 wipe:
     #!/usr/bin/env bash
+    set -euo pipefail
     kubectl delete daemonset disk-wipe -n rook-ceph --ignore-not-found >/dev/null 2>&1
     apply="kubectl apply -f {{ BOOTSTRAP_DIR }}/wipe-daemonset.yaml"
     rollout="kubectl rollout status daemonset/disk-wipe -n rook-ceph --timeout=10m"
     just step "Applying wipe DaemonSet" "${apply}"
     just step "Wiping disks" "${rollout}"
     kubectl delete daemonset disk-wipe -n rook-ceph --ignore-not-found >/dev/null 2>&1
+    # The DaemonSet clears the on-disk signatures, but the kernel holds on to the
+    # ceph-* device-mapper mappings Talos auto-activated at boot until a reboot.
+    just reboot
+    just verify-wipe
+
+# Reboot all nodes
+reboot:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    NODES=$(talosctl config info --output json | jq --raw-output '.endpoints[]' | paste -sd,)
+    talosctl --nodes "$NODES" reboot --wait=false
+    down="for _ in \$(seq 60); do talosctl --nodes $NODES version >/dev/null 2>&1 || break; sleep 2; done"
+    up="until talosctl --nodes $NODES version >/dev/null 2>&1; do sleep 5; done"
+    ready="until kubectl wait nodes --all --for=condition=Ready --timeout=5m >/dev/null 2>&1; do sleep 5; done"
+    just step "Rebooting nodes" "${down} && ${up}"
+    just step "Waiting for nodes" "${ready}"
+
+# Fail if any node still has leftover device-mapper volumes after a wipe
+[private]
+verify-wipe:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    NODES=$(talosctl config info --output json | jq --raw-output '.endpoints[]')
+    rc=0
+    for node in $NODES; do
+      left=$(talosctl --nodes "$node" --endpoints "$node" get discoveredvolumes --output json \
+        | jq --raw-output 'select(.metadata.id | startswith("dm-")) | .metadata.id' | tr '\n' ' ')
+      if [[ -n "${left// /}" ]]; then
+        printf '\e[31m✗\e[0m %s still has device-mapper volumes: %s\n' "$node" "$left"
+        rc=1
+      fi
+    done
+    if [[ $rc -eq 0 ]]; then
+      printf '\e[32m✓\e[0m Disks wiped, no stale device-mapper volumes\n'
+    fi
+    exit $rc
 
 status:
     #!/usr/bin/env bash

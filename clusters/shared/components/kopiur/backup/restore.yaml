@@ -5,6 +5,8 @@ kind: Restore
 metadata:
   name: ${APP}
 spec:
+  failurePolicy:
+    podStartupDeadlineSeconds: 1800
   mover:
     securityContext:
       runAsUser: 0
