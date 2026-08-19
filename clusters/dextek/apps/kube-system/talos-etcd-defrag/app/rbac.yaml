@@ -1,9 +1,0 @@
----
-# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/talos.dev/serviceaccount_v1alpha1.json
-apiVersion: talos.dev/v1alpha1
-kind: ServiceAccount
-metadata:
-  name: talos-etcd-defrag
-  namespace: kube-system
-spec:
-  roles: ["os:admin"]

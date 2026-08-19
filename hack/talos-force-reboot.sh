@@ -128,6 +128,7 @@ reset_node() {
 
 wait_for_node() {
     local node="$1"
+    local failfile="$2"
     local deadline=$(( SECONDS + WAIT_TIMEOUT ))
 
     echo "==> $node: waiting for API (timeout ${WAIT_TIMEOUT}s)"
@@ -141,20 +142,34 @@ wait_for_node() {
         sleep 10
     done
     echo "    $node: did NOT come back within ${WAIT_TIMEOUT}s" >&2
-    return 1
+    : > "$failfile"
 }
 
 FAILED=()
 
+# Fire resets at every node concurrently — a sequential loop would leave
+# each node sitting idle (and the terminal blocked) for up to $TIMEOUT
+# seconds while waiting on the node ahead of it.
+pids=()
 for node in "${NODES[@]}"; do
-    reset_node "$node"
+    reset_node "$node" &
+    pids+=($!)
 done
+wait "${pids[@]}"
 
 if [[ $DO_WAIT -eq 1 ]]; then
     echo
+    failtmp=$(mktemp -d)
+    pids=()
     for node in "${NODES[@]}"; do
-        wait_for_node "$node" || FAILED+=("$node")
+        wait_for_node "$node" "$failtmp/$node" &
+        pids+=($!)
     done
+    wait "${pids[@]}"
+    for node in "${NODES[@]}"; do
+        [[ -e "$failtmp/$node" ]] && FAILED+=("$node")
+    done
+    rm -rf "$failtmp"
 fi
 
 echo

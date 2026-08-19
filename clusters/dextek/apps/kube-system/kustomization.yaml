@@ -15,7 +15,6 @@ resources:
   - ./descheduler/ks.yaml
   - ./k8tz/ks.yaml
   - ./irqbalance/ks.yaml
-  - ./talos-etcd-defrag/ks.yaml
   - ./intel-gpu-resource-driver/ks.yaml
   - ./tuppr/ks.yaml
   - ./ksgate/ks.yaml

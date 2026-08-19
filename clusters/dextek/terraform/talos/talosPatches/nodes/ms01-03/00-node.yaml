@@ -4,7 +4,7 @@ machine:
     disk: /dev/sda
     wipe: false
     diskSelector:
-      model: "Samsung SSD*"
+      serial: "S435NC0R703016"
   nodeLabels:
     node.kubernetes.io/gpu: "true"
     topology.kubernetes.io/region: main
