@@ -77,6 +77,11 @@ spec:
         connections:
           requireMsgr2: true
       removeOSDsIfOutAndSafeToRemove: true
+      security:
+        cephx:
+          daemon:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
       storage:
         config:
           osdsPerDevice: "2"
