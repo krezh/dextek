@@ -41,10 +41,6 @@ machine:
     extraConfig:
       maxPods: 150
       serializeImagePulls: false
-      # Make image cleanup more aggressive
-      imageMaximumGCAge: 24h # One day
-      imageGCHighThresholdPercent: 70 # Default is 85%
-      imageGCLowThresholdPercent: 50 # Default is 80%
     nodeIP:
       validSubnets:
         - 10.10.0.0/27
@@ -99,9 +95,6 @@ cluster:
       - 10.10.0.0/27
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
-      auto-compaction-mode: periodic
-      auto-compaction-retention: "5m"
-      quota-backend-bytes: "4294967296" # 4 GiB
   controllerManager:
     extraArgs:
       feature-gates: PersistentVolumeClaimUnusedSinceTime=true,HPAScaleToZero=true
