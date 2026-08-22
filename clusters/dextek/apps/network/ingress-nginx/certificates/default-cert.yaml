@@ -8,7 +8,7 @@ metadata:
 spec:
   secretName: plexuz-default-tls
   dnsNames:
-    - "*.talos.plexuz.xyz"
+    - "*.plexuz.xyz"
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
