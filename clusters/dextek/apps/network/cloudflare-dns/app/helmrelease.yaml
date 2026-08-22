@@ -34,7 +34,7 @@ spec:
     triggerLoopOnEvent: true
     policy: sync
     sources: [crd, gateway-httproute]
-    txtPrefix: k8s.%{ record_type }-
+    txtPrefix: k8s.%{record_type}-
     txtOwnerId: dextek
     domainFilters:
       - plexuz.xyz

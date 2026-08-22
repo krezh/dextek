@@ -50,7 +50,7 @@ spec:
     policy: sync
     sources: [crd, gateway-httproute, ingress, service]
     txtOwnerId: main
-    txtPrefix: k8s.main.%{ record_type }-
+    txtPrefix: k8s.main.%{record_type}-
     domainFilters:
       - plexuz.xyz
     serviceMonitor:
