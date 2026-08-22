@@ -36,7 +36,7 @@ spec:
               JELLYFIN_BASEURL: http://jellyfin.default.svc.cluster.local:8096
               LOGFILE: /tmp/sync.log
               MARK_FILE: /tmp/mark.log
-              PLEX_BASEURL: https://plex.talos.plexuz.xyz
+              PLEX_BASEURL: https://plex.plexuz.xyz
               RUN_ONLY_ONCE: true
               WHITELIST_LIBRARY: "Anime,Movies,TV Shows,Shows"
               LIBRARY_MAPPING: '{ "Shows": "TV Shows", "Movie": "Movies" }'
