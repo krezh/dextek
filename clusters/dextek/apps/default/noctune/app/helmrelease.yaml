@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/noctune
-              tag: 0.1.1
+              tag: 0.1.1@sha256:05badee290f86c0aefd08b6efc8a19527304a03237f72e4a3f837850d9b6e981
             env:
               WEB_LISTEN_ADDR: ":8080"
               WEB_PUBLIC_URL: "https://alfred.plexuz.xyz"
