@@ -74,7 +74,6 @@ spec:
           - path: /home/nonroot
       shared-memory:
         type: emptyDir
-        medium: Memory
         sizeLimit: 1Gi
         globalMounts:
           - path: /dev/shm

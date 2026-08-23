@@ -82,4 +82,3 @@ spec:
     persistence:
       config:
         type: emptyDir
-        medium: Memory

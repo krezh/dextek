@@ -67,8 +67,6 @@ spec:
                 path: /spec/template/spec/volumes/0
                 value:
                   name: temp
-                  emptyDir:
-                    medium: Memory
             target:
               kind: Deployment
               name: kustomize-controller

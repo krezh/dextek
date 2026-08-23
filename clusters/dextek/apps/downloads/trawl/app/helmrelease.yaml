@@ -61,11 +61,9 @@ spec:
     persistence:
       shm:
         type: emptyDir
-        medium: Memory
         sizeLimit: 1Gi
         globalMounts:
           - path: /dev/shm
       data:
         type: emptyDir
-        medium: Memory
         sizeLimit: 100Mi

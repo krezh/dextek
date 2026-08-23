@@ -41,7 +41,6 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-        medium: Memory
       config:
         type: secret
         name: jellyfin-config-secret
