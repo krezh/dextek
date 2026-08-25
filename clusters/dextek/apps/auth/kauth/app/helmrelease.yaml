@@ -31,3 +31,10 @@ spec:
         - name: gateway-internal
           namespace: network
       hostnames: ["kauth.plexuz.xyz"]
+    monitoring:
+      enabled: true
+      grafanaDashboard:
+        enabled: true
+        instanceSelector:
+          matchLabels:
+            dashboards: grafana
