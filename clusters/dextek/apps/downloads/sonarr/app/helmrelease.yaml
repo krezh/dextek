@@ -29,7 +29,9 @@ spec:
             env:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
+              SONARR__SERVER__ALLOWEDHOSTS: sonarr.plexuz.xyz,sonarr.downloads.svc.cluster.local
               SONARR__SERVER__PORT: &port 8989
+              SONARR__SERVER__TRUSTEDNETWORKS: 10.244.0.0/16
               SONARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
               SONARR__AUTH__METHOD: External
@@ -45,6 +47,9 @@ spec:
                   httpGet:
                     path: /ping
                     port: *port
+                    httpHeaders:
+                      - name: Host
+                        value: localhost
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
