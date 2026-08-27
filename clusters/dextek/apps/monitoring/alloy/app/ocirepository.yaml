@@ -10,5 +10,5 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.12.0
+    tag: 1.12.1
   url: oci://ocharted.plexuz.xyz/grafana.github.io/helm-charts/alloy
