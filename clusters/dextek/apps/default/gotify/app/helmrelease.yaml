@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gotify/server
-              tag: 3.0.0@sha256:d75e89e0e28389c00c2556afe01282a37ee9756b0285799aa25214243aebd5e5
+              tag: 3.1.0@sha256:be44495e4609c6f5b06c01a9445ec6198dba902ce49fc3d0d71ab585cda8014c
             env:
               GOTIFY_DATABASE_CONNECTION:
                 valueFrom:
@@ -37,6 +37,10 @@ spec:
               GOTIFY_OIDC_ISSUER: https://sso.plexuz.xyz/application/o/gotify/
               GOTIFY_OIDC_LINK_BY_USERNAME: true
               GOTIFY_OIDC_REDIRECTURL: https://gotify.plexuz.xyz/auth/oidc/callback
+              GOTIFY_OIDC_GROUPS_CLAIM: groups
+              GOTIFY_OIDC_GROUPS_USER: gotify-users
+              GOTIFY_OIDC_GROUPS_ADMIN: superuser
+              GOTIFY_LOCALAUTH_ENABLED: false
               GOTIFY_SERVER_PORT: &port 8080
               GOTIFY_SERVER_SECURECOOKIE: true
             envFrom:
