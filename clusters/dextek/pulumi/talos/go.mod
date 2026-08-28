@@ -1,11 +1,11 @@
 module github.com/krezh/dextek/clusters/dextek/pulumi/talos
 
-go 1.25.11
+go 1.26.6
 
 require (
 	github.com/infisical/go-sdk v0.8.0
 	github.com/pulumi/pulumi-command/sdk v1.2.1
-	github.com/pulumi/pulumi/sdk/v3 v3.259.0
+	github.com/pulumi/pulumi/sdk/v3 v3.260.0
 	github.com/pulumiverse/pulumi-matchbox/sdk v0.3.0
 	github.com/pulumiverse/pulumi-talos/sdk v0.8.1
 	gopkg.in/yaml.v3 v3.0.1
@@ -55,6 +55,7 @@ require (
 	github.com/cloudflare/circl v1.6.3 // indirect
 	github.com/cyphar/filepath-securejoin v0.6.1 // indirect
 	github.com/danieljoos/wincred v1.2.3 // indirect
+	github.com/deckarep/golang-set/v2 v2.5.0 // indirect
 	github.com/djherbis/times v1.5.0 // indirect
 	github.com/ebitengine/purego v0.10.2 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
