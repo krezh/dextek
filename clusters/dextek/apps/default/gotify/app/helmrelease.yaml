@@ -37,6 +37,10 @@ spec:
               GOTIFY_OIDC_ISSUER: https://sso.plexuz.xyz/application/o/gotify/
               GOTIFY_OIDC_LINK_BY_USERNAME: true
               GOTIFY_OIDC_REDIRECTURL: https://gotify.plexuz.xyz/auth/oidc/callback
+              GOTIFY_OIDC_GROUPS_CLAIM: groups
+              GOTIFY_OIDC_GROUPS_USER: gotify-users
+              GOTIFY_OIDC_GROUPS_ADMIN: superuser
+              GOTIFY_LOCALAUTH_ENABLED: false
               GOTIFY_SERVER_PORT: &port 8080
               GOTIFY_SERVER_SECURECOOKIE: true
             envFrom:
