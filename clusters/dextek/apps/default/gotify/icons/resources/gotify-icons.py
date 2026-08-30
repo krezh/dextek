@@ -5,8 +5,7 @@ import re
 import requests
 
 GOTIFY_URL = os.environ["GOTIFY_URL"]
-GOTIFY_USER = os.environ["GOTIFY_USERNAME"]
-GOTIFY_PASS = os.environ["GOTIFY_PASSWORD"]
+GOTIFY_APIKEY = os.environ["GOTIFY_APIKEY"]
 
 CDN_BASE = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png"
 
@@ -56,7 +55,7 @@ def upload_icon(session: requests.Session, app_id: int, icon_name: str) -> bool:
 
 def main():
     session = requests.Session()
-    session.auth = (GOTIFY_USER, GOTIFY_PASS)
+    session.headers["X-Gotify-Key"] = GOTIFY_APIKEY
 
     resp = session.get(f"{GOTIFY_URL}/application")
     resp.raise_for_status()
