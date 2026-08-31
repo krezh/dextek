@@ -22,6 +22,7 @@ spec:
         [
           "^nix run github:purpleclay/go-overlay#govendor",
           "^bash .github/scripts/update-hash.sh",
+          "^nix",
         ]
   parallelism: 10
   schedule: 0 * * * *
