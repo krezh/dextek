@@ -33,7 +33,7 @@ spec:
     - --embedding
   resources:
     cpu: 100m
-    memory: 2Gi
+    memory: 8Gi
   endpoint:
     port: 8080
     type: ClusterIP
