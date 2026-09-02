@@ -144,16 +144,6 @@ module "oauth_apps" {
       redirect_uris      = ["gotify://oidc/callback"]
       meta_description   = "Notification server"
     }
-    coder = {
-      app_group = "Infrastructure"
-      access_groups = [
-        data.authentik_group.superuser.id
-      ]
-      client_id          = data.infisical_secrets.coder.secrets["CODER_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.coder.secrets["CODER_OAUTH_CLIENT_SECRET"].value
-      redirect_uri_paths = ["/api/v2/users/oidc/callback"]
-      meta_description   = "Remote development environments"
-    }
     radarr = {
       app_group = "Downloads"
       access_groups = [
