@@ -216,6 +216,15 @@ spec:
           name: kaneo-postgres
         inRoles:
           - scram_users
+      - name: coder
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: false
+        passwordSecret:
+          name: coder-postgres
+        inRoles:
+          - scram_users
       - name: pooler-rw
         ensure: present
         login: true
