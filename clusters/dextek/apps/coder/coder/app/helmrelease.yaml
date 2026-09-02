@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: coder
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: coder
+  values:
+    coder:
+      podAnnotations:
+        secret.reloader.stakater.com/reload: coder-secret
+      env:
+        - name: CODER_ACCESS_URL
+          value: https://coder.plexuz.xyz
+        - name: CODER_PG_CONNECTION_URL
+          valueFrom:
+            secretKeyRef:
+              name: coder-postgres
+              key: url
+        - name: CODER_OIDC_ISSUER_URL
+          value: https://sso.plexuz.xyz/application/o/coder/
+      envFrom:
+        - secretRef:
+            name: coder-secret
+      serviceAccount:
+        workspacePerms: true
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 2Gi
+      service:
+        enable: true
+        type: ClusterIP
+      httproute:
+        enable: true
+        parentRefs:
+          - name: gateway-internal
+            namespace: network
+            sectionName: https
+        host: coder.plexuz.xyz
