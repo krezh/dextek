@@ -5,7 +5,7 @@ go 1.26.6
 require (
 	github.com/infisical/go-sdk v0.8.0
 	github.com/pulumi/pulumi-command/sdk v1.2.1
-	github.com/pulumi/pulumi/sdk/v3 v3.260.0
+	github.com/pulumi/pulumi/sdk/v3 v3.261.0
 	github.com/pulumiverse/pulumi-matchbox/sdk v0.3.0
 	github.com/pulumiverse/pulumi-talos/sdk v0.8.1
 	gopkg.in/yaml.v3 v3.0.1
