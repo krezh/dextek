@@ -1,10 +1,2 @@
 machine:
   type: controlplane
-  install:
-    disk: /dev/sda
-    wipe: false
-    diskSelector:
-      serial: "S435NC0R704060"
-  nodeLabels:
-    node.kubernetes.io/gpu: "true"
-    topology.kubernetes.io/region: main

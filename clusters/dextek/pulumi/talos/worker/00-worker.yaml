@@ -1,7 +1,0 @@
-machine:
-  features:
-    kubernetesTalosAPIAccess:
-      $patch: delete
-cluster:
-  etcd:
-    $patch: delete

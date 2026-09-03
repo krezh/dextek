@@ -1,0 +1,8 @@
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: ${factory_repo_url}/metal-installer/${talos_factory_hash}:${talos_version}
+provisioning:
+  diskSelector:
+    match: disk.serial == "S435NC0R703016"
+  wipe: false
