@@ -56,10 +56,22 @@ extraArgs:
   feature-gates: PersistentVolumeClaimUnusedSinceTime=true,HPAScaleToZero=true
   default-not-ready-toleration-seconds: "60"
   default-unreachable-toleration-seconds: "60"
-  oidc-client-id: kubernetes
-  oidc-groups-claim: groups
-  oidc-issuer-url: https://sso.plexuz.xyz/application/o/kubernetes/
-  oidc-username-claim: email
+---
+apiVersion: v1alpha1
+kind: KubeAuthenticationConfig
+configuration:
+  jwt:
+    - issuer:
+        url: https://sso.plexuz.xyz/application/o/kubernetes/
+        audiences:
+          - kubernetes
+      claimMappings:
+        username:
+          claim: email
+          prefix: ""
+        groups:
+          claim: groups
+          prefix: ""
 ---
 apiVersion: v1alpha1
 kind: KubeAuditPolicyConfig
