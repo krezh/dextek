@@ -58,6 +58,12 @@ extraArgs:
 apiVersion: v1alpha1
 kind: KubeAuthenticationConfig
 configuration:
+  anonymous:
+    conditions:
+      - path: /livez
+      - path: /readyz
+      - path: /healthz
+    enabled: true
   jwt:
     - issuer:
         url: https://sso.plexuz.xyz/application/o/kubernetes/
@@ -70,6 +76,16 @@ configuration:
         groups:
           claim: groups
           prefix: ""
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: node
+type: Node
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: rbac
+type: RBAC
 ---
 apiVersion: v1alpha1
 kind: KubeAuditPolicyConfig

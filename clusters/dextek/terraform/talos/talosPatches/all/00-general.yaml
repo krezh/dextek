@@ -1,11 +1,7 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.14/website/content/v1.14/schemas/config.schema.json
+version: v1alpha1
 machine:
-  certSANs:
-    - 192.168.25.20
-    - dextek.plexuz.xyz
-    - 127.0.0.1
-    - localhost
   features:
     diskQuotaSupport: true
 ---
