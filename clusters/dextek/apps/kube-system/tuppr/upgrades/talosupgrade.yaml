@@ -13,7 +13,7 @@ spec:
   silences:
     - matchers:
         - name: alertname
-          value: ^(CephMonDown|CephOSDDown|KubeNodeUnreachable|KubeNodeNotReady|TargetDown)$
+          value: ^(CephMonDown|CephOSDDown|KubeNodeUnreachable|KubeNodeNotReady|TargetDown|CephMonDownQuorumAtRisk|CephOSDDownHigh)$
           matchType: "=~"
       maxDuration: 2h
   healthChecks:
