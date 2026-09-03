@@ -95,11 +95,11 @@ kind: ResolverConfig
 nameservers:
   - address: 192.168.20.1
 searchDomains:
-  disableDefault: true
+  domains: []
 hostDNS:
   enabled: true
   resolveMemberNames: true
-  forwardKubeDNSToHost: false
+  forwardKubeDNSToHost: true
 ---
 apiVersion: v1alpha1
 kind: FilesystemTrimConfig
