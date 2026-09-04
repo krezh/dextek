@@ -88,7 +88,15 @@ resource "matchbox_profile" "machine" {
     "talos.platform=${each.value.platform}",
     "talos.config=${var.matchbox.url}/ignition?mac=$${mac:hexhyp}"
   ]
-  raw_ignition = data.talos_machine_configuration.machine[each.key].machine_configuration
+  # Re-inject `domains: []` into ResolverConfig. It is the only way to override
+  # DHCP-supplied search domains, but machinery tags the field `yaml:"domains,omitempty"`,
+  # so the explicit empty list is dropped on marshal and never reaches the node.
+  # Safe only while no node sets a non-empty `domains` (that would duplicate the key).
+  raw_ignition = replace(
+    data.talos_machine_configuration.machine[each.key].machine_configuration,
+    "searchDomains:\n",
+    "searchDomains:\n    domains: []\n"
+  )
 }
 
 locals {
