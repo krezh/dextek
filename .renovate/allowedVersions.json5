@@ -15,8 +15,9 @@
     },
     {
       description: "CoreDNS 1.14.3+ prefetch poisons autopath answers, hold until coredns/coredns#8390 is fixed",
-      matchPackageNames: ["oci://ghcr.io/coredns/charts/coredns"],
-      allowedVersions: "<1.47.0",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["ghcr.io/coredns/charts/coredns"],
+      enabled: false,
     },
   ],
 }
