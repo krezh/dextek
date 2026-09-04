@@ -95,6 +95,7 @@ nameservers:
   - address: 192.168.20.1
 searchDomains:
   domains: []
+  disableDefault: true
 hostDNS:
   enabled: true
   resolveMemberNames: true
