@@ -104,6 +104,10 @@ spec:
         login: true
         superuser: false
         disablePassword: false
+        passwordSecret:
+          name: atuin-postgres
+        inRoles:
+          - scram_users
       - name: attic
         ensure: present
         login: true
