@@ -8,15 +8,14 @@ metadata:
 spec:
   targetNamespace: *namespace
   dependsOn:
-    - name: cloudnative-pg
+    - name: cnpg-cluster
       namespace: flux-system
-  path: ./clusters/shared/components/cnpg/base/database
+  path: ./clusters/shared/components/cnpg/cert/database
   prune: true
   sourceRef:
     kind: OCIRepository
     name: flux-system
     namespace: flux-system
-  wait: false
   interval: 1h
   retryInterval: 2m
   timeout: 5m
@@ -26,7 +25,6 @@ spec:
       OWNER: ${DATABASE_OWNER:=${APP}}
       EXTENSIONS: ${q:='}${DATABASE_EXTENSIONS:=}${q:='}
       DATABASE_SUPERUSER: ${q:='}${DATABASE_SUPERUSER:=false}${q:='}
-      DISABLE_PASSWORD: ${q:='}${DISABLE_PASSWORD:=true}${q:='}
       emptyArray: "[]"
   healthChecks:
     - apiVersion: postgresql.cnpg.io/v1

@@ -5,7 +5,7 @@ kind: Component
 components:
   - ../base/patch
 resources:
-  - ../base/ks.yaml
+  - ./ks-database.yaml
   - ./certificate.yaml
   - ./secret.yaml
 patches:
