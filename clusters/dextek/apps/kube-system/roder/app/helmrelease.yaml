@@ -16,9 +16,6 @@ spec:
     envFrom:
       - secretRef:
           name: roder-secret
-    env:
-      - name: RODER_ALERTMANAGER_URL
-        value: http://alertmanager-operated.monitoring.svc.cluster.local:9093
     talos:
       enabled: true
       roles:
@@ -29,6 +26,12 @@ spec:
       config:
         enabled: true
         readerGroups: ["superuser"]
+    alertmanager:
+      url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+      readerGroups: ["superuser"]
+      actions:
+        enabled: true
+        operatorGroups: ["superuser"]
     resources:
       requests:
         cpu: 50m
