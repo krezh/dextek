@@ -4,6 +4,9 @@ cluster:
       - 10.10.0.0/27
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
+      auto-compaction-mode: periodic
+      auto-compaction-retention: "5m"
+      quota-backend-bytes: "4294967296"
 ---
 apiVersion: v1alpha1
 kind: KubeClusterConfig
