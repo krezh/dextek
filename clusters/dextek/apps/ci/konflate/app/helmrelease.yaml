@@ -18,6 +18,7 @@ spec:
       mcp: true
       prFilterExpr: pr.labels.exists(l, l.name == "cluster/dextek")
       clusterPath: clusters/dextek
+      verifyImages: true
     secret:
       existingSecret: konflate-secret
     httpRoute:
