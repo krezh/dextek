@@ -102,16 +102,6 @@ module "oauth_apps" {
       redirect_uri_paths = ["/auth/oidc/callback"]
       meta_description   = ""
     }
-    papra = {
-      app_group = "Tools"
-      access_groups = [
-        data.authentik_group.superuser.id,
-        authentik_group.groups["users"].id
-      ]
-      client_id          = data.infisical_secrets.papra.secrets["PAPRA_OAUTH_CLIENT_ID"].value
-      client_secret      = data.infisical_secrets.papra.secrets["PAPRA_OAUTH_CLIENT_SECRET"].value
-      redirect_uri_paths = ["/api/auth/oauth2/callback/authentik"]
-    }
     qui = {
       app_group = "Downloads"
       access_groups = [
