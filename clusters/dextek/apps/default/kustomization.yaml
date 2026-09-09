@@ -22,7 +22,6 @@ resources:
   - ./chaski/ks.yaml
   - ./miniflux/ks.yaml
   - ./termix/ks.yaml
-  - ./papra/ks.yaml
   - ./gotify/ks.yaml
   - ./xilo/ks.yaml
 components:
