@@ -8,6 +8,12 @@
     "local>krezh/dextek//.renovate/packageRules.json5",
     "local>krezh/dextek//.renovate/clusters.json5",
   ],
+  hostRules: [
+    {
+      matchHost: "ocharted.plexuz.xyz",
+      allowInternal: true,
+    },
+  ],
   flux: {
     managerFilePatterns: ["/clusters/.+\\.ya?ml$/"],
   },
