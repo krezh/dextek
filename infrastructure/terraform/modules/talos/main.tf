@@ -35,6 +35,20 @@ locals {
       factory_repo_url   = var.factory_repo_url
     }, var.template_vars)
   }
+
+  # Re-inject `domains: []` into ResolverConfig. It is the only way to override
+  # DHCP-supplied search domains, but machinery tags the field `yaml:"domains,omitempty"`,
+  # so the explicit empty list is dropped on marshal and never reaches the node.
+  # Safe only while no node sets a non-empty `domains` (that would duplicate the key).
+  # Single source of truth: every consumer of the rendered machine config reads
+  # this instead of data.talos_machine_configuration.machine[...] directly.
+  machine_configs = {
+    for k, v in local.nodes : k => replace(
+      data.talos_machine_configuration.machine[k].machine_configuration,
+      "searchDomains:\n",
+      "searchDomains:\n    domains: []\n"
+    )
+  }
 }
 
 resource "talos_machine_secrets" "talos" {
@@ -88,15 +102,7 @@ resource "matchbox_profile" "machine" {
     "talos.platform=${each.value.platform}",
     "talos.config=${var.matchbox.url}/ignition?mac=$${mac:hexhyp}"
   ]
-  # Re-inject `domains: []` into ResolverConfig. It is the only way to override
-  # DHCP-supplied search domains, but machinery tags the field `yaml:"domains,omitempty"`,
-  # so the explicit empty list is dropped on marshal and never reaches the node.
-  # Safe only while no node sets a non-empty `domains` (that would duplicate the key).
-  raw_ignition = replace(
-    data.talos_machine_configuration.machine[each.key].machine_configuration,
-    "searchDomains:\n",
-    "searchDomains:\n    domains: []\n"
-  )
+  raw_ignition = local.machine_configs[each.key]
 }
 
 locals {

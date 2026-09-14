@@ -9,7 +9,7 @@ resource "local_sensitive_file" "machine_config" {
   for_each = var.machine_yaml ? local.nodes : {}
 
   filename        = "${each.value.role}_${each.value.hostname}.yaml"
-  content         = data.talos_machine_configuration.machine[each.key].machine_configuration
+  content         = local.machine_configs[each.key]
   file_permission = 0600
 }
 
