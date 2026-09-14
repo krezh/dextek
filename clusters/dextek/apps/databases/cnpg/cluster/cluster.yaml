@@ -87,7 +87,7 @@ spec:
           - /usr/share/postgresql/18/
       - name: timescaledb
         image:
-          reference: ghcr.io/vember31/timescaledb:2.29.2
+          reference: ghcr.io/vember31/timescaledb:2.30.0
       - name: timescaledb-toolkit
         image:
           reference: ghcr.io/vember31/timescaledb-toolkit:1.26.0
