@@ -12,7 +12,7 @@ spec:
   serviceTemplate:
     metadata:
       annotations:
-        external-dns.kubernetes.io/hostname: pgbouncer-cnpg.plexuz.xyz
+        external-dns.alpha.kubernetes.io/hostname: pgbouncer-cnpg.plexuz.xyz
     spec:
       type: LoadBalancer
   pgbouncer:

@@ -53,8 +53,8 @@
 #     "kubernetes_service_type"        = "ClusterIP"
 #     "kubernetes_disabled_components" = ["ingress", "traefik middleware"]
 #     "kubernetes_httproute_annotations" = {
-#       "gatus.home-operations.com/enabled"  = "false"
-#       "external-dns.kubernetes.io/exclude" = "true"
+#       "gatus.home-operations.com/enabled"        = "false"
+#       "external-dns.alpha.kubernetes.io/exclude" = "true"
 #     }
 #     "kubernetes_httproute_parent_refs" = [
 #       {
