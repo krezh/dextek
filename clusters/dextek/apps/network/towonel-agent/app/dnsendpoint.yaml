@@ -4,7 +4,7 @@ apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: towonel
-  annotations:
+  labels:
     external-dns.alpha.kubernetes.io/provider: cloudflare
 spec:
   endpoints:
