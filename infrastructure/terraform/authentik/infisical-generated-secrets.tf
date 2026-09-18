@@ -1,5 +1,6 @@
 locals {
-  oidc_migration_apps = {
+  oidc_generated_secret_apps = {
+    donetick         = "Donetick"
     radarr           = "Radarr"
     sonarr           = "Sonarr"
     prowlarr         = "Prowlarr"
@@ -14,22 +15,22 @@ locals {
 
   # Only apps whose Infisical folder doesn't exist yet. The rest use a literal
   # folder_path below, kept out of Terraform's create/destroy lifecycle.
-  oidc_missing_folders = toset(["home-assistant", "librespeed", "pinchflat"])
+  oidc_missing_folders = toset(["home-assistant", "librespeed", "pinchflat", "donetick"])
 }
 
 resource "infisical_secret_folder" "oidc_app" {
   for_each         = local.oidc_missing_folders
-  name             = local.oidc_migration_apps[each.key]
+  name             = local.oidc_generated_secret_apps[each.key]
   folder_path      = "/Kubernetes/DexTek"
   environment_slug = local.infisical_env
   project_id       = local.infisical_project_id
 }
 
 resource "infisical_secret" "oidc_client_secret" {
-  for_each         = local.oidc_migration_apps
-  name             = "OIDC_CLIENT_SECRET"
-  env_slug         = local.infisical_env
-  workspace_id     = local.infisical_project_id
+  for_each     = local.oidc_generated_secret_apps
+  name         = "OIDC_CLIENT_SECRET"
+  env_slug     = local.infisical_env
+  workspace_id = local.infisical_project_id
   folder_path = contains(local.oidc_missing_folders, each.key) ? (
     infisical_secret_folder.oidc_app[each.key].path
   ) : "/Kubernetes/DexTek/${each.value}"

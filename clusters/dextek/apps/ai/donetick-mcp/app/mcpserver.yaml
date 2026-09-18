@@ -1,0 +1,32 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: donetick-mcp
+spec:
+  image: ghcr.io/trash-panda-v91-beta/donetick-mcp:v2.0.0@sha256:23eedb59d3a98fa26624a638d1d47158a0e62589e313b13cfb52c2e91e3295ae
+  transport: streamable-http
+  mcpPort: 8000
+  groupRef:
+    name: mcp-tools
+  permissionProfile:
+    type: builtin
+    name: network
+  env:
+    - name: FASTMCP_TRANSPORT
+      value: streamable-http
+    - name: FASTMCP_HOST
+      value: 0.0.0.0
+    - name: FASTMCP_PORT
+      value: "8000"
+    - name: DONETICK_BASE_URL
+      value: http://donetick.default.svc.cluster.local:2021
+    - name: ALLOW_INSECURE_HTTP
+      value: "true"
+    - name: TZ
+      value: Europe/Stockholm
+  secrets:
+    - name: donetick-mcp-secret
+      key: DONETICK_API_TOKEN
+      targetEnvName: DONETICK_API_TOKEN
