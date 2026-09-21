@@ -166,5 +166,5 @@ spec:
       inputName: DS_PROMETHEUS
     - datasourceName: prometheus
       inputName: DS_VICTORIAMETRICS
-  url: https://grafana.com/api/dashboards/22236/revisions/4/download
+  url: https://grafana.com/api/dashboards/22236/revisions/5/download
 
