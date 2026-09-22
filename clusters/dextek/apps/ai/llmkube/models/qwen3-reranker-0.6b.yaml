@@ -22,10 +22,10 @@ spec:
   image: ghcr.io/ggml-org/llama.cpp:server
   replicas: 1
   priority: batch
-  parallelSlots: 4
-  contextSize: 8192
-  batchSize: 8192
-  uBatchSize: 2048
+  parallelSlots: 2
+  contextSize: 4096
+  batchSize: 4096
+  uBatchSize: 1024
   extraArgs:
     - --reranking
     - --pooling
@@ -33,7 +33,7 @@ spec:
     - --embedding
   resources:
     cpu: 100m
-    memory: 12Gi
+    memory: 4Gi
   endpoint:
     port: 8080
     type: ClusterIP
