@@ -151,3 +151,15 @@ spec:
                 expr: node_zfs_zpool_state{ state!="online" } > 0
                 labels:
                   severity: critical
+      container-thrashing-rules:
+        groups:
+          - name: container-memory-thrashing
+            rules:
+              - alert: ContainerMemoryMajorPagesFaults
+                annotations:
+                  summary: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} is thrashing memory
+                  description: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} on node {{ $labels.node }} is experiencing {{ printf "%.2f" $value }} major page faults per second. This indicates it is pinned against its cgroup memory limit and causing memory thrashing.
+                expr: rate(container_memory_failures_total{failure_type="pgmajfault", container!=""}[5m]) > 100
+                for: 5m
+                labels:
+                  severity: warning
