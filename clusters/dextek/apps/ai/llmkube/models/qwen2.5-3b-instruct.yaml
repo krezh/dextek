@@ -23,8 +23,8 @@ spec:
   image: ghcr.io/ggml-org/llama.cpp:server
   replicas: 1
   priority: batch
-  parallelSlots: 2
-  contextSize: 8192
+  parallelSlots: 1
+  contextSize: 32768
   batchSize: 2048
   uBatchSize: 512
   jinja: true
@@ -35,7 +35,7 @@ spec:
     - qwen2-5-3b-instruct
   resources:
     cpu: 100m
-    memory: 4Gi
+    memory: 6Gi
   endpoint:
     port: 8080
     type: ClusterIP
