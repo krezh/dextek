@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: memory-thrashing
+spec:
+  groups:
+    - name: memory-thrashing
+      rules:
+        - alert: ContainerMemoryMajorPagesFaults
+          annotations:
+            summary: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} is thrashing memory
+            description: |
+              Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} on node {{ $labels.node }}
+              is experiencing {{ printf "%.2f" $value }} major page faults per second.
+              This indicates it is pinned against its cgroup memory limit and causing memory thrashing.
+          expr: rate(container_memory_failures_total{failure_type="pgmajfault", container!=""}[5m]) > 100
+          for: 5m
+          labels:
+            severity: warning
