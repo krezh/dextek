@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/inference.llmkube.dev/model_v1alpha1.json
+apiVersion: inference.llmkube.dev/v1alpha1
+kind: Model
+metadata:
+  name: qwen2-5-3b-instruct
+spec:
+  source: https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q4_k_m.gguf
+  format: gguf
+  quantization: Q4_K_M
+  hardware:
+    accelerator: cpu
+    gpu:
+      enabled: false
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/inference.llmkube.dev/inferenceservice_v1alpha1.json
+apiVersion: inference.llmkube.dev/v1alpha1
+kind: InferenceService
+metadata:
+  name: qwen2-5-3b-instruct
+spec:
+  modelRef: qwen2-5-3b-instruct
+  image: ghcr.io/ggml-org/llama.cpp:server
+  replicas: 1
+  priority: batch
+  parallelSlots: 2
+  contextSize: 8192
+  batchSize: 2048
+  uBatchSize: 512
+  jinja: true
+  extraArgs:
+    - --alias
+    - qwen2.5-3b-instruct
+    - --alias
+    - qwen2-5-3b-instruct
+  resources:
+    cpu: 100m
+    memory: 4Gi
+  endpoint:
+    port: 8080
+    type: ClusterIP
