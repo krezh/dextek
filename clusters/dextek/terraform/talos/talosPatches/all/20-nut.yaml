@@ -5,5 +5,6 @@ name: nut-client
 configFiles:
   - content: |-
       MONITOR ${upsmonHost} 1 upsmon_remote ${upsmonPasswd} slave
+      ALARMCRITICAL 0
       SHUTDOWNCMD "/sbin/poweroff"
     mountPath: /usr/local/etc/nut/upsmon.conf

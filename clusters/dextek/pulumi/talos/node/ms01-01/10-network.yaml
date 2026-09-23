@@ -27,8 +27,10 @@ kind: BondConfig
 name: bond0
 links:
   - eth0
-  - eth1
 bondMode: active-backup
+miimon: 100
+updelay: 200
+downdelay: 200
 mtu: 1500
 ---
 apiVersion: v1alpha1
@@ -42,6 +44,9 @@ name: bond1
 links:
   - eth10g
 bondMode: active-backup
+miimon: 100
+updelay: 200
+downdelay: 200
 mtu: 1500
 addresses:
   - address: 10.10.0.23/27
