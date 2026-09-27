@@ -29,7 +29,7 @@ spec:
         containers:
           app:
             image:
-              repository: codeberg.org/towonel/towonel-agent
+              repository: git.ow-ops.eu/towonel/towonel-agent
               tag: 1.8.0
             env:
               RUST_LOG: info

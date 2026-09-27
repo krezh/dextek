@@ -149,7 +149,7 @@
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
-      sourceUrl: "https://codeberg.org/towonel/towonel",
+      sourceUrl: "https://git.ow-ops.eu/towonel/towonel",
     },
     {
       description: "Toolhive group",
