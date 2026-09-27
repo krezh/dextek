@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: git.ow-ops.eu/towonel/towonel-agent
-              tag: 1.8.0
+              tag: 1.10.0
             env:
               RUST_LOG: info
               NODE_NAME:
