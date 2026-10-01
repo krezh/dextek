@@ -8,6 +8,9 @@ spec:
   oidc:
     provider:
       issuer: https://sso.plexuz.xyz/application/o/${OIDC_SLUG:-${APP}}/
+      authorizationEndpoint: https://sso.plexuz.xyz/application/o/authorize/
+      tokenEndpoint: https://sso.plexuz.xyz/application/o/token/
+      endSessionEndpoint: https://sso.plexuz.xyz/application/o/${OIDC_SLUG:-${APP}}/end-session/
     clientID: ${OIDC_CLIENT_ID:-${APP}}
     clientSecret:
       name: ${OIDC_CLIENT_SECRET_NAME:-${APP}-oidc-secret}
