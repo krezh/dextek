@@ -36,7 +36,6 @@ spec:
       schedule:
         cron: "0 4 * * *"
         jitter: 30m
-    successExpr: "stats.files > 0 && stats.errors == 0"
     verifyFilesPercent: 10
   upload:
     maxParallelFileReads: 20
