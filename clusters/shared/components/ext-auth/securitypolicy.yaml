@@ -19,7 +19,7 @@ spec:
     http:
       backendRefs:
         - kind: Service
-          name: ak-outpost-authentik-embedded-outpost
+          name: ak-outpost-${EXT_AUTH_OUTPOST:-internal}
           namespace: auth
           port: 9000
       headersToBackend:
