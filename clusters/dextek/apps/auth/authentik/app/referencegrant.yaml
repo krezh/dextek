@@ -19,6 +19,9 @@ spec:
     - group: gateway.envoyproxy.io
       kind: SecurityPolicy
       namespace: databases
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: kopiur-system
   to:
     - group: ""
       kind: Service
