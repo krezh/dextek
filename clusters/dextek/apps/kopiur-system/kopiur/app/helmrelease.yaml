@@ -20,27 +20,6 @@ spec:
       fsGroupChangePolicy: OnRootMismatch
       seccompProfile:
         type: RuntimeDefault
-    ui:
-      enabled: true
-      auth:
-        userHeader: X-authentik-username
-        groupsHeader: X-authentik-groups
-        groupsSeparator: "|"
-        emailHeader: X-authentik-email
-        allowedGroups:
-          - superuser
-        acknowledgeNoProxySecret: true
-      networkPolicy:
-        enabled: true
-        proxySelector:
-          namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: network
-          podSelector:
-            matchLabels:
-              gateway.envoyproxy.io/owning-gateway-name: gateway-internal
-      serviceMonitor:
-        enabled: true
     monitoring:
       serviceMonitor:
         enabled: true
