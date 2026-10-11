@@ -20,6 +20,14 @@ spec:
       fsGroupChangePolicy: OnRootMismatch
       seccompProfile:
         type: RuntimeDefault
+    ui:
+      enabled: true
+      auth:
+        anonymous:
+          enabled: true
+          user: kopiur-ui
+      serviceMonitor:
+        enabled: true
     monitoring:
       serviceMonitor:
         enabled: true
