@@ -6,3 +6,11 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
+configMapGenerator:
+  - name: jellyfin-config-scripts
+    files:
+      - jellyfin-config.py=./resources/jellyfin-config.py
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

@@ -10,6 +10,13 @@ spec:
     kind: OCIRepository
     name: jellyfin-config
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       jellyfin-config:
         annotations:
@@ -22,29 +29,69 @@ spec:
           successfulJobsHistory: 1
           failedJobsHistory: 1
           ttlSecondsAfterFinished: 3600
+        initContainers:
+          pip-install:
+            image:
+              repository: public.ecr.aws/docker/library/python
+              tag: 3.15-slim@sha256:6ea0540b2837a9a285e64f59a2e8eb7e85defc4bb7c8cea52742821f50217deb
+            command:
+              - pip
+              - install
+              - "--target=/pip-packages"
+              - "requests"
+              - "pyyaml"
         containers:
           app:
             image:
-              repository: ghcr.io/venkyr77/jellarr
-              tag: v0.1.0
+              repository: public.ecr.aws/docker/library/python
+              tag: 3.15-slim@sha256:6ea0540b2837a9a285e64f59a2e8eb7e85defc4bb7c8cea52742821f50217deb
+            command: ["python", "/scripts/jellyfin-config.py"]
+            env:
+              JELLYFIN_URL: http://jellyfin.default.svc.cluster.local:8096
+              PYTHONPATH: /pip-packages
             envFrom:
               - secretRef:
-                  name: jellyfin-config-secret
+                  name: "{{ .Release.Name }}-secret"
             resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 512M
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
         pod:
           hostUsers: false
           restartPolicy: Never
     persistence:
-      tmp:
-        type: emptyDir
+      script:
+        type: configMap
+        name: "{{ .Release.Name }}-scripts"
+        globalMounts:
+          - path: /scripts/jellyfin-config.py
+            subPath: jellyfin-config.py
+            readOnly: true
       config:
         type: secret
-        name: jellyfin-config-secret
-        globalMounts:
-          - path: /config/config.yml
-            subPath: config.yml
-            readOnly: true
+        name: "{{ .Release.Name }}-secret"
+        advancedMounts:
+          jellyfin-config:
+            app:
+              - path: /config/config.yaml
+                subPath: config.yaml
+                readOnly: true
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          jellyfin-config:
+            app:
+              - path: /pip-packages
+                subPath: pip-packages
+              - path: /tmp
+                subPath: tmp
+            pip-install:
+              - path: /pip-packages
+                subPath: pip-packages
+              - path: /tmp
+                subPath: tmp-pip
