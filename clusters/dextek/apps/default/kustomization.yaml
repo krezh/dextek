@@ -17,6 +17,7 @@ resources:
   - ./changedetection/ks.yaml
   - ./zipline/ks.yaml
   - ./jellyfin/ks.yaml
+  - ./stash/ks.yaml
   - ./tracearr/ks.yaml
   - ./librespeed/ks.yaml
   - ./chaski/ks.yaml

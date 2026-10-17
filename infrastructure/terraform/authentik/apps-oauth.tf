@@ -236,5 +236,13 @@ module "oauth_apps" {
       client_id          = "tracearr"
       redirect_uri_paths = ["/api/v1/auth/oauth2/callback/oidc"]
     }
+    stash = {
+      app_group = "Media"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "stash"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
   }
 }
