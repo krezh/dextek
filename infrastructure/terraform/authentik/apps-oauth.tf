@@ -151,6 +151,14 @@ module "oauth_apps" {
       client_id          = "sonarr"
       redirect_uri_paths = ["/oauth2/callback"]
     }
+    whisparr = {
+      app_group = "Downloads"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "whisparr"
+      redirect_uri_paths = ["/oauth2/callback"]
+    }
     prowlarr = {
       app_group = "Downloads"
       access_groups = [

@@ -11,6 +11,7 @@ locals {
     changedetection  = "Changedetection"
     "home-assistant" = "HomeAssistant"
     librespeed       = "Librespeed"
+    whisparr         = "Whisparr"
   }
 
   # Only apps whose Infisical folder doesn't exist yet. The rest use a literal

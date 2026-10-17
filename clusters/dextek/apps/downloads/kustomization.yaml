@@ -10,6 +10,7 @@ resources:
   - ./qbittorrent/ks.yaml
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
+  - ./whisparr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./trawl/ks.yaml
   - ./bazarr/ks.yaml

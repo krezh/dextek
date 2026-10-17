@@ -1,0 +1,112 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: whisparr
+  namespace: downloads
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: whisparr
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      app:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/krezh/whisparr
+              tag: 3.6.5@sha256:08a897eedb67e352a53180a6a4374f4afd230e3de519d2b2ef96fd364d543995
+            env:
+              WHISPARR__APP__INSTANCENAME: Whisparr
+              WHISPARR__APP__THEME: dark
+              WHISPARR__SERVER__ALLOWEDHOSTS: whisparr.plexuz.xyz,whisparr.downloads.svc.cluster.local
+              WHISPARR__SERVER__PORT: &port 8989
+              WHISPARR__SERVER__TRUSTEDNETWORKS: 10.244.0.0/16
+              WHISPARR__LOG__DBENABLED: "False"
+              WHISPARR__LOG__LEVEL: info
+              WHISPARR__AUTH__METHOD: External
+              WHISPARR__UPDATE__BRANCH: eros
+            envFrom:
+              - secretRef:
+                  name: whisparr-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                    httpHeaders:
+                      - name: Host
+                        value: localhost
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 671Mi
+              limits:
+                memory: 3027Mi
+    service:
+      app:
+        controller: app
+        ports:
+          http:
+            port: 80
+            targetPort: *port
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 80
+      api:
+        hostnames: ["{{ .Release.Name }}.plexuz.xyz"]
+        annotations:
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 80
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /api
+    persistence:
+      config:
+        enabled: true
+        existingClaim: whisparr-config
+      media:
+        type: nfs
+        server: jotunheim.fast.internal
+        path: /mnt/tank/media
+        globalMounts:
+          - path: /media
+      downloads:
+        enabled: true
+        existingClaim: downloads
