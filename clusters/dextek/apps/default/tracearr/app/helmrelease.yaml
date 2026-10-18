@@ -69,10 +69,14 @@ spec:
         accessMode: ReadWriteOnce
         globalMounts:
           - path: /data/backup
+      image-cache:
+        size: 10Gi
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: /data/tracearr/image-cache
       tmpfs:
         type: emptyDir
         globalMounts:
-          - path: /app/data/image-cache
-            subPath: cache
           - path: /tmp
             subPath: tmp
