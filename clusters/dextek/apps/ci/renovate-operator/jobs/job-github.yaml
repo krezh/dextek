@@ -11,6 +11,11 @@ spec:
   discoveryFilters:
     - krezh/*
   extraEnv:
+    - name: GHCR_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: renovate-secret
+          key: GHCR_TOKEN
     - name: LOG_LEVEL
       value: debug
     - name: RENOVATE_ONBOARDING_CONFIG_FILE_NAME
@@ -30,6 +35,12 @@ spec:
           {
             "matchHost": "ocharted.plexuz.xyz",
             "allowInternal": true
+          },
+          {
+            "matchHost": "ghcr.io",
+            "hostType": "docker",
+            "username": "krezh",
+            "password": "$(GHCR_TOKEN)"
           }
         ]
   parallelism: 10
