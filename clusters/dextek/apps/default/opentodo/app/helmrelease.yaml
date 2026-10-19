@@ -30,6 +30,8 @@ spec:
               OPENTODO_ADDR: :8080
               OPENTODO_DATA_DIR: /data
               OPENTODO_BASE_URL: https://opentodo.plexuz.xyz
+              OPENTODO_MCP: "true"
+              OPENTODO_MCP_WRITES: "true"
               OPENTODO_OIDC_ISSUER: https://sso.plexuz.xyz/application/o/opentodo/
               OPENTODO_OIDC_CLIENT_ID: opentodo
               OPENTODO_OIDC_DISPLAY_NAME: Authentik
