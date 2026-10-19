@@ -1,0 +1,92 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app opentodo
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: opentodo
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      opentodo:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/pixari/opentodo
+              tag: 0.8.0@sha256:bd1ff3d14218e1d2c0c45f25a1620e7494bdddf307be8824082c1819b1161056
+            env:
+              OPENTODO_ADDR: :8080
+              OPENTODO_DATA_DIR: /data
+              OPENTODO_BASE_URL: https://opentodo.plexuz.xyz
+              OPENTODO_OIDC_ISSUER: https://sso.plexuz.xyz/application/o/opentodo/
+              OPENTODO_OIDC_CLIENT_ID: opentodo
+              OPENTODO_OIDC_DISPLAY_NAME: Authentik
+            envFrom:
+              - secretRef:
+                  name: opentodo-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: &port 8080
+                  initialDelaySeconds: 10
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.plexuz.xyz"
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}"
+        advancedMounts:
+          opentodo:
+            app:
+              - path: /data
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

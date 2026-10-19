@@ -124,15 +124,15 @@ module "oauth_apps" {
       redirect_uris      = ["gotify://oidc/callback"]
       meta_description   = "Notification server"
     }
-    doska = {
+    opentodo = {
       app_group = "Tools"
       access_groups = [
         data.authentik_group.superuser.id,
         authentik_group.groups["users"].id
       ]
-      client_id          = "doska"
-      redirect_uri_paths = ["/api/auth/oauth2/callback/oidc"]
-      meta_description   = "Kanban board"
+      client_id          = "opentodo"
+      redirect_uri_paths = ["/api/v1/auth/oidc/callback"]
+      meta_description   = "Task management"
     }
     radarr = {
       app_group = "Downloads"

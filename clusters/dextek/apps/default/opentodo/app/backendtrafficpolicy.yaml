@@ -3,11 +3,11 @@
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
-  name: doska
+  name: opentodo
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: doska
+      name: opentodo
   requestBuffer:
     limit: 1Gi

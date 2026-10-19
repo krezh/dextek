@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app doska
+  name: &app opentodo
   namespace: flux-system
 spec:
   targetNamespace: default
@@ -11,9 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cnpg-cluster
     - name: external-secrets-stores
-  path: ./clusters/dextek/apps/default/doska/app
+  path: ./clusters/dextek/apps/default/opentodo/app
   prune: true
   sourceRef:
     kind: OCIRepository
@@ -23,10 +22,8 @@ spec:
   retryInterval: 1m
   timeout: 3m
   components:
-    - ../../../../../shared/components/cnpg/pass
     - ../../../../../shared/components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
-      DATABASE_SSLMODE: no-verify
       KOPIUR_CAPACITY: 5Gi
