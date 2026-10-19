@@ -13,7 +13,6 @@ resources:
   - ./sidero-mcp/ks.yaml
   - ./talos-mcp/ks.yaml
   - ./nixos-mcp/ks.yaml
-  - ./donetick-mcp/ks.yaml
   - ./llmkube/ks.yaml
 transformers:
   - |-

@@ -124,16 +124,15 @@ module "oauth_apps" {
       redirect_uris      = ["gotify://oidc/callback"]
       meta_description   = "Notification server"
     }
-    donetick = {
+    doska = {
       app_group = "Tools"
       access_groups = [
         data.authentik_group.superuser.id,
         authentik_group.groups["users"].id
       ]
-      client_id          = "donetick"
-      redirect_uri_paths = ["/auth/oauth2"]
-      redirect_uris      = ["donetick://auth/oauth2"]
-      meta_description   = "Chores and task management"
+      client_id          = "doska"
+      redirect_uri_paths = ["/api/auth/oauth2/callback/oidc"]
+      meta_description   = "Kanban board"
     }
     radarr = {
       app_group = "Downloads"

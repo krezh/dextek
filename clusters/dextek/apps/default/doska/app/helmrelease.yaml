@@ -1,0 +1,156 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app doska
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: doska
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      doska:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          server:
+            image:
+              repository: ghcr.io/romenkova/doska-server
+              tag: 0.27.0@sha256:691fb6754b92db2a12678101820ad1056455ae8392e7eb85423856c5cf46e07c
+            env:
+              PORT: &port 3000
+              NODE_ENV: production
+              BASE_URL: https://doska.plexuz.xyz
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: doska-postgres
+                    key: url
+              AUTH_LOGIN: admin
+              OIDC_ISSUER: https://sso.plexuz.xyz/application/o/doska/
+              OIDC_CLIENT_ID: doska
+              OIDC_NAME: Authentik
+              OIDC_AUTO_CREATE: "on"
+            envFrom:
+              - secretRef:
+                  name: doska-secret
+              - secretRef:
+                  name: doska-auth-secret
+              - secretRef:
+                  name: doska-admin-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: *port
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+          web:
+            image:
+              repository: ghcr.io/romenkova/doska-web
+              tag: 0.27.0@sha256:8cd9642cc8f085e63276a6d169e2d119938a375018f11db3d075a04bbef1a505
+            probes:
+              liveness: &webProbes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 80
+                  initialDelaySeconds: 5
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *webProbes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 80
+          api:
+            port: 3000
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.plexuz.xyz"
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /api
+              - path:
+                  type: PathPrefix
+                  value: /mcp
+              - path:
+                  type: PathPrefix
+                  value: /.well-known
+            backendRefs:
+              - name: *app
+                port: 3000
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - name: *app
+                port: 80
+    persistence:
+      files:
+        existingClaim: "{{ .Release.Name }}"
+        advancedMounts:
+          doska:
+            server:
+              - path: /data/files
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+      nginx-run:
+        type: emptyDir
+        advancedMounts:
+          doska:
+            web:
+              - path: /var/run
+              - path: /var/cache/nginx
