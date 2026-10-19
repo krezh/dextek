@@ -28,6 +28,7 @@ spec:
             args: ["docker/supervisor.py", "--no-update", "--config", "/config"]
             env:
               TZ: Europe/Stockholm
+              BAZARR_ALLOWED_HOSTS: bazarr.plexuz.xyz,bazarr.downloads.svc.cluster.local
             resources:
               requests:
                 cpu: 43m
