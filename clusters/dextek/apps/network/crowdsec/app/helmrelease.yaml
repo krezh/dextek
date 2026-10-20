@@ -13,6 +13,17 @@ spec:
     container_runtime: containerd
     image:
       repository: mirror.gcr.io/crowdsecurity/crowdsec
+    config:
+      parsers:
+        s02-enrich:
+          xilo-cache-whitelist.yaml: |
+            name: dextek/xilo-cache-whitelist
+            description: Exclude Nix cache protocol requests from HTTP attack scenarios
+            filter: "evt.Meta.log_type == 'http_access-log' && evt.Meta.target_fqdn == 'xilo.plexuz.xyz' && evt.Meta.http_verb in ['GET', 'HEAD']"
+            whitelist:
+              reason: Nix cache misses and parallel downloads are normal client behavior
+              expression:
+                - "evt.Meta.http_path matches '^/c/[^/]+/[^/]+/(nix-cache-info|[0-9abcdfghijklmnpqrsvwxyz]{32}[.]narinfo|nar/[0-9abcdfghijklmnpqrsvwxyz]{32}[.]nar)$'"
     lapi:
       envFrom:
         - secretRef:
