@@ -9,6 +9,10 @@ spec:
   chartRef:
     kind: OCIRepository
     name: crowdsec
+  install:
+    disableSchemaValidation: true
+  upgrade:
+    disableSchemaValidation: true
   values:
     container_runtime: containerd
     image:
@@ -25,6 +29,9 @@ spec:
               expression:
                 - "evt.Meta.http_path matches '^/c/[^/]+/[^/]+/(nix-cache-info|[0-9abcdfghijklmnpqrsvwxyz]{32}[.]narinfo|nar/[0-9abcdfghijklmnpqrsvwxyz]{32}[.]nar)$'"
     lapi:
+      env:
+        - name: USE_WAL
+          value: "true"
       envFrom:
         - secretRef:
             name: &secret crowdsec-secret
@@ -34,15 +41,55 @@ spec:
         serviceMonitor:
           enabled: true
     agent:
-      acquisition:
-        - namespace: network
-          podName: gateway-external-*
-          program: envoy
+      isDeployment: true
+      hostVarLog: false
+      serviceAccountName: crowdsec-agent
+      additionalAcquisition:
+        - source: kubernetes
+          namespace: network
+          selector: gateway.envoyproxy.io/owning-gateway-name=gateway-external
+          labels:
+            type: envoy
+        - source: kubernetes
+          namespace: auth
+          selector: app.kubernetes.io/name=authentik,app.kubernetes.io/component=server
+          labels:
+            type: authentik
+        - source: kubernetes
+          namespace: default
+          selector: app.kubernetes.io/name=jellyfin,app.kubernetes.io/controller=jellyfin
+          labels:
+            type: jellyfin
+        - source: kubernetes
+          namespace: immich
+          selector: app.kubernetes.io/name=immich,app.kubernetes.io/controller=server
+          labels:
+            type: immich
+        - source: kubernetes
+          namespace: downloads
+          selector: app.kubernetes.io/name=radarr,app.kubernetes.io/controller=app
+          labels:
+            type: Radarr
+        - source: kubernetes
+          namespace: downloads
+          selector: app.kubernetes.io/name=sonarr,app.kubernetes.io/controller=app
+          labels:
+            type: Sonarr
+        - source: kubernetes
+          namespace: downloads
+          selector: app.kubernetes.io/name=prowlarr,app.kubernetes.io/controller=app
+          labels:
+            type: Prowlarr
       env:
         - name: COLLECTIONS
-          value: yanis-kouidri/envoy
-        - name: PARSERS
-          value: crowdsecurity/cri-logs
+          value: >-
+            yanis-kouidri/envoy
+            firix/authentik
+            LePresidente/jellyfin
+            gauth-fr/immich
+            schiz0phr3ne/radarr
+            schiz0phr3ne/sonarr
+            schiz0phr3ne/prowlarr
       metrics:
         serviceMonitor:
           enabled: true
