@@ -5,6 +5,7 @@ kind: SecurityPolicy
 metadata:
   name: ${APP}
 spec:
+  mergeType: StrategicMerge
   oidc:
     provider:
       issuer: https://sso.plexuz.xyz/application/o/${OIDC_SLUG:-${APP}}/
