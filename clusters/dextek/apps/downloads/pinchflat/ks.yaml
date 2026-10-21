@@ -21,7 +21,6 @@ spec:
   interval: 30m
   timeout: 5m
   components:
-    - ../../../../../shared/components/oidc-auth
     - ../../../../../shared/components/gpu
     - ../../../../../shared/components/kopiur/backup
     - ../../../../../shared/components/zeroscaler
@@ -30,4 +29,3 @@ spec:
       APP: *app
       KOPIUR_CLAIM: pinchflat-config
       KOPIUR_CAPACITY: 10Gi
-      OIDC_INFISICAL_FOLDER: Pinchflat

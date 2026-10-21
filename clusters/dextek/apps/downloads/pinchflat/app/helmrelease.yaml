@@ -25,12 +25,20 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/kieraneglin/pinchflat
-              tag: v2025.6.6@sha256:4e975edf58f0861a5cbfe8fc6aac4851ff5a02dfc3f05ffeea4982e3084a5a4a
+              repository: ghcr.io/thebadfella/pinchflat-ngx
+              tag: 2026.10.20@sha256:4d3f7450a8bcbf21ae5ddad353891381c8e62824930fb716cd7166864409eb96
             env:
               TZ: Europe/Stockholm
-              TZ_DATA_DIR: /tmp/elixir_tz_data
+              TZ_DATA_PATH: /tmp/elixir_tz_data
               PORT: &port 80
+              OIDC_ISSUER: https://sso.plexuz.xyz/application/o/pinchflat/
+              OIDC_CLIENT_ID: pinchflat
+              OIDC_REDIRECT_URI: https://pinchflat.plexuz.xyz/auth/oidc/callback
+              OIDC_PROVIDER_NAME: Authentik
+              SECURE_SESSION_COOKIE: "true"
+            envFrom:
+              - secretRef:
+                  name: pinchflat-secret
             probes:
               liveness: &probes
                 enabled: true

@@ -197,7 +197,7 @@ module "oauth_apps" {
         data.authentik_group.superuser.id
       ]
       client_id          = "pinchflat"
-      redirect_uri_paths = ["/oauth2/callback"]
+      redirect_uri_paths = ["/auth/oidc/callback"]
     }
     changedetection = {
       app_group = "Tools"
