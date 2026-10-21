@@ -1,3 +1,7 @@
+data "authentik_certificate_key_pair" "pinchflat_rs256" {
+  name = "authentik Self-signed Certificate"
+}
+
 module "oauth_apps" {
   source = "./modules/oauth"
   domain = var.domain
@@ -197,6 +201,7 @@ module "oauth_apps" {
         data.authentik_group.superuser.id
       ]
       client_id          = "pinchflat"
+      signing_key_id     = data.authentik_certificate_key_pair.pinchflat_rs256.id
       redirect_uri_paths = ["/auth/oidc/callback"]
     }
     changedetection = {
