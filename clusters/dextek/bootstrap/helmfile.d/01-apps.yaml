@@ -63,7 +63,7 @@ releases:
   - name: ocharted
     namespace: ci
     chart: oci://ghcr.io/home-operations/charts/ocharted
-    version: 0.1.6
+    version: 0.1.7
     values:
       - templates/values.yaml.gotmpl
     needs:
