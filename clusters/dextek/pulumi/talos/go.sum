@@ -356,6 +356,8 @@ github.com/pulumi/pulumi/sdk/v3 v3.270.0 h1:qzqmv8CoZyZI9JT7yQTkgeu0fPFnjWl6421k
 github.com/pulumi/pulumi/sdk/v3 v3.270.0/go.mod h1:aUQk7DpZpqUsxLSUUWUCzIapJNb4+Smgh81ONxIdfCo=
 github.com/pulumi/pulumi/sdk/v3 v3.271.0 h1:feT+ux4kNUuGOL1yaPK25B7icZXU7KRrcRc4XJB+LzU=
 github.com/pulumi/pulumi/sdk/v3 v3.271.0/go.mod h1:i10HR5xF3FMeMNYcinudY1asWhVge4tz75gJU/9yd4A=
+github.com/pulumi/pulumi/sdk/v3 v3.272.0 h1:MoJElH3Y/VwV1tfTVNCh2BJuc3HxB7OPmvvYzaDe89c=
+github.com/pulumi/pulumi/sdk/v3 v3.272.0/go.mod h1:i10HR5xF3FMeMNYcinudY1asWhVge4tz75gJU/9yd4A=
 github.com/pulumiverse/pulumi-matchbox/sdk v0.2.0 h1:f5Yo9HRwMhe2STqmIUXHcWAS768zc7AxvvPEXa1PuRg=
 github.com/pulumiverse/pulumi-matchbox/sdk v0.2.0/go.mod h1:ayvZ4nwHQ2kf/NB2S5q1nI7NLyCqN/U8I8gyHH/4tu8=
 github.com/pulumiverse/pulumi-matchbox/sdk v0.3.0 h1:oUHG7bT1BmWQvmPh66tjbLhezQNtrCJBpGsteFvH2Pg=
