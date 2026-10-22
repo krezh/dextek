@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/pixari/opentodo
-              tag: 0.8.0@sha256:bd1ff3d14218e1d2c0c45f25a1620e7494bdddf307be8824082c1819b1161056
+              tag: 0.9.0@sha256:416833792b4414c0604cd7bbb5011bb3ca8e261d534b38434551f45083b71064
             env:
               OPENTODO_ADDR: :8080
               OPENTODO_DATA_DIR: /data
