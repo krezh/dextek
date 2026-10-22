@@ -33,7 +33,7 @@ spec:
           pip-install:
             image:
               repository: public.ecr.aws/docker/library/python
-              tag: 3.15-slim@sha256:a83d68dc3d8f1048ff5628bc6f8c9f859938eb5add44ca947b70105b0383e961
+              tag: 3.15-slim@sha256:b23bb42e5298783f81e7e6f09e1175f68eb46000a789b3ee272ac231c212c4cf
             command:
               - pip
               - install
@@ -44,7 +44,7 @@ spec:
           app:
             image:
               repository: public.ecr.aws/docker/library/python
-              tag: 3.15-slim@sha256:a83d68dc3d8f1048ff5628bc6f8c9f859938eb5add44ca947b70105b0383e961
+              tag: 3.15-slim@sha256:b23bb42e5298783f81e7e6f09e1175f68eb46000a789b3ee272ac231c212c4cf
             command: ["python", "/scripts/jellyfin-config.py"]
             env:
               JELLYFIN_URL: http://jellyfin.default.svc.cluster.local:8096
