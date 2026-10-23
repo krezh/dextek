@@ -20,6 +20,8 @@ spec:
       value: debug
     - name: RENOVATE_ONBOARDING_CONFIG_FILE_NAME
       value: .renovaterc.json5
+    - name: RENOVATE_DOCKER_MAX_PAGES
+      value: "100"
     - name: RENOVATE_REDIS_URL
       value: "redis://dragonfly.databases.svc:6379/3"
     - name: RENOVATE_ALLOWED_COMMANDS
