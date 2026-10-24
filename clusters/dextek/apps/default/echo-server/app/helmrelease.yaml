@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -10,64 +9,23 @@ spec:
     kind: OCIRepository
     name: echo-server
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-    controllers:
-      echo-server:
-        replicas: 2
-        strategy: RollingUpdate
-        containers:
-          app:
-            image:
-              repository: ghcr.io/mendhak/http-https-echo
-              tag: 43@sha256:c4a81744e620ad3cfbffa97374c9c0e545bb3d132b07ebc7745cce6ddee745a1
-            env:
-              HTTP_PORT: &port 80
-              LOG_WITHOUT_NEWLINE: true
-              LOG_IGNORE_PATH: &path /healthz
-              PROMETHEUS_ENABLED: true
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: *path
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 5
-                  failureThreshold: 3
-              readiness: *probes
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 64Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-    service:
-      app:
-        ports:
-          http:
-            port: *port
-    route:
-      app:
-        annotations:
-          gatus.home-operations.com/endpoint: |-
-            url: https://{{ .Release.Name }}.plexuz.xyz/healthz
-        hostnames:
-          - "{{ .Release.Name }}.plexuz.xyz"
-          - echo.plexuz.xyz
-        parentRefs:
-          - name: gateway-external
-            namespace: network
-    serviceMonitor:
-      app:
-        endpoints:
-          - port: http
+    replicaCount: 2
+    resources:
+      requests:
+        cpu: 10m
+      limits:
+        memory: 64Mi
+    httpRoute:
+      enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          url: https://{{ .Release.Name }}.plexuz.xyz/healthz
+      hostnames:
+        - "{{ .Release.Name }}.plexuz.xyz"
+        - echo.plexuz.xyz
+      parentRefs:
+        - name: gateway-external
+          namespace: network
+    monitoring:
+      serviceMonitor:
+        enabled: true
