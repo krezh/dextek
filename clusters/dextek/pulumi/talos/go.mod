@@ -3,7 +3,7 @@ module github.com/krezh/dextek/clusters/dextek/pulumi/talos
 go 1.26.10
 
 require (
-	github.com/infisical/go-sdk v0.9.0
+	github.com/infisical/go-sdk v0.9.1
 	github.com/pulumi/pulumi-command/sdk v1.2.1
 	github.com/pulumi/pulumi/sdk/v3 v3.272.0
 	github.com/pulumiverse/pulumi-matchbox/sdk v0.3.0

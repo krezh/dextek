@@ -213,6 +213,8 @@ github.com/infisical/go-sdk v0.8.0 h1:Ipw62V1ptg77OY/5DYH/39D2Ej61Hnrbgn05PCZd32
 github.com/infisical/go-sdk v0.8.0/go.mod h1:yEfXF+3YDDXiJ9zzJUSzW6me6XXPPEDK52fSU6JfpCA=
 github.com/infisical/go-sdk v0.9.0 h1:hCapIFZztHg3dgz0+U6tOSDFPb1pvPIzzLlCS+TauGY=
 github.com/infisical/go-sdk v0.9.0/go.mod h1:4Xh9Mj2/8wPmYuyNDbg8oJFajNFBTcrgITBQ6K8hXaU=
+github.com/infisical/go-sdk v0.9.1 h1:3QMToKEPasPXYamtuqWYl07ItwfL0vzjYB4YCY1ANvY=
+github.com/infisical/go-sdk v0.9.1/go.mod h1:4Xh9Mj2/8wPmYuyNDbg8oJFajNFBTcrgITBQ6K8hXaU=
 github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 h1:BQSFePA1RWJOlocH6Fxy8MmwDt+yVQYULKfN0RoTN8A=
 github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99/go.mod h1:1lJo3i6rXxKeerYnT8Nvf0QmHCRC1n8sfWVwXF2Frvo=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
