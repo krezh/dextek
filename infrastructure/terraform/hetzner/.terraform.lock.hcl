@@ -158,20 +158,28 @@ provider "registry.opentofu.org/kreuzwerker/docker" {
 }
 
 provider "registry.opentofu.org/loafoe/ssh" {
-  version     = "2.7.0"
-  constraints = "2.7.0"
+  version     = "2.9.0"
+  constraints = "2.9.0"
   hashes = [
-    "h1:MYcyNF/9w/O0nEeKmopbji1NqeD9kpd2a55r9E4rFXs=",
-    "zh:0301be53defa9294c713fb3ce4c9925e83051b7444b6eb7262c692ad514f9c46",
-    "zh:2670797441d6fefddaaac4498f31b0dc8053fe82a3744fca44da7471e6449f1f",
-    "zh:2d70166644fba761aec397920e9e843cce2c060875ddd224f7791ea2cd7bd6e6",
-    "zh:30bda314598fee47cf890adfb6f3e1db606feab99252ccfdd0e5c93108f38fdd",
-    "zh:3a0c0c9f1aff15818fb5fe97b361b879baf19886d413fa468165c3c6de49d348",
-    "zh:5183c1a7fb5d1f1394bfcfe716a61c4191198ccbd64311601c68c52a3a1ea7e2",
-    "zh:5190fd7e18f0e46d2263fafa04a6862578abb1c14d60ea3e6597f1b00b041ec7",
-    "zh:825e2a7eb6c176dc96b82a1123d63ce6e04ef502a973a7ac44ab156cae4f991a",
-    "zh:8e0716c9a628801284663cad3a8f70e026780f34d04fa5ffb822f0cd5876c353",
-    "zh:8f19c94a72fb4cecdc70ac97f04c24fa24c46a4e125bbb7c24f642e95f753c70",
-    "zh:a965929f10651c7139009aa509a6929f2205f90e85ce91a8354416d17624ed04",
+    "h1:/cXMEG8Fq51Qv2etVHqGMnFgYu8TvhUAdkTFi71Bru4=",
+    "h1:5Eu+n4yVp4xFnppKTqmYPrxwkULQqZMzHfxyvzqpkOM=",
+    "h1:8B/awPFeKCtDNuUnFEFRu+08PAQsRm37FNywVLNOtVc=",
+    "h1:IezwmOFH0izyb57Ic/ywiItQeHgfWU2zbXYSwP4NZ9g=",
+    "h1:WpZ5/qAPxPIIF1V7vzSwUldoq5+zSfoGaA2wtcuY5ho=",
+    "h1:Xxb/BaHquTKx8/4q3pHNaRQKEFRVqBf6OCip/IedxUQ=",
+    "h1:ZZ9LjY1LfA1wpant/l73X3RP/AhsQezTAj5dTyHGRJc=",
+    "h1:gWDIiU32wNqiXgJr7T/ZFonELudyl5aYZgFG8HUsu4M=",
+    "h1:hTrqxhOFEr/UmjyuJXUiWSJP4Y/18+5xAxaeLJ3VwTc=",
+    "h1:yBP3hnyinRi6U8u0I3nAv6uj6KvYjv3TiCPIKyM0RO4=",
+    "zh:1e096e1aa6d4e81e8eb6bd7fd1cfe349ffdceb075d0243ac9531eb035abfa264",
+    "zh:393cdd7b6f67fd4e37183d2a802346050cb3c3176adaf902069e831a93e28490",
+    "zh:3d4911e44a967a097e5866b5e32a2d6ab2e0f10e4298532383bca03165d20dbb",
+    "zh:553be6384a2ae09800d94e00e9b033a80cf6773ff06b8b3d15d63de04f030f3d",
+    "zh:9b6053c8c98ea1beb4c19aaf5131ca0dbec420264635917fccc4d4d84ae3800b",
+    "zh:a6ba40370c2f1d5bb890a0529a6f9148cd7c4d2fdb46e04c596627ef878d4e3a",
+    "zh:b163a72adc7d2a7db1c2c76930f1c244d087bc35ac2397cb650b151cb3814864",
+    "zh:d471e19fbde619f55417c68982444c6d11b51ffd4d073b7ab3b83f668aa087ed",
+    "zh:e2e36066fc9f5d0faf627fe23b8a2006297ee9ee9adacf3404ce7e3fa24776c6",
+    "zh:f4b17eb57b575e1ca56200aa496dfd9a6525a7cbae0a2914cc8b7eafd88162ac",
   ]
 }
