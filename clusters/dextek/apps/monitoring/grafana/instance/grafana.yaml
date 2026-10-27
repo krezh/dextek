@@ -26,6 +26,7 @@ spec:
     auth.generic_oauth:
       name: authentik
       enabled: "true"
+      auto_login: "true"
       scopes: openid profile email groups
       auth_url: https://sso.plexuz.xyz/application/o/authorize/
       token_url: https://sso.plexuz.xyz/application/o/token/
