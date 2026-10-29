@@ -4,7 +4,7 @@ go 1.26.10
 
 require (
 	github.com/infisical/go-sdk v0.9.1
-	github.com/pulumi/pulumi-command/sdk v1.2.1
+	github.com/pulumi/pulumi-command/sdk v1.3.0
 	github.com/pulumi/pulumi/sdk/v3 v3.273.0
 	github.com/pulumiverse/pulumi-matchbox/sdk v0.3.0
 	github.com/pulumiverse/pulumi-talos/sdk v0.8.1
