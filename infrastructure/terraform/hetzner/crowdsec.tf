@@ -86,7 +86,7 @@ resource "docker_container" "crowdsec" {
   ]
 
   name        = "crowdsec"
-  image       = "crowdsecurity/crowdsec:v1.8.1"
+  image       = "crowdsecurity/crowdsec:v1.8.2"
   restart     = "unless-stopped"
   memory      = 512
   memory_swap = 1024
