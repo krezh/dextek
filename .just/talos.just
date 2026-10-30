@@ -37,10 +37,7 @@ etcd-defrag:
     NODES=$(talosctl config info --output json | jq --raw-output '.endpoints[]' | tr '\n' ' ' | awk '{$1=$1};1')
     talosctl etcd status
     for node in $NODES; do
-      (
-        echo "$node: defragging"
-        until talosctl etcd defrag -n $node -e $node; do sleep 1; done
-        echo "$node: done"
-      ) &
+      echo "$node: defragging"
+      until talosctl etcd defrag -n "$node" -e "$node"; do sleep 1; done
+      echo "$node: done"
     done
-    wait
