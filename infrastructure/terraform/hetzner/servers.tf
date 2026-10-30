@@ -14,6 +14,7 @@ resource "hcloud_server" "towonel" {
     hcloud_firewall.inbound_https.id,
     hcloud_firewall.default.id,
     hcloud_firewall.towonel.id,
+    hcloud_firewall.inbound_mail.id,
   ]
 
   network {

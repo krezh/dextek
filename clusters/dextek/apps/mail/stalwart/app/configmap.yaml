@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stalwart-config
+spec:
+  data:
+    config.json: |
+      {
+        "@type": "PostgreSql",
+        "host": "pooler-rw.databases.svc",
+        "port": 5432,
+        "database": "stalwart",
+        "authUsername": "stalwart",
+        "useTls": true,
+        "allowInvalidCerts": false,
+        "options": "sslmode=verify-full&sslcert=/var/run/secrets/postgresql/tls.crt&sslkey=/var/run/secrets/postgresql/tls.key&sslrootcert=/var/run/secrets/root-ca/ca.crt"
+      }

@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.plexuz.xyz/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: stalwart-tls
+spec:
+  secretName: stalwart-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+    - mail.plexuz.xyz
+    - autoconfig.plexuz.xyz
+    - autodiscover.plexuz.xyz
+    - mta-sts.plexuz.xyz
+  privateKey:
+    algorithm: Ed25519
+    rotationPolicy: Always
