@@ -15,7 +15,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: apply-plan
-          image: docker.io/stalwartlabs/cli:v1.0.12
+          image: docker.io/stalwartlabs/cli:1.0.14
           command:
             - /bin/sh
             - -c
