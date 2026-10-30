@@ -12,7 +12,6 @@ locals {
     librespeed       = "Librespeed"
     whisparr         = "Whisparr"
     opentodo         = "OpenTodo"
-    stalwart         = "Stalwart"
   }
 
   # Only apps whose Infisical folder doesn't exist yet. The rest use a literal

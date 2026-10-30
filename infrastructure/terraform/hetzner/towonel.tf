@@ -52,15 +52,6 @@ resource "docker_container" "towonel" {
     protocol = "udp"
   }
 
-  dynamic "ports" {
-    for_each = [25, 465, 587, 993, 995, 4190]
-    content {
-      external = ports.value
-      internal = ports.value
-      protocol = "tcp"
-    }
-  }
-
   networks_advanced {
     name = docker_network.edge.name
   }

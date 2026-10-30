@@ -46,15 +46,6 @@ spec:
                 [
                   { "hostname":"*.plexuz.xyz","origin":"gateway-external.network.svc.cluster.local:443" }
                 ]
-              TOWONEL_AGENT_TCP_SERVICES: |
-                [
-                  { "name":"smtp", "origin":"stalwart.mail.svc.cluster.local:25", "listen_port":25, "proxy_protocol":"v2" },
-                  { "name":"smtps", "origin":"stalwart.mail.svc.cluster.local:465", "listen_port":465, "proxy_protocol":"v2" },
-                  { "name":"submission", "origin":"stalwart.mail.svc.cluster.local:587", "listen_port":587, "proxy_protocol":"v2" },
-                  { "name":"imaps", "origin":"stalwart.mail.svc.cluster.local:993", "listen_port":993, "proxy_protocol":"v2" },
-                  { "name":"pop3s", "origin":"stalwart.mail.svc.cluster.local:995", "listen_port":995, "proxy_protocol":"v2" },
-                  { "name":"sieve", "origin":"stalwart.mail.svc.cluster.local:4190", "listen_port":4190, "proxy_protocol":"v2" }
-                ]
               TOWONEL_AGENT_DIAL_EDGE: "true"
               TOWONEL_INVITE_TOKEN:
                 valueFrom:
