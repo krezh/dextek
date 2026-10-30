@@ -15,5 +15,6 @@ spec:
     - autodiscover.plexuz.xyz
     - mta-sts.plexuz.xyz
   privateKey:
-    algorithm: Ed25519
+    algorithm: RSA
+    size: 4096
     rotationPolicy: Always
