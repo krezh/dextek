@@ -7,12 +7,6 @@ resources:
   - ./namespace.yaml
   - ./toolhive/ks.yaml
   - ./memini/ks.yaml
-  - ./context7-mcp/ks.yaml
-  - ./github-mcp/ks.yaml
-  - ./grafana-mcp/ks.yaml
-  - ./sidero-mcp/ks.yaml
-  - ./talos-mcp/ks.yaml
-  - ./nixos-mcp/ks.yaml
   - ./llmkube/ks.yaml
 transformers:
   - |-
