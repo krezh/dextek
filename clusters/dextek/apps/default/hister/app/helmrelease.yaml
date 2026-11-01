@@ -1,0 +1,100 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app hister
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: hister
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      hister:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/asciimoo/hister
+              tag: v0.21.0@sha256:4dab1cbd7aabe8ade8e696e4085ecd3254e1170467c4502debec792a904abdbc
+            env:
+              HISTER__SERVER__ADDRESS: :4433
+              HISTER__SERVER__BASE_URL: https://hister.plexuz.xyz
+              HISTER__APP__DIRECTORY: /hister/data
+              HISTER__APP__USER_HANDLING: "true"
+              HISTER__SERVER__METRICS: "true"
+              HISTER__SERVER__OAUTH__OIDC__CLIENT_ID: hister
+              HISTER__SERVER__OAUTH__OIDC__CONFIGURATION_URL: https://sso.plexuz.xyz/application/o/hister/.well-known/openid-configuration
+            envFrom:
+              - secretRef:
+                  name: hister-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 4433
+                  initialDelaySeconds: 10
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 15m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    serviceMonitor:
+      app:
+        serviceName: hister
+        endpoints:
+          - port: http
+    route:
+      app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            url: https://{{ .Release.Name }}.plexuz.xyz/health
+        hostnames:
+          - "{{ .Release.Name }}.plexuz.xyz"
+        parentRefs:
+          - name: gateway-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}"
+        advancedMounts:
+          hister:
+            app:
+              - path: /hister/data
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

@@ -26,6 +26,7 @@ resources:
   - ./gotify/ks.yaml
   - ./xilo/ks.yaml
   - ./opentodo/ks.yaml
+  - ./hister/ks.yaml
 components:
   - ../../../shared/components/kopiur/secret
 transformers:

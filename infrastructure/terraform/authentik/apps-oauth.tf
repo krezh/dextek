@@ -138,6 +138,17 @@ module "oauth_apps" {
       redirect_uri_paths = ["/api/v1/auth/oidc/callback"]
       meta_description   = "Task management"
     }
+    hister = {
+      app_group = "Tools"
+      access_groups = [
+        data.authentik_group.superuser.id
+      ]
+      client_id          = "hister"
+      meta_icon          = "https://hister.org/logo.png"
+      redirect_uri_paths = ["/api/oauth/callback"]
+      redirect_uris      = ["https://hister.${var.domain}/api/oauth/callback?provider=oidc"]
+      meta_description   = "Self-hosted search engine"
+    }
     radarr = {
       app_group = "Downloads"
       access_groups = [

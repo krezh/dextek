@@ -12,11 +12,12 @@ locals {
     librespeed       = "Librespeed"
     whisparr         = "Whisparr"
     opentodo         = "OpenTodo"
+    hister           = "Hister"
   }
 
   # Only apps whose Infisical folder doesn't exist yet. The rest use a literal
   # folder_path below, kept out of Terraform's create/destroy lifecycle.
-  oidc_missing_folders = toset(["home-assistant", "librespeed", "pinchflat", "opentodo"])
+  oidc_missing_folders = toset(["home-assistant", "librespeed", "pinchflat", "opentodo", "hister"])
 }
 
 resource "infisical_secret_folder" "oidc_app" {
