@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/krezh/stash
-              tag: 0.31.1
+              tag: 0.32.0
             env:
               STASH_CACHE: /cache
               STASH_EXTERNAL_HOST: https://stash.plexuz.xyz
