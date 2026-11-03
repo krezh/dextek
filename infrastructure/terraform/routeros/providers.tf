@@ -11,7 +11,7 @@ terraform {
     }
     infisical = {
       source  = "Infisical/infisical"
-      version = "0.20.9"
+      version = "0.20.10"
     }
   }
   required_version = ">= 1.3.0"
