@@ -6,7 +6,7 @@ metadata:
   name: mcp-tools-embedding
 spec:
   model: sentence-transformers/all-MiniLM-L6-v2
-  image: ghcr.io/huggingface/text-embeddings-inference:cpu-latest@sha256:6c27ddf396327f287706ab77672d253471963f3936d384fcfeb6c4bdebaa3906
+  image: ghcr.io/huggingface/text-embeddings-inference:cpu-latest@sha256:86da7b7687bbe8886120383bf1f463bc596c278849b6c816d0c200bd0733a12b
   env:
     - name: HOSTNAME
       value: "::"
