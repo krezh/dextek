@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/thebadfella/pinchflat-ngx
-              tag: 2026.10.20@sha256:4d3f7450a8bcbf21ae5ddad353891381c8e62824930fb716cd7166864409eb96
+              tag: 2026.11.0@sha256:ea6d43d11ecb99de558935b61414bf7efaf7f1382d4a05c15800fddb72778f80
             env:
               TZ: Europe/Stockholm
               TZ_DATA_PATH: /tmp/elixir_tz_data
