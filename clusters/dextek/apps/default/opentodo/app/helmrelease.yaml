@@ -24,8 +24,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/pixari/opentodo
-              tag: 0.16.0@sha256:2c89769e2535d351ecfa2d54ba22e59c4886bb7547d4680dcaa6e2e24e35f7c8
+              repository: ghcr.io/opentodoapp/opentodo
+              tag: 0.22.0@sha256:7fb6a46a7bb1af4a7b5b03b70788e51d37a9502c9fe6d808a109a554934a15ff
             env:
               OPENTODO_ADDR: :8080
               OPENTODO_DATA_DIR: /data
