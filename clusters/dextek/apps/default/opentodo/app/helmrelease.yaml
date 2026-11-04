@@ -35,6 +35,7 @@ spec:
               OPENTODO_OIDC_ISSUER: https://sso.plexuz.xyz/application/o/opentodo/
               OPENTODO_OIDC_CLIENT_ID: opentodo
               OPENTODO_OIDC_DISPLAY_NAME: Authentik
+              OPENTODO_TRUSTED_PROXIES: 10.244.0.0/16
             envFrom:
               - secretRef:
                   name: opentodo-secret
