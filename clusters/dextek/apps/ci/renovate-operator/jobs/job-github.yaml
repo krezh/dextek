@@ -5,7 +5,7 @@ kind: RenovateJob
 metadata:
   name: github
 spec:
-  image: ghcr.io/krezh/renovate-nix:44.215.0@sha256:2ff50003b7f7f3659bd39576dafad6cd98b3c4b6afbea2f80af52f22ed50b842
+  image: ghcr.io/krezh/renovate-nix:44.216.0@sha256:03d96e9532f81722445ea8cb543abc99ede89de1a6d429d8e89fc76257d7d6eb
   discoverTopics:
     - renovate
   discoveryFilters:
