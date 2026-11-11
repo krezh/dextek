@@ -17,7 +17,7 @@ terraform {
     }
     docker = {
       source  = "kreuzwerker/docker"
-      version = "4.6.0"
+      version = "4.7.0"
     }
     ssh = {
       source  = "loafoe/ssh"
