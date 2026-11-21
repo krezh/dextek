@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/opentodoapp/opentodo
-              tag: 1.5.0@sha256:af0db93aaabd01479337af9847f7de86b2f908f2e78bddec05aefdb6a79e6bab
+              tag: 1.6.0@sha256:bbdf370927282a2df218d69ec472a3ab6cadb81eaedc8341230457a85e222afe
             env:
               OPENTODO_ADDR: :8080
               OPENTODO_DATA_DIR: /data
