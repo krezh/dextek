@@ -91,7 +91,7 @@ spec:
           reference: ghcr.io/vember31/timescaledb:2.32.0
       - name: timescaledb-toolkit
         image:
-          reference: ghcr.io/vember31/timescaledb-toolkit:1.26.0
+          reference: ghcr.io/vember31/timescaledb-toolkit:1.28.0
 
   managed:
     roles:
