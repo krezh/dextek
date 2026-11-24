@@ -50,6 +50,7 @@ spec:
       labelSelector:
         matchLabels:
           cnpg.io/cluster: postgres
+          cnpg.io/podRole: instance
 
   nodeMaintenanceWindow:
     inProgress: false
